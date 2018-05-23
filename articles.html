@@ -1,0 +1,100 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="main.css">
+    <script src="main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="prism.js"></script>    
+    <link rel="stylesheet" href="prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<title>RBF RG Wiki</title>
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="main.html">
+    <img id="logo" src="images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar">
+    <object data="sidebar.html"> 
+        Your browser doesn’t support the object tag. 
+    </object>
+</div>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<div class="divContent"><p class="title_and_author">
+	<span class="title">Articles</span>
+</p>
+<h2><a href="articles/article_template.html">Article Template</a></h2>
+<span class="mod_time">Mon May 21 22:22:36 2018</span>
+<p>
+
+    This is a template for new articles.
+
+</p>
+<h2><a href="articles/laplacian.html">Laplacian</a></h2>
+<span class="mod_time">Mon May 21 22:22:36 2018</span>
+<p>
+
+The laplacian is a second order differential operator. When applied to the function $u$ it is denoted $\nabla^2u$ or $\Delta u$. It is the sum of the second partial derivatives with respect to each dimension. For example, for a function $u : \RR^3 \to \RR$ the laplacian is given by $$\nabla^2 u = \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} + \frac{\partial^2 u}{\partial z^2}.$$
+
+</p>
+<h2><a href="articles/test.html">Test Article</a></h2>
+<span class="mod_time">Mon May 21 22:22:36 2018</span>
+<p>
+
+    This is a test article to demonstrate $\LaTeX$ rendering, code rendering, and citations.
+
+</p>
+<h2><a href="articles/time_stepping.html">Time-Stepping</a></h2>
+<span class="mod_time">Wed May 23 13:12:53 2018</span>
+<p>
+
+Time stepping referes techniques that propagate initial condidtions of an ODE or PDE discretely through time to obtain a numerical solution. Presently this article discusses only forward and backward Euler time-stepping.
+
+</p>
+</div>
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+</div></body>
+
+
+</html>

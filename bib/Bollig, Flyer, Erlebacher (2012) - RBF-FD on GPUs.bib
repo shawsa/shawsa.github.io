@@ -1,0 +1,14 @@
+@article{BOLLIG20127133,
+title = "Solution to PDEs using radial basis function finite-differences (RBF-FD) on multiple GPUs",
+journal = "Journal of Computational Physics",
+volume = "231",
+number = "21",
+pages = "7133 - 7151",
+year = "2012",
+issn = "0021-9991",
+doi = "https://doi.org/10.1016/j.jcp.2012.06.030",
+url = "http://www.sciencedirect.com/science/article/pii/S0021999112003452",
+author = "Evan F. Bollig and Natasha Flyer and Gordon Erlebacher",
+keywords = "Multi-GPU computing, Radial basis functions, RBF-FD, High-order finite differencing, Parallel computing, OpenCL",
+abstract = "This paper presents parallelization strategies for the radial basis function-finite difference (RBF-FD) method. As a generalized finite differencing scheme, the RBF-FD method functions without the need for underlying meshes to structure nodes. It offers high-order accuracy approximation and scales as O(N) per time step, with N being with the total number of nodes. To our knowledge, this is the first implementation of the RBF-FD method to leverage GPU accelerators for the solution of PDEs. Additionally, this implementation is the first to span both multiple CPUs and multiple GPUs. OpenCL kernels target the GPUs and inter-processor communication and synchronization is managed by the Message Passing Interface (MPI). We verify our implementation of the RBF-FD method with two hyperbolic PDEs on the sphere, and demonstrate up to 9x speedup on a commodity GPU with unoptimized kernel implementations. On a high performance cluster, the method achieves up to 7x speedup for the maximum problem size of 27,556 nodes."
+}

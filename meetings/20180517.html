@@ -1,0 +1,162 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Thursday May 17th, 2018</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../main.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar">
+    <object data="../sidebar.html"> 
+        Your browser doesn’t support the object tag. 
+    </object>
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Thursday May 17<sup>th</sup>, 2018</span> <br>
+<span class="author">Authors: Sage Shaw </span> <br>
+<span class="updated">Wed May 23 14:29:07 2018</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+We reviewed Daniel's experiments with singular PHS matrices. We discussed forward and backward Euler time-stepping. 
+</p>
+
+<div class="contents">
+<ol>
+	<li>Tasks</li>
+	<ol>
+		<li>Daniel</li>
+		<li>Sage</li>
+		<li>General</li>
+	</ol>
+	<li>Singular PHS Matrices</li>
+	<li>Time-Stepping</li>
+	<li>Questions for the Next Meeting</li>
+	<li>References</li>
+</ol>
+</div>
+
+<!--************************************************************************-->
+<h1>Tasks</h1>
+<h2>Daniel</h2>
+<p>
+<ul>
+    <li>Explore complete pivoting for all instances of solving square matrix systems.</li>
+    <li>Test QR minimum-norm solution in the Schure Complement Method.</li>
+    <li>Test for points projected off of a line instead of projected onto a line.</li>
+    <li>Test for points projected off of a circle.</li>
+</ul>
+</p>
+<h2>Sage</h2>
+</p>
+<ul>
+    <li>Test forward and backward time-stepping for 1-D heat equation.</li>
+    <li>Implement RBF-FD on a sphere.</li>
+</ul>
+</p>
+<h2>General</h2>
+</p>
+<ul>
+    <li>Record meeting notes.</li>
+</ul>
+</p>
+
+<!--************************************************************************-->
+<h1>Singular PHS Matrices</h1>
+<p>
+We discussed Daniel's conclusions about techniques for solving the matrix systems that arrise from using PHS RBFs. 
+</p>
+
+<!--************************************************************************-->
+<h1>Time-Stepping</h1>
+<p>
+We discussed forward and backward time-stepping and their stability. Grady recommened LeVeque's book <span class="cite" src="LEVEQUE2007"><b>[<a href="#bib1">1</a>]</b></span>. Notes are included in <a href="../articles/time_stepping.html">Time-Stepping</a>.
+</p>
+
+
+<!--************************************************************************-->
+<h1>Questions for the Next Meeting</h1>
+<p>
+<ul>
+    <li>Why does $\norm{1+\lambda \Delta t}<1$ mean forward Euler is unstable. I see that the coefficient grows - does that suggest that the error grows too?
+</ul>
+</p>
+
+
+
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+		<li id="bib1">
+			Randall&nbsp;J. LeVeque.
+<em>Finite Difference Methods for Ordinary and Partial Differential Equations</em>.
+SIAM, 2007.
+URL: <a href="https://epubs.siam.org/doi/book/10.1137/1.9780898717839">https://epubs.siam.org/doi/book/10.1137/1.9780898717839</a>, <a href="https://doi.org/10.1137/1.9780898717839.fm">doi:10.1137/1.9780898717839.fm</a>.
+		</li>
+	</ol>
+</p>
+</div>
+
+</div></body>
+
+
+</html>

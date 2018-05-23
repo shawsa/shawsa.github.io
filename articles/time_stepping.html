@@ -1,0 +1,180 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Time-Stepping</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../main.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar">
+    <object data="../sidebar.html"> 
+        Your browser doesn’t support the object tag. 
+    </object>
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Time-Stepping</span> <br>
+<span class="author">Authors: Sage Shaw</span> <br>
+<span class="updated">Mon May 21 22:14:52 2018</span> <br>
+<span hidden id="status">i</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+Time stepping referes techniques that propagate initial condidtions of an ODE or PDE discretely through time to obtain a numerical solution. Presently this article discusses only forward and backward Euler time-stepping.
+</p>
+
+<div class="contents">
+<ol>
+	<li>Euler Time-Stepping</li>
+	<ol>
+		<li>Forward Euler Time-Stepping</li>
+		<li>Backward Euler Time-Stepping</li>
+	</ol>
+	<li>References</li>
+</ol>
+</div>
+
+<p>Grady recommends LeVeque's book <span class="cite" src="LEVEQUE2007"><b>[<a href="#bib1">1</a>]</b></span> - presumably chapter 5 (p. 113).
+</p>
+
+<!--************************************************************************-->
+<h1>Euler Time-Stepping</h1>
+<p>
+Euler time-stepping is explored in <a target="parent" href="../experiments/ex001_time_stepping.html">experiment 1</a>.
+</p>
+
+<h3>Problem</h3>
+<p>
+Given the differential equation $\vec{y}^\prime(t) = f(t, \vec{y})$ and the initial condition $\vec{y}_0$ find $\vec{y}(t)$.
+</p>
+
+<p>
+We will approximate the true solution with a discrete solution but choosing a step size $\Delta t$, denoting  the time at each step as $t_0 +n \Delta t = t_n$, then approximating the solution $\vec{y}_n \approx \vec{y}(t_n)$ at each step. This is done by using forward or backward approximations of $\vec{y}^\prime_n$.
+</p>
+
+<h2>Forward Euler Time-Stepping</h2>
+<p>
+In forward Euler we approximate $$\vec{y}^\prime(t) \approx \frac{\vec{y}_{n+1} - \vec{y}_n}{\Delta t}\text{.}$$ Using the definition of our differential equation we obtain the recurrence relation $\vec{y}_{n+1} = \vec{y}_n + \Delta t f(t_n, \vec{y}_n)$. This relation gives the next time-step explicitly in terms of the previous.
+</p>
+
+<h3>Stability</h3>
+<img src="time_stepping/fw_stability_domain.png" height="400" style="float:right;">
+<p>In analyzing the stability we first consider the one dimensional linear case where $f(t, y) = \lambda y$. Our forward formulation can now be expressed as $y_{n+1} = (1+\lambda \Delta t)y_n$ which leads to the solution
+$$
+y_n = (1+\lambda \Delta t)^n y_0
+$$
+by induction.
+</p>
+<p>
+This soultion is stable if $\norm{1+\lambda \Delta t}<1$. The stability domain is depicted in the picture to the right.
+</p>
+
+
+<h2>Backward Euler Time-Stepping</h2>
+<p>
+In backward Euler we approximate $$\vec{y}^\prime(t) \approx \frac{\vec{y}_{n} - \vec{y}_{n-1}}{\Delta t}\text{.}$$ Using the definition of our differential equation we obtain the recurrence relation $\vec{y}_{n+1} = \vec{y}_n + \Delta t f(t_n, \vec{y}_{n+1})$. This relation gives the next time-step implicitly in terms of the previous.
+</p>
+<p>
+In the case where $f$ is linear we say $f(t_n, \vec{y}_n) = L\vec{y}_n$. Then the recurrence relation can be expressed explicitly and solved to give
+$$
+\vec{y}_{n} = (I - \Delta t L)^{-n}\vec{y}_0
+.$$
+</p>
+
+<h3>Stability</h3>
+<p>In analyzing the stability we first consider the one dimensional linear case where $f(t, y) = \lambda y$. The solution to the resulting recurrance relation is $y_{n} = \left( \frac{1}{1 - \lambda \Delta t} \right) ^{n}y_0$
+</p>
+
+<p>
+This soultion is stable if $\norm{1-\lambda \Delta t}>1$.
+</p>
+
+<p>
+For higher dimensional linear systems we have the relation $\vec{y}_{n+1} = (I - \Delta t L)^{-1}\vec{y}_n$ with the corresponding solution $\vec{y}_{n} = (I - \Delta t L)^{-n}\vec{y}_0$. If we perform a spectral decomposistion on the matrix $I - \Delta t L = U \Lambda U^{-1}$ we can reformulate the recurrance relation as
+$$
+\begin{align}
+\vec{y}_{n+1} &= (I - \Delta t L)^{-1}\vec{y}_n \\
+& = U \Lambda^{-1} U^{-1} \vec{y}_n \\
+U^{-1} \vec{y}_{n+1} &= \Lambda^{-1} U^{-1} \vec{y}_n \\
+\vec{w}_{n+1} &= \Lambda^{-1} \vec{w}_n
+\end{align}
+$$
+where $\vec{w}_n = U^{-1}\vec{y}_n$. The solution is now represented as a completely decoupuled system. The original system is stable if each of the decoupled relations is stable. That is if $\norm{1-\lambda_i \Delta t}>1$ for $i=1, 2,..., n$ where $\lambda_i$ represents the $i$<sup>th</sup> eigenvalue of $L$.
+</p>
+
+
+
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+		<li id="bib1">
+			Randall&nbsp;J. LeVeque.
+<em>Finite Difference Methods for Ordinary and Partial Differential Equations</em>.
+SIAM, 2007.
+URL: <a href="https://epubs.siam.org/doi/book/10.1137/1.9780898717839">https://epubs.siam.org/doi/book/10.1137/1.9780898717839</a>, <a href="https://doi.org/10.1137/1.9780898717839.fm">doi:10.1137/1.9780898717839.fm</a>.
+		</li>
+	</ol>
+</p>
+</div>
+
+</div></body>
+
+
+</html>

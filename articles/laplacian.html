@@ -1,0 +1,131 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Laplacian</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../main.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar">
+    <object data="../sidebar.html"> 
+        Your browser doesn’t support the object tag. 
+    </object>
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Laplacian</span> <br>
+<span class="author">Authors: Sage Shaw</span> <br>
+<span class="updated">Sun May 20 17:49:08 2018</span> <br>
+<span hidden id="status">i</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+The laplacian is a second order differential operator. When applied to the function $u$ it is denoted $\nabla^2u$ or $\Delta u$. It is the sum of the second partial derivatives with respect to each dimension. For example, for a function $u : \RR^3 \to \RR$ the laplacian is given by $$\nabla^2 u = \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} + \frac{\partial^2 u}{\partial z^2}.$$
+</p>
+
+
+<div class="contents">
+<ol>
+	<li>Applied to Radial Basis Functions</li>
+	<li>Projected onto the Sphere</li>
+	<li>References</li>
+</ol>
+</div>
+
+<h1>Applied to Radial Basis Functions</h1>
+<p>
+Given a point $\vec{y} \in \RR^d$ called the center, the distance from a point $\vec{x} \in \RR^3$ to the center is given by $r = \left( \sum\limits_{i=1}^d (x_i - y_i)^2 \right)^{\frac{1}{2}}$. For a radial basis function centered at $\vec{y}$ denoted $\phi_{\vec{y}}$ we derive the laplacian as follows.
+</p>
+
+<p>
+First note that for any dimension $\frac{\partial \phi_y}{\partial x_i} = \frac{d \phi_y}{d r}\frac{\partial r}{\partial x_i}$. Then
+\begin{align}
+\frac{\partial r}{\partial x_i} &= \frac{\partial}{\partial x_i} \left( \sum\limits_{i=1}^d (x_i - y_i)^2 \right)^{\frac{1}{2}} \\
+&= \frac{1}{2} \left( \sum\limits_{i=1}^d (x_i - y_i)^2 \right)^{-\frac{1}{2}} 2x_i \\
+& = \frac{x_i}{r}
+\end{align}
+Thus the gradient is given by
+$$
+\nabla\phi_y = \frac{d \phi_y}{dr}\frac{1}{r} 
+\begin{bmatrix}
+    x_1 \\
+    x_2 \\
+    \vdots \\
+    x_d
+\end{bmatrix}.
+$$
+</p>
+
+
+<h1>Projected onto the Sphere</h1>
+
+
+
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+	</ol>
+</p>
+</div>
+
+</div></body>
+
+
+</html>
