@@ -102,20 +102,116 @@ This experiment will test forward and backward Euler <a href="../articles/time_s
 <!--************************************************************************-->
 <h1>ODEs</h1>
 <p>
-Here we explore forward and backward Euler time-stepping for ODEs of the form $y^\prime = \lambda y$ for several values of lambda. 
-</p>
-<p>
-<a href="http://localhost:8888/notebooks/experiments/ex001_time_stepping/ex001nb1_time_stepping.ipynb" target="_blank">Notebook</a>
+Here we explore forward and backward Euler time-stepping for ODEs of the form $y^\prime = \lambda y$ for several values of lambda. The experiment can be seen in detail in the <a href="ex001_time_stepping/ex001nb1_time_stepping.ipynb" download>Jupyter Notebook</a>.
 </p>
 
 <h2>Hypothesis</h2>
 <p>
-We will test the forward and backward Euler time-stepping methods for several values of $\lambda$, 
+We will test the forward and backward Euler time-stepping methods for several values of $\lambda$. We expect, that for a given target time, as we double the number of time steps we expect to halve the error at the target time. This would show that the error is $\mathcal{O}(\Delta t)$.
 </p>
 
 <h2>Method</h2>
+<p>
+We will use a very simple ODE to test this: $y^\prime = \lambda y$. Using the code below we test several target times <span class="mono">target_t</span>, and several values of <span class="mono">lam</span>.
+
+<pre><code class="language-python">target_t = 5
+time_steps = [2**i for i in range(1,20)]
+lam = -1
+y_0 = 1
+
+def foo(y_0, t, lam):
+    return np.exp(lam*t)
+
+def forward(y_0, delta_t, lam, n):
+    return y_0 * (1+lam*delta_t)**n
+        
+def backward(y_0, delta_t, lam, n):
+    return y_0 * (1-lam*delta_t)**-n
+
+fw_errors = []
+bk_errors = []
+steps = [target_t/t for t in time_steps]
+for step in time_steps:
+    delta_t = target_t/step
+    fw = forward(y_0, delta_t, lam, step)
+    back = backward(y_0, delta_t, lam, step)
+    true_value = foo(y_0, target_t, lam)
+    fw_errors.append(np.abs(fw - true_value))
+    bk_errors.append(np.abs(back - true_value))
+print('fw_err\t\tfw_ratio\tback_err\tback_ratio')
+print('%f\tN/A \t\t%f\tN/A  ' % (fw_errors[0], bk_errors[0]) )
+for fw, fw_prev, bk, bk_prev in zip(fw_errors[1:], fw_errors[:-1], bk_errors[1:], bk_errors[:-1]):
+    print('%f\t%f\t%f\t%f' % (fw, fw/fw_prev, bk, bk/bk_prev))
+</code></pre>
+</p>
 
 <h2>Results</h2>
+<p>
+For $\lambda = -1$ A sample output of the errors at time $t=5$ can be seen in the table below. As expected, as $\Delta t$ is havled, so is the error. This confirms that the error is indeed $\mathcal{O}(\Delta t)$.
+</p>
+
+<p>
+<table class="data center">
+	<th>$\Delta t$</th>	<th>fw_err</th>	<th>fw_ratio</th>	<th>bk_err</th>	<th>bk_ratio</th>
+	<tr>
+		<td>2.50000000</td><td>2.24326205</td><td>N/A</td><td>0.07489471</td><td>N/A</td>
+	</tr>
+	<tr>
+		<td>1.25000000</td><td>0.00283170</td><td>0.00126231</td><td>0.03228050</td><td>0.43101171</td>
+	</tr>
+	<tr>
+		<td>0.62500000</td><td>0.00634688</td><td>2.24137008</td><td>0.01382915</td><td>0.42840588</td>
+	</tr>
+	<tr>
+		<td>0.31250000</td><td>0.00424701</td><td>0.66914871</td><td>0.00615675</td><td>0.44520049</td>
+	</tr>
+	<tr>
+		<td>0.15625000</td><td>0.00238442</td><td>0.56143559</td><td>0.00286366</td><td>0.46512633</td>
+	</tr>
+	<tr>
+		<td>0.07812500</td><td>0.00125505</td><td>0.52635250</td><td>0.00137496</td><td>0.48014022</td>
+	</tr>
+	<tr>
+		<td>0.03906250</td><td>0.00064288</td><td>0.51223998</td><td>0.00067287</td><td>0.48937381</td>
+	</tr>
+	<tr>
+		<td>0.01953125</td><td>0.00032524</td><td>0.50590302</td><td>0.00033273</td><td>0.49449984</td>
+	</tr>
+	<tr>
+		<td>0.00976562</td><td>0.00016356</td><td>0.50289927</td><td>0.00016544</td><td>0.49720141</td>
+	</tr>
+	<tr>
+		<td>0.00488281</td><td>0.00008202</td><td>0.50143681</td><td>0.00008248</td><td>0.49858835</td>
+	</tr>
+	<tr>
+		<td>0.00244141</td><td>0.00004107</td><td>0.50071523</td><td>0.00004118</td><td>0.49929106</td>
+	</tr>
+	<tr>
+		<td>0.00122070</td><td>0.00002055</td><td>0.50035683</td><td>0.00002058</td><td>0.49964475</td>
+	</tr>
+	<tr>
+		<td>0.00061035</td><td>0.00001028</td><td>0.50017822</td><td>0.00001028</td><td>0.49982218</td>
+	</tr>
+	<tr>
+		<td>0.00030518</td><td>0.00000514</td><td>0.50008906</td><td>0.00000514</td><td>0.49991104</td>
+	</tr>
+	<tr>
+		<td>0.00015259</td><td>0.00000257</td><td>0.50004452</td><td>0.00000257</td><td>0.49995551</td>
+	</tr>
+	<tr>
+		<td>0.00007629</td><td>0.00000129</td><td>0.50002226</td><td>0.00000129</td><td>0.49997775</td>
+	</tr>
+	<tr>
+		<td>0.00003815</td><td>0.00000064</td><td>0.50001113</td><td>0.00000064</td><td>0.49998887</td>
+	</tr>
+	<tr>
+		<td>0.00001907</td><td>0.00000032</td><td>0.50000556</td><td>0.00000032</td><td>0.49999444</td>
+	</tr>
+	<tr>
+		<td>0.00000954</td><td>0.00000016</td><td>0.50000278</td><td>0.00000016</td><td>0.49999722</td>
+	</tr>
+</table>
+</p>
 
 <!--************************************************************************-->
 <h1>Second Iteration</h1>
