@@ -102,7 +102,7 @@ Discussed how to measure order of convergence for time-stepping both ODEs and 1-
 <h2>Sage</h2>
 </p>
 <ul>
-    <li>Test order of convergence for time-stepping with ODE.</li>
+    <li>Test order of convergence for time-stepping with ODE. (See <a href="../experiments/ex001_time_stepping.html">Experiment 001</a>)</li>
     <li>Test order of convergence for time-stepping with system of ODEs. (see pg 40 of <span class="cite" src="LAMBERT1991"><b>[<a href="#bib1">1</a>]</b></span>)</li>
     <li>Implement RBF-FD on a sphere.</li>
 </ul>
@@ -114,9 +114,9 @@ Discussed how to measure order of convergence for time-stepping both ODEs and 1-
 </p>
 
 <p>
-For the 1-D heat equation $u_t = \lambda u_{xx}$ we discretize in space with step size $h$ then choose a step size in time $\Delta t$. The eigenvalues of the finite difference matrix
+For the 1-D heat equation $u_t = c^2 u_{xx}$ we discretize in space with step size $h$ then choose a step size in time $\Delta t$. The eigenvalues of the finite difference matrix
 $$
-D = h^2\begin{bmatrix} 
+D = \frac{c^2}{h^2}\begin{bmatrix} 
 -2 &  1 &    &    &    &    \\
  1 & -2 &  1 &    &    &    \\
    & \ddots &  \ddots &  \ddots  &    &    \\
@@ -124,7 +124,7 @@ D = h^2\begin{bmatrix}
    &    &    &  1 & -2  
 \end{bmatrix}
 $$
-are given by $\lambda_k = -4h^2\sin^2( \frac{\pi}{n+1} \frac{k}{2} )$. In order for all eigenvalues to be within the stability domain of forward Euler we require that $\lambda \Delta t \propto h^2$. If we choose $\Delta t = h$ (maybe this should be $\Delta t = h^2$ at each step we expect second order convergence around times near $t = \frac{1}{\Delta t}$.
+are given by $\lambda_k = -\frac{4c^2}{h^2}\sin^2( \frac{\pi}{n+1} \frac{k}{2} )$. In order for all eigenvalues to be within the stability domain of forward Euler we require that $\lambda \Delta t \propto h^2$. If we choose $\Delta t = h$ (maybe this should be $\Delta t = h^2$ at each step we expect second order convergence around times near $t = \frac{1}{\Delta t}$.
 </p>
 
 <!--************************************************************************-->

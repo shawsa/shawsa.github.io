@@ -65,7 +65,7 @@
 <p class="title_and_author">
 <span class="title">Experiment 1: Time-Stepping</span> <br>
 <span class="author">Authors: Sage Shaw</span> <br>
-<span class="updated">Mon May 21 22:18:10 2018</span> <br>
+<span class="updated">Thu May 24 11:39:50 2018</span> <br>
 <span hidden id="status">i</span>
 <span id="status_message" class="status_message"></span>
 </p>
@@ -73,22 +73,25 @@
 <hr>
 
 <p class="intro">
-This experiment will test forward and backward Euler <a href="../articles/time_stepping.html" target="parent">time-stepping</a>. We will verify the order of the error.
+This experiment will test forward and backward Euler <a href="../articles/time_stepping.html">time-stepping</a>. We will verify the order of the error.
 </p>
 
 <div class="contents">
 <ol>
 	<li>Conclusions</li>
-	<li>First Iteration</li>
+	<li>ODEs</li>
 	<ol>
-		<li>Hypothesis</li>
-		<li>Method</li>
+		<li>Hypothesis &amp; Method</li>
 		<li>Results</li>
 	</ol>
-	<li>Second Iteration</li>
+	<li>System of ODEs</li>
 	<ol>
-		<li>Hypothesis</li>
-		<li>Method</li>
+		<li>Hypothesis &amp; Method</li>
+		<li>Results</li>
+	</ol>
+	<li>PDEs</li>
+	<ol>
+		<li>Hypothesis &amp; Method</li>
 		<li>Results</li>
 	</ol>
 	<li>References</li>
@@ -105,12 +108,10 @@ This experiment will test forward and backward Euler <a href="../articles/time_s
 Here we explore forward and backward Euler time-stepping for ODEs of the form $y^\prime = \lambda y$ for several values of lambda. The experiment can be seen in detail in the <a href="ex001_time_stepping/ex001nb1_time_stepping.ipynb" download>Jupyter Notebook</a>.
 </p>
 
-<h2>Hypothesis</h2>
+<h2>Hypothesis &amp; Method</h2>
 <p>
-We will test the forward and backward Euler time-stepping methods for several values of $\lambda$. We expect, that for a given target time, as we double the number of time steps we expect to halve the error at the target time. This would show that the error is $\mathcal{O}(\Delta t)$.
+We will test the forward and backward Euler time-stepping methods for several values of $\lambda$. We expect that for a given target time, as we double the number of time steps we will halve the error at the target time. This would show that the error is $\mathcal{O}(\Delta t)$.
 </p>
-
-<h2>Method</h2>
 <p>
 We will use a very simple ODE to test this: $y^\prime = \lambda y$. Using the code below we test several target times <span class="mono">target_t</span>, and several values of <span class="mono">lam</span>.
 
@@ -145,6 +146,7 @@ for fw, fw_prev, bk, bk_prev in zip(fw_errors[1:], fw_errors[:-1], bk_errors[1:]
 </code></pre>
 </p>
 
+<!--************************************************************************-->
 <h2>Results</h2>
 <p>
 For $\lambda = -1$ A sample output of the errors at time $t=5$ can be seen in the table below. As expected, as $\Delta t$ is havled, so is the error. This confirms that the error is indeed $\mathcal{O}(\Delta t)$.
@@ -214,11 +216,186 @@ For $\lambda = -1$ A sample output of the errors at time $t=5$ can be seen in th
 </p>
 
 <!--************************************************************************-->
-<h1>Second Iteration</h1>
+<h1>System of ODEs</h1>
 
-<h2>Hypothesis</h2>
+<h2>Hypothesis &amp; Method</h2>
+<p>
+We will test Forward and Backward Euler on the initial value system of equations given on pg. 40 of Lambert<span class="cite" src="LAMBERT1991"><b>[<a href="#bib1">1</a>]</b></span>.
+$$
+\begin{align}
+u^\prime &= \frac{1}{3}v & u(0) &= \frac{1}{2}\\
+v^\prime &= \frac{v(v-1)}{3u} & v(0) &= -3
+\end{align}
+$$
+This has a known solution of
+$$
+\begin{align}
+u(t) &= \frac{1}{8}\left( 1 + 3e^{-\frac{8}{3}t} \right) \\
+v(t) &= -3e^{-\frac{8}{3}t}.
+\end{align}
+$$
+As in the single ODE case above, we expect that for a given target time, as we double the number of time steps we will halve the error at the target time. This would show that the error is $\mathcal{O}(\Delta t)$. 
+</p>
+<p>
+Implementation of forward Euler is straightforward, but since the formulation of $v^\prime$ is non-linear, backward Euler is not so obvious. Given the formulation of backward Euler
+$$
+\begin{align}
+u_{n+1} &= u_n + \Delta t \tfrac{1}{3}v_{n+1} \\
+v_{n+1} & = v_n + \Delta t \frac{v_{n+1}(v_{n+1}-1)}{3u_{n+1}}
+\end{align}
+$$
+we seek to express $u_{n+1}$ and $v_{n+1}$ in terms of $u_n$ and $v_n$. In general this may be difficult, but in this case it is just a matter of algebra.
+$$
+\begin{align}
+v_{n+1} &= v_n + \Delta t \frac{v_{n+1}(v_{n+1}-1)}{3u_{n+1}} \\
+        &= v_n + \tfrac{\Delta t}{3} \frac{v_{n+1}(v_{n+1}-1)}{u_n + \tfrac{\Delta t}{3}v_{n+1}} \\
+v_{n+1}(u_n + \tfrac{\Delta t}{3}v_{n+1}) &= v_n(u_n + \tfrac{\Delta t}{3}v_{n+1}) + \tfrac{\Delta t}{3} v_{n+1}(v_{n+1}-1) \\
+v_{n+1}u_n + \tfrac{\Delta t}{3}v_{n+1}^2 &= v_nu_n + \tfrac{\Delta t}{3}v_nv_{n+1} + \tfrac{\Delta t}{3} v_{n+1}^2 - \tfrac{\Delta t}{3}v_{n+1} \\
+v_{n+1}u_n &= v_nu_n + \tfrac{\Delta t}{3}v_nv_{n+1} - \tfrac{\Delta t}{3}v_{n+1}  \\
+v_{n+1}(u_n - \tfrac{\Delta t}{3}v_n + \tfrac{\Delta t}{3}) &= v_nu_n \\
+v_{n+1} &= \frac{v_nu_n}{u_n - \tfrac{\Delta t}{3}v_n + \tfrac{\Delta t}{3}}
+\end{align}
+$$
+Substituting back into our formulation for $u_{n+1}$ we finally arive at our recurrance relation
+$$
+\begin{align}
+u_{n+1} &= u_n + \tfrac{\Delta t}{3}\frac{v_nu_n}{u_n - \tfrac{\Delta t}{3}v_n + \tfrac{\Delta t}{3}} \\
+v_{n+1} &= \frac{v_nu_n}{u_n - \tfrac{\Delta t}{3}v_n + \tfrac{\Delta t}{3}}.
+\end{align}
+$$
+</p>
 
-<h2>Method</h2>
+<p>
+The following modifications to the code in the previous section implements both forward and backward Euler for this problem.
+<pre><code class="language-python">def foo(z):
+    u, v = z[0], z[1]
+    return np.array((1/3 * v, v*(v-1)/(3*u)))
+
+z0 = np.array([.5, -3])
+
+def forward(delta_t, n):
+    z = z0*1
+    for i in range(n):
+        z += delta_t * foo(z)
+    return z
+
+def backward(delta_t, n):
+    A = delta_t/3
+    u, v = z0[0], z0[1]
+    for i in range(n):
+        v = v*(u-A)/(u-A*v)
+        u += A*v
+    return np.array([u,v])
+</code></pre>
+</p>
+
+<!--************************************************************************-->
+<h2>Results</h2>
+<p>
+The following table shows the errors and the ratios of the errors between steps for both forward and backward Euler. As expected the errors get cut in half as we half $\Delta t$, confirming our hypothesis.
+</p>
+<p>
+<table class="data center">
+	<th>$\Delta t$</th>	<th>fw_err</th>	<th>fw_ratio</th>	<th>bk_err</th>	<th>bk_ratio</th>
+	<tr>
+		<td>0.25000000</td><td>0.46101812</td><td>N/A</td><td>0.29145927</td><td>N/A</td>
+	</tr>
+	<tr>
+		<td>0.12500000</td><td>0.19974125</td><td>0.43326117</td><td>0.15966025</td><td>0.54779610</td>
+	</tr>
+	<tr>
+		<td>0.06250000</td><td>0.09381172</td><td>0.46966624</td><td>0.08392814</td><td>0.52566712</td>
+	</tr>
+	<tr>
+		<td>0.03125000</td><td>0.04554590</td><td>0.48550334</td><td>0.04308341</td><td>0.51333685</td>
+	</tr>
+	<tr>
+		<td>0.01562500</td><td>0.02244991</td><td>0.49290732</td><td>0.02183481</td><td>0.50680318</td>
+	</tr>
+	<tr>
+		<td>0.00781250</td><td>0.01114618</td><td>0.49649117</td><td>0.01099244</td><td>0.50343648</td>
+	</tr>
+	<tr>
+		<td>0.00390625</td><td>0.00555364</td><td>0.49825479</td><td>0.00551520</td><td>0.50172712</td>
+	</tr>
+	<tr>
+		<td>0.00195312</td><td>0.00277199</td><td>0.49912968</td><td>0.00276238</td><td>0.50086580</td>
+	</tr>
+	<tr>
+		<td>0.00097656</td><td>0.00138479</td><td>0.49956541</td><td>0.00138239</td><td>0.50043346</td>
+	</tr>
+	<tr>
+		<td>0.00048828</td><td>0.00069209</td><td>0.49978284</td><td>0.00069149</td><td>0.50021687</td>
+	</tr>
+	<tr>
+		<td>0.00024414</td><td>0.00034597</td><td>0.49989146</td><td>0.00034582</td><td>0.50010847</td>
+	</tr>
+	<tr>
+		<td>0.00012207</td><td>0.00017297</td><td>0.49994574</td><td>0.00017293</td><td>0.50005424</td>
+	</tr>
+	<tr>
+		<td>0.00006104</td><td>0.00008648</td><td>0.49997287</td><td>0.00008647</td><td>0.50002713</td>
+	</tr>
+	<tr>
+		<td>0.00003052</td><td>0.00004324</td><td>0.49998644</td><td>0.00004324</td><td>0.50001356</td>
+	</tr>
+	<tr>
+		<td>0.00001526</td><td>0.00002162</td><td>0.49999322</td><td>0.00002162</td><td>0.50000679</td>
+	</tr>
+	<tr>
+		<td>0.00000763</td><td>0.00001081</td><td>0.49999661</td><td>0.00001081</td><td>0.50000334</td>
+	</tr>
+	<tr>
+		<td>0.00000381</td><td>0.00000540</td><td>0.49999831</td><td>0.00000540</td><td>0.50000189</td>
+	</tr>
+	<tr>
+		<td>0.00000191</td><td>0.00000270</td><td>0.49999915</td><td>0.00000270</td><td>0.50000005</td>
+	</tr>
+	<tr>
+		<td>0.00000095</td><td>0.00000135</td><td>0.49999959</td><td>0.00000135</td><td>0.50000363</td>
+	</tr>
+</table>
+
+
+</p>
+
+<!--************************************************************************-->
+<h1>PDEs</h1>
+<p>
+We will use the one dimensional heat eaquation $u_t = u_{xx}$ with dirichlet boundary conditions and an initial temperature distribution of $f(x) = x^2(1-x)$. The analytic solution is depicted in the animation below. 
+</p>
+
+<p align="center">
+<video width="600" controls loop>
+  <source src="ex001_time_stepping/1D-heat.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+</p>
+
+<p>
+We first discretize in space letting the step size be $h = \frac{1}{n}$. This gives us the approximation $\vec{u}_t = D \vec{u}$ where 
+$$
+D = \frac{1}{h^2}\begin{bmatrix} 
+-2 &  1 &    &    &    \\
+ 1 & -2 &  1 &    &    \\
+   & \ddots &  \ddots &  \ddots  & \\
+   &    &  1 & -2 &  1 \\
+   &    &    &  1 & -2  
+\end{bmatrix}
+$$
+and the eigenvalues of $D$ are given by $\lambda_k = -\frac{4}{h^2}\sin^2( \frac{\pi}{n+1} \frac{k}{2} )$. In order for forward Euler to work, we need that $\norm{1+ \lambda_k \Delta t}<1$ for $k=1, 2, ..., n$. Rearanging that is 
+$$
+\norm{1 - \Delta t \frac{4}{h^2}\sin^2 \left( \frac{\pi}{n+1} \frac{k}{2}\right) } < 1.
+$$
+If we are to increase $\Delta t$ as we had previously for ODEs we must ensure that this criteria is met. If we choose $h \propto \sqrt{\Delta t}$ then for some appropriate proportionality constant the criteria will be true for any $\Delta t$.
+</p>
+<p>
+For the spatial discretization we expect the error to be $\mathcal{O}(h^2)$. For a single timestep we expect the error to be $\mathcal{O}(\Delta t^2 h^2)$. Thus for a given time we expect the error to be $\mathcal{O}(\Delta t h^2)$. If we choose $h^2 \propto \Delta t$ then we will expect the error to be $\mathcal{O}(\Delta t^2)$.
+</p>
+
+
+
+<h2>Hypothesis &amp; Method</h2>
 
 <h2>Results</h2>
 

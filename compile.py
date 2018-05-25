@@ -330,10 +330,10 @@ def complie_article(file_path, bib_dict):
 if __name__=='__main__':
     parser = argparse.ArgumentParser(description='Compile HTML files.')
     parser.add_argument('files', nargs="*")
-    parser.add_argument('--main', '-m', action='store_const', default=True, const=False)
+    parser.add_argument('--only', '-o', action='store_const', default=False, const=True)
     parser.add_argument('--all', '-a', action='store_const', default=False, const=True)
     parser.add_argument('--experiments', '-e', action='store_const', default=False, const=True)
-    parser.add_argument('--meetings', '-t', action='store_const', default=False, const=True)
+    parser.add_argument('--meetings', '-m', action='store_const', default=False, const=True)
     parser.add_argument('--bibliography', '-b', action='store_const', default=False, const=True)
 
     args = parser.parse_args()
@@ -374,6 +374,6 @@ if __name__=='__main__':
                 print('Error, ' + path + 'does not exist')
 
     # compile main.html
-    if args.main:
+    if not args.only:
         compile_main()
         
