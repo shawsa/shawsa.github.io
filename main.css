@@ -75,7 +75,7 @@ object {
         /*max-width: 800px;*/
         width: 100%;
         grid-template-columns: auto;
-        grid-template-rows: 100px 300px auto;
+        grid-template-rows: 100px auto auto;
         grid-row-gap: 10px;
     }
     .divHeader {

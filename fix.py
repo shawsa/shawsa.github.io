@@ -3,9 +3,9 @@ import glob
 
 string_start = '<div class="divSidebar"'
 string_end = '</div>'
-new_string = '<div class="divSidebar" w3-include-html="../sidebar.html">\n'
+new_string = '<div class="divSidebar" w3-include-html="../sidebar-sub.html">\n'
 
-target_dir = 'meetings'
+target_dir = 'experiments'
 
 if __name__ == '__main__':
 
