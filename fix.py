@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 import glob
 
-string_start = '<div class="divSidebar"'
-string_end = '</div>'
-new_string = '<div class="divSidebar" w3-include-html="sidebar.html">\n'
+string_start = '</body>'
+string_end = '</html>'
+new_string = '\n</body>\n\n<script>includeHTML();</script>\n\n'
 
-target_dir = 'test'
+target_dir = ''
 
 if __name__ == '__main__':
 
