@@ -141,7 +141,8 @@ for step in time_steps:
     bk_errors.append(np.abs(back - true_value))
 print('fw_err\t\tfw_ratio\tback_err\tback_ratio')
 print('%f\tN/A \t\t%f\tN/A  ' % (fw_errors[0], bk_errors[0]) )
-for fw, fw_prev, bk, bk_prev in zip(fw_errors[1:], fw_errors[:-1], bk_errors[1:], bk_errors[:-1]):
+for fw, fw_prev, bk, bk_prev in zip(fw_errors[1:], fw_errors[:-1], 
+        bk_errors[1:], bk_errors[:-1]):
     print('%f\t%f\t%f\t%f' % (fw, fw/fw_prev, bk, bk/bk_prev))
 </code></pre>
 </p>
@@ -283,7 +284,7 @@ def backward(delta_t, n):
     A = delta_t/3
     u, v = z0[0], z0[1]
     for i in range(n):
-        v = v*(u-A)/(u-A*v)
+        v = v*u/(u-A*v+A)
         u += A*v
     return np.array([u,v])
 </code></pre>
@@ -366,7 +367,7 @@ We will use the one dimensional heat eaquation $u_t = u_{xx}$ with dirichlet bou
 </p>
 
 <p align="center">
-<video width="600" controls loop>
+<video width="600" controls loop autoplay>
   <source src="ex001_time_stepping/1D-heat.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video>

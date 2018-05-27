@@ -27,24 +27,29 @@ if __name__=='__main__':
     import matplotlib.animation as animation
 
     fig, ax = plt.subplots()
+    plt.xlabel('Position')
+    plt.ylabel('Temperature')
+    plt.title('Temperature Distribution')
 
-    #x = np.arange(0, 2*np.pi, 0.01)
     line, = ax.plot(x, f(x))
+    time_text = ax.text(0.02, 0.95, '', transform=ax.transAxes)
 
 
     def animate(i):
         line.set_ydata(u(x,i/1000))  # update the data
-        return line,
+        time_text.set_text('time (s) = %.3f' % (i/1000))
+        return line, time_text
 
 
     # Init only required for blitting to give a clean slate.
     def init():
         line.set_ydata(np.ma.array(x, mask=True))
-        return line,
+        time_text.set_text('')
+        return line, time_text
 
     ani = animation.FuncAnimation(fig, animate, np.arange(1, 200), init_func=init,
                                   interval=25, blit=True)
 
-    #ani.save('test.mp4', writer='imagemagick', fps=30)
+    ani.save('test.mp4', writer='imagemagick', fps=30)
                                   
     plt.show()

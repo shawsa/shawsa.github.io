@@ -1,5 +1,7 @@
 /*
 Colors from https://brandstandards.boisestate.edu/colors/
+blue -      #0033A0
+orange -    #D64309
 */
 
 /*********************************************************
@@ -17,7 +19,7 @@ body {
     max-width: 1100px;
     display: grid;
     grid-template-columns: 200px auto;
-    grid-template-rows: 100px auto;
+    grid-template-rows: 100px 600px auto;
     gap: 0px;
 }
 .divHeader {
@@ -34,8 +36,8 @@ body {
     border-radius: 0 0 25px 0;
     grid-column: 1;
     grid-row: 2/3;
-    background-color: orange;
-    color: white;
+    background-color: #D64309;
+    
 }
 .divContent{
     grid-column: 2;
@@ -54,6 +56,40 @@ body {
 object {
     width: 100%;
     height: 100%;
+}
+
+.sidebar{
+    color: white;
+}
+
+
+/*********************************************************
+* Small Screen Support
+*********************************************************/
+@media screen and (max-width: 800px){
+    .wrapper {
+        /*max-width: 800px;*/
+        width: 100%;
+        grid-template-columns: auto;
+        grid-template-rows: 100px 300px auto;
+        grid-row-gap: 10px;
+    }
+    .divHeader {
+        border-radius: 0 0 25px 25px;
+        grid-column: 1/3;
+        grid-row: 1;
+    }
+    .divSidebar { 
+        border-radius: 25px;
+        grid-column: 1/3;
+        grid-row: 2; 
+    }
+    .divContent{
+        margin: 0px;
+        padding: 0px 10px 0px 10px;
+        grid-column: 1/3;
+        grid-row: 3/4;
+    }
 }
 
 /*********************************************************
@@ -126,3 +162,8 @@ table.center {
     margin-left:auto; 
     margin-right:auto;
 }
+
+pre code {
+    word-wrap: normal;
+}
+
