@@ -17,6 +17,7 @@
     <!-- Prisim for code highlighting -->
     <script src="prism.js"></script>    
     <link rel="stylesheet" href="prism.css">
+
     
 <!--***************************************************************************
 *******************************************************************************
@@ -49,10 +50,10 @@
     </a>
 </div>
 
-<div class="divSidebar">
-    <object data="sidebar.html"> 
+<div class="divSidebar" w3-include-html="sidebar.html">
+    <!--object data="sidebar.html"> 
         Your browser doesn’t support the object tag. 
-    </object>
+    </object-->
 </div>
 
 <!--***************************************************************************
@@ -133,6 +134,10 @@ This is a template for new experment pages.
 ****************************************************************************-->
 
 </div></body>
+
+<script>
+includeHTML();
+</script>
 
 
 </html>
