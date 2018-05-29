@@ -41,6 +41,8 @@
     \newcommand{\QQ}{\mathbb{Q}}
     \newcommand{\ZZ}{\mathbb{Z}}
     \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\MM}{\mathbb{M}}
     \renewcommand{\Re}{\operatorname{Re}}
     \renewcommand{\Im}{\operatorname{Im}}
     \renewcommand{\vec}[1]{\mathbf{#1}}$
@@ -70,7 +72,7 @@
 <hr>
 
 <p class="intro">
-The laplacian is a second order differential operator. When applied to the function $u$ it is denoted $\nabla^2u$ or $\Delta u$. It is the sum of the second partial derivatives with respect to each dimension. For example, for a function $u : \RR^3 \to \RR$ the laplacian is given by $$\nabla^2 u = \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} + \frac{\partial^2 u}{\partial z^2}.$$
+The laplacian is a second order differential operator. When applied to the function $u$ it is denoted $\nabla^2u$ or $\Delta u$. It is the sum of the second partial derivatives with respect to each dimension. It's notation can be understood by noting that the sum of second partials is the divergence of the gradient $\nabla^2u = (\nabla \cdot \nabla) u$.
 </p>
 
 
@@ -82,34 +84,126 @@ The laplacian is a second order differential operator. When applied to the funct
 </ol>
 </div>
 
+<p>
+For example, for a function $u : \RR^3 \to \RR$ the laplacian is given by $$\nabla^2 u = \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} + \frac{\partial^2 u}{\partial z^2}.$$
+</p>
+
 <h1>Applied to Radial Basis Functions</h1>
 <p>
 Given a point $\vec{y} \in \RR^d$ called the center, the distance from a point $\vec{x} \in \RR^3$ to the center is given by $r = \left( \sum\limits_{i=1}^d (x_i - y_i)^2 \right)^{\frac{1}{2}}$. For a radial basis function centered at $\vec{y}$ denoted $\phi_{\vec{y}}$ we derive the laplacian as follows.
 </p>
 
 <p>
-First note that for any dimension $\frac{\partial \phi_y}{\partial x_i} = \frac{d \phi_y}{d r}\frac{\partial r}{\partial x_i}$. Then
+First note that for any dimension $\frac{\partial \phi_\vec{y}}{\partial x_i} = \frac{d \phi_\vec{y}}{d r}\frac{\partial r}{\partial x_i}$. Then
 \begin{align}
 \frac{\partial r}{\partial x_i} &= \frac{\partial}{\partial x_i} \left( \sum\limits_{i=1}^d (x_i - y_i)^2 \right)^{\frac{1}{2}} \\
-&= \frac{1}{2} \left( \sum\limits_{i=1}^d (x_i - y_i)^2 \right)^{-\frac{1}{2}} 2x_i \\
-& = \frac{x_i}{r}
+&= \frac{1}{2} \left( \sum\limits_{i=1}^d (x_i - y_i)^2 \right)^{-\frac{1}{2}} 2(x_i - y_i) \\
+& = \frac{x_i - y_i}{r}.
 \end{align}
 Thus the gradient is given by
 $$
 \nabla\phi_y = \frac{d \phi_y}{dr}\frac{1}{r} 
 \begin{bmatrix}
-    x_1 \\
-    x_2 \\
+    x_1 - y_1 \\
+    x_2 - y_2\\
     \vdots \\
-    x_d
+    x_d - y_d
 \end{bmatrix}.
+$$
+</p>
+<p>
+Going further
+$$
+\begin{align}
+\frac{\partial^2 \phi_\vec{y}}{\partial x_i^2} &= \frac{\partial}{\partial x_i} \left( \frac{d \phi_y}{dr}\frac{x_i - y_i}{r} \right) \\
+    &= \frac{(x_i - y_i)}{r}\frac{\partial}{\partial x_i}\frac{d \phi_y}{dr} + 
+        (x_i - y_i)\frac{d \phi_y}{dr}\frac{\partial}{\partial x_i} \frac{1}{r} +
+        \frac{1}{r}\frac{d \phi_y}{dr} \\
+    &= \frac{x_i - y_i}{r}\frac{\partial}{\partial x_i}\frac{d \phi_y}{dr} +
+        \frac{d \phi_y}{dr} \left( (x_i - y_i)\frac{\partial}{\partial x_i} \frac{1}{r} +
+        \frac{1}{r} \right). 
+\end{align}
+$$
+Simplifying we have
+$$
+\begin{align}
+\frac{1}{r} + (x_i - y_i) \frac{\partial}{\partial x_i}\frac{1}{r} 
+    &= \frac{1}{r} + (x_i - y_i) \frac{\partial}{\partial x_i} \left( \sum\limits_{i=1}^d (x_i - y_i)^2 \right)^{-\frac{1}{2}} \\
+    &= \frac{1}{r} + (x_i - y_i) (-\tfrac{1}{2}) \left( \sum\limits_{i=1}^d (x_i - y_i)^2 \right)^{-\frac{3}{2}} 2(x_i - y_i) \\
+    &= \frac{1}{r} - \frac{(x_i - y_i)^2}{r^3} \\
+    &= \frac{1}{r} \left( 1 - \frac{(x_i - y_i)^2}{r^2} \right).
+\end{align}
+$$
+
+Also
+$$
+\begin{align}
+\frac{\partial}{\partial x_i}\frac{d \phi_y}{dr} &= \frac{d}{dr} \frac{\partial r}{\partial x_i} \frac{d \phi_y}{dr} \\
+    &= \frac{x_i - y_i}{r} \frac{d^2 \phi_y}{dr^2}.
+\end{align}
+$$
+
+Substituting into the origional equation we get
+$$
+\begin{align}
+\frac{\partial^2 \phi_\vec{y}}{\partial x_i^2} 
+    &= \frac{(x_i - y_i)^2}{r^2}\frac{d^2 \phi_y}{dr^2} +
+        \frac{d \phi_y}{dr} \frac{1}{r} \left( 1 - \frac{(x_i - y_i)^2}{r^2} \right)
+\end{align}
+$$
+
+
+Finally we have that the gradient is given by
+$$
+\begin{align}
+\nabla^2 u &= \sum\limits_{i=1}^d \frac{\partial^2 \phi_\vec{y}}{\partial x_i^2} \\
+    &= \frac{d^2 \phi_y}{dr^2}\frac{\sum\limits_{i=1}^d (x_i - y_i)^2}{r^2} +
+        \frac{d \phi_y}{dr} \frac{1}{r} \left( d - \frac{\sum\limits_{i=1}^d (x_i - y_i)^2}{r^2} \right) \\
+    &= \frac{d^2 \phi_y}{dr^2}\frac{r^2}{r^2} +
+        \frac{d \phi_y}{dr} \frac{1}{r} \left( d - \frac{r^2}{r^2} \right) \\
+    & = \frac{d^2 \phi_y}{dr^2} + \frac{d \phi_y}{dr} \frac{1}{r} (d-1)
+\end{align}
 $$
 </p>
 
 <!--************************************************************************-->
-<h1>Projected onto the Sphere</h1>
+<h1>Projected onto a Surface in $\RR^3$.</h1>
 <p>
 The primary source for this method is an <i>arXiv.org</i> article recommended by Dr. Wright <span class="cite" src="SHANKAR2018"><b>[<a href="#bib1">1</a>]</b></span>.
+</p>
+<p>
+Let $\vec{x} = (x, y, z)$ be a point on a surface embedded in $\RR^3$. Let $\vec{n} = (n^x, n^y, n^z)$ denote the unit normal vector at $\vec{x}$. We seek to project the gradient vector onto the plane tangent to the surface at $\vec{x}$. Then the operator that projects vectors onto this tangent plane is given by
+$$
+P = I - \vec{n}\vec{n}^t = 
+\begin{bmatrix}
+(1-n^xn^x) & -n^x n^y & -n^xn^z \\
+-n^x n^y & (1-n^yn^y) &-n^yn^z \\
+-n^x n^z & -n^yn^z & (1-n^zn^z) \\
+\end{bmatrix} 
+=
+\begin{bmatrix}
+\vec{p}^x & \vec{p}^y & \vec{p}^z
+\end{bmatrix}.
+$$
+
+The surface gradient at $\vec{x}$ is then given by 
+$$
+\nabla_\MM = P\nabla =
+\begin{bmatrix}
+\vec{p}^x \cdot \nabla \\ \vec{p}^y \cdot \nabla \\ \vec{p}^z \cdot \nabla
+\end{bmatrix}
+=
+\begin{bmatrix}
+\mathcal{G}^x \\ \mathcal{G}^y \\ \mathcal{G}^z
+\end{bmatrix}.
+$$
+</p>
+
+<p>
+Thus the surface lapplacian $\Delta_\MM$ is given by
+$$
+\Delta_\MM = \nabla_\MM \cdot \nabla_\MM = \mathcal{G}^x\mathcal{G}^x + \mathcal{G}^y\mathcal{G}^y + \mathcal{G}^z\mathcal{G}^z.
+$$
 </p>
 
 
