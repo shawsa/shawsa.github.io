@@ -191,3 +191,7 @@ pre code {
     word-wrap: normal;
 }
 
+.warning{
+    color: red;
+}
+
