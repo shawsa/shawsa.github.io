@@ -123,7 +123,7 @@ div.contents {
 }
 
 div.contents > ol ol {
-    list-style-type: lower-alpha;
+    list-style-type: lower-roman;
 }
 
 /*********************************************************

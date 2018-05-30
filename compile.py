@@ -134,7 +134,7 @@ def compile_main():
     f.write(new_html)
     f.close()
 
-    # update last meeting link
+    # update last meeting link   
     file_path = 'sidebar.html'
     f = open(file_path, 'r')
     html = f.read()
@@ -144,10 +144,23 @@ def compile_main():
     link_end = html.find('"', link_start)
     meeting_files = [path for path in listdir('meetings') if path[-5:]==".html"]
     meeting_files.sort(reverse=True)
-    #meeting template is fisrt in the list
-    link_html = join('meetings', meeting_files[1])
+    #check for meeting template
+    last_meeting_file = meeting_files[0]
+    if last_meeting_file.find('template') > 0 :
+        last_meeting_file = meeting_files[1]
+    link_html = join('meetings', last_meeting_file)
     new_html = html[:link_start] + link_html + html[link_end:]
     f = open(file_path, 'w')
+    f.write(new_html)
+    f.close()
+
+    # update sidbar-sub.html
+    print('Compiling sidebar-sub.html')
+    f = open('sidebar.html', 'r')
+    html = f.read()
+    f.close()
+    new_html = html.replace('href="', 'href="../')
+    f = open('sidebar-sub.html', 'w')
     f.write(new_html)
     f.close()
 
