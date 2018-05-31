@@ -1,0 +1,37 @@
+# https://stackoverflow.com/questions/9600801/evenly-distributing-n-points-on-a-sphere
+
+from numpy import pi, cos, sin, arccos, arange
+import mpl_toolkits.mplot3d
+import matplotlib.pyplot as plt
+
+import matplotlib.animation as animation
+def init():
+    ax.view_init(azim=0)
+    return line, 
+
+def rotate(angle):
+    ax.view_init(azim=angle)
+    return line,
+
+n = 400
+indices = arange(0, n, dtype=float) + 0.5
+
+phi = arccos(1 - 2*indices/n)
+theta = pi * (1 + 5**0.5) * indices
+
+xs, ys, zs = cos(theta) * sin(phi), sin(theta) * sin(phi), cos(phi);
+
+
+fig = plt.figure(figsize=(5,5))
+ax = fig.add_subplot(111, projection='3d')
+
+line = ax.scatter(xs, ys, zs, 'b.')
+plt.axis('off')
+plt.title(str(n) + ' Vogel Nodes on a Sphere')
+
+#plt.show()
+
+ani = animation.FuncAnimation(fig, rotate, frames=range(0, 360, 1), init_func=init,
+                                  interval=200, blit=True)
+
+ani.save('vogel_3d.mp4', writer='imagemagick', fps=30)

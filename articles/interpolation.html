@@ -1,8 +1,8 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="main.css">
-    <script src="main.js"></script>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
     
     <!-- Mathjax scripts -->
     <script type="text/x-mathjax-config">
@@ -15,13 +15,15 @@
     </script>
 
     <!-- Prisim for code highlighting -->
-    <script src="prism.js"></script>    
-    <link rel="stylesheet" href="prism.css">
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
     
 <!--***************************************************************************
 *******************************************************************************
 ****************************************************************************-->
-<title>RBF RG Wiki</title>
+
+<title>RBF-Interpolation</title>
+
 <!--***************************************************************************
 *******************************************************************************
 ****************************************************************************-->
@@ -40,58 +42,71 @@
     \newcommand{\ZZ}{\mathbb{Z}}
     \newcommand{\CC}{\mathbb{C}}
     \newcommand{\SS}{\mathbb{S}}
-    \newcommand{\MM}{\mathbb{M}}
     \renewcommand{\Re}{\operatorname{Re}}
     \renewcommand{\Im}{\operatorname{Im}}
     \renewcommand{\vec}[1]{\mathbf{#1}}$
 
 <div class="divHeader">
-    <a href="main.html">
-    <img id="logo" src="images/RBFRG_logo.png" alt="RBF Research Group">
+    <a href="../main.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
     </a>
 </div>
 
-<div class="divSidebar" w3-include-html="sidebar.html">
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
 </div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">RBF-Interpolation</span> <br>
+<span class="author">Authors: Sage Shaw</span> <br>
+<span class="updated">Thu May 31 12:20:49 2018</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+Given a set of distinct points $\{\vec{x}_i\}_{i=1}^n \subseteq D$ and function values $\{f_i\}_{i=1}^n \subseteq \RR$ (or $\CC$) at those points an interpolant $s : D \to \RR$ is a function such that $s(\vec{x}_i) = f_i$ for $i=1, 2, ..., n$. This article discusses RBF interpolation and compares it to polynomial interpolation.
+</p>
+
+<div class="contents">
+<ol>
+	<li>Polynomial Interpolation</li>
+	<li>RBF Interpolation</li>
+	<li>References</li>
+</ol>
+</div>
+
+<p>
+For this article $D$ will denote the domain, $\{\vec{x}_i\}_{i=1}^n \subseteq D$ will denote distinct points in our domain, and $\{f_i\}_{i=1}^n \subseteq \RR$ (or $\CC$) will denote function values at the chosen points in our domain. The function $s : D \to \RR$ is a function such that $s(\vec{x}_i) = f_i$ for $i=1, 2, ..., n$ will denote the interpolant.
+<p>
+
+<!--************************************************************************-->
+<h1>Polynomial Interpolation</h1>
+<p>
+    
+</p>
+
+<!--************************************************************************-->
+<h1>RBF Interpolation</h1>
+<p>
+<a href="interpolation/sphere_interp.py" target="_download">Source code</a> for RBF interpolation on a sphere.
+</p>
 
 <!--***************************************************************************
 *******************************************************************************
 ****************************************************************************-->
-<div class="divContent"><p class="title_and_author">
-	<span class="title">Meetings</span>
-</p>
-<h2><a href="meetings/20180517.html">Thursday May 17<sup>th</sup>, 2018</a></h2>
-<span class="mod_time">Sun May 27 03:08:42 2018</span>
-<p>
-
-We reviewed Daniel's experiments with singular PHS matrices. We discussed forward and backward Euler time-stepping. 
-
-</p>
-<h2><a href="meetings/20180523.html">Wed May 23<sup>rd</sup>, 2018</a></h2>
-<span class="mod_time">Sun May 27 03:08:42 2018</span>
-<p>
-
-Discussed how to measure order of convergence for time-stepping both ODEs and 1-D PDEs. Discussed <span class="mono">lsqminnorm</span> and <span class="mono">decomposition</span> MATLAB functions.
-
-</p>
-<h2><a href="meetings/20180529.html">Tuesday May 29<sup>th</sup>, 2018</a></h2>
-<span class="mod_time">Thu May 31 11:48:50 2018</span>
-<p>
-
-We We reviewed RBF-FD for the surface Laplacian. We also spent some time testing Daniel's new code for the Singular Polyharmonic Matrix Experiment that he has been working on.
-
-</p>
-<h2><a href="meetings/meeting_template.html">Meeting Template</a></h2>
-<span class="mod_time">Tue May 29 19:38:57 2018</span>
-<p>
-
-An introduction that will appear in the meeting listing.
-
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+	</ol>
 </p>
 </div>
-<!--***************************************************************************
-*******************************************************************************
-****************************************************************************-->
 
 </div>
 </body>

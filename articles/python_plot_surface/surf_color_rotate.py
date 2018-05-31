@@ -17,7 +17,7 @@ def f(pos):
     return np.cos(5*phi) * np.sin(2*theta)
 
 # steps in each parameter
-n = 200
+n = 20
 
 u = np.linspace(0, 2 * np.pi, n)
 v = np.linspace(0, np.pi, n)
@@ -40,13 +40,14 @@ fcolors = m.to_rgba(color_dimension)
 
 fig = plt.figure()
 ax = fig.gca(projection='3d')
-line = ax.plot_surface(X,Y,Z, rstride=1, cstride=1, facecolors=fcolors, vmin=minn, vmax=maxx, shade=False)
+line = ax.plot_surface(X,Y,Z, rstride=1, cstride=1, facecolors=fcolors, vmin=minn, vmax=maxx, shade=True)
 
 plt.axis('off')
 ax.grid(False)
 
 #fig.canvas.draw()
 #plt.show()
+
 
 import matplotlib.animation as animation
 
@@ -62,4 +63,5 @@ ani = animation.FuncAnimation(fig, rotate, frames=np.arange(0, 360, 2), init_fun
                                   interval=200, blit=True)
 
 ani.save('test.mp4', writer='imagemagick', fps=30)
+
 
