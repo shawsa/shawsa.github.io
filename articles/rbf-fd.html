@@ -1,0 +1,237 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>RBF Finite Differences</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\MM}{\mathbb{M}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../main.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">RBF Finite Differences</span> <br>
+<span class="author">Authors: Sage Shaw</span> <br>
+<span class="updated">Tue Jun  5 03:01:35 2018</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+This article discusses Radial Basis Function Finite Differnece methods for approximating differential operators and solving differential equations.
+</p>
+
+<div class="contents">
+<ol>
+	<li>Classical Finite Differences</li>
+	<li>Method</li>
+	<li>Derivation</li>
+	<li>RBF-FD for the Surface Laplacian</li>
+	<ol>
+		<li>Form the Stencil</li>
+		<li>Surface Gradient Approximation</li>
+		<li>Surface Laplacian</li>
+		<li>Steady-State Example</li>
+		<li>Time Dependant Example</li>
+	</ol>
+	<li>References</li>
+</ol>
+</div>
+<!--************************************************************************-->
+
+<h1>Classical Finite Differences</h1>
+<p>
+    
+</p>
+
+<!--************************************************************************-->
+<h1>Method</h1>
+<p>
+    
+</p>
+<h2>Global RBF-FD</h2>
+
+<h2>RBF-FD Stencils</h2>
+
+<!--************************************************************************-->
+<h1>Derivation</h1>
+<p>
+    
+</p>
+
+<!--************************************************************************-->
+<h1>Surface Laplacian</h1>
+<p>
+Sage had trouble implementing RBF-FD from the description given in Shankar et. al 2018 <span class="cite" src="SHANKAR2018"><b>[<a href="#bib1">1</a>]</b></span>. Grady explained that it uses a process called <i>iterated differentiation</i>. In effect, we approximate differential operators by first interpolating a function, then differentiating the interpolant, then repeating until the desired operator is calculated. The difficulty Sage whas having was that for RBF-FD the solution at the nodes is unkown and therefore the interpolant cannot be calculated. Iterative differentiation is a theoretical tool in this case to derive the system that will generate the desired weights.
+</p>
+
+<p>
+The surface gradient, denoted $\nabla_\MM$ or
+$$
+\nabla_\MM = (I-\vec{n}\vec{n}^T)\nabla = \begin{bmatrix}\mathcal{G}^x \\ \mathcal{G}^y \\ \mathcal{G}^z \end{bmatrix}
+$$
+is approximated by approximating the individual scalar values $\mathcal{G}^x, \mathcal{G}^y$, and $\mathcal{G}^z$ independently. The formulation of each is the same, but along a different dimension, thus we will only illustrate the formulation of $\mathcal{G}^x$.
+</p>
+
+<h2>Form the Stencil</h2>
+<p>
+First we choose a point at which we will approximate the surface gradient called the stencil center. Then we choose a collection of the $n-1$ nearest neighbours which when unioned with the stencil center form the stencil $\{\vec{x}_i\}_{i=1}^n$ (where WLOG $\vec{x}_1$ is the stencil center).
+</p>
+
+<p>If the surface is known the normal unit vector at the stencil center $\vec{n}$ can be calculated directly, otherwise a numerical technique is used to approximate it. The projection matrix
+$$
+P = \begin{bmatrix} \vec{p}^x & \vec{p}^y & \vec{p}^z \end{bmatrix} = I - \vec{n}\vec{n}^T
+$$
+is then a linear operator that projects vectors onto the plane tangent to the surface at the stencil center. The linear operator we seek to approximate is $\mathcal{G}^x = \vec{p}^x \cdot \nabla$.
+</p>
+
+<h2>Surface Gradient Approximation</h2>
+<p>
+We use the method of undetermined coefficients to find the set of weights such that the weighted sum of the values at our stencil nodes is the best approximation of our differential operator. Unlike in standard RBF-FD, we not only calculate the set of weights that best approximates our operator at the stencil center, but the sets of points that best approximate it at each point in the stencil similarly to global RBF-FD.
+<p>
+
+<p>
+More explicitly we solve this system
+$$
+A
+\begin{bmatrix}
+\vec{&omega;}_1 & \vec{&omega;}_2 & \dots & \vec{&omega;}_n
+\end{bmatrix}
+=
+\begin{bmatrix}
+\mathcal{G}^x \phi_1(\vec{x}) \vert_{\vec{x}=\vec{x}_1} &
+    \mathcal{G}^x \phi_1(\vec{x}) \vert_{\vec{x}=\vec{x}_2} &
+    \dots &
+    \mathcal{G}^x \phi_1(\vec{x}) \vert_{\vec{x}=\vec{x}_n} \\
+\mathcal{G}^x \phi_2(\vec{x}) \vert_{\vec{x}=\vec{x}_1} &
+    \mathcal{G}^x \phi_2(\vec{x}) \vert_{\vec{x}=\vec{x}_2} &
+    \dots &
+    \mathcal{G}^x \phi_2(\vec{x}) \vert_{\vec{x}=\vec{x}_n} \\
+
+\vdots & \vdots & \ddots & \vdots \\
+
+\mathcal{G}^x \phi_1(\vec{x}) \vert_{\vec{x}=\vec{x}_1} &
+    \mathcal{G}^x \phi_n(\vec{x}) \vert_{\vec{x}=\vec{x}_2} &
+    \dots &
+    \mathcal{G}^x \phi_n(\vec{x}) \vert_{\vec{x}=\vec{x}_n}
+\end{bmatrix}
+$$
+where $A$ is the standard $RBF$ interpolation matrix.
+</p>
+
+<h2>Surface Laplacian</h2>
+<p>
+Let $W = \begin{bmatrix} \vec{&omega;}_1 & \vec{&omega;}_2 & \dots & \vec{&omega;}_n \end{bmatrix}$ then 
+$$
+W 
+\begin{bmatrix} u(\vec{x}_1) \\ u(\vec{x}_2) \\ \vdots \\ u(\vec{x}_n)  \end{bmatrix}
+\approx
+\begin{bmatrix} \mathcal{G}^x u(\vec{x}) \vert_{\vec{x}=\vec{x}_1} \\
+    \mathcal{G}^x u(\vec{x}) \vert_{\vec{x}=\vec{x}_2} \\
+    \vdots \\
+    \mathcal{G}^x u(\vec{x}) \vert_{\vec{x}=\vec{x}_n}
+\end{bmatrix}
+$$
+and furthermore 
+$$
+W^2
+\begin{bmatrix} u(\vec{x}_1) \\ u(\vec{x}_2) \\ \vdots \\ u(\vec{x}_n)  \end{bmatrix}
+\approx
+\begin{bmatrix} \mathcal{G}^x\mathcal{G}^x u(\vec{x}) \vert_{\vec{x}=\vec{x}_1} \\
+    \mathcal{G}^x\mathcal{G}^x u(\vec{x}) \vert_{\vec{x}=\vec{x}_2} \\
+    \vdots \\
+    \mathcal{G}^x\mathcal{G}^x u(\vec{x}) \vert_{\vec{x}=\vec{x}_n}
+\end{bmatrix}.
+$$
+We then can extract the first row of $W^2$ to find the weights that approximate $\mathcal{G}^x\mathcal{G}^x u(\vec{x}) \vert_{\vec{x}=\vec{x}_1}$. We sum these with the weights to approximate $\mathcal{G}^y\mathcal{G}^y u(\vec{x}) \vert_{\vec{x}=\vec{x}_1}$ and $\mathcal{G}^z\mathcal{G}^z u(\vec{x}) \vert_{\vec{x}=\vec{x}_1}$ (found in the same way) to obtain a set of weights that approximate $\Delta_\MM u(\vec{x})\vert_{\vec{x}=\vec{x}_1}$. 
+</p>
+
+<p>
+With the weights that approximate the surface laplacian we can use standard RBF-FD techniques to solve steady-state problems or time-step. 
+</p>
+
+<h2>Steady-State Example on $\SS^2$</h2>
+<p>
+Follow along with the <a href="rbf-fd/rbf-fd_sphere_steady-state.ipynb" download>Jupyter Notebook</a>.
+</p>
+
+<h2>Time Dependant Example on $\SS^2$</h2>
+
+
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+		<li id="bib1">
+			Varun Shankar, Grady&nbsp;B. Wright, Robert&nbsp;M. Kirby, and Aaron&nbsp;L. Fogelson.
+A radial basis function (<span class="bibtex-protected">RBF</span>)-finite difference (<span class="bibtex-protected">FD</span>) method for diffusion and reaction-diffusion equations on surfaces.
+<em>arXiv.org</em>, 2018.
+URL: <a href="https://arxiv.org/pdf/1404.0812.pdf">https://arxiv.org/pdf/1404.0812.pdf</a>.
+		</li>
+	</ol>
+</p>
+</div>
+
+</div>
+</body>
+
+<script>includeHTML();</script>
+
+</html>
