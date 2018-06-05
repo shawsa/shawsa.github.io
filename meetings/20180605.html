@@ -1,0 +1,145 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Tuesday June 5th, 2018</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\MM}{\mathbb{M}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../main.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Tuesday June 5<sup>th</sup>, 2018</span> <br>
+<span class="author">Attendees: Daniel, Grady, and Sage </span> <br>
+<span class="updated">Tue Jun  5 17:36:29 2018</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+
+</p>
+
+<div class="contents">
+<ol>
+	<li>Tasks</li>
+	<ol>
+		<li>Daniel</li>
+		<li>Sage</li>
+	</ol>
+	<li>Steady State Surface Laplacian</li>
+	<li>Time-Stepping</li>
+	<li>References</li>
+</ol>
+</div>
+
+<p>
+The next meeting is scheduled for Thursday June 7<sup>th</sup> at 2 pm.
+</p>
+<!--************************************************************************-->
+<h1>Tasks</h1>
+<h2>Daniel</h2>
+<p>
+<ul>
+    <li>Test using second degree polynomial terms.</li>
+    <li>Test with points projected off of a circle.</li>
+    <li>Fine tune parameters for the QR approach and the PInv approach.</li>
+    <li>Implement RBF-FD.</li>
+</ul>
+</p>
+<h2>Sage</h2>
+</p>
+<ul>
+    <li>Add an additional constraint to RBF-FD on sphere for steady state problem.</li>
+    <li>Cleanup PDE time-stepping code for review next time.</li>
+</ul>
+</p>
+
+<!--************************************************************************-->
+<h1>Steady State Surface Laplacian</h1>
+<p>
+Sage found that the differenetiation matrix approximating the surface laplacian was singular and thought this to be an error. Grady demonstrated that it is correct. Consider $\Delta_\SS u = 0$. Any constant function $u(\vec{x}) = c$ is a solution to this, thus the system must be underdetermined. In order to have a meaningful solution to a steady state problem without boundary conditions more information is needed.
+</p>
+<p>
+Grady suggested trying to fix the temperature at a point (effectively creating a boundary condition). Alternatively he suggested adding the constraint that $\int_\SS u = 0$, that the average value is zero. 
+</p>
+
+<!--************************************************************************-->
+<h1>Time-Stepping</h1>
+<p>
+The timestepping code was unclear. Sage is to rewrite it with readability in mind so that we can explore the issues with the code more easily next time.
+</p>
+
+
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+	</ol>
+</p>
+</div>
+
+</div>
+</body>
+
+<script>includeHTML();</script>
+
+</html>
