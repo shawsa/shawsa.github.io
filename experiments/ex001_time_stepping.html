@@ -370,6 +370,8 @@ Your browser does not support the video tag.
 </video>
 </p>
 
+<h2>Hypothesis &amp; Method</h2>
+
 <p>
 We first discretize in space letting the step size be $h = \frac{1}{n}$. This gives us the approximation $\vec{u}_t = D \vec{u}$ where 
 $$
@@ -391,12 +393,187 @@ If we are to increase $\Delta t$ as we had previously for ODEs we must ensure th
 For the spatial discretization we expect the error to be $\mathcal{O}(h^2)$. For a single timestep we expect the error to be $\mathcal{O}(\Delta t^2 h^2)$. Thus for a given time we expect the error to be $\mathcal{O}(\Delta t h^2)$. If we choose $h^2 \propto \Delta t$ then we will expect the error to be $\mathcal{O}(\Delta t^2)$.
 </p>
 
+<p>
+The following code tests these hypotheses.
+</p>
+<pre><code class="language-python">from heat_equation import *
+c = 1
+def f(x):
+    return x**2 * (1-x)
+
+f = np.vectorize(f)
+u = dirichlet_solution(c,f)
 
 
-<h2>Hypothesis &amp; Method</h2>
+# Time-step n steps
+def forward(u0, D, delta_t, num_steps):
+    u = u0
+    for i in range(num_steps):
+        u = u + delta_t * D@u
+    return u
+
+def backward(u0, D, delta_t, num_steps):
+    u = u0
+    L = sp.eye(D.shape[0]) - delta_t*D
+    for i in range(num_steps):
+        u = spla.spsolve(L, u)
+    return u
+
+target_t = .1 # Time at which we are evaluating the error
+time_steps = [2**i for i in range(2,10)] # List of the number of steps we are taking.
+
+fw_errors = []
+bk_errors = []
+
+
+for num_steps in time_steps:
+    delta_t = target_t/num_steps
+    ###################################################################
+    # Choice of n affects order of convergence
+    
+    n = num_steps
+    #n = int(np.sqrt(num_steps))
+        
+    ###################################################################
+    print('Processing num_steps=%d \t n=%d' % (num_steps, n) )
+    h = 1/n
+    D = sp.diags([1] + [-2]*(n-2) + [1]) + sp.diags([0] + [1]*(n-2), 1)
+    D = D + sp.diags([1]*(n-2) + [0], -1)
+    D = h**-2 * D
+    D[0,0] = 1
+    D[n-1,n-1] = 1
+    #print(D)
+    xs = np.linspace(0,1, n)
+    u0 = f(xs)
+    true_value = u(xs, target_t)
+    fw = forward(u0, D, delta_t, num_steps)
+    back = backward(u0, D, delta_t, num_steps)
+    fw_errors.append(la.norm(fw - true_value))
+    bk_errors.append(la.norm(back - true_value))
+</code></pre>
+
 
 <h2>Results</h2>
 
+<p>
+For a target time of $t=0.1$ with $h \approx \sqrt{\Delta t}$ the errors are given in the table below. For the first two rows, the spatial discretization is $n=2$ so only the two end points are considered. The solution at the end points is $u(0,t) = u(1,t) = 0$ so the solution is exact. As expected, forward Euler is stable in this situation.
+</p>
+
+<p>
+<table class="data center">
+	<th>$\Delta t$</th>	<th>fw_err</th>	<th>fw_ratio</th>	<th>bk_err</th>	<th>bk_ratio</th>
+	<tr>
+		<td>          0.025</td><td>  6.1171839e-18</td><td>N/A</td><td>  6.1171839e-18</td><td>N/A</td>
+	</tr>
+	<tr>
+		<td>         0.0125</td><td>  6.1171839e-18</td><td>              1</td><td>  6.1171839e-18</td><td>              1</td>
+	</tr>
+	<tr>
+		<td>        0.00625</td><td>    0.029786062</td><td>  4.8692441e+15</td><td>    0.024693141</td><td>  4.0366843e+15</td>
+	</tr>
+	<tr>
+		<td>       0.003125</td><td>    0.027337333</td><td>     0.91778944</td><td>    0.024504521</td><td>     0.99236146</td>
+	</tr>
+	<tr>
+		<td>      0.0015625</td><td>    0.022910183</td><td>     0.83805478</td><td>    0.021194308</td><td>     0.86491419</td>
+	</tr>
+	<tr>
+		<td>     0.00078125</td><td>    0.019786197</td><td>     0.86364202</td><td>    0.018810993</td><td>     0.88754928</td>
+	</tr>
+	<tr>
+		<td>    0.000390625</td><td>    0.016585217</td><td>     0.83822156</td><td>    0.016014668</td><td>     0.85134622</td>
+	</tr>
+	<tr>
+		<td>   0.0001953125</td><td>    0.014201978</td><td>     0.85630345</td><td>    0.013873999</td><td>     0.86633076</td>
+	</tr>
+	<tr>
+		<td>   9.765625e-05</td><td>      0.0118248</td><td>     0.83261639</td><td>    0.011630396</td><td>     0.83828723</td>
+	</tr>
+	<tr>
+		<td>  4.8828125e-05</td><td>   0.0099909454</td><td>     0.84491455</td><td>    0.009876969</td><td>     0.84923753</td>
+	</tr>
+	<tr>
+		<td>  2.4414063e-05</td><td>   0.0083896657</td><td>     0.83972691</td><td>   0.0083222698</td><td>     0.84259349</td>
+	</tr>
+	<tr>
+		<td>  1.2207031e-05</td><td>   0.0070808438</td><td>     0.84399594</td><td>   0.0070411137</td><td>     0.84605689</td>
+	</tr>
+	<tr>
+		<td>  6.1035156e-06</td><td>   0.0059413669</td><td>     0.83907611</td><td>   0.0059177772</td><td>      0.8404604</td>
+	</tr>
+</table>
+</p>
+
+<p>
+For a target time of $t=0.01$ with $h \approx \Delta t$ the errors are given below. Forward Euler does not remain stable as $\Delta t$ decreases.
+</p>
+
+<p>
+<table class="data center">
+	<th>$\Delta t$</th>	<th>fw_err</th>	<th>fw_ratio</th>	<th>bk_err</th>	<th>bk_ratio</th>
+	<tr>
+		<td>0.00250000</td><td>0.01186183</td><td>N/A</td><td>0.01011415</td><td>N/A</td>
+	</tr>
+	<tr>
+		<td>0.00125000</td><td>0.00879856</td><td>0.74175360</td><td>0.00739092</td><td>0.73075027</td>
+	</tr>
+	<tr>
+		<td>0.00062500</td><td>0.00645683</td><td>0.73385113</td><td>0.00549377</td><td>0.74331290</td>
+	</tr>
+	<tr>
+		<td>0.00031250</td><td>0.00463589</td><td>0.71798186</td><td>0.00397957</td><td>0.72437840</td>
+	</tr>
+	<tr>
+		<td>0.00015625</td><td>4414901.91684370</td><td>952331526.89668298</td><td>0.00284527</td><td>0.71496929</td>
+	</tr>
+	<tr>
+		<td>0.00007813</td><td>inf</td><td>inf</td><td>0.00202242</td><td>0.71080311</td>
+	</tr>
+	<tr>
+		<td>0.00003906</td><td>inf</td><td>inf</td><td>0.00143368</td><td>0.70889251</td>
+	</tr>
+	<tr>
+		<td>0.00001953</td><td>nan</td><td>nan</td><td>0.00101502</td><td>0.70798367</td>
+	</tr>
+</table>
+</p>
+
+<p>
+For a target time of $t=0.1$ with $h \approx \Delta t$ the errors are given below.
+</p>
+
+<p>
+<table class="data center">
+	<th>$\Delta t$</th>	<th>fw_err</th>	<th>fw_ratio</th>	<th>bk_err</th>	<th>bk_ratio</th>
+	<tr>
+		<td>0.02500000</td><td>0.03853758</td><td>N/A</td><td>0.01801736</td><td>N/A</td>
+	</tr>
+	<tr>
+		<td>0.01250000</td><td>0.59760437</td><td>15.50705359</td><td>0.01555952</td><td>0.86358442</td>
+	</tr>
+	<tr>
+		<td>0.00625000</td><td>67521636.80649941</td><td>112987187.79299849</td><td>0.01187460</td><td>0.76317258</td>
+	</tr>
+	<tr>
+		<td>0.00312500</td><td>inf</td><td>inf</td><td>0.00867667</td><td>0.73069146</td>
+	</tr>
+	<tr>
+		<td>0.00156250</td><td>inf</td><td>inf</td><td>0.00622900</td><td>0.71790207</td>
+	</tr>
+	<tr>
+		<td>0.00078125</td><td>inf</td><td>inf</td><td>0.00443671</td><td>0.71226805</td>
+	</tr>
+	<tr>
+		<td>0.00039063</td><td>nan</td><td>nan</td><td>0.00314843</td><td>0.70962985</td>
+	</tr>
+	<tr>
+		<td>0.00019531</td><td>nan</td><td>nan</td><td>0.00223020</td><td>0.70835412</td>
+	</tr>
+</table>
+
+<p>
+The order of convergence seems to be roughly $\mathcal{O}(\sqrt{\Delta t})$. That is, when $\Delta t$ is quartered, the error is halved.
+</p>
 
 
 <!--***************************************************************************

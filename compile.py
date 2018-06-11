@@ -61,7 +61,7 @@ def compile_main():
     
 
     # update main
-    print('Compiling main.html')
+    print('Compiling index.html')
     main_html = '<p class="title_and_author">\n\t<span class="title">Recent Changes</span>\n</p>\n'
     main_html += '<h1>Last Meeting</h1>\n'
     for article in meetings[:1]:
@@ -82,7 +82,7 @@ def compile_main():
         main_html += '<span class="mod_time">' + time_string + '</span>\n'
         main_html += '<p>\n' + intro + '\n</p>\n'
 
-    file_path = 'main.html'
+    file_path = 'index.html'
     f = open(file_path, 'r')
     html = f.read()
     f.close()
@@ -386,7 +386,7 @@ if __name__=='__main__':
             else:
                 print('Error, ' + path + 'does not exist')
 
-    # compile main.html
+    # compile index.html
     if not args.only:
         compile_main()
         

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 import glob
 
-string_start = '<div class="divSidebar"'
-string_end = '</div>'
-new_string = '<div class="divSidebar" w3-include-html="../sidebar-sub.html">\n'
+string_start = 'main.html'
+string_end = '.html'
+new_string = 'index.html'
 
 target_dir = 'experiments'
 
