@@ -75,7 +75,7 @@ print(np.max(np.abs(us - foo(X,Y,Z))))
 
 ##################################################################################
 #
-# Construct Interpolant
+# Plot Interpolant
 #
 ##################################################################################
 color_dimension = us # change to desired fourth dimension
