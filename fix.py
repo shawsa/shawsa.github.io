@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 import glob
 
-string_start = 'main.html'
-string_end = '.html'
+string_start = 'index.html.html'
+string_end = '"'
 new_string = 'index.html'
 
-target_dir = 'experiments'
+target_dir = 'meetings'
 
 if __name__ == '__main__':
 
