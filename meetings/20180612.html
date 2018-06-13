@@ -126,7 +126,7 @@ More generally, given $A\vec{u} = \vec{b}$ and $\vec{w}^T\vec{u} = 0$ we constru
 $$
 \mathcal{L}(\vec{u}, \lambda) = \tfrac{1}{2} \vec{u}^T A \vec{u} - \vec{u}^T \vec{b} + \lambda \vec{w}^T \vec{u}
 $$
-and set the gradient to zero. That is $A\vec{u} + - \vec{b} + \lambda\vec{w} = 0$. Combined with our criteria that $\vec{w}^T \vec{u} = 0$ we can construct the following $(n+1) \times (n+1)$ system:
+and set the gradient to zero. That is $A\vec{u} - \vec{b} + \lambda\vec{w} = 0$. Combined with our criteria that $\vec{w}^T \vec{u} = 0$ we can construct the following $(n+1) \times (n+1)$ system:
 $$
 \begin{bmatrix}A & \vec{w} \\ \vec{w}^T & 0 \end{bmatrix}
 \begin{bmatrix}\vec{u} \\ \lambda \end{bmatrix}
