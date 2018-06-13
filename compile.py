@@ -57,10 +57,10 @@ def compile_main():
 
     file_paths = [path for path in listdir('meetings') if path[-5:]==".html"]
     meetings = [read_article( join('meetings', path) ) for path in file_paths]  
-    meetings.sort(reverse=True) 
+    meetings.sort(reverse=True, key= lambda x: x[1]) 
     
 
-    # update main
+    # update index
     print('Compiling index.html')
     main_html = '<p class="title_and_author">\n\t<span class="title">Recent Changes</span>\n</p>\n'
     main_html += '<h1>Last Meeting</h1>\n'
@@ -172,6 +172,8 @@ def compile_main():
     for file_path, dir_path, title, contents in zip(file_paths, dir_paths, titles, content_list):
         print('Compiling ' + file_path)
         contents.sort(key= lambda x: x[1])
+        if file_path=='meetings.html':
+            contents.sort(key= lambda x: x[1], reverse=True)
         articles_html = '<p class="title_and_author">\n\t<span class="title">'
         articles_html += title
         articles_html += '</span>\n</p>\n'

@@ -1,0 +1,175 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Tuesday June 12th, 2018</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\MM}{\mathbb{M}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../index.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Tuesday June 12<sup>th</sup>, 2018</span> <br>
+<span class="author">Attendees: Daniel, Grady, and Sage </span> <br>
+<span class="updated">Tue Jun 12 19:31:58 2018</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+
+</p>
+
+<div class="contents">
+<ol>
+	<li>Tasks</li>
+	<ol>
+		<li>Daniel</li>
+		<li>Sage</li>
+	</ol>
+	<li>Lagrange Multipliers</li>
+	<li>Spherical Harmonics</li>
+	<li>Time-Stepping Experiment</li>
+	<li>References</li>
+</ol>
+</div>
+
+<p>
+The next meeting is scheduled for Thursday June 14<sup>th</sup> at 2 pm.
+</p>
+<!--************************************************************************-->
+<h1>Tasks</h1>
+
+<h2>Daniel</h2>
+<p>
+<ul>
+    <li>Test using second degree polynomial terms.</li>
+    <li>Test with points projected off of a circle.</li>
+    <li>Fine tune parameters for the QR approach and the PInv approach.</li>
+    <li>Implement RBF-FD.</li>
+</ul>
+</p>
+
+<h2>Sage</h2>
+<p>
+<ul>
+    <li>Add an additional constraint to RBF-FD on sphere for steady state problem using Lagrange multipliers.</li>
+    <li>Research sphereical harmonics</li>
+    <li>Test time-stepping code against known solutions for more accuracy.</li>
+    <li>Test steady-state diffusion on a sphere against known solutions using spherical harmonics.</li>
+</ul>
+</p>
+
+<!--************************************************************************-->
+<h1>Lagrange Multipliers</h1>
+<p>
+When solving the steady state problem $\Delta_\SS u = f$ on the sphere, we need an additional constraint such as $\int_S u = 0$. When we have discretized our problem to $L \vec{u} = \vec{f}$ and $\vec{w}^T \vec{u} = 0$ for some set of weights $\vec{w}$ (assumed to be a vector of ones for simplicity), we use Lagrange multipliers to create an $(n+1) \times (n+1)$ system of equations.
+</p>
+
+<p>
+More generally, given $A\vec{u} = \vec{b}$ and $\vec{w}^T\vec{u} = 0$ we construct the function 
+$$
+\mathcal{L}(\vec{u}, \lambda) = \tfrac{1}{2} \vec{u}^T A \vec{u} - \vec{u}^T \vec{b} + \lambda \vec{w}^T \vec{u}
+$$
+and set the gradient to zero. That is $A\vec{u} + - \vec{b} + \lambda\vec{w} = 0$. Combined with our criteria that $\vec{w}^T \vec{u} = 0$ we can construct the following $(n+1) \times (n+1)$ system:
+$$
+\begin{bmatrix}A & \vec{w} \\ \vec{w}^T & 0 \end{bmatrix}
+\begin{bmatrix}\vec{u} \\ \lambda \end{bmatrix}
+=
+\begin{bmatrix}\vec{b} \\ 0 \end{bmatrix}
+$$
+</p>
+
+<!--************************************************************************-->
+<h1>Spherical Harmonics</h1>
+<p>
+Sphereical harmonic functions, denoted $Y_l^m(\lambda, \theta)$ have the property that 
+$$
+\Delta_\SS Y_l^m(\lambda, \theta) = -l(l+1)Y_l^m(\lambda, \theta)\text{.}
+$$
+That is that $Y_l^m(\lambda, \theta)$ are eigenfunctions corresponding to the eigenvalues $-l(l+1)$ for the surface laplacian. They are given by
+$$
+Y_l^m(\lambda, \theta) = e^{im\lambda} P_l^m(\cos(\theta))
+$$
+where $P_l^m$ are the associated Legendre functions.
+</p>
+
+<!--************************************************************************-->
+<h1>Time-Stepping Experiment</h1>
+<p>
+There were two issues with the time stepping experiment. First $h^2 \propto \Delta t$ and second $h = \frac{1}{n+1}$ where $n$ is the number of points. This gives an error that is $\mathcal{O}(\Delta t)$.
+</p>
+
+
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+	</ol>
+</p>
+</div>
+
+</div>
+</body>
+
+<script>includeHTML();</script>
+
+</html>
