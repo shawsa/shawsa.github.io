@@ -22,7 +22,7 @@
 *******************************************************************************
 ****************************************************************************-->
 
-<title>Tuesday June 12th, 2018</title>
+<title>Tuesday June 14th, 2018</title>
 
 <!--***************************************************************************
 *******************************************************************************
@@ -62,9 +62,9 @@
 ****************************************************************************-->
 
 <p class="title_and_author">
-<span class="title">Tuesday June 12<sup>th</sup>, 2018</span> <br>
+<span class="title">Tuesday June 14<sup>th</sup>, 2018</span> <br>
 <span class="author">Attendees: Daniel, Grady, and Sage </span> <br>
-<span class="updated">Thu Jun 14 19:57:03 2018</span> <br>
+<span class="updated">Thu Jun 14 20:39:02 2018</span> <br>
 <span hidden id="status">c</span>
 <span id="status_message" class="status_message"></span>
 </p>
@@ -72,7 +72,7 @@
 <hr>
 
 <p class="intro">
-We discussed constraints on the steady-state diffusion equation on the sphere via <b>lagrange multipliers</b>. We also discussed <b>sphereical harmonics</b> and their usefulness as test cases for RBF-FD. We did a little debugging into the time-stepping experiment <a href="../experiments/ex001_time_stepping.html">ex001 time-stepping</a>.
+We discussed more general <b>Backward Differentiation Formulae</b> (BDF). In particular BDF2, a second order approximation of the first derivative.
 </p>
 
 <div class="contents">
@@ -82,9 +82,7 @@ We discussed constraints on the steady-state diffusion equation on the sphere vi
 		<li>Daniel</li>
 		<li>Sage</li>
 	</ol>
-	<li>Lagrange Multipliers</li>
-	<li>Spherical Harmonics</li>
-	<li>Time-Stepping Experiment</li>
+	<li>Backward Differentiation Formulae (BDF Schemes)</li>
 	<li>References</li>
 </ol>
 </div>
@@ -101,6 +99,7 @@ The next meeting is scheduled for Thursday June 14<sup>th</sup> at 2 pm.
     <li>Test using second degree polynomial terms.</li>
     <li>Test with points projected off of a circle.</li>
     <li>Fine tune parameters for the QR approach and the PInv approach.</li>
+    <li>Explore how the rank changes as $\alpha \to 0^+$.</li>
     <li>Implement RBF-FD.</li>
 </ul>
 </p>
@@ -108,52 +107,39 @@ The next meeting is scheduled for Thursday June 14<sup>th</sup> at 2 pm.
 <h2>Sage</h2>
 <p>
 <ul>
-    <li>Add an additional constraint to RBF-FD on sphere for steady state problem using Lagrange multipliers.</li>
+    <li>Debug the steady-state diffusion equation on the sphere. Test for accuracy. </li>
     <li>Research sphereical harmonics</li>
     <li>Test steady-state diffusion on a sphere against known solutions using spherical harmonics.(<a href="20180612/sphereForcing.m" download>Sample MATLAB Code</a>)</li>
-    <li>Test time-stepping code against known solutions for more accuracy.</li>
+    <li>Test time-stepping code with BDF2.</li>
 </ul>
 </p>
 
 <!--************************************************************************-->
-<h1>Lagrange Multipliers</h1>
+<h1>Backward Differentiation Formulae (BDF Schemes)</h1>
 <p>
-When solving the steady state problem $\Delta_\SS u = f$ on the sphere, we need an additional constraint such as $\int_S u = 0$. When we have discretized our problem to $L \vec{u} = \vec{f}$ and $\vec{w}^T \vec{u} = 0$ for some set of weights $\vec{w}$ (assumed to be a vector of ones for simplicity), we use Lagrange multipliers to create an $(n+1) \times (n+1)$ system of equations.
+Backward Euler is the simplest BDF scheme (BDF1). The second simplest is BDF2, a second order backward approximation to the first derivative. It can be derived using Taylors theorem as follows.
 </p>
 
+<img src='20180614/time-stepping_diagram.png' class='center' >
+
 <p>
-More generally, given $A\vec{u} = \vec{b}$ and $\vec{w}^T\vec{u} = 0$ we construct the function 
+Let $t_{n-2}, t_{n-1}$ and $t_{n}$ denote three sequential time values separated by steps of size $\Delta t$ (illustrated above). Further let $u_n$ denote $u(t_n)$, the function value at time $t_n$. Two results follow from Taylors theorem:
 $$
-\mathcal{L}(\vec{u}, \lambda) = \tfrac{1}{2} \vec{u}^T A \vec{u} - \vec{u}^T \vec{b} + \lambda \vec{w}^T \vec{u}
+\begin{align}
+u_{n-1} &= u_n -\Delta t u_n^\prime + \frac{\Delta t^2}{2} u_n^{\prime\prime} + \mathcal{O}(\Delta t^3) \\
+u_{n-2} &= u_n -2\Delta t u_n^\prime + 2\Delta t^2 u_n^{\prime\prime} + \mathcal{O}(\Delta t^3)
+\end{align}
 $$
-and set the gradient to zero. That is $A\vec{u} - \vec{b} + \lambda\vec{w} = 0$. Combined with our criteria that $\vec{w}^T \vec{u} = 0$ we can construct the following $(n+1) \times (n+1)$ system:
+Multiplying the first equation by $-4$ and adding it to the second we obtain
 $$
-\begin{bmatrix}A & \vec{w} \\ \vec{w}^T & 0 \end{bmatrix}
-\begin{bmatrix}\vec{u} \\ \lambda \end{bmatrix}
-=
-\begin{bmatrix}\vec{b} \\ 0 \end{bmatrix}
+u_{n-2} - 4 u_{n-1} = -3 u_n + 2 \Delta t u_n^\prime + \mathcal{O}(\Delta t^3)
+$$
+and then it follows that a second order accurate approximation to $u_n^\prime$ is given by
+$$
+u_n^\prime = \tfrac{1}{\Delta t} \left( \tfrac{3}{2}u_n - 2u_{n-1} + \tfrac{1}{2}u_{n-2} \right)
 $$
 </p>
 
-<!--************************************************************************-->
-<h1>Spherical Harmonics</h1>
-<p>
-Sphereical harmonic functions, denoted $Y_l^m(\lambda, \theta)$ have the property that 
-$$
-\Delta_\SS Y_l^m(\lambda, \theta) = -l(l+1)Y_l^m(\lambda, \theta)\text{.}
-$$
-That is that $Y_l^m(\lambda, \theta)$ are eigenfunctions corresponding to the eigenvalues $-l(l+1)$ for the surface laplacian. They are given by
-$$
-Y_l^m(\lambda, \theta) = e^{im\lambda} P_l^m(\cos(\theta))
-$$
-where $P_l^m$ are the associated Legendre functions.
-</p>
-
-<!--************************************************************************-->
-<h1>Time-Stepping Experiment</h1>
-<p>
-There were two issues with the time stepping experiment. First $h^2 \propto \Delta t$ and second $h = \frac{1}{n+1}$ where $n$ is the number of points. This gives an error that is $\mathcal{O}(\Delta t)$.
-</p>
 
 
 
