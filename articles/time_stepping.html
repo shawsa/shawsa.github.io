@@ -62,7 +62,7 @@
 <p class="title_and_author">
 <span class="title">Time-Stepping</span> <br>
 <span class="author">Authors: Sage Shaw</span> <br>
-<span class="updated">Mon May 21 22:14:52 2018</span> <br>
+<span class="updated">Mon Jun 18 03:50:05 2018</span> <br>
 <span hidden id="status">i</span>
 <span id="status_message" class="status_message"></span>
 </p>
@@ -79,6 +79,11 @@ Time stepping referes techniques that propagate initial condidtions of an ODE or
 	<ol>
 		<li>Forward Euler Time-Stepping</li>
 		<li>Backward Euler Time-Stepping</li>
+		<li>Accuracy</li>
+	</ol>
+	<li>Backward Differentiation Formulae (BDF Schemes)</li>
+	<ol>
+		<li>BDF2</li>
 	</ol>
 	<li>References</li>
 </ol>
@@ -158,6 +163,52 @@ where $\vec{w}_n = U^{-1}\vec{y}_n$. The solution is now represented as a comple
 <p>
 The error for a single time step is $\mathcal{O}(\Delta t^2)$. The error at a given time $t = n\Delta t$ where $n$ increases so that $t$ is held constant is given by $\mathcal{O}(\Delta t)$. See <a href="../experiments/ex001_time_stepping.html">Experiment 001</a> for details.
 </p>
+
+
+<!--************************************************************************-->
+<h1>Backward Differentiation Formulae (BDF Schemes)</h1>
+<p>
+Backward Differentiation Formulae are a generalization of Backward Euler. Backward Euler is the simplest BDF scheme and is order $\mathcal{O}(\Delta t^1)$ for a given target time and thus it is denoted BDF1. More generally the formula $\vec{y}_{n+1} = \vec{y}_n + \Delta t f(t_n, \vec{y}_{n+1})$ can be seen as comming from the the Taylor series
+$$
+y(t_0 + \Delta t) = y(t_0) + \Delta t y^\prime(t_0) + \mathcal{O}(\Delta t^2)
+$$
+where it is a second order accurate approximation. After $n \propto \frac{1}{\Delta t}$ steps the accuraccy is $\mathcal{O}(\Delta t)$, thus BDF1.
+</p>
+
+<h2>BDF2</h2>
+<p>
+In a similar way, BDF2 is a second order method. It can be derived using Taylors theorem as follows.
+</p>
+
+<img src='time_stepping/time-stepping_diagram.png' class='center' >
+
+<p>
+Let $t_{n-2}, t_{n-1}$ and $t_{n}$ denote three sequential time values separated by steps of size $\Delta t$ (illustrated above). Further let $u_n$ denote $u(t_n)$, the function value at time $t_n$. Two results follow from Taylors theorem:
+$$
+\begin{align}
+u_{n-1} &= u_n -\Delta t u_n^\prime + \frac{\Delta t^2}{2} u_n^{\prime\prime} + \mathcal{O}(\Delta t^3) \\
+u_{n-2} &= u_n -2\Delta t u_n^\prime + 2\Delta t^2 u_n^{\prime\prime} + \mathcal{O}(\Delta t^3)
+\end{align}
+$$
+Multiplying the first equation by $-4$ and adding it to the second we obtain
+$$
+u_{n-2} - 4 u_{n-1} = -3 u_n + 2 \Delta t u_n^\prime + \mathcal{O}(\Delta t^3)
+$$
+and then it follows that a second order accurate approximation to $\Delta t u_n^\prime$ is given by
+$$
+\Delta t u_n^\prime = \tfrac{3}{2}u_n - 2u_{n-1} + \tfrac{1}{2}u_{n-2}.
+$$
+When this is applied to PDEs dicretized in space we approximate $u_n^\prime \approx L u_{n}$. Thus we arrive at the two step reccurance relation
+$$
+\vec{u}_{n} = \left( \tfrac{3}{2}I - \Delta t L \right ) ^{-1} (2\vec{u}_{n-1} - \tfrac{1}{2}\vec{u}_{n-2}).
+$$
+</p>
+
+<h3>Stability</h3>
+<p>
+Similarly to BDF1, BDF2 is stable if $\norm{\tfrac{3}{2}-\lambda \Delta t}>1$ for every $\lambda$ that is an eigenvalue of $L$.
+</p>
+
 
 
 
