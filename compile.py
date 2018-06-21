@@ -46,6 +46,10 @@ def read_article(file_path):
 # Compile the main page
 #
 ##################################################################################
+def remove_previous_dir(text):
+    text = text.replace('href="../', 'href="')
+    return text
+
 def compile_main():
     file_paths = [path for path in listdir('articles') if path[-5:]==".html"]
     articles = [read_article( join('articles', path) ) for path in file_paths]  
@@ -68,19 +72,19 @@ def compile_main():
         mtime, file_path, title, time_string, intro = article
         main_html += '<h2><a href="' + file_path + '">' + title + '</a></h2>\n'
         main_html += '<span class="mod_time">' + time_string + '</span>\n'
-        main_html += '<p>\n' + intro + '\n</p>\n'
+        main_html += '<p>\n' + remove_previous_dir(intro) + '\n</p>\n'
     main_html += '<h1>Recent Articles</h1>\n'
     for article in articles[:5]:
         mtime, file_path, title, time_string, intro = article
         main_html += '<h2><a href="' + file_path + '">' + title + '</a></h2>\n'
         main_html += '<span class="mod_time">' + time_string + '</span>\n'
-        main_html += '<p>\n' + intro + '\n</p>\n'
+        main_html += '<p>\n' + remove_previous_dir(intro) + '\n</p>\n'
     main_html += '<h1>Recent Experiments</h1>\n'
     for experiment in experiments[:5]:
         mtime, file_path, title, time_string, intro = experiment
         main_html += '<h2><a href="' + file_path + '">' + title + '</a></h2>\n'
         main_html += '<span class="mod_time">' + time_string + '</span>\n'
-        main_html += '<p>\n' + intro + '\n</p>\n'
+        main_html += '<p>\n' + remove_previous_dir(intro) + '\n</p>\n'
 
     file_path = 'index.html'
     f = open(file_path, 'r')
@@ -101,7 +105,7 @@ def compile_main():
         mtime, file_path, title, time_string, intro = article
         articles_html += '<h2><a href="' + file_path + '">' + title + '</a></h2>\n'
         articles_html += '<span class="mod_time">' + time_string + '</span>\n'
-        articles_html += '<p>\n' + intro + '\n</p>\n'
+        articles_html += '<p>\n' + remove_previous_dir(intro) + '\n</p>\n'
     file_path = 'recent_articles.html'
     f = open(file_path, 'r')
     html = f.read()
@@ -121,7 +125,7 @@ def compile_main():
         mtime, file_path, title, time_string, intro = experiment
         experiments_html += '<h2><a href="' + file_path + '">' + title + '</a></h2>\n'
         experiments_html += '<span class="mod_time">' + time_string + '</span>\n'
-        experiments_html += '<p>\n' + intro + '\n</p>\n'
+        experiments_html += '<p>\n' + remove_previous_dir(intro) + '\n</p>\n'
     file_path = 'recent_experiments.html'
     f = open(file_path, 'r')
     html = f.read()
@@ -182,7 +186,7 @@ def compile_main():
             link_path
             articles_html += '<h2><a href="' + link_path + '">' + title + '</a></h2>\n'
             articles_html += '<span class="mod_time">' + time_string + '</span>\n'
-            articles_html += '<p>\n' + intro + '\n</p>\n'
+            articles_html += '<p>\n' + remove_previous_dir(intro) + '\n</p>\n'
         f = open(file_path, 'r')
         html = f.read()
         f.close()

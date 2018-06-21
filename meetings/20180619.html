@@ -22,7 +22,7 @@
 *******************************************************************************
 ****************************************************************************-->
 
-<title>Thursday June 14th, 2018</title>
+<title>Tuesday June 19th, 2018</title>
 
 <!--***************************************************************************
 *******************************************************************************
@@ -62,9 +62,9 @@
 ****************************************************************************-->
 
 <p class="title_and_author">
-<span class="title">Thursday June 14<sup>th</sup>, 2018</span> <br>
+<span class="title">Tuesday June 19<sup>th</sup>, 2018</span> <br>
 <span class="author">Attendees: Daniel, Grady, and Sage </span> <br>
-<span class="updated">Thu Jun 14 20:39:02 2018</span> <br>
+<span class="updated">Wed Jun 20 17:07:26 2018</span> <br>
 <span hidden id="status">c</span>
 <span id="status_message" class="status_message"></span>
 </p>
@@ -72,7 +72,7 @@
 <hr>
 
 <p class="intro">
-We discussed more general <b>Backward Differentiation Formulae</b> (BDF). In particular BDF2, a second order approximation of the first derivative.
+Discussed conclusions from applying BDF2 to the 1D heat equation in <a href="../experiments/ex001_time_stepping.html">experiment 001</a>. Discussed alternative formulation of BDF formulae using interpolation.
 </p>
 
 <div class="contents">
@@ -88,7 +88,7 @@ We discussed more general <b>Backward Differentiation Formulae</b> (BDF). In par
 </div>
 
 <p>
-The next meeting is scheduled for Thursday June 14<sup>th</sup> at 2 pm.
+The next meeting is scheduled for Thursday June 24<sup>th</sup> at 11 am.
 </p>
 <!--************************************************************************-->
 <h1>Tasks</h1>
@@ -96,9 +96,7 @@ The next meeting is scheduled for Thursday June 14<sup>th</sup> at 2 pm.
 <h2>Daniel</h2>
 <p>
 <ul>
-    <li>Test using second degree polynomial terms.</li>
     <li>Test with points projected off of a circle.</li>
-    <li>Fine tune parameters for the QR approach and the PInv approach.</li>
     <li>Explore how the rank changes as $\alpha \to 0^+$.</li>
     <li>Implement RBF-FD.</li>
 </ul>
@@ -110,34 +108,18 @@ The next meeting is scheduled for Thursday June 14<sup>th</sup> at 2 pm.
     <li>Debug the steady-state diffusion equation on the sphere. Test for accuracy. </li>
     <li>Research sphereical harmonics</li>
     <li>Test steady-state diffusion on a sphere against known solutions using spherical harmonics.(<a href="20180612/sphereForcing.m" download>Sample MATLAB Code</a>)</li>
-    <li>Test time-stepping code with BDF2.</li>
+    <li>Test time-stepping code with BDF3 to verify that the accuracy is limited by $\mathcal{O}(h^2)$.</li>
 </ul>
 </p>
 
 <!--************************************************************************-->
-<h1>Backward Differentiation Formulae (BDF Schemes)</h1>
+<h1>Alternative Formulation of BDF Schemes</h1>
 <p>
-Backward Euler is the simplest BDF scheme (BDF1). The second simplest is BDF2, a second order backward approximation to the first derivative. It can be derived using Taylors theorem as follows.
+The Taylor Series approach to deriving the weights for the BDF schemes gets much more difficult if not imposible when the points are not equally spaced. Another approach using polynomial interpolation generalizes and doesn't have this shortcomming.
 </p>
 
-<img src='20180614/time-stepping_diagram.png' class='center' >
-
 <p>
-Let $t_{n-2}, t_{n-1}$ and $t_{n}$ denote three sequential time values separated by steps of size $\Delta t$ (illustrated above). Further let $u_n$ denote $u(t_n)$, the function value at time $t_n$. Two results follow from Taylors theorem:
-$$
-\begin{align}
-u_{n-1} &= u_n -\Delta t u_n^\prime + \frac{\Delta t^2}{2} u_n^{\prime\prime} + \mathcal{O}(\Delta t^3) \\
-u_{n-2} &= u_n -2\Delta t u_n^\prime + 2\Delta t^2 u_n^{\prime\prime} + \mathcal{O}(\Delta t^3)
-\end{align}
-$$
-Multiplying the first equation by $-4$ and adding it to the second we obtain
-$$
-u_{n-2} - 4 u_{n-1} = -3 u_n + 2 \Delta t u_n^\prime + \mathcal{O}(\Delta t^3)
-$$
-and then it follows that a second order accurate approximation to $u_n^\prime$ is given by
-$$
-u_n^\prime = \tfrac{1}{\Delta t} \left( \tfrac{3}{2}u_n - 2u_{n-1} + \tfrac{1}{2}u_{n-2} \right)
-$$
+Given a point $t_0$ at which we would like to approximate the derivative, and previous points $t_{-1}, t_{-2}, ..., t_{-n+1}$ along with the known function values at these previous points $u_{-1}, u_{-2}, ..., u_{-n+1}$, we first construct the polynomial interpolant through all $n$ points. Differnetiating the interpolant and evaluating at $t$ gives us the $\mathcal{O}(n)$ approximation to $u^\prime (t_0)$.
 </p>
 
 
