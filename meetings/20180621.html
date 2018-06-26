@@ -1,0 +1,150 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Thursday June 21st, 2018</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\MM}{\mathbb{M}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../index.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Thursday June 21<sup>st</sup>, 2018</span> <br>
+<span class="author">Attendees: Daniel, Grady, and Sage </span> <br>
+<span class="updated">Tue Jun 26 01:01:49 2018</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+We discussed Daniel's progress on the Singular PHS RBF Experiment. Daniel had modified it to project onto a circle instead of a line.
+</p>
+
+<div class="contents">
+<ol>
+	<li>Tasks</li>
+	<ol>
+		<li>Daniel</li>
+		<li>Sage</li>
+		<li>Grady</li>
+	</ol>
+	<li>References</li>
+</ol>
+</div>
+
+<p>
+The next meeting is scheduled for Tuesday June 26<sup>th</sup> at 2 pm.
+</p>
+<!--************************************************************************-->
+<h1>Tasks</h1>
+
+<h2>Daniel</h2>
+<p>
+<ul>
+    <li>Explore how the rank changes as $\alpha \to 0^+$.</li>
+    <li>Implement RBF-FD.</li>
+    <li>Explore why the SVD is giving different results for the non-singular case ($\alpha \approx 1$).</li>
+    <li>Fix the code for the SVD non-Schur case.</li>
+    <li>Test PHS RBF Experiment on half-circle and quarter-circle.</li>
+    <li>Test on other algabraic curves.</li>
+</ul>
+</p>
+
+<h2>Sage</h2>
+<p>
+<ul>
+    <li>Debug the steady-state diffusion equation on the sphere. Test for accuracy. </li>
+    <li>Research sphereical harmonics</li>
+    <li>Test steady-state diffusion on a sphere against known solutions using spherical harmonics.(<a href="20180612/sphereForcing.m" download>Sample MATLAB Code</a>)</li>
+    <li>Test time-stepping code with BDF2.</li>
+</ul>
+</p>
+
+<h2>Grady</h2>
+<p>
+<ul>
+    <li>Verify Sage's time-stepping code.</li>
+</ul>
+</p>
+
+
+
+<!--************************************************************************-->
+<!--h1>Backward Differentiation Formulae (BDF Schemes)</h1>
+
+</p-->
+
+
+
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+	</ol>
+</p>
+</div>
+
+</div>
+</body>
+
+<script>includeHTML();</script>
+
+</html>
