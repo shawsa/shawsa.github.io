@@ -1,0 +1,149 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Tuesday June 26th, 2018</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\MM}{\mathbb{M}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../index.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Tuesday June 26<sup>th</sup>, 2018</span> <br>
+<span class="author">Attendees: Daniel, Grady, Varun, and Sage </span> <br>
+<span class="updated">Tue Jun 26 21:26:37 2018</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+We brought Varun up to speed with our projects. After the meeting Grady caught the bug that fixed the SVD for larger $\alpha$. 
+</p>
+
+<div class="contents">
+<ol>
+	<li>Tasks</li>
+	<ol>
+		<li>Daniel</li>
+		<li>Sage</li>
+		<li>Grady</li>
+	</ol>
+	<li>References</li>
+</ol>
+</div>
+
+<p>
+The next meeting is scheduled for Thursday June 28<sup>th</sup> at 2 pm.
+</p>
+<!--************************************************************************-->
+<h1>Tasks</h1>
+
+<h2>Daniel</h2>
+<p>
+<ul>
+    <li>Explore how the rank changes as $\alpha \to 0^+$.</li>
+    <li>Implement RBF-FD.</li>
+    <li>Test on other algabraic curves and non-algabraic curves.</li>
+    <li>Add Column Pivoted QR as one of the test methods.</li>
+    <li>Test the $L_2$ norm in addition to the infinity norm.</li>
+</ul>
+</p>
+
+<h2>Sage</h2>
+<p>
+<ul>
+    <li>Debug the steady-state diffusion equation on the sphere. Use RBFs with a Shape </li>
+    <li>Research sphereical harmonics</li>
+    <li>Test steady-state diffusion on a sphere against known solutions using spherical harmonics.(<a href="20180612/sphereForcing.m" download>Sample MATLAB Code</a>)</li>
+    <li>Test the eigenvalues of the finite difference matrix in the time-stepping code.</li>
+</ul>
+</p>
+
+<h2>Grady</h2>
+<p>
+<ul>
+    <li>Verify Sage's time-stepping code.</li>
+</ul>
+</p>
+
+
+
+<!--************************************************************************-->
+<!--h1>Backward Differentiation Formulae (BDF Schemes)</h1>
+
+</p-->
+
+
+
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+	</ol>
+</p>
+</div>
+
+</div>
+</body>
+
+<script>includeHTML();</script>
+
+</html>
