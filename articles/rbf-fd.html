@@ -132,7 +132,7 @@ is approximated by approximating the individual scalar values $\mathcal{G}^x, \m
 First we choose a point at which we will approximate the surface gradient called the stencil center. Then we choose a collection of the $n-1$ nearest neighbours which when unioned with the stencil center form the stencil $\{\vec{x}_i\}_{i=1}^n$ (where WLOG $\vec{x}_1$ is the stencil center).
 </p>
 
-<p>If the surface is known the normal unit vector at the stencil center $\vec{n}$ can be calculated directly, otherwise a numerical technique is used to approximate it. The projection matrix
+<p>If the surface is known the unit normal vector at the stencil center $\vec{n}$ can be calculated directly, otherwise a numerical technique is used to approximate it. The projection matrix
 $$
 P = \begin{bmatrix} \vec{p}^x & \vec{p}^y & \vec{p}^z \end{bmatrix} = I - \vec{n}\vec{n}^T
 $$
@@ -206,7 +206,14 @@ With the weights that approximate the surface laplacian we can use standard RBF-
 
 <h2>Steady-State Example on $\SS^2$</h2>
 <p>
-Follow along with the <a href="rbf-fd/rbf-fd_sphere_steady-state.ipynb" download>Jupyter Notebook</a>.
+<b>Under construction...</b>
+</p>
+
+<p>
+Old notebook: <a href="rbf-fd/rbf-fd_sphere_steady-state.ipynb" download>Jupyter Notebook</a>.
+</p>
+<p>
+New notebook: <a href="rbf-fd/rbf-fd_sphere_steady-state2.ipynb" download>Jupyter Notebook</a>.
 </p>
 
 <h2>Time Dependant Example on $\SS^2$</h2>
