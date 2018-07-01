@@ -32,7 +32,7 @@ xlabel('h'), ylabel('Error'), title('Forward Euler, \Delta t = 0.5h^2')
 ratio = err(1:end-1)./err(2:end)
 
 %% Backward Euler
-ntests = 8;
+ntests = 6;
 N = 2.^(0:ntests-1)*10+1;
 err = zeros(ntests,1);
 H = 1./(N-1);
@@ -48,7 +48,7 @@ for k = 1:length(N)
     D = D(2:n-1,2:n-1);
     
     tfinal = 0.1;
-    dt = 0.25*h;  % No stability restrictions
+    dt = 0.25*h^2;  % No stability restrictions
     ntsteps = round(tfinal/dt);
 
     u = uexact(0,x(2:end-1));
@@ -68,7 +68,7 @@ ratio = err(1:end-1)./err(2:end)
 
 %% BDF 2
 
-ntests = 8;
+ntests = 6;
 N = 2.^(0:ntests-1)*10+1;
 err = zeros(ntests,1);
 H = 1./(N-1);
@@ -84,7 +84,7 @@ for k = 1:length(N)
     D = D(2:n-1,2:n-1);
     
     tfinal = 0.1;
-    dt = 0.125*h;  % No stability restrictions
+    dt = 0.125*h^2;  % No stability restrictions
     ntsteps = round(tfinal/dt);
 
     u0 = uexact(0,x(2:end-1));

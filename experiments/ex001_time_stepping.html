@@ -62,7 +62,7 @@
 <p class="title_and_author">
 <span class="title">Experiment 001 - Time-Stepping</span> <br>
 <span class="author">Authors: Sage Shaw</span> <br>
-<span class="updated">Thu May 24 11:39:50 2018</span> <br>
+<span class="updated">Sun Jul  1 01:08:38 2018</span> <br>
 <span hidden id="status">i</span>
 <span id="status_message" class="status_message"></span>
 </p>
@@ -90,6 +90,7 @@ This experiment will test forward and backward Euler <a href="../articles/time_s
 	<ol>
 		<li>Hypothesis &amp; Method</li>
 		<li>Results</li>
+		<li>Correction</li>
 	</ol>
 	<li>References</li>
 </ol>
@@ -394,16 +395,31 @@ For the spatial discretization we expect the error to be $\mathcal{O}(h^2)$. For
 </p>
 
 <p>
-The following code tests these hypotheses.
+The following code tests this hypotheses.
 </p>
 <pre><code class="language-python">from heat_equation import *
 c = 1
+'''
+def f(x):
+    return np.sin(x*2*np.pi)
+f = np.vectorize(f)
+def u(x,t):
+    return np.sin(x*2*np.pi)*np.exp(-(2*np.pi)**2 * t)
+'''
+
+def f(x):
+    return np.sin(np.pi*x)
+def u(x,t):
+    return np.sin(np.pi*x) * np.exp(-np.pi**2 * t)
+
+'''
 def f(x):
     return x**2 * (1-x)
-
 f = np.vectorize(f)
 u = dirichlet_solution(c,f)
+#u = dirichlet_solution(c,f, n=40)
 
+'''
 
 # Time-step n steps
 def forward(u0, D, delta_t, num_steps):
@@ -419,37 +435,49 @@ def backward(u0, D, delta_t, num_steps):
         u = spla.spsolve(L, u)
     return u
 
-target_t = .1 # Time at which we are evaluating the error
-time_steps = [2**i for i in range(2,10)] # List of the number of steps we are taking.
+def bdf2(u0, D, delta_t, num_steps):
+    u1 = u0
+    L = sp.eye(D.shape[0]) - delta_t*D
+    # one step of backward Euler
+    u2 = spla.spsolve(L, u1)
+    # continue with BDF2
+    L = 3/2*sp.eye(D.shape[0]) - delta_t*D
+    for i in range(num_steps-1):
+        u_3 = spla.spsolve(L, 2*u2 - .5*u1)
+        u1, u2 = u2, u_3
+    return u2
+
+target_t = .1
+ns = [10*2**i + 1 for i in range(0, 6)]
 
 fw_errors = []
 bk_errors = []
 
-
-for num_steps in time_steps:
-    delta_t = target_t/num_steps
-    ###################################################################
-    # Choice of n affects order of convergence
-    
-    n = num_steps
-    #n = int(np.sqrt(num_steps))
-        
-    ###################################################################
+for n in ns:
+    h = 1/(n-1)
+    #delta_t = h**2 *.5
+    delta_t = h
+    num_steps = int(np.round(target_t/delta_t))
     print('Processing num_steps=%d \t n=%d' % (num_steps, n) )
-    h = 1/n
-    D = sp.diags([1] + [-2]*(n-2) + [1]) + sp.diags([0] + [1]*(n-2), 1)
-    D = D + sp.diags([1]*(n-2) + [0], -1)
+    actuaul_time = num_steps*delta_t
+    print('Calculated time: %g' % actuaul_time)
+    D = sp.diags([1] + [-2]*(n-2) + [1]) + sp.diags([0] + [1]*(n-2), 1) + sp.diags([1]*(n-2) + [0], -1)
     D = h**-2 * D
     D[0,0] = 1
     D[n-1,n-1] = 1
-    #print(D)
     xs = np.linspace(0,1, n)
     u0 = f(xs)
     true_value = u(xs, target_t)
     fw = forward(u0, D, delta_t, num_steps)
-    back = backward(u0, D, delta_t, num_steps)
+    #back = backward(u0, D, delta_t, num_steps)
+    back = bdf2(u0, D, delta_t, num_steps)
     fw_errors.append(la.norm(fw - true_value))
     bk_errors.append(la.norm(back - true_value))
+    
+print('fw_err       fw_ratio       back_err       back_ratio')
+print('%10.5g        N/A       %10.5g       N/A  ' % (fw_errors[0], bk_errors[0]) )
+for fw, fw_prev, bk, bk_prev in zip(fw_errors[1:], fw_errors[:-1], bk_errors[1:], bk_errors[:-1]):
+    print('%10.5g    %10.5g    %10.5g    %10.5g' % (fw, fw/fw_prev, bk, bk/bk_prev) )
 </code></pre>
 
 <!--************************************************************************-->
@@ -575,6 +603,140 @@ For a target time of $t=0.1$ with $h \approx \Delta t$ the errors are given belo
 The order of convergence seems to be roughly $\mathcal{O}(\sqrt{\Delta t})$. That is, when $\Delta t$ is quartered, the error is halved.
 </p>
 
+<!--************************************************************************-->
+<h2>Correction</h2>
+
+<p>
+The issue was the calculations of the error ratio:
+</p>
+<pre><code class="language-python">    fw_errors.append(la.norm(fw - true_value))
+    bk_errors.append(la.norm(back - true_value))
+</code></pre>
+<p>
+Testing showed that both the relative $L_2$ norm and the $L_\infty$ norm gave correct results. In theory these should not affect the order of convergence, however, Between each step the dimension of the vector doubles so the overall norm is affected. The relative error compensates for this and is thus unaffected. The $L_\infty$ norm is also unaffected since the maximum value is not affected by the number of values in the vector.
+</p>
+
+<p>
+The corrected lines read
+</p>
+<pre><code class="language-python">    # relative L_2 norm
+    #fw_errors.append(la.norm(fw - true_value)/la.norm(true_value))
+    #bk_errors.append(la.norm(back - true_value)/la.norm(true_value))</pre></code>
+<p>or</p>
+<pre><code class="language-python">    # L_\infty norm
+    fw_errors.append(np.max(np.abs(fw - true_value)))
+    bk_errors.append(np.max(np.abs(back - true_value)))</pre></code>
+<p>
+The results now are as expected. For the relative $L_2$ norm we have the following errors.
+</p>
+
+<p>
+<table class="data center">
+	<th>$\Delta t$</th>	<th>fw_err</th>	<th>fw_ratio</th>	<th>bk_err</th>	<th>bk_ratio</th>
+	<tr>
+		<td>            0.1</td><td>      1.9513734</td><td>N/A</td><td>      1.9811852</td><td>N/A</td>
+	</tr>
+	<tr>
+		<td>           0.05</td><td>      1.9580811</td><td>      1.0034374</td><td>      1.9729271</td><td>     0.99583172</td>
+	</tr>
+	<tr>
+		<td>          0.025</td><td>     0.09898413</td><td>      0.0505516</td><td>     0.29391721</td><td>      0.1489752</td>
+	</tr>
+	<tr>
+		<td>         0.0125</td><td>     0.15497225</td><td>      1.5656272</td><td>     0.25167043</td><td>     0.85626299</td>
+	</tr>
+	<tr>
+		<td>        0.00625</td><td>    0.021353803</td><td>     0.13779115</td><td>    0.079099332</td><td>     0.31429728</td>
+	</tr>
+	<tr>
+		<td>       0.003125</td><td>    0.017661767</td><td>     0.82710168</td><td>     0.04709118</td><td>     0.59534233</td>
+	</tr>
+	<tr>
+		<td>      0.0015625</td><td>   0.0051387323</td><td>     0.29095233</td><td>    0.020161315</td><td>     0.42813357</td>
+	</tr>
+	<tr>
+		<td>     0.00078125</td><td>   0.0029217562</td><td>     0.56857529</td><td>    0.010479506</td><td>     0.51978287</td>
+	</tr>
+	<tr>
+		<td>    0.000390625</td><td>   0.0012724167</td><td>     0.43549724</td><td>    0.005065084</td><td>     0.48333231</td>
+	</tr>
+	<tr>
+		<td>   0.0001953125</td><td>  0.00072702771</td><td>     0.57137547</td><td>   0.0026262749</td><td>      0.5185057</td>
+	</tr>
+	<tr>
+		<td>   9.765625e-05</td><td>  0.00031734098</td><td>      0.4364909</td><td>   0.0012678278</td><td>     0.48274754</td>
+	</tr>
+	<tr>
+		<td>  4.8828125e-05</td><td>  0.00016311025</td><td>     0.51399049</td><td>  0.00063854489</td><td>     0.50365271</td>
+	</tr>
+	<tr>
+		<td>  2.4414063e-05</td><td>  7.9287598e-05</td><td>     0.48609821</td><td>  0.00031705439</td><td>     0.49652639</td>
+	</tr>
+	<tr>
+		<td>  1.2207031e-05</td><td>  4.0765382e-05</td><td>     0.51414576</td><td>  0.00015966073</td><td>     0.50357522</td>
+	</tr>
+	<tr>
+		<td>  6.1035156e-06</td><td>  1.9818923e-05</td><td>     0.48617041</td><td>  7.9269691e-05</td><td>     0.49648833</td>
+	</tr>
+</table>
+</p>
+
+<p>
+For the $L_\infty$ norm we have the following errors.
+</p>
+
+<p>
+<table class="data center">
+	<th>$\Delta t$</th>	<th>fw_err</th>	<th>fw_ratio</th>	<th>bk_err</th>	<th>bk_ratio</th>
+	<tr>
+		<td>            0.1</td><td>  8.9067602e-17</td><td>N/A</td><td>   9.042832e-17</td><td>N/A</td>
+	</tr>
+	<tr>
+		<td>           0.05</td><td>  8.9373763e-17</td><td>      1.0034374</td><td>   9.005139e-17</td><td>     0.99583172</td>
+	</tr>
+	<tr>
+		<td>          0.025</td><td>    0.036892161</td><td>  4.1278514e+14</td><td>     0.10954525</td><td>  1.2164748e+15</td>
+	</tr>
+	<tr>
+		<td>         0.0125</td><td>    0.057759371</td><td>      1.5656272</td><td>    0.093799541</td><td>     0.85626299</td>
+	</tr>
+	<tr>
+		<td>        0.00625</td><td>   0.0079587299</td><td>     0.13779115</td><td>    0.029480941</td><td>     0.31429728</td>
+	</tr>
+	<tr>
+		<td>       0.003125</td><td>   0.0062604997</td><td>     0.78662045</td><td>    0.016692233</td><td>      0.5662042</td>
+	</tr>
+	<tr>
+		<td>      0.0015625</td><td>   0.0019152458</td><td>     0.30592539</td><td>   0.0075142801</td><td>     0.45016627</td>
+	</tr>
+	<tr>
+		<td>     0.00078125</td><td>   0.0010778774</td><td>     0.56278801</td><td>   0.0038660388</td><td>     0.51449223</td>
+	</tr>
+	<tr>
+		<td>    0.000390625</td><td>  0.00047423969</td><td>     0.43997555</td><td>   0.0018877965</td><td>     0.48830253</td>
+	</tr>
+	<tr>
+		<td>   0.0001953125</td><td>  0.00027096893</td><td>     0.57137547</td><td>  0.00097883326</td><td>      0.5185057</td>
+	</tr>
+	<tr>
+		<td>   9.765625e-05</td><td>  0.00011827547</td><td>      0.4364909</td><td>  0.00047252935</td><td>     0.48274754</td>
+	</tr>
+	<tr>
+		<td>  4.8828125e-05</td><td>  6.0755434e-05</td><td>     0.51367738</td><td>  0.00023784571</td><td>      0.5033459</td>
+	</tr>
+	<tr>
+		<td>  2.4414063e-05</td><td>  2.9551109e-05</td><td>     0.48639451</td><td>  0.00011816866</td><td>     0.49682904</td>
+	</tr>
+	<tr>
+		<td>  1.2207031e-05</td><td>  1.5193578e-05</td><td>     0.51414576</td><td>  5.9506807e-05</td><td>     0.50357522</td>
+	</tr>
+	<tr>
+		<td>  6.1035156e-06</td><td>  7.3866678e-06</td><td>     0.48617041</td><td>  2.9544435e-05</td><td>     0.49648833</td>
+	</tr>
+</table>
+</p>
+
+
 
 
 <!--***************************************************************************
@@ -583,6 +745,12 @@ The order of convergence seems to be roughly $\mathcal{O}(\sqrt{\Delta t})$. Tha
 <h1>References</h1>
 <p class="bibliography">
 	<ol>
+		<li id="bib1">
+			J.&nbsp;D. Lambert.
+<em>Numerical Methods for Ordinary Differential Systems: The Initial Value Problem</em>.
+John Wiley &amp; Sons, Inc., New York, NY, USA, 1991.
+ISBN 0-471-92990-5.
+		</li>
 	</ol>
 </p>
 </div>
