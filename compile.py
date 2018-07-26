@@ -390,7 +390,7 @@ if __name__=='__main__':
                 print('Compiling ' + path)
                 complie_article(path, bib_dict)
             else:
-                print('Error, ' + path + 'does not exist')
+                print('Error, ' + path + ' does not exist')
 
     # compile index.html
     if not args.only:
