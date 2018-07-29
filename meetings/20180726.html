@@ -1,0 +1,150 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Thursday July 26th, 2018</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\MM}{\mathbb{M}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../index.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Thursday July 26<sup>th</sup>, 2018</span> <br>
+<span class="author">Attendees: Daniel, Varun, Grady, and Sage </span> <br>
+<span class="updated">Sat Jul 28 20:48:04 2018</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+Outlined the RBF-OGr method for solving PDEs on surfaces. Briefly reviewed Sage's code for interpolation using PHS RBFs augmented with spherical harmonics.
+</p>
+
+<div class="contents">
+<ol>
+	<li>Tasks</li>
+	<ol>
+		<li>Daniel</li>
+		<li>Sage</li>
+	</ol>
+	<li>RBF-OGr</li>
+	<li>References</li>
+</ol>
+</div>
+
+<p>
+The next meeting is scheduled for on July 31<sup>st</sup> at 2 pm.
+</p>
+<!--************************************************************************-->
+<h1>Tasks</h1>
+
+<h2>Daniel</h2>
+<p>
+<ul>
+    <li>Explore how the rank changes as $\alpha \to 0^+$.</li>
+    <li>Test on other algabraic curves and non-algabraic curves.</li>
+    <li>Add Column Pivoted QR as one of the test methods.</li>
+    <li>Test the $L_2$ norm in addition to the infinity norm.</li>
+    <li>Implement semi-Lagrangian advection for the one-way wave equation.</li>
+</ul>
+</p>
+
+<h2>Sage</h2>
+<p>
+<ul>
+    <li>Research sphereical harmonics.</li>
+    <li>Fix bugs in code for interpolation with PHS RBFs augmented with shperical harmonic terms.</li>
+    <li>Run tests for RBF-FD on the sphere from experiment 002 using larger values of N. Plot error vs $\sqrt{N}$ on a log-log scale.</li>
+    <li>Learn and implement the RBF-OGr method.</li>
+</ul>
+</p>
+
+
+<!--************************************************************************-->
+<h1>RBF-OGr</h1>
+<p>
+The Radial Basis Functions Orthogonal Gradients method (RBF-OGr) originaly published in <span class="cite" src="PIRET2012"><b>[<a href="#bib1">1</a>]</b></span> is a method for solving PDEs on surfaces.
+</p>
+
+<p>
+Grady outlined the basic idea in the meeting. In order to approximate the surface laplacian$\nabla^2_\SS(u)$ we note that for each point in our nodeset $\nabla^2(u) = \nabla^2_\SS(u) + \nabla^2_\vec{n}(u)$ where $\nabla^2_\vec{n}(u)$ is the component of the full laplacian $\nabla^2(u)$ in the direction of the normal vector at the particular point on the surface. The idea is to construct a function $s$ that interpolates $u$ on the surface, but for which $\nabla^2_\vec{n}(s)=0$ at each point in our node set. Once this function is obtained, the full gradient is equivalent to the surface gradient of the original function, $\nabla^2_\SS(u) = \nabla^2(s)$.
+</p>
+
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+		<li id="bib1">
+			C&eacute;cile Piret.
+The orthogonal gradients method: a radial basis functions method for solving partial differential equations on arbitrary surfaces.
+<em>Journal of Computational Physics</em>, 231(14):4662 &ndash; 4675, 2012.
+URL: <a href="http://www.sciencedirect.com/science/article/pii/S0021999112001477">http://www.sciencedirect.com/science/article/pii/S0021999112001477</a>, <a href="https://doi.org/https://doi.org/10.1016/j.jcp.2012.03.007">doi:https://doi.org/10.1016/j.jcp.2012.03.007</a>.
+		</li>
+	</ol>
+</p>
+</div>
+
+</div>
+</body>
+
+<script>includeHTML();</script>
+
+</html>
