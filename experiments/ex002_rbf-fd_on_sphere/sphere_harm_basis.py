@@ -279,6 +279,12 @@ def gen_sphere_harm_basis(degree, nodes, projectors):
         return P, rhs_x, rhs_y, rhs_z
     
     x, y , z = nodes[:,0], nodes[:,1], nodes[:,2]
+    '''    
+    x = nodes[:,0] - nodes[0,0]
+    y = nodes[:,1] - nodes[0,1]
+    z = nodes[:,2] - nodes[0,2]
+    '''
+    
     num_cols = (degree + 1)**2
     P = np.zeros((n, num_cols))
     j = 0
