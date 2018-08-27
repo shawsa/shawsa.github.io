@@ -1,0 +1,19 @@
+sphere_harm_1.pickle
+r^3 augmented with spherical harmonics up to degree 3 with stencil size 31.
+Shows good convergence for degrees 1 and up. NOTE: the spherical harmonics
+were not scaled or centered in the stencil.
+
+sphere_harm_1.pickle
+r^3 augmented with spherical harmonics up to degree 6 with stencil size 101.
+Shows good convergence for degrees 1 through 3 and up. Degrees 4 through 6
+become bad after 6400 total nodes are used. NOTE: the spherical harmonics
+were not scaled or centered in the stencil.
+
+sphere_harm_survey_0.pickle
+rbf_labels = ['r^6*log(r)', 'r^7', 'r^8*log(r)', 'r^9']
+basis_degs = range(4)
+Augmented with spherical harmonics. The spherical harmonic terms were centered
+to the stencil center but they were not scaled.
+Shows good convergence for sufficient degree and improving convergence for 
+higher degree RBF until degree 3 at which point they are the same. This 
+may be due to using a second degree spherical harmonic as the test function.

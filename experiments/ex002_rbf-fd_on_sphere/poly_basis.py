@@ -4,6 +4,7 @@ partial derivatives were generated usying Sympy
 '''
 
 import numpy as np
+from numpy.linalg import norm
 
 sphere_harm = []
 sphere_harm.append( lambda x, y , z :1+0*x)
@@ -270,6 +271,7 @@ sphere_harm_grad_z.append( lambda x, y , z :x**6 - 15*x**4*y**2 + 15*x**2*y**4 -
 sphere_harm_grad_z.append( lambda x, y , z :0)
 
 def gen_sphere_harm_basis(degree, nodes, projectors):
+    nodes = (nodes - nodes[0]) #/norm(nodes[0] - nodes[-1])
     n = len(nodes)
     if degree == -1:
         P = np.zeros((n, 0))
@@ -278,12 +280,7 @@ def gen_sphere_harm_basis(degree, nodes, projectors):
         rhs_z = np.zeros((0, n))
         return P, rhs_x, rhs_y, rhs_z
     
-    x, y , z = nodes[:,0], nodes[:,1], nodes[:,2]
-    '''    
-    x = nodes[:,0] - nodes[0,0]
-    y = nodes[:,1] - nodes[0,1]
-    z = nodes[:,2] - nodes[0,2]
-    '''
+    x, y, z = nodes[:,0], nodes[:,1], nodes[:,2]
     
     num_cols = (degree + 1)**2
     P = np.zeros((n, num_cols))
@@ -304,3 +301,36 @@ def gen_sphere_harm_basis(degree, nodes, projectors):
             rhs_z[row, col] = proj[2] @ gradient
     rhs_x, rhs_y, rhs_z = rhs_x.T, rhs_y.T, rhs_z.T
     return P, rhs_x, rhs_y, rhs_z
+
+def get_poly_basis(deg, nodes, projectors):
+    num_nodes = len(nodes)
+    if deg == -1:
+        P = np.zeros((num_nodes, 0))
+        rhs_x = np.zeros((0, num_nodes))
+        rhs_y = np.zeros((0, num_nodes))
+        rhs_z = np.zeros((0, num_nodes))
+        return P, rhs_x, rhs_y, rhs_z
+    if deg == 0:
+        P = np.ones((num_nodes, 1))
+        rhs_x = np.zeros((1, num_nodes))
+        rhs_y = np.zeros((1, num_nodes))
+        rhs_z = np.zeros((1, num_nodes))
+        return P, rhs_x, rhs_y, rhs_z
+    
+    if deg == 1:
+        P = np.ones((num_nodes, 4))
+        P[:,1:] = nodes - nodes[0]
+        
+        rhs_x = np.array([ proj@[[1],[0],[0]] for proj in projectors])
+        rhs_x = rhs_x.reshape((num_nodes,3)).T
+        rhs_x = np.block([[np.zeros((1, num_nodes))], [rhs_x]])
+        
+        rhs_y = np.array([ proj@[[0],[1],[0]] for proj in projectors])
+        rhs_y = rhs_y.reshape((num_nodes,3)).T
+        rhs_y = np.block([[np.zeros((1, num_nodes))], [rhs_y]])
+
+        rhs_z = np.array([ proj@[[0],[0],[1]] for proj in projectors])
+        rhs_z = rhs_z.reshape((num_nodes,3)).T
+        rhs_z = np.block([[np.zeros((1, num_nodes))], [rhs_z]])
+
+        return P, rhs_x, rhs_y, rhs_z
