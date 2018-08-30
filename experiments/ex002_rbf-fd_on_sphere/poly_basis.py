@@ -271,7 +271,8 @@ sphere_harm_grad_z.append( lambda x, y , z :x**6 - 15*x**4*y**2 + 15*x**2*y**4 -
 sphere_harm_grad_z.append( lambda x, y , z :0)
 
 def gen_sphere_harm_basis(degree, nodes, projectors):
-    nodes = (nodes - nodes[0]) #/norm(nodes[0] - nodes[-1])
+    scaling = 1/norm(nodes[0] - nodes[-1])
+    nodes = (nodes - nodes[0]) * scaling
     n = len(nodes)
     if degree == -1:
         P = np.zeros((n, 0))
@@ -299,7 +300,7 @@ def gen_sphere_harm_basis(degree, nodes, projectors):
             rhs_x[row, col] = proj[0] @ gradient
             rhs_y[row, col] = proj[1] @ gradient
             rhs_z[row, col] = proj[2] @ gradient
-    rhs_x, rhs_y, rhs_z = rhs_x.T, rhs_y.T, rhs_z.T
+    rhs_x, rhs_y, rhs_z = rhs_x.T * scaling , rhs_y.T * scaling, rhs_z.T * scaling
     return P, rhs_x, rhs_y, rhs_z
 
 def get_poly_basis(deg, nodes, projectors):
