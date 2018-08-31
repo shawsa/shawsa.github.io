@@ -1,0 +1,150 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Meeting Notes</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\MM}{\mathbb{M}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../index.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Thursday August 30<sup>th</sup>, 2018</span> <br>
+<span class="author">Attendees: Daniel, Varun, Grady, Andrew, and Sage </span> <br>
+<span class="updated">Thu Aug 30 12:24:24 2018</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+At the meeting we reviewed Sage's results for the steady state solution to $\Delta_\SS u = f(x)$. There was an interesting case where $f$ was a low degree spherical harmonic for which the choice of RBF was irrelevant when augmented with sufficiently high degree spherical harmonics. We formed a hypothesis as to why. We also reviewed Daniel's 1-D advection results for time dependent wave-speed. Lastly we discussed attending the upcomming <a href="http://www.cs.ubc.ca/~greif/PNWNAS2018">Pacific Northwest Numerical Analysis Seminar</a> (PNWNAS) being held this October in Vancouver.
+</p>
+
+<div class="contents">
+<ol>
+	<li>Tasks</li>
+	<ol>
+		<li>Daniel</li>
+		<li>Sage</li>
+	</ol>
+	<li>Augmenting with Spherical Harmonics</li>
+	<li>References</li>
+</ol>
+</div>
+
+<p>
+The next meeting is scheduled for on September 6<sup>th</sup> at 10 am.
+</p>
+<!--************************************************************************-->
+<h1>Tasks</h1>
+
+<h2>Daniel</h2>
+<p>
+<ul>
+    <li>Modify code so that the wave speed is a function of both time and space.</li>
+</ul>
+</p>
+
+<h2>Sage</h2>
+<p>
+<ul>
+    <li>Learn and implement the RBF-OGr method.</li>
+    <li>Test our hypothesis explaining why the choice of RBF is irellevant in the special case discussed below.</li>
+    <li>Test the difference between scaling and not scaling the spherical harmonic terms for a large node set and a high degree forcing function. One test should be sufficient.</li>
+    <li>Find an example where $\phi(r)=r^9$ attains better accuracy than the gaussian.$</li>
+    <li>Add the orders of convergence to our plots.</li>
+    <li>Research the Skeel Condition Number<span class="cite" src="HIGHAM2002"><b>[<a href="#bib1">1</a>]</b></span>.</li>
+    <li>Research sphereical harmonics.</li>
+</ul>
+</p>
+
+
+<!--************************************************************************-->
+<h1>Error is independant of RBF?</h1>
+<p>
+The two plots below show the error of our method using a variety of RBFs augmented with up to 2<sup>nd</sup> and 3<sup>rd</sup> degree polynomials respectively for the problem $\Delta_\SS u = Y_{2,2}$. In the second plot, the errors seem to be independent of the choice of RBF. We susspected that this is due to the use of a second degree spherical harmonic and tested it by using $Y_{4,-3}$ (not shown here), and indeed the error depended on the choice of RBF up to 5<sup>th</sup> degree terms. This seems to confirm our suspicion that the phenomenon is due to the particular form of the forcing term, but does not explain why?
+</p>
+<img src="20180830/rbf_indep2.png">
+<p>
+Grady's hypothesis is that the gradient is recovered exactly by the shperical harmonic basis terms but error is introduced by iterated differentiation. This will be tested in <a href="../experiments/ex003_RBF_independent_error.html">Experiment 003</a>.
+</p>
+
+
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+		<li id="bib1">
+			Nicholas&nbsp;J. Higham.
+<em>Accuracy and Stability of Numerical Algorithms</em>.
+University of Manchester, 2002.
+URL: <a href="https://epubs.siam.org/doi/abs/10.1137/1.9780898718027.fm">https://epubs.siam.org/doi/abs/10.1137/1.9780898718027.fm</a>, <a href="https://arxiv.org/abs/https://epubs.siam.org/doi/pdf/10.1137/1.9780898718027.fm">arXiv:https://epubs.siam.org/doi/pdf/10.1137/1.9780898718027.fm</a>, <a href="https://doi.org/10.1137/1.9780898718027.fm">doi:10.1137/1.9780898718027.fm</a>.
+		</li>
+	</ol>
+</p>
+</div>
+
+</div>
+</body>
+
+<script>includeHTML();</script>
+
+</html>
