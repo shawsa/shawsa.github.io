@@ -71,7 +71,7 @@
 <hr>
 
 <p class="intro">
-It has been obsereved that when using iterated differentiation to solve the problem $\Delta_\SS u = Y_{4,-3}$ on the unit sphere, if the degree of the basis terms is 5 (i.e. one higher than the degree of the forcing function) then the error is independent of the choice of RBF. We attempt to explain this behavior. 
+It has been obsereved that when using iterated differentiation to solve the problem $\Delta_\SS u = -20Y_{4,-3}$ on the unit sphere, if the degree of the basis terms is 5 (i.e. one higher than the degree of the forcing function) then the error is independent of the choice of RBF. We attempt to explain this behavior. 
 </p>
 
 <div class="contents">
@@ -84,8 +84,48 @@ It has been obsereved that when using iterated differentiation to solve the prob
 
 <!--************************************************************************-->
 
-<h1>Augmenting With Spherical Harmonics</h1>
+<h1>Observation</h1>
+<p>
+The two plots below show the error of our method using a variety of RBFs augmented with up to 2<sup>nd</sup> and 3<sup>rd</sup> degree polynomials respectively for the problem $\Delta_\SS u = -2(2+1)Y_{2,2}$. In the second plot, the errors seem to be independent of the choice of RBF. We susspected that this is due to the use of a second degree spherical harmonic and tested it by using $-4(4+1)Y_{4,-3}$ (not shown here), and indeed the error depended on the choice of RBF up to 5<sup>th</sup> degree terms. This seems to confirm our suspicion that the phenomenon is due to the particular form of the forcing term, but does not explain why it leads to error independent of the RBF?
+</p>
+<img src="ex003_RBF_independent_error/rbf_indep.png">
 
+<h1>Hypothesis</h1>
+<p>
+We expect that when we augment with terms up to one degree higher than the degree of the forcing function that our approximation to the surface gradient will be exact, and that error is comming from using iterated differentiation in the approximation of the surface laplacian. We can check this by evaluating 
+$\begin{bmatrix} 
+    \mathcal{G}^x u(\vec{x})&
+    \mathcal{G}^y u(\vec{x})& 
+    \mathcal{G}^zu(\vec{x})
+\end{bmatrix}^T$
+at a point, projecting onto the tangent plane, and directly comparing it to the surface gradient. We expect to find that the coefficients are exact for the computation of the gradient, but that error is introduced in the iterated differentiation step. 
+</p>
+
+<p>
+We test this hypothesis in this <a href="ex003_RBF_independent_error/finite_difference_exact.ipynb" download>Jupyter Notebook</a> which requires <a href="ex003_RBF_independent_error/poly_basis.py" download>poly_basis.py</a>.
+</p>
+
+<h1>Results and Conclusion</h1>
+<p>
+Our hypothesis was slightly wrong, though the reasoning was almost correct. The surface gradient is exact when we augment with polynomials up to the degree of the forcing term, but the surface laplacian is not exact. When we increase the degree of the augmented terms to one higher than the degree of the forcing term the surface laplacian is exact. The choice of RBF becomes irrelevant when our weights for the surface laplacian are exact for polynomials of the degree of our forcing term. The error is not being introduced by iterated differentiation.
+<p>
+
+<!--h2>Proof</h2>
+<p>
+Let $f:\RR^3 \to \RR$ where $f$ is a linear combination of polynomials of at most degree $d$. Let $\{\vec{x}_i\}_{i=1}^n$ be a collection of points on some surface in $\RR^3$, and let $\{\omega_i\}_{i=1}^n$ be the weights that approximate the surface laplacian at $\vec{x}_i$, obtained via RBF-FD iterated differentiation, and augmenting with spherical harmonics up to degree $d+1$. Then $\Delta_\SS^2 f(\vec{x}) \vert_{\vec{x}=\vec{x}_1} = \sum_{i=1}^n\omega_i
+</p>
+
+<p>
+<i>proof</i>:
+</p>
+
+<p>
+
+</p>
+
+<p align='right'>
+$\blacksquare$
+</p-->
 
 <!--***************************************************************************
 *******************************************************************************
