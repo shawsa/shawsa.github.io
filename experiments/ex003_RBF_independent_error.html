@@ -106,7 +106,7 @@ at a point, projecting onto the tangent plane, and directly comparing it to the 
 We test this hypothesis in this <a href="ex003_RBF_independent_error/finite_difference_exact.ipynb" download>Jupyter Notebook</a> which requires <a href="ex003_RBF_independent_error/poly_basis.py" download>poly_basis.py</a>.
 </p>
 
-<h1>Results and Conclusion</h1>
+<h1>Results</h1>
 <p>
 Our hypothesis was slightly wrong, though the reasoning was almost correct. The surface gradient is exact when we augment with polynomials up to the degree of the forcing term, but the surface laplacian is not exact. When we increase the degree of the augmented terms to one higher than the degree of the forcing term the surface laplacian is exact. The choice of RBF becomes irrelevant when our weights for the surface laplacian are exact for polynomials of the degree of our forcing term. The error is not being introduced by iterated differentiation.
 <p>
@@ -127,6 +127,11 @@ Let $f:\RR^3 \to \RR$ where $f$ is a linear combination of polynomials of at mos
 <p align='right'>
 $\blacksquare$
 </p-->
+
+<h1>Explaination</h1>
+<p>
+Since the approximation is exact for the surface laplacian the error must not be comming from the process. In fact, the error is comming from the lagrange multiplier to force a unique solution. The extra condition we require is that the sum of the function values over all points is zero: $\sum u_i = 0$. For the shperical harmonics (above degree 0) their average value over all points is $0$ however the average value of our points only approaches zero with spectral accuracy (please confirm). In fact, when we require that the sum of the points is equal to the sum of the true values at those points, we obtain machine precision.
+</p>
 
 <!--***************************************************************************
 *******************************************************************************
