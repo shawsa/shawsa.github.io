@@ -6,6 +6,10 @@ partial derivatives were generated usying Sympy
 import numpy as np
 from numpy.linalg import norm
 
+sphere_harm_degs = []
+for deg in range(8):
+    sphere_harm_degs += [deg] * (2*deg+1)
+
 sphere_harm = []
 sphere_harm.append( lambda x, y , z :1+0*x)
 sphere_harm.append( lambda x, y , z :y)

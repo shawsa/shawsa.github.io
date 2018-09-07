@@ -204,6 +204,8 @@ def compile_main():
 #
 ##################################################################################
 
+replace_strings = [('\xe9', '&eacute;')]
+
 def build_bib_dict():
     pybtex_style = pybtex.plugin.find_plugin('pybtex.style.formatting', 'plain')()
     pybtex_html_backend = pybtex.plugin.find_plugin('pybtex.backends', 'html')()
@@ -224,6 +226,8 @@ def build_bib_dict():
         
         html = html.split("<dd>")[1]
         html = html.split("</dd>")[0]
+        for old_string, new_string in replace_strings:
+            html = html.replace(old_string, new_string)
         
         key = next(iter(data.entries))
         bib_dict[key] = html
@@ -235,7 +239,7 @@ def write_full_bib(bib_dict, file_name):
     f.write('<html><body><ol>')
     entries = [v for k,v in bib_dict.items()]
     for v in sorted(entries):
-        f.write('<li>' + v + '</li>')
+        f.write('<li>' + v + '</li><br>')
     f.close()
 
 ##################################################################################

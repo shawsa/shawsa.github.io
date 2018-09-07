@@ -1,0 +1,186 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Meeting Notes</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\MM}{\mathbb{M}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../index.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Thursday September 9<sup>th</sup>, 2018</span> <br>
+<span class="author">Attendees: Daniel, Varun, Grady, Andrew, and Sage </span> <br>
+<span class="updated">Thu Sep  6 19:18:28 2018</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+
+</p>
+
+<div class="contents">
+<ol>
+	<li>Sage's Tasks</li>
+	<li>Error is independant of RBF</li>
+	<ol>
+		<li>Theorem on Exactness for Polynomials</li>
+	</ol>
+	<li>Symmetric Orthogonal Gradients Method</li>
+	<ol>
+		<li>RBF-OGr Summary</li>
+		<li>The Symmetric Case</li>
+	</ol>
+	<li>Meeting Followup</li>
+	<ol>
+		<li>Surpassing the Gaussian</li>
+	</ol>
+	<li>References</li>
+</ol>
+</div>
+
+<p>
+We reviewed and explained the phenomenon that is the subject of <a href="../experiments/ex003_RBF_independent_error.html">experiment 003</a> wherein the error seemed to be independent of the choice of RBF. We reviewed, in detial, Dr. Piret's paper <span class="cite" src="PIRET2012"><b>[<a href="#bib1">1</a>]</b></span> on the Orthogonal Gradient Method; and have decided that Sage will implement the Symmetric Orthogonal Gradient Method.
+</p>
+<!--************************************************************************-->
+<h1>Sage's Tasks</h1>
+
+<p>
+<ul>
+    <li>Learn and implement the RBF Symmetric OGr method.</li>
+    <li><s>Find an example where $\phi(r)=r^9$ attains better accuracy than the gaussian.</s></li>
+    <li>Add the symmetric T-design points as a node-set.</li>
+    <li>Add more node sets.</li>
+    <li>Research the Skeel Condition Number<span class="cite" src="HIGHAM2002"><b>[<a href="#bib2">2</a>]</b></span>.</li>
+    <li>Research sphereical harmonics.</li>
+</ul>
+</p>
+
+
+<!--************************************************************************-->
+<h1>Error is independant of RBF</h1>
+<p>
+In the <a href="20180830.html">previous meeting</a> we outlined a phenomenon wherein the error was independent of the choice of RBF, and the exploration of which is the subject of <a href="../experiments/ex003_RBF_independent_error.html">experiment 003</a>. The the conclusion (at the time) of this experiment, we asserted that some property about iterated differentiation was requiring one degree higher. This may not be the case.
+</p>
+
+<p>
+The new explaination is that the particular geometry of the sphere is to blame. On the sphere, the normal vector at a point is given by $\vec{n} = \frac{1}{r}[x, y, z]^T$, where each entry of the gradient is a one degree polynomial. Thus if our interpolant $s(\vec{x})$ is a polynomail of degree $n$ then $(\vec{n}\cdot \nabla)s(\vec{x})$ will be a polynomial of at most degree $n+1$. Thus if our approximation to $(\vec{n}\cdot \nabla)$ is exact for polynomails of degree $n+1$ our approximation to $\Delta_\SS$ will be exact as well. This sugests the following theorem.
+</p>
+
+<h2>Theorem on Exactness for Polynomials</h2>
+<p>
+<b>Theorem</b>: Let $\SS$ be a surface such that the normal vector at any point on the surface can be written component wise as $n$<sup>th</sup> degree polynomails. Then the projection method using PHS-RBFs and augmented with a basis for polynomials of degree $n+m$ will be exact for polynomials of degree $m$.
+</p>
+
+<h1>Symmetric Orthogonal Gradients Method</h1>
+<p>
+The Radial Basis Function Orthogonal Gradients Method (RBF-OGr) is detailed in <span class="cite" src="PIRET2012"><b>[<a href="#bib1">1</a>]</b></span>. Dr. Piret has since improved the method to the Symmetric OGr Method which Grady outlined in meeting.
+</p>
+
+<h2>RBF-OGr Summary</h2>
+<p>
+In the RBF-OGr method, we are given $n$ points, and we generate $2n$ more points such that for each original point we have two new points, one at distance $\delta$ in the direction of the normal vector and another at distance $\delta$ in the negative of the direction of the normal vector. An RBF interpolant $s(\vec{x})$ is constructed using $3n$ basis funtions centered at each of the $3n$ points that interpolates the original $n$ points. This gives an underdetermined system. We therefore add $2n$ more conditions. We require that $(\vec{n} \cdot \nabla) s(\vec{x}) \vert_{\vec{x}=\vec{x}_i} = 0$ where each $\vec{x}_i$ is one of the original $n$ points. This adds an additional $n$ conditions, one for each point. We also require that $(\vec{n} \cdot \nabla)(\vec{n} \cdot \nabla) s(\vec{x}) \vert_{\vec{x}=\vec{x}_i} = 0$ for the final $n$ conditions. 
+</p>
+
+<p>
+The solution to this $(3n)\times(3n)$ linear system gives the weights for an RBF interpolant for which the lapplacian of the interpolant is equal to the surface laplacian at all $n$ points. Analytically deriving the laplacian of this interpolant gives the weights for the surface laplacian.
+</p>
+
+<h2>The Symmetric Case</h2>
+<p>
+
+</p>
+
+<h1>Meeting Followup</h1>
+
+<h2>Surpassing the Gaussian</h2>
+<p>
+When the shape parameter was optimized for each stencil, the best that the gaussain could achieve was between $10^-4$ and $10^-5$ error (except when the spherical harmonics exactly reproduced the operator). Due to ill-conditioning, the gaussian wasn't tested beyond $n=6400$ points. However, the PHS with 4<sup>th</sup> degree spherical harmonics added attained far higher accuracy and higher than 3<sup>rd</sup> order convergence.
+</p>
+<img src="20180906/PHS_better_than_gaussian.png">
+
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+		<li id="bib1">
+			C&eacute;cile Piret.
+The orthogonal gradients method: a radial basis functions method for solving partial differential equations on arbitrary surfaces.
+<em>Journal of Computational Physics</em>, 231(14):4662 &ndash; 4675, 2012.
+URL: <a href="http://www.sciencedirect.com/science/article/pii/S0021999112001477">http://www.sciencedirect.com/science/article/pii/S0021999112001477</a>, <a href="https://doi.org/https://doi.org/10.1016/j.jcp.2012.03.007">doi:https://doi.org/10.1016/j.jcp.2012.03.007</a>.
+		</li>
+		<li id="bib2">
+			Nicholas&nbsp;J. Higham.
+<em>Accuracy and Stability of Numerical Algorithms</em>.
+University of Manchester, 2002.
+URL: <a href="https://epubs.siam.org/doi/abs/10.1137/1.9780898718027.fm">https://epubs.siam.org/doi/abs/10.1137/1.9780898718027.fm</a>, <a href="https://arxiv.org/abs/https://epubs.siam.org/doi/pdf/10.1137/1.9780898718027.fm">arXiv:https://epubs.siam.org/doi/pdf/10.1137/1.9780898718027.fm</a>, <a href="https://doi.org/10.1137/1.9780898718027.fm">doi:10.1137/1.9780898718027.fm</a>.
+		</li>
+	</ol>
+</p>
+</div>
+
+</div>
+</body>
+
+<script>includeHTML();</script>
+
+</html>

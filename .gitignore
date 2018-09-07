@@ -1,6 +1,7 @@
 .ipynb_checkpoints/*
 texaux/*
 cascsum
+experiments/ex002_rbf-fd_on_sphere/pnts/*
 
 *.pdf
 __pycache__
