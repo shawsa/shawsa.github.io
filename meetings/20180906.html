@@ -105,8 +105,8 @@ We reviewed and explained the phenomenon that is the subject of <a href="../expe
 <ul>
     <li>Learn and implement the RBF Symmetric OGr method.</li>
     <li><s>Find an example where $\phi(r)=r^9$ attains better accuracy than the gaussian.</s></li>
-    <li>Add the symmetric T-design points as a node-set.</li>
-    <li>Add more node sets.</li>
+    <li><s>Add the symmetric T-design points as a node-set.</s></li>
+    <li><s>Add more node sets.</s></li>
     <li>Research the Skeel Condition Number<span class="cite" src="HIGHAM2002"><b>[<a href="#bib2">2</a>]</b></span>.</li>
     <li>Research sphereical harmonics.</li>
 </ul>
@@ -142,11 +142,6 @@ In the RBF-OGr method, we are given $n$ points, and we generate $2n$ more points
 The solution to this $(3n)\times(3n)$ linear system gives the weights for an RBF interpolant for which the lapplacian of the interpolant is equal to the surface laplacian at all $n$ points. Analytically deriving the laplacian of this interpolant gives the weights for the surface laplacian.
 </p>
 
-<h2>The Symmetric Case</h2>
-<p>
-
-</p>
-
 <h1>Meeting Followup</h1>
 
 <h2>Surpassing the Gaussian</h2>
@@ -155,6 +150,13 @@ When the shape parameter was optimized for each stencil, the best that the gauss
 </p>
 <img src="20180906/PHS_better_than_gaussian.png">
 
+<h2>Nodeset Survey</h2>
+<p>
+Four new nodesets were added. The minimum energy nodes, the maximum determiant nodes, the symmetric T-design nodes, and the equal area mesh icosohedral nodes. The plots below show their performance when using $r^9$ and the gaussian when augmented with shperical harmonic basis terms up to degrees 2, 3, and 4. 
+</p>
+<img src="20180906/nodeset_survey_deg_2.png">
+<img src="20180906/nodeset_survey_deg_3.png">
+<img src="20180906/nodeset_survey_deg_4.png">
 
 <!--***************************************************************************
 *******************************************************************************

@@ -22,7 +22,7 @@
 *******************************************************************************
 ****************************************************************************-->
 
-<title>RBF-Interpolation</title>
+<title>RBF-OGr</title>
 
 <!--***************************************************************************
 *******************************************************************************
@@ -61,9 +61,9 @@
 ****************************************************************************-->
 
 <p class="title_and_author">
-<span class="title">RBF-Interpolation</span> <br>
+<span class="title">RBF-OGr</span> <br>
 <span class="author">Authors: Sage Shaw</span> <br>
-<span class="updated">Fri Sep  7 22:38:22 2018</span> <br>
+<span class="updated">Fri Sep  7 22:46:55 2018</span> <br>
 <span hidden id="status">c</span>
 <span id="status_message" class="status_message"></span>
 </p>
@@ -71,32 +71,48 @@
 <hr>
 
 <p class="intro">
-Given a set of distinct points $\{\vec{x}_i\}_{i=1}^n \subseteq D$ and function values $\{f_i\}_{i=1}^n \subseteq \RR$ (or $\CC$) at those points an interpolant $s : D \to \RR$ is a function such that $s(\vec{x}_i) = f_i$ for $i=1, 2, ..., n$. This article discusses RBF interpolation and compares it to polynomial interpolation.
+This article outlines the RBF Orthogonal Gradients method for solving approximating surface operators as described in <span class="cite" src="PIRET2012"><b>[<a href="#bib1">1</a>]</b></span>.
 </p>
 
 <div class="contents">
 <ol>
-	<li>Polynomial Interpolation</li>
-	<li>RBF Interpolation</li>
+	<li>Overview</li>
+	<li>Low Order Method</li>
+	<li>High Order Method</li>
+	<li>Symmetric Method</li>
 	<li>References</li>
 </ol>
 </div>
-
-<p>
-For this article $D$ will denote the domain, $\{\vec{x}_i\}_{i=1}^n \subseteq D$ will denote distinct points in our domain, and $\{f_i\}_{i=1}^n \subseteq \RR$ (or $\CC$) will denote function values at the chosen points in our domain. The function $s : D \to \RR$ is a function such that $s(\vec{x}_i) = f_i$ for $i=1, 2, ..., n$ will denote the interpolant.
-<p>
-
 <!--************************************************************************-->
-<h1>Polynomial Interpolation</h1>
+
+<h1>Overview</h1>
 <p>
-    
+Given a set of points $\{\vec{x}_i\}_{i=1}^n$ from a surface $\SS$, and an operator $\mathcal{L}$, we would like to approximate the coressponding surface operator $\mathcal{L}_\SS$ of a function $u$ as a weighted sum of the function values $\{u(\vec{x}_i)\}_{i=1}^n$. In effect, we want the finite difference weights.
 </p>
 
-<!--************************************************************************-->
-<h1>RBF Interpolation</h1>
 <p>
-<a href="interpolation/sphere_interp.py" target="_download">Source code</a> for RBF interpolation on a sphere.
+The idea is to construct an RBF interpolant $s(\vec{x})$ such that it interpolates the points, and has the property that $\mathcal{L}s(\vec{x}_i) = \mathcal{L}_\SS s(\vec{x}_i)$ for all $i=1, 2, ..., n$.
 </p>
+
+<p>
+Three versions of this method are outlined here. The high order method, and low order method are from <span class="cite" src="PIRET2012"><b>[<a href="#bib1">1</a>]</b></span>. The symmetric method, is also by Dr. Piret, but has yet to be published.
+</p>
+
+<h1>Low Order Method</h1>
+<p>
+
+</p>
+
+<h1>High Order Method</h1>
+<p>
+
+</p>
+
+<h1>Symmetric Method</h1>
+<p>
+
+</p>
+
 
 <!--***************************************************************************
 *******************************************************************************
@@ -104,6 +120,12 @@ For this article $D$ will denote the domain, $\{\vec{x}_i\}_{i=1}^n \subseteq D$
 <h1>References</h1>
 <p class="bibliography">
 	<ol>
+		<li id="bib1">
+			C&eacute;cile Piret.
+The orthogonal gradients method: a radial basis functions method for solving partial differential equations on arbitrary surfaces.
+<em>Journal of Computational Physics</em>, 231(14):4662 &ndash; 4675, 2012.
+URL: <a href="http://www.sciencedirect.com/science/article/pii/S0021999112001477">http://www.sciencedirect.com/science/article/pii/S0021999112001477</a>, <a href="https://doi.org/https://doi.org/10.1016/j.jcp.2012.03.007">doi:https://doi.org/10.1016/j.jcp.2012.03.007</a>.
+		</li>
 	</ol>
 </p>
 </div>

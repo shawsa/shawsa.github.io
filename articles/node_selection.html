@@ -63,7 +63,7 @@
 <p class="title_and_author">
 <span class="title">Node Selection</span> <br>
 <span class="author">Authors: Sage Shaw</span> <br>
-<span class="updated">Wed May 30 15:21:49 2018</span> <br>
+<span class="updated">Fri Sep  7 22:38:22 2018</span> <br>
 <span hidden id="status">c</span>
 <span id="status_message" class="status_message"></span>
 </p>
@@ -79,6 +79,9 @@ This article is a collection of methods for choosing points for RBF interpolatio
 	<li>Uniform Grids</li>
 	<li>Halton Points</li>
 	<li>Vogel Nodes</li>
+	<ol>
+		<li>Vogel Nodes on a Sphere</li>
+	</ol>
 	<li>References</li>
 </ol>
 </div>
@@ -92,7 +95,7 @@ This article is a collection of methods for choosing points for RBF interpolatio
 <!--************************************************************************-->
 <h1>Halton Points</h1>
 <p>
-Halton points are pseudorandomly generated points that mimic uniformly distributed random points except that they do not cluster. They were developed by J.H. Halton in 1960 and rely on prime numbers<span class="cite" src="HALTON1960"><b>[<a href="#bib2">2</a>]</b></span>. The implementation we use was developed by John Burkhardt<span class="cite" src="BURKHARDT2016"><b>[<a href="#bib1">1</a>]</b></span> and can be downloaded <a href="node_selection/halton.py" download>here</a>.
+Halton points are pseudorandomly generated points that mimic uniformly distributed random points except that they do not cluster. They were developed by J.H. Halton in 1960 and rely on prime numbers<span class="cite" src="HALTON1960"><b>[<a href="#bib1">1</a>]</b></span>. The implementation we use was developed by John Burkhardt<span class="cite" src="BURKHARDT2016"><b>[<a href="#bib2">2</a>]</b></span> and can be downloaded <a href="node_selection/halton.py" download>here</a>.
 </p>
 <img src="node_selection/halton_2d.png" width=49% float='left'>
 <img src="node_selection/random_2d.png" width=49% float='right'>
@@ -135,16 +138,16 @@ Distributing nodes on a sphere is slightly different. See this <a href="https://
 <p class="bibliography">
 	<ol>
 		<li id="bib1">
-			John Burkardt.
-Halton.
-2016.
-URL: <a href="https://people.sc.fsu.edu/~jburkardt/py_src/halton/halton.html">https://people.sc.fsu.edu/~jburkardt/py_src/halton/halton.html</a>.
-		</li>
-		<li id="bib2">
 			J.H. Halton.
 On the efficiency of certain quasi-random sequences of points in evaluating multi-dimensional integrals.
 <em>Numerische Mathematik</em>, 2:84&ndash;90, 1960.
 URL: <a href="http://eudml.org/doc/131448">http://eudml.org/doc/131448</a>.
+		</li>
+		<li id="bib2">
+			John Burkardt.
+Halton.
+2016.
+URL: <a href="https://people.sc.fsu.edu/~jburkardt/py_src/halton/halton.html">https://people.sc.fsu.edu/~jburkardt/py_src/halton/halton.html</a>.
 		</li>
 	</ol>
 </p>

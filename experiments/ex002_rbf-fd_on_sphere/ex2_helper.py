@@ -93,6 +93,14 @@ def gen_max_det_nodes(n_try):
     nodes = loadmat(file_path)['x']
     return len(nodes), nodes
 
+equ_area_icos_Ns = [12, 42, 162, 642, 2562, 10242, 40962]
+def gen_equ_area_icos_nodes(n_try):
+    i = np.argmin(np.abs([n_try - Ni for Ni in equ_area_icos_Ns]))
+    n = equ_area_icos_Ns[i]
+    file_path = os.path.join('pnts','equal_area_mesh_icos', 'eami%05d.mat'%n)
+    nodes = loadmat(file_path)['x']
+    return len(nodes), nodes
+
 
 ########################################################################################
 #
