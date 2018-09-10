@@ -2,6 +2,7 @@
 texaux/*
 cascsum
 experiments/ex002_rbf-fd_on_sphere/pnts/*
+articles/node_selection/pnts/*
 
 *.pdf
 __pycache__
