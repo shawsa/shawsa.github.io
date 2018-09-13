@@ -1,0 +1,171 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Meeting Notes</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\MM}{\mathbb{M}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../index.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Thursday September 13<sup>th</sup>, 2018</span> <br>
+<span class="author">Attendees: Daniel, Varun, Grady, Andrew, and Sage </span> <br>
+<span class="updated">Thu Sep 13 15:03:32 2018</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+
+</p>
+
+<div class="contents">
+<ol>
+	<li>Sage's Tasks</li>
+	<ol>
+		<li>Code</li>
+		<li>Research</li>
+		<li>Writing</li>
+		<li>Misc</li>
+	</ol>
+	<li>Why does the gaussian give some singular stencils?</li>
+	<li>Meeting Followup</li>
+	<li>References</li>
+</ol>
+</div>
+
+<p>
+We reviewed the error plots in the followup to the previous meeting. We made some interesting observations and asked some questions about why the plots using the gaussian RBF do not converge, but maintain a steady error (more or less) regardless of the number of points used. 
+</p>
+<!--************************************************************************-->
+<h1>Sage's Tasks</h1>
+<h2>Code</h2>
+<p>
+<ul>
+    <li>Implement the RBF Symmetric OGr method.</li>
+    <li>Change order calculation to best fit and plot vs $\sqrt{N}$.</li>
+    <li>Implement time-stepping.</li>
+    <li>Improve performance of the projection method and OGr.</li>
+    <li>Change website compliation to correctly show recent activity.</li>
+</ul>
+</p>
+
+<h2>Research</h2>
+<p>
+<ul>
+    <li>Investigate why the gaussian RBF stencils are sometimes singular.</li>
+    <li>Research the Skeel Condition Number<span class="cite" src="HIGHAM2002"><b>[<a href="#bib1">1</a>]</b></span>.</li>
+    <li>Research sphereical harmonics.</li>
+    <li>Avoiding loops in numpy. General numpy efficiency.</li>
+</ul>
+</p>
+
+<h2>Writing</h2>
+<p>
+<ul>
+    <li>Write the theorem for exactness.</li>
+    <li>Write RBF-FD article.</li>
+    <li>Write RBF-FD Projection Method article.</li>
+    <li>Write RBF-OGr article.</li>
+</ul>
+</p>
+
+<h2>Misc</h2>
+<p>
+<ul>
+    <li>Check on funding for the PNWNAS.</li>
+    <li>Register for the GRE.</li>
+    <li>Select PhD programs.</li>
+</ul>
+</p>
+
+
+<!--************************************************************************-->
+<h1>Why does the gaussian give some singular stencils?</h1>
+<p>
+The plots below show the errors in solving the steady state surface diffusion on the sphere with a a forcing function that is the sum of seven gaussians, using $r^9$ and the gaussian when augmented with shperical harmonic basis terms up to degree5. 
+The plots below show the same test but with a forcing function that is the sum of seven gaussians. In the plot, there are node sets for which the error is not calculated for the gaussian RBF but is for $r^9$. This is because some (at least one) of the RBF-FD stencils for the gaussian were singular and thus were skipped. This should not be the case. We expect that the cause is due to the way we choose an optimized shape parameter. Further investigation is needed. 
+</p>
+<img src="20180906/nodeset_survey_gaussforcing_deg_5.png">
+
+<h1>Meeting Followup</h1>
+
+ 
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+		<li id="bib1">
+			Nicholas&nbsp;J. Higham.
+<em>Accuracy and Stability of Numerical Algorithms</em>.
+University of Manchester, 2002.
+URL: <a href="https://epubs.siam.org/doi/abs/10.1137/1.9780898718027.fm">https://epubs.siam.org/doi/abs/10.1137/1.9780898718027.fm</a>, <a href="https://arxiv.org/abs/https://epubs.siam.org/doi/pdf/10.1137/1.9780898718027.fm">arXiv:https://epubs.siam.org/doi/pdf/10.1137/1.9780898718027.fm</a>, <a href="https://doi.org/10.1137/1.9780898718027.fm">doi:10.1137/1.9780898718027.fm</a>.
+		</li>
+	</ol>
+</p>
+</div>
+
+</div>
+</body>
+
+<script>includeHTML();</script>
+
+</html>
