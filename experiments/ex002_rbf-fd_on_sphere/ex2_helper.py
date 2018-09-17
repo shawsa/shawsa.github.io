@@ -49,6 +49,15 @@ def exact4(node):
 def dist(node1, node2):
     return np.sqrt( (node1[0]-node2[0])**2 + (node1[1]-node2[1])**2 + (node1[2]-node2[2])**2 )
 
+def dist_outer(nodes1, nodes2):
+    n1 = len(nodes1)
+    n2 = len(nodes2)
+    L = nodes1.reshape((1,n1,3))
+    R = nodes2.reshape((n2,1,3))
+    ret = (L-R)**2
+    ret = np.sum(ret,2)
+    return np.sqrt(ret)
+
 ########################################################################################
 #
 # Nodesets

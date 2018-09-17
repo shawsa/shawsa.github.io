@@ -40,3 +40,21 @@ Forcing func is a sum of 7 guassians
                         [2,-13,1],
                         [2,12,-15],
                         [1,0,-1]], dtype=np.float)
+
+node_sets_2.pickle
+Forcing is a sum of seven Gaussians
+sigmas = [2, .5, .3, .1, 5, 2, 1.5]
+ys = np.array([ [0,0,1],
+                [1,-1,1],
+                [2,0,1],
+                [-5,7,0],
+                [2,-13,1],
+                [2,12,-15],
+                [1,0,-1]], dtype=np.float)
+ns = [400 * 2**i for i in range(0,6)]
+basis_degs = range(2,5)
+node_sets = ['spiral', 'sym_t_design', 'min_energy', 'max_det', 'icos']
+rbf_labels = ['r^9', 'gaussian']
+target_cond = 10**12
+
+

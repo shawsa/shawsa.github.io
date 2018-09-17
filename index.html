@@ -63,32 +63,32 @@
 </p>
 <h1>Last Meeting</h1>
 <h2><a href="meetings/20180913.html">Thursday September 13<sup>th</sup>, 2018</a></h2>
-<span class="mod_time">Thu Sep 13 15:03:36 2018</span>
+<span class="mod_time">Mon Sep 17 10:05:28 2018</span>
 <p>
 
 
 
 </p>
 <h1>Recent Articles</h1>
+<h2><a href="articles/numpy_efficiency.html">Numpy Efficiency</a></h2>
+<span class="mod_time">Mon Sep 17 01:17:03 2018</span>
+<p>
+
+One of the most attractive features of Python is that list comprehensions allow the expression of loops in a clear human readable format that avoids indices. In the context of scientific computing, Numpy is often used to merge the speed of C and Fortran libraries with the clear presentation of Python. If one naively wraps Python list comprehensions in Numpy arrays, they lose much of the efficiency provided by Numpy. This article discusses efficient use of Numpy and best practices.
+
+</p>
+<h2><a href="articles/laplacian.html">Laplacian</a></h2>
+<span class="mod_time">Sun Sep 16 22:11:35 2018</span>
+<p>
+
+The laplacian is a second order differential operator. When applied to the function $u$ it is denoted $\nabla^2u$ or $\Delta u$. It is the sum of the second partial derivatives with respect to each dimension. It's notation can be understood by noting that the sum of second partials is the divergence of the gradient $\nabla^2u = (\nabla \cdot \nabla) u$.
+
+</p>
 <h2><a href="articles/node_selection.html">Node Selection</a></h2>
 <span class="mod_time">Sun Sep  9 18:40:39 2018</span>
 <p>
 
 This article is a collection of methods for choosing points for RBF interpolation and RBF-FD.
-
-</p>
-<h2><a href="articles/node_selection2.html">Node Selection</a></h2>
-<span class="mod_time">Sun Sep  9 16:03:26 2018</span>
-<p>
-
-This article is a collection of methods for choosing points for RBF interpolation and RBF-FD.
-
-</p>
-<h2><a href="articles/laplacian.html">Laplacian</a></h2>
-<span class="mod_time">Sat Sep  8 21:59:08 2018</span>
-<p>
-
-The laplacian is a second order differential operator. When applied to the function $u$ it is denoted $\nabla^2u$ or $\Delta u$. It is the sum of the second partial derivatives with respect to each dimension. It's notation can be understood by noting that the sum of second partials is the divergence of the gradient $\nabla^2u = (\nabla \cdot \nabla) u$.
 
 </p>
 <h2><a href="articles/time_stepping.html">Time-Stepping</a></h2>
@@ -106,6 +106,13 @@ Time stepping referes techniques that propagate initial condidtions of an ODE or
 
 </p>
 <h1>Recent Experiments</h1>
+<h2><a href="experiments/ex001_time_stepping.html">Experiment 001 - Time-Stepping</a></h2>
+<span class="mod_time">Sun Sep 16 22:13:31 2018</span>
+<p>
+
+This experiment will test forward and backward Euler <a href="articles/time_stepping.html">time-stepping</a>. We will verify the order of the error.
+
+</p>
 <h2><a href="experiments/ex003_RBF_independent_error.html">Experiment 003 RBF Independent Error</a></h2>
 <span class="mod_time">Sat Sep  1 17:46:26 2018</span>
 <p>
@@ -118,13 +125,6 @@ It has been obsereved that when using iterated differentiation to solve the prob
 <p>
 
 This experiment will set up code to quickly test many variations of RBF-FD on $\SS^2$. We will test many aspects of RBF-FD in this circumstance including how the number of polynomial/spherical harmonic terms affect stability and convergence rates for PHS RBFs and infinitely-differentiable RBFs.
-
-</p>
-<h2><a href="experiments/ex001_time_stepping.html">Experiment 001 - Time-Stepping</a></h2>
-<span class="mod_time">Mon Aug 13 10:03:26 2018</span>
-<p>
-
-This experiment will test forward and backward Euler <a href="articles/time_stepping.html">time-stepping</a>. We will verify the order of the error.
 
 </p>
 </div>

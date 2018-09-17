@@ -1,0 +1,210 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Numpy Efficiency</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../index.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Numpy Efficiency</span> <br>
+<span class="author">Authors: Sage Shaw</span> <br>
+<span class="updated">Mon Sep 17 01:14:55 2018</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+One of the most attractive features of Python is that list comprehensions allow the expression of loops in a clear human readable format that avoids indices. In the context of scientific computing, Numpy is often used to merge the speed of C and Fortran libraries with the clear presentation of Python. If one naively wraps Python list comprehensions in Numpy arrays, they lose much of the efficiency provided by Numpy. This article discusses efficient use of Numpy and best practices.
+</p>
+
+<div class="contents">
+<ol>
+	<li>Outer Products</li>
+	<ol>
+		<li>One Dimensional Points</li>
+		<li>Higher Dimensional Points</li>
+	</ol>
+	<li>References</li>
+</ol>
+</div>
+<!--************************************************************************-->
+
+<h1>Outer Products</h1>
+<h2>One Dimensional Points</h2>
+<p>
+A common technique in RBF methods is to form the RBF intepolation matrix 
+
+$$
+A = \begin{bmatrix}
+\phi(\norm{x_1 - x_1}) & \phi(\norm{x_1 - x_2}) & \cdots & \phi(\norm{x_1 - x_n}) \\
+\phi(\norm{x_2 - x_1}) & \phi(\norm{x_2 - x_2}) & \cdots & \phi(\norm{x_2 - x_n}) \\
+\vdots & \vdots &  & \vdots \\
+\phi(\norm{x_n - x_1}) & \phi(\norm{x_n - x_2}) & \cdots & \phi(\norm{x_n - x_n}) \\
+\end{bmatrix}
+$$
+where $\phi$ is some radial basis function, and $\{x_i\}_{i=1}^n \subseteq \RR$. The index notation $A_{ij} = \phi(\norm{x_i-x_j})$ makes it exeptionally clear how one would create such a matrix in Python:
+</p>
+<p>
+<pre><code class="language-python">def rbf(r, eps):
+    return np.exp(-eps*r**2)
+def dist(x,y):
+    return np.abs(x-y)
+
+n = 50
+eps = .3
+
+xs = np.linspace(0,1,n)
+A = np.array([[rbf(dist(x,y), eps) for y in xs] for x in xs])
+</code></pre>
+</p>
+
+<p>
+This formulation of the RBF interpolation matrix is actually quite slow. While numpy is being used, the bulk of the work is done by the inner list comprehension <code class="language-python">[[rbf(dist(x,y)) for y in xs] for x in xs]</code>, which is really using Python level loops. A much faster solution is to use outer products with Numpy.
+</p>
+
+<p><pre><code class="language-python">def rbf(r, eps):
+    return np.exp(-eps*r**2)
+
+n = 50
+eps = .3
+
+xs = np.linspace(0,1,n)
+A = rbf(np.abs( np.subtract.outer(xs,xs) ), eps)
+</code></pre></p>
+
+<p>
+Here the function <code class="language-python">np.subtract.outer</code> accepts two lists treats one as a row vector and the other as a column vector in order to broadcast the subtaction to form a matrix. It is exactly the same result as the previous code, but the looping is done on a far lower level.
+</p>
+
+<h2>Higher Dimensional Points</h2>
+<p>
+The <code class="language-python">np.subtract.outer</code> function takes two one dimensional lists, but one of the beauties of RBF methods is that they easily generalize to higher dimensions. In higher dimensions the RBF interpolation matrix takes the form
+$$
+A = \begin{bmatrix}
+\phi(\norm{\vec{x}_1 - \vec{x}_1}) & \phi(\norm{\vec{x}_1 - \vec{x}_2}) & \cdots & \phi(\norm{\vec{x}_1 - \vec{x}_n}) \\
+\phi(\norm{\vec{x}_2 - \vec{x}_1}) & \phi(\norm{\vec{x}_2 - \vec{x}_2}) & \cdots & \phi(\norm{\vec{x}_2 - \vec{x}_n}) \\
+\vdots & \vdots &  & \vdots \\
+\phi(\norm{\vec{x}_n - \vec{x}_1}) & \phi(\norm{\vec{x}_n - \vec{x}_2}) & \cdots & \phi(\norm{\vec{x}_n - \vec{x}_n}) \\
+\end{bmatrix}
+$$
+where $\phi$ is some radial basis function, and $\{\vec{x}_i\}_{i=1}^d \subseteq \RR^n$. Again the index notation $A_{ij} = \phi(\norm{\vec{x}_i-\vec{x}_j})$ makes it exeptionally clear how one would create such a matrix in Python - in exactly the same way!
+</p>
+<p>
+<pre><code class="language-python">def rbf(r, eps):
+    return np.exp(-eps*r**2)
+def dist(x,y):
+    return np.norm(x-y)
+
+n = 50
+eps = .3
+
+xs = gen_spiral_nodes(n)
+A = np.array([[rbf(dist(x,y), eps) for y in xs] for x in xs])
+</code></pre>
+</p>
+
+<p>
+Since the <code class="language-python">xs</code> are now a list of vectors, they are subtracted element-wise and, by simply replacing the absolute value with a vector norm we have modified the code for the higher dimensional case. As before, this is particularly slow because of the list comprehension. However, in this case we cannot use <code class="language-python">np.subtract.outer</code> to speed things up because we no longer have a single dimensional array. The next technique is perhaps less beautiful, but is quite fast.
+</p>
+
+<p><pre><code class="language-python">def rbf(r, eps):
+    return np.exp(-eps*r**2)
+
+def dist_outer(nodes1, nodes2):
+    d = len(nodes1[0]) # the dimension of each vector
+    n1 = len(nodes1)
+    n2 = len(nodes2)
+    # create a row vector of d dimensional vectors
+    row = nodes1.reshape((1,n1,d)) 
+    # create a column vector of d dimensional vectors
+    col = nodes2.reshape((n2,1,d)) 
+    ret = (row-col)**2
+    ret = np.sum(ret,2) #sum each d-dimensional vector
+    return np.sqrt(ret)
+
+n = 50
+eps = .3
+
+xs = gen_spiral_nodes(n)
+A = rbf(dist_outer(xs,xs), eps)
+</code></pre></p>
+
+<p>
+Once this somewhat tedious function is created the final output is even more readable than a list comprehension. The code <code class="language-python">A = rbf(dist_outer(xs,xs), eps)</code> clearly reads as "form the pairwise distance matrix, then apply the RBF." Contrasted with <code class="language-python">np.array([[rbf(dist(x,y), eps) for y in xs] for x in xs])</code> which reads "form a 2-D list where elements are the RBF applied to the distance between <code class="language-python">x</code> and <code class="language-python">y</code> where each <code class="language-python">x</code> is from <code class="language-python">xs</code> for each row, and each <code class="language-python">y</code> is also from <code class="language-python">xs</code> for each column." The sentence is quite dense and perhaps only a mathematician would be particularly comfortable with it, in which case <code class="language-python">A = rbf(dist_outer(xs,xs), eps)</code> is even more desirable.
+</p>
+
+<h2>Timings</h2>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+	</ol>
+</p>
+</div>
+
+</div>
+</body>
+
+<script>includeHTML();</script>
+
+</html>

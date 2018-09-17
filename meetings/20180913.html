@@ -64,7 +64,7 @@
 <p class="title_and_author">
 <span class="title">Thursday September 13<sup>th</sup>, 2018</span> <br>
 <span class="author">Attendees: Daniel, Varun, Grady, Andrew, and Sage </span> <br>
-<span class="updated">Thu Sep 13 15:03:32 2018</span> <br>
+<span class="updated">Mon Sep 17 10:00:29 2018</span> <br>
 <span hidden id="status">c</span>
 <span id="status_message" class="status_message"></span>
 </p>
@@ -86,6 +86,10 @@
 	</ol>
 	<li>Why does the gaussian give some singular stencils?</li>
 	<li>Meeting Followup</li>
+	<ol>
+		<li>Singular Stencils for the Gausian</li>
+		<li>Order of Convergence</li>
+	</ol>
 	<li>References</li>
 </ol>
 </div>
@@ -99,20 +103,20 @@ We reviewed the error plots in the followup to the previous meeting. We made som
 <p>
 <ul>
     <li>Implement the RBF Symmetric OGr method.</li>
-    <li>Change order calculation to best fit and plot vs $\sqrt{N}$.</li>
+    <li><s>Change order calculation to best fit and plot vs $\sqrt{N}$.</s></li>
     <li>Implement time-stepping.</li>
-    <li>Improve performance of the projection method and OGr.</li>
-    <li>Change website compliation to correctly show recent activity.</li>
+    <li>Improve performance of the <s>projection method</s> and OGr (<s>low order</s> and high order).</li>
+    <li><s>Change website compliation to correctly show recent activity.</s></li>
 </ul>
 </p>
 
 <h2>Research</h2>
 <p>
 <ul>
-    <li>Investigate why the gaussian RBF stencils are sometimes singular.</li>
+    <li><s>Investigate why the gaussian RBF stencils are sometimes singular.</s></li>
     <li>Research the Skeel Condition Number<span class="cite" src="HIGHAM2002"><b>[<a href="#bib1">1</a>]</b></span>.</li>
     <li>Research sphereical harmonics.</li>
-    <li>Avoiding loops in numpy. General numpy efficiency.</li>
+    <li><s>Avoiding loops in numpy. General numpy efficiency.</s></li>
 </ul>
 </p>
 
@@ -123,6 +127,7 @@ We reviewed the error plots in the followup to the previous meeting. We made som
     <li>Write RBF-FD article.</li>
     <li>Write RBF-FD Projection Method article.</li>
     <li>Write RBF-OGr article.</li>
+    <li>Write Numpy Efficiency article. (matrx of vectors)</li>
 </ul>
 </p>
 
@@ -145,6 +150,19 @@ The plots below show the same test but with a forcing function that is the sum o
 <img src="20180906/nodeset_survey_gaussforcing_deg_5.png">
 
 <h1>Meeting Followup</h1>
+<h2>Singular Stencils for the Gausian</h2>
+<p>
+The singular stencils were caused by a poor choice of shape parameter. The optimization subroutine was converging, however it was getting trapped in local minima near $\varepsilon = 0$. For larger values of $n$ we expect $\varepsilon$ to be larger rather than smaller. Specifying a starting interval for the optimization algorithm discourages this, and gives stencils on the edge of ill-conditioning. The gaussian graph below show the new errors and convergence rates compared to the PHS RBFs.
+</p>
+<img src="20180913/nodeset_survey_deg_4_fixed.png">
+
+<h2>Order of Convergence</h2>
+<p>
+The order of convergence was corrected to compare the error to $\sqrt{N}$. These are the corrected plots shown in the meeting notes on 9/6/2018 for the fourth degree spherical harmonic forcing function (20th sphereical harmonic), using $r^9$ and the gaussian when augmented with shperical harmonic basis terms up to degrees 2, 3, and 4. 
+</p>
+<img src="20180913/nodeset_survey_deg_2.png">
+<img src="20180913/nodeset_survey_deg_3.png">
+<img src="20180913/nodeset_survey_deg_4.png">
 
  
 <!--***************************************************************************
