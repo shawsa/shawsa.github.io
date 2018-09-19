@@ -63,7 +63,7 @@
 <p class="title_and_author">
 <span class="title">Numpy Efficiency</span> <br>
 <span class="author">Authors: Sage Shaw</span> <br>
-<span class="updated">Mon Sep 17 01:14:55 2018</span> <br>
+<span class="updated">Wed Sep 19 00:16:48 2018</span> <br>
 <span hidden id="status">c</span>
 <span id="status_message" class="status_message"></span>
 </p>
@@ -71,19 +71,28 @@
 <hr>
 
 <p class="intro">
-One of the most attractive features of Python is that list comprehensions allow the expression of loops in a clear human readable format that avoids indices. In the context of scientific computing, Numpy is often used to merge the speed of C and Fortran libraries with the clear presentation of Python. If one naively wraps Python list comprehensions in Numpy arrays, they lose much of the efficiency provided by Numpy. This article discusses efficient use of Numpy and best practices.
+One of the most attractive features of Python is that list comprehensions allow the expression of loops in a clear human readable format that avoids indices. In the context of scientific computing, Numpy is often used to merge the speed of C and Fortran libraries with the clear presentation of Python. If one naively wraps Python list comprehensions in Numpy arrays, they lose much of the efficiency provided by Numpy and may be less efficient than pure Python! This article discusses efficient use of Numpy and best practices.
 </p>
 
 <div class="contents">
 <ol>
+	<li>Mixing Numpy and Python</li>
 	<li>Outer Products</li>
 	<ol>
 		<li>One Dimensional Points</li>
 		<li>Higher Dimensional Points</li>
+		<li>Timings</li>
 	</ol>
 	<li>References</li>
 </ol>
 </div>
+<!--************************************************************************-->
+
+<h1>Mixing Numpy and Python</h1>
+<p>
+There is a general conception that Python is slow and that Numpy is fast. While this is true, the details turn out to be quite important. In fact, mixing numpy with python list comprehensions is actually slower than pure Python! This <a href="numpy_efficiency/np_efficiency.html" target="blank">Jupyter Notebook</a> (<a href="numpy_efficiency/np_efficiency.ipynb" download>download</a>) shows a few examples where Python outperforms Numpy+Python.
+</p>
+
 <!--************************************************************************-->
 
 <h1>Outer Products</h1>
@@ -191,6 +200,9 @@ Once this somewhat tedious function is created the final output is even more rea
 </p>
 
 <h2>Timings</h2>
+<p>
+The timings for the above techniques can be seen in this <a href="numpy_efficiency/rbf_interp_matrix.html" target="blank">Jupyter Notebook</a> (<a href="numpy_efficiency/rbf_interp_matrix.ipynb" download>download</a>)
+<p>
 
 <!--***************************************************************************
 *******************************************************************************
