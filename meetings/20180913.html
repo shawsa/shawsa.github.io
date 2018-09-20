@@ -64,7 +64,7 @@
 <p class="title_and_author">
 <span class="title">Thursday September 13<sup>th</sup>, 2018</span> <br>
 <span class="author">Attendees: Daniel, Varun, Grady, Andrew, and Sage </span> <br>
-<span class="updated">Mon Sep 17 10:00:29 2018</span> <br>
+<span class="updated">Thu Sep 20 09:54:53 2018</span> <br>
 <span hidden id="status">c</span>
 <span id="status_message" class="status_message"></span>
 </p>
@@ -89,6 +89,7 @@
 	<ol>
 		<li>Singular Stencils for the Gausian</li>
 		<li>Order of Convergence</li>
+		<li>Numpy Efficiency</li>
 	</ol>
 	<li>References</li>
 </ol>
@@ -163,6 +164,11 @@ The order of convergence was corrected to compare the error to $\sqrt{N}$. These
 <img src="20180913/nodeset_survey_deg_2.png">
 <img src="20180913/nodeset_survey_deg_3.png">
 <img src="20180913/nodeset_survey_deg_4.png">
+
+<h2>Numpy Efficiency</h2>
+<p>
+As I expected, using list comprehensions was slower than using numpy functions to accomplish the same task. Surprisingly though, the way I was using numpy in the list comprehensions was much slower than even pure Python. I'm noting this, and exploring it further in the article on <a href="../articles/numpy_efficiency.html">Numpy Efficiency</a>, but the initial timings can be seen in the <a href="../articles/numpy_efficiency/np_efficiency.html" target="blank">Jupyter Notebook</a> (<a href="../articles/numpy_efficiency/np_efficiency.ipynb" download>download</a>).
+</p>
 
  
 <!--***************************************************************************

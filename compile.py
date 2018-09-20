@@ -354,7 +354,7 @@ if __name__=='__main__':
     parser = argparse.ArgumentParser(description='Compile HTML files.')
     parser.add_argument('files', nargs="*")
     parser.add_argument('--only', '-o', action='store_const', default=False, const=True)
-    parser.add_argument('--all', '-a', action='store_const', default=False, const=True)
+    parser.add_argument('--all', action='store_const', default=False, const=True)
     parser.add_argument('--experiments', '-e', action='store_const', default=False, const=True)
     parser.add_argument('--meetings', '-m', action='store_const', default=False, const=True)
     parser.add_argument('--bibliography', '-b', action='store_const', default=False, const=True)
