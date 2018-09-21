@@ -64,7 +64,7 @@
 <p class="title_and_author">
 <span class="title">Thursday September 13<sup>th</sup>, 2018</span> <br>
 <span class="author">Attendees: Daniel, Varun, Grady, Andrew, and Sage </span> <br>
-<span class="updated">Thu Sep 20 09:54:53 2018</span> <br>
+<span class="updated">Thu Sep 20 12:02:30 2018</span> <br>
 <span hidden id="status">c</span>
 <span id="status_message" class="status_message"></span>
 </p>
@@ -72,7 +72,7 @@
 <hr>
 
 <p class="intro">
-
+We reviewed the error plots in the followup to the previous meeting. We made some interesting observations and asked some questions about why the plots using the gaussian RBF do not converge, but maintain a steady error (more or less) regardless of the number of points used. 
 </p>
 
 <div class="contents">
@@ -95,9 +95,6 @@
 </ol>
 </div>
 
-<p>
-We reviewed the error plots in the followup to the previous meeting. We made some interesting observations and asked some questions about why the plots using the gaussian RBF do not converge, but maintain a steady error (more or less) regardless of the number of points used. 
-</p>
 <!--************************************************************************-->
 <h1>Sage's Tasks</h1>
 <h2>Code</h2>
@@ -145,7 +142,7 @@ We reviewed the error plots in the followup to the previous meeting. We made som
 <!--************************************************************************-->
 <h1>Why does the gaussian give some singular stencils?</h1>
 <p>
-The plots below show the errors in solving the steady state surface diffusion on the sphere with a a forcing function that is the sum of seven gaussians, using $r^9$ and the gaussian when augmented with shperical harmonic basis terms up to degree5. 
+The plots below show the errors in solving the steady state surface diffusion on the sphere with a a forcing function that is the sum of seven gaussians, using $r^9$ and the gaussian when augmented with shperical harmonic basis terms up to degree 5. 
 The plots below show the same test but with a forcing function that is the sum of seven gaussians. In the plot, there are node sets for which the error is not calculated for the gaussian RBF but is for $r^9$. This is because some (at least one) of the RBF-FD stencils for the gaussian were singular and thus were skipped. This should not be the case. We expect that the cause is due to the way we choose an optimized shape parameter. Further investigation is needed. 
 </p>
 <img src="20180906/nodeset_survey_gaussforcing_deg_5.png">
