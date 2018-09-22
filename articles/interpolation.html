@@ -63,7 +63,7 @@
 <p class="title_and_author">
 <span class="title">RBF-Interpolation</span> <br>
 <span class="author">Authors: Sage Shaw</span> <br>
-<span class="updated">Sat Sep  8 21:59:08 2018</span> <br>
+<span class="updated">Fri Sep 21 23:13:27 2018</span> <br>
 <span hidden id="status">c</span>
 <span id="status_message" class="status_message"></span>
 </p>
@@ -78,25 +78,159 @@ Given a set of distinct points $\{\vec{x}_i\}_{i=1}^n \subseteq D$ and function 
 <ol>
 	<li>Polynomial Interpolation</li>
 	<li>RBF Interpolation</li>
+	<ol>
+		<li>Comparison to Polynomials</li>
+		<li>Higher Dimensions</li>
+	</ol>
+	<li>Shape Parameter Selection</li>
 	<li>References</li>
 </ol>
 </div>
 
-<p>
+<!--p>
 For this article $D$ will denote the domain, $\{\vec{x}_i\}_{i=1}^n \subseteq D$ will denote distinct points in our domain, and $\{f_i\}_{i=1}^n \subseteq \RR$ (or $\CC$) will denote function values at the chosen points in our domain. The function $s : D \to \RR$ is a function such that $s(\vec{x}_i) = f_i$ for $i=1, 2, ..., n$ will denote the interpolant.
-<p>
+<p-->
 
 <!--************************************************************************-->
 <h1>Polynomial Interpolation</h1>
 <p>
-    
+It is commonly said that two points determine a line. Indeed, in one dimension $n+1$ points (distinct in $x$) determine an $n$<sup>th</sup> degree polynomial. That is to say that there is a unique polynomial interpolant of degree $n$, and it is straightforward to calculate.
 </p>
+
+<p>
+Let $\{(x_i, f_i)\}_{i=0}^n$ denote $n+1$ points such that the $x$ values are distinct. We would like to form the polynomial $p_n(x) = \sum\limits_{i=0}^n a_i x^i$ where $a_i$ are chosen so that it interpolates the points. That is
+$$
+\begin{align*}
+a_0 + a_1 x_0 + a_2 x_0^2 + \cdots a_n x_0^n &= f_0 \\
+a_0 + a_1 x_1 + a_2 x_1^2 + \cdots a_n x_1^n &= f_1 \\
+a_0 + a_1 x_2 + a_2 x_2^2 + \cdots a_n x_2^n &= f_2 \\
+\vdots & \\
+a_0 + a_1 x_n + a_2 x_n^2 + \cdots a_n x_n^n &= f_n \text{.}\\
+\end{align*}
+$$
+Notice that coefficients are unkown and that this system is linear in the coefficients. Thus we can form the matrix system
+$$
+\begin{bmatrix}
+1 & x_0 & x_0^2 & \cdots & x_0^n \\
+1 & x_1 & x_1^2 & \cdots & x_1^n \\
+1 & x_2 & x_2^2 & \cdots & x_2^n \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+1 & x_n & x_n^2 & \cdots & x_n^n \\
+\end{bmatrix}
+\vec{a} = \vec{f}
+$$
+for which the solution gives the coefficients of our polynomial. The matrix in this system is known as the Vandermonde matrix and it is proven to be non-singular for distinct $x_i$. Large Vandermonde matrices are quite ill-conditioned however, and finding acurate solutions to this system can be difficlut. 
 
 <!--************************************************************************-->
 <h1>RBF Interpolation</h1>
 <p>
-<a href="interpolation/sphere_interp.py" target="_download">Source code</a> for RBF interpolation on a sphere.
+By choosing radial basis functions centered at the points, we can guarantee non-singularity and by adjusting the shape parameter we can optimize the conditioning. Instead of the monomial basis for polynomials, we pick a radial basis function $\phi$ and choose our basis dependent on the points: $\phi_{i}(\vec{x}) = \phi(\norm{\vec{x} - \vec{x}_i})$.
 </p>
+
+<p>
+Our interpolant is of the same form: $s(\vec{x}) = \sum\limits_{i=0}^n a_i \phi_i(\vec{x})$. Now our matrix system is
+$$
+\begin{bmatrix}
+\phi_0(\vec{x}_0) & \phi_1(\vec{x}_0) & \phi_2(\vec{x}_0) & \cdots & \phi_n(\vec{x}_0) \\
+\phi_0(\vec{x}_1) & \phi_1(\vec{x}_1) & \phi_2(\vec{x}_1) & \cdots & \phi_n(\vec{x}_1) \\
+\phi_0(\vec{x}_2) & \phi_1(\vec{x}_2) & \phi_2(\vec{x}_2) & \cdots & \phi_n(\vec{x}_2) \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+\phi_0(\vec{x}_n) & \phi_1(\vec{x}_n) & \phi_2(\vec{x}_n) & \cdots & \phi_n(\vec{x}_n) \\
+\end{bmatrix}
+\vec{a} = \vec{f} \text{.}
+$$
+This matrix is often written as
+$$
+\begin{bmatrix}
+\phi(\norm{\vec{x}_0 - \vec{x}_0}) & \phi(\norm{\vec{x}_0 - \vec{x}_1}) & \phi(\norm{\vec{x}_0 - \vec{x}_2}) & \cdots & \phi(\norm{\vec{x}_0 - \vec{x}_n}) \\
+\phi(\norm{\vec{x}_1 - \vec{x}_0}) & \phi(\norm{\vec{x}_1 - \vec{x}_1}) & \phi(\norm{\vec{x}_1 - \vec{x}_2}) & \cdots & \phi(\norm{\vec{x}_1 - \vec{x}_n}) \\
+\phi(\norm{\vec{x}_2 - \vec{x}_0}) & \phi(\norm{\vec{x}_2 - \vec{x}_1}) & \phi(\norm{\vec{x}_2 - \vec{x}_2}) & \cdots & \phi(\norm{\vec{x}_2 - \vec{x}_n}) \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+\phi(\norm{\vec{x}_n - \vec{x}_0}) & \phi(\norm{\vec{x}_n - \vec{x}_1}) & \phi(\norm{\vec{x}_n - \vec{x}_2}) & \cdots & \phi(\norm{\vec{x}_n - \vec{x}_n}) \\
+\end{bmatrix}
+$$
+and is called the RBF interpolation matrix and it is guaranteed non-singular. Since $\norm{\vec{x} - \vec{y}} = \norm{\vec{y} - \vec{x}}$ it is clear that this matrix is symmetric.
+</p>
+
+<h2>Comparison to Polynomials</h2>
+<p>
+The following graphs show polynomial and RBF interpolation of the function $f(x) = e^{-\cos(10 \pi x)}$ for differing numbers of equally spaced points. The code used to generate these can be found in this <a href="interpolation/rbf_interpolation.ipynb" download>Jupyter Notebook</a>.
+</p>
+
+<p>
+In the first pair of graphs, 10 equally spaced points are used. We can see that both versions of polynoial interpolation and RBF interpolation successfuly interpolate, but are poor approximations to the underlying function.
+</p>
+<img src="interpolation/all_good.png" width=100%>
+<img src="interpolation/all_good_res.png" width=100%>
+
+<p>
+As we increase the number of points, the Vandermonde matrix is the first to become ill-conditioned and fails to interpolate the points.
+</p>
+
+<img src="interpolation/bad_monomial.png" width=100%>
+<img src="interpolation/bad_monomial_res.png" width=100%>
+
+<p>
+Increacing to 30 points causes the Lagrange polynomial interpolation to fail as well. At this point the RBF interpolant is a fairly good approximation of the underlying function on the interior of the interval, but has significant error near the end points.
+</p>
+
+<img src="interpolation/bad_poly.png" width=100%>
+<img src="interpolation/bad_poly_res.png" width=100%>
+
+<p>
+As the number of points increases the RBF interpolant becomes a better approximation of the underlying function.
+</p>
+
+<img src="interpolation/good_rbf.png" width=100%>
+<img src="interpolation/good_rbf_res.png" width=100%>
+
+<p>
+When using 100 points, the RBF interpolant becomes even more accurate with the largest error being near the end points with an error of roughly $10^{-4}$!
+</p>
+
+<img src="interpolation/many_pnts.png" width=100%>
+<img src="interpolation/many_pnts_res.png" width=100%>
+
+<h2>Higher Dimensions</h2>
+<p>
+Polynomial interpolation becomes more complicated when we move into higher dimensions. Firstly, given $4$ points there is no unique second degree polynomial that interpolates them. We could find an interpolant with the basis of $\{1, x, y, x^2\}$ for example, or we could choose a basis of $\{1, x, y, y^2\}$ which will give different interpolants if they interpolate at all! Indeed many selections of points will fail to interpolate with the wrong choice of basis. For example, if all the points are chosen on a circle centered at the origin, and we choose a basis including $\{1, x^2, y^2\}$ then these columns of the matrix will be linearly dependent. There is an elegant proof that shows that this will always be a problem in higher dimensions if the choice of basis is independent of the points.
+</p>
+
+<h3>Proof:</h3>
+<p>
+Consider a set of points in the plane and choose two of the points (in red below) and construct a closed path (in green below) including both points. Let the points move along the path such that at time $t=0$ they are where they originally were, and at time $t=1$ they have swapped position.
+</p>
+<img src="interpolation/circle_proof.png" class='center'>
+
+<p>
+Form the interpolation matrices at time $t=0$ and at $t=1$. The matrices will be the same except that the rows corresponding to the two chosen points will have swapped. A row swap changes the sign of the determinant thus the determinant at time $t=1$ is the negative of the determinant at $t=0$. Since the determinant is a continuous function of $t$ we know that at some time the points were in a position where the interpolation matrix was singular.
+</p>
+
+<p>
+This shows that for any choice of basis functions that do not depend on the points there is some set of points for which the interpolation matrix is singular. Consider applying this argument to radial basis funtions centered at the points. When the points swap position, not only have we swapped rows of the matrix, we have swapped the corresponding collumns as well. Since a column swap also changes the sign, the sign is the same, indeed the matrix is exactly the same as before the swap. $\blacksquare$
+</p>
+
+<p>
+Radial basis function interpolation is exactly the same in higher dimensions except that the norm used to measure the distance between points must change to be approprate for the dimension.
+</p>
+
+<h1>Shape Parameter Selection</h1>
+<p>
+Shape parameter selection matters a great deal and has yet to be mentioned. In the plots above, the RBF interpolant is quite good, but if one chooses a shape parameter poorly this will not be the case. In the image below we see an example where the shape parameter is chosen to be $\varepsilon = 10^4$ and, though it interpolates, it is a terrible approximation to the function.
+</p>
+<img src="interpolation/eps_10000.png" class='center'>
+
+<p>
+The particular RBF used is $\phi(r) = e^{-\varepsilon r^2}$ and is known as the <i>gaussian</i> (the normal distribution or the bell curve). When $\varepsilon$ is large, the gaussian is essentially flat, except at zero where it forms a sharp peak. The sum of such gaussians centered at our points is essentially zero everywhere with sharp peaks at our points. Our interpolation matrix looks like the identity since the diagonal entries have a distance of $0$ which evaluates to $1$, and the off diagonal entries are not $0$ so the evaluate to essentially $0$.
+</p>
+
+<p>
+The identity matrix has a condition number of $1$. As the shape parameter decreases, the off-diagonal entries of the RBF interpolation matrix grow, the condition number of the matrix increases, and the interpolant becomes a better approximation of the underlying function. That is until the RBF matrix becomes sufficiently ill-conditioned. It is good practice to select a shape parameter so that the condition number of the matrix is "on the edge of ill-conditioning." More specifically, it is chosen so that the condition number large, but several orders of magnitude below the inverse of machine-epsilon. 
+</p>
+
+<!--p>
+<a href="interpolation/sphere_interp.py" target="_download">Source code</a> for RBF interpolation on a sphere.
+</p-->
 
 <!--***************************************************************************
 *******************************************************************************
