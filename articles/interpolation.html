@@ -221,7 +221,7 @@ Shape parameter selection matters a great deal and has yet to be mentioned. In t
 <img src="interpolation/eps_10000.png" class='center'>
 
 <p>
-The particular RBF used is $\phi(r) = e^{-\varepsilon r^2}$ and is known as the <i>gaussian</i> (the normal distribution or the bell curve). When $\varepsilon$ is large, the gaussian is essentially flat, except at zero where it forms a sharp peak. The sum of such gaussians centered at our points is essentially zero everywhere with sharp peaks at our points. Our interpolation matrix looks like the identity since the diagonal entries have a distance of $0$ which evaluates to $1$, and the off diagonal entries are not $0$ so the evaluate to essentially $0$.
+The particular RBF used is $\phi(r) = e^{-(\varepsilon r)^2}$ and is known as the <i>gaussian</i> (the normal distribution or the bell curve). When $\varepsilon$ is large, the gaussian is essentially flat, except at zero where it forms a sharp peak. The sum of such gaussians centered at our points is essentially zero everywhere with sharp peaks at our points. Our interpolation matrix looks like the identity since the diagonal entries have a distance of $0$ which evaluates to $1$, and the off diagonal entries are not $0$ so the evaluate to essentially $0$.
 </p>
 
 <p>

@@ -1,0 +1,186 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Meeting Notes</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\MM}{\mathbb{M}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../index.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Thursday September 20<sup>th</sup>, 2018</span> <br>
+<span class="author">Attendees: Daniel, Varun, Grady, Andrew, and Sage </span> <br>
+<span class="updated">Thu Sep 20 09:54:53 2018</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+We reivewed Daniel's semi-Lagrangian advection code with a wave speed that is both spatially and temporally dependent. We reviewed Sage's new error plots and suggested improvements and new test. We reviewed Andrews RBF interpolation code.
+</p>
+
+<div class="contents">
+<ol>
+	<li>Sage's Tasks</li>
+	<ol>
+		<li>Code</li>
+		<li>Research</li>
+		<li>Writing</li>
+		<li>Misc</li>
+	</ol>
+	<li>Why does the gaussian give some singular stencils?</li>
+	<li>Meeting Followup</li>
+	<ol>
+		<li>Singular Stencils for the Gausian</li>
+		<li>Order of Convergence</li>
+		<li>Numpy Efficiency</li>
+	</ol>
+	<li>References</li>
+</ol>
+</div>
+
+<!--************************************************************************-->
+<h1>Sage's Tasks</h1>
+<h2>Code</h2>
+<p>
+<ul>
+    <li>Implement the RBF Symmetric OGr method.</li>
+    <li>Implement time-stepping.</li>
+    <li>Improve performance of the high order.</li>
+    <li>Test RBF OGr interpolation.</li>
+    <li>For the differentiation matrices, calculate the eigenvalue wit the largest real component. (AR pack routines)</li>
+    <li>Include a new test. For shape-parameter RBFs, optimize $\varepsilon$ on the largest nodeset (most refined) and use the same shape parameter for the smaller nodesets. 
+</ul>
+</p>
+
+<h2>Research</h2>
+<p>
+<ul>
+    <li>Research the Skeel Condition Number<span class="cite" src="HIGHAM2002"><b>[<a href="#bib1">1</a>]</b></span>.</li>
+    <li>Research sphereical harmonics.</li>
+</ul>
+</p>
+
+<h2>Writing</h2>
+<p>
+<ul>
+    <li>Write the theorem for exactness.</li>
+    <li>Write RBF-FD article.</li>
+    <li>Write RBF-FD Projection Method article.</li>
+    <li>Write RBF-OGr article.</li>
+    <li>Write Numpy Efficiency article. (matrx of vectors)</li>
+    <li>Python+Numpy Loops Experiment</li>
+    <li><s>Write RBF Interpolation article.</s></li>
+</ul>
+</p>
+
+<h2>Misc</h2>
+<p>
+<ul>
+    <li>Request travel funding for <a href="http://www.cs.ubc.ca/~greif/PNWNAS2018">PNWNAS</a>.</li>
+    <li><s>Register for the <a href='https://www.ets.org/gre/subject/register/'>GRE</a>. (09/21/2018 at the latest)</s></li>
+    <li>Select PhD programs.</li>
+</ul>
+</p>
+
+
+<!--************************************************************************-->
+<h1>Projection Method Testing</h1>
+<p>
+The error plots in the followup to the <a href='20180913.html'>previous meeting</a> were unclear in a few ways. In some places it was unclear which forcing function was being used, what stencil sizes were being used. We should develop a checklist to be referenced when including plots in meeting notes so that all of the relevant information is available and clear.
+</p>
+
+<p>
+When augmenting with a PHS RBF of degree $p$ with polynomial basis terms up to degree $d$ the theory suggests that one needs $p \leq 2d+1$ in order to have good convergence. In some of the plots shown this is not the case. Either use parameters that fit this criteria or explicitly note that the condition is not satisfied. 
+</p>
+
+<!--************************************************************************-->
+<h1>OGr Testing</h1>
+<p>
+We're interested in the properties of the interpolation matrices used in the OGr methods. In particular...
+</p>
+
+<!--************************************************************************-->
+<h1>Meeting Followup</h1>
+<p>
+
+</p>
+ 
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+		<li id="bib1">
+			Nicholas&nbsp;J. Higham.
+<em>Accuracy and Stability of Numerical Algorithms</em>.
+University of Manchester, 2002.
+URL: <a href="https://epubs.siam.org/doi/abs/10.1137/1.9780898718027.fm">https://epubs.siam.org/doi/abs/10.1137/1.9780898718027.fm</a>, <a href="https://arxiv.org/abs/https://epubs.siam.org/doi/pdf/10.1137/1.9780898718027.fm">arXiv:https://epubs.siam.org/doi/pdf/10.1137/1.9780898718027.fm</a>, <a href="https://doi.org/10.1137/1.9780898718027.fm">doi:10.1137/1.9780898718027.fm</a>.
+		</li>
+	</ol>
+</p>
+</div>
+
+</div>
+</body>
+
+<script>includeHTML();</script>
+
+</html>
