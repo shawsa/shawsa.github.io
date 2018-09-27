@@ -176,7 +176,7 @@ th, td {
     padding: 5px;
 }
 
-table.data td{
+table.data > tbody >td{
     text-align: right;
     font-family: "Lucida Console", Monaco, monospace;
     padding-left: 15px;
@@ -200,4 +200,9 @@ img.center {
     margin-left: auto;
     margin-right: auto;
 }
+
+/*********************************************************
+* Pandas Table Formatting
+*********************************************************/
+
 

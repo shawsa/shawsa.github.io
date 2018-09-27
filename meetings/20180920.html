@@ -64,7 +64,7 @@
 <p class="title_and_author">
 <span class="title">Thursday September 20<sup>th</sup>, 2018</span> <br>
 <span class="author">Attendees: Daniel, Varun, Grady, Andrew, and Sage </span> <br>
-<span class="updated">Thu Sep 20 09:54:53 2018</span> <br>
+<span class="updated">Sun Sep 23 01:22:30 2018</span> <br>
 <span hidden id="status">c</span>
 <span id="status_message" class="status_message"></span>
 </p>
@@ -84,13 +84,9 @@ We reivewed Daniel's semi-Lagrangian advection code with a wave speed that is bo
 		<li>Writing</li>
 		<li>Misc</li>
 	</ol>
-	<li>Why does the gaussian give some singular stencils?</li>
+	<li>Projection Method Testing</li>
+	<li>OGr Testing</li>
 	<li>Meeting Followup</li>
-	<ol>
-		<li>Singular Stencils for the Gausian</li>
-		<li>Order of Convergence</li>
-		<li>Numpy Efficiency</li>
-	</ol>
 	<li>References</li>
 </ol>
 </div>
@@ -102,9 +98,9 @@ We reivewed Daniel's semi-Lagrangian advection code with a wave speed that is bo
 <ul>
     <li>Implement the RBF Symmetric OGr method.</li>
     <li>Implement time-stepping.</li>
-    <li>Improve performance of the high order.</li>
+    <li>Improve performance of the high order OGr method.</li>
     <li>Test RBF OGr interpolation.</li>
-    <li>For the differentiation matrices, calculate the eigenvalue wit the largest real component. (AR pack routines)</li>
+    <li>For the differentiation matrices, calculate the eigenvalue with the largest real component. (AR pack routines)</li>
     <li>Include a new test. For shape-parameter RBFs, optimize $\varepsilon$ on the largest nodeset (most refined) and use the same shape parameter for the smaller nodesets. 
 </ul>
 </p>
@@ -133,7 +129,7 @@ We reivewed Daniel's semi-Lagrangian advection code with a wave speed that is bo
 <h2>Misc</h2>
 <p>
 <ul>
-    <li>Request travel funding for <a href="http://www.cs.ubc.ca/~greif/PNWNAS2018">PNWNAS</a>.</li>
+    <li><s>Request travel funding for <a href="http://www.cs.ubc.ca/~greif/PNWNAS2018">PNWNAS</a>.</s></li>
     <li><s>Register for the <a href='https://www.ets.org/gre/subject/register/'>GRE</a>. (09/21/2018 at the latest)</s></li>
     <li>Select PhD programs.</li>
 </ul>
@@ -158,9 +154,331 @@ We're interested in the properties of the interpolation matrices used in the OGr
 
 <!--************************************************************************-->
 <h1>Meeting Followup</h1>
-<p>
 
+<h2>Shape Optimized for the Finest Nodeset</h2>
+<p>
+Varun had asked that I run some trials where $\varepsilon$ is chosen so that it optimizes the condition number for a stencil (I chose the first for simplicity) of the finest nodeset. Here are the results.
 </p>
+<img src='20180920/eps_optimized_on_finest.png'>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>node_set</th>
+      <th>epsilon</th>
+      <th>N</th>
+      <th>max_error</th>
+      <th>rel_L2_error</th>
+      <th>largest_re_eig</th>
+      <th>skeel_cond</th>
+      <th>stencil_cond</th>
+      <th>target_cond</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>spiral</td>
+      <td>4.265276</td>
+      <td>400</td>
+      <td>3.136836</td>
+      <td>0.599750</td>
+      <td>235.751091</td>
+      <td>-</td>
+      <td>-</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>spiral</td>
+      <td>4.265276</td>
+      <td>800</td>
+      <td>3.660251</td>
+      <td>0.621926</td>
+      <td>531.757438</td>
+      <td>-</td>
+      <td>-</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>spiral</td>
+      <td>4.265276</td>
+      <td>1600</td>
+      <td>0.145499</td>
+      <td>0.021181</td>
+      <td>1345.498242</td>
+      <td>-</td>
+      <td>-</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>spiral</td>
+      <td>4.265276</td>
+      <td>3200</td>
+      <td>0.030619</td>
+      <td>0.006703</td>
+      <td>2868.326889</td>
+      <td>-</td>
+      <td>-</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>spiral</td>
+      <td>4.265276</td>
+      <td>6400</td>
+      <td>0.004431</td>
+      <td>0.000959</td>
+      <td>NaN</td>
+      <td>-</td>
+      <td>-</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>sym_t_design</td>
+      <td>4.234377</td>
+      <td>393</td>
+      <td>4.830745</td>
+      <td>1.059085</td>
+      <td>243.052971</td>
+      <td>20.6389</td>
+      <td>309.971</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>sym_t_design</td>
+      <td>4.234377</td>
+      <td>801</td>
+      <td>2.594560</td>
+      <td>0.590280</td>
+      <td>532.024430</td>
+      <td>983.245</td>
+      <td>43484</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>sym_t_design</td>
+      <td>4.234377</td>
+      <td>1626</td>
+      <td>0.068025</td>
+      <td>0.013504</td>
+      <td>1223.179387</td>
+      <td>245625</td>
+      <td>1.90681e+07</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>sym_t_design</td>
+      <td>4.234377</td>
+      <td>3201</td>
+      <td>0.008430</td>
+      <td>0.001750</td>
+      <td>2640.227298</td>
+      <td>8.43843e+07</td>
+      <td>1.99164e+10</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>sym_t_design</td>
+      <td>4.234377</td>
+      <td>6386</td>
+      <td>0.000806</td>
+      <td>0.000139</td>
+      <td>6407.804086</td>
+      <td>2.81494e+10</td>
+      <td>2.44322e+13</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>min_energy</td>
+      <td>3.687056</td>
+      <td>397</td>
+      <td>1.610455</td>
+      <td>0.399464</td>
+      <td>226.479367</td>
+      <td>58.7019</td>
+      <td>798.66</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>min_energy</td>
+      <td>3.687056</td>
+      <td>797</td>
+      <td>0.721329</td>
+      <td>0.174059</td>
+      <td>499.089440</td>
+      <td>6761.95</td>
+      <td>103527</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>min_energy</td>
+      <td>3.687056</td>
+      <td>1597</td>
+      <td>0.042599</td>
+      <td>0.009760</td>
+      <td>1133.663617</td>
+      <td>2.60074e+06</td>
+      <td>4.72168e+07</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>min_energy</td>
+      <td>3.687056</td>
+      <td>3197</td>
+      <td>0.003424</td>
+      <td>0.000779</td>
+      <td>2473.740832</td>
+      <td>8.77201e+08</td>
+      <td>6.68324e+10</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>min_energy</td>
+      <td>3.687056</td>
+      <td>4666</td>
+      <td>0.000685</td>
+      <td>0.000162</td>
+      <td>3710.122526</td>
+      <td>3.50733e+10</td>
+      <td>1.79628e+12</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>max_det</td>
+      <td>4.065398</td>
+      <td>400</td>
+      <td>1.126837</td>
+      <td>0.280479</td>
+      <td>220.684213</td>
+      <td>32.0657</td>
+      <td>199.858</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>max_det</td>
+      <td>4.065398</td>
+      <td>784</td>
+      <td>10.365440</td>
+      <td>2.516335</td>
+      <td>457.208426</td>
+      <td>1138.46</td>
+      <td>15970.1</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>max_det</td>
+      <td>4.065398</td>
+      <td>1600</td>
+      <td>0.108999</td>
+      <td>0.025286</td>
+      <td>1077.207987</td>
+      <td>276427</td>
+      <td>5.79481e+06</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>max_det</td>
+      <td>4.065398</td>
+      <td>3249</td>
+      <td>0.007076</td>
+      <td>0.001630</td>
+      <td>2350.671622</td>
+      <td>1.60157e+08</td>
+      <td>4.8177e+09</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>max_det</td>
+      <td>4.065398</td>
+      <td>6400</td>
+      <td>0.000498</td>
+      <td>0.000115</td>
+      <td>4733.011091</td>
+      <td>5.28359e+10</td>
+      <td>3.62854e+12</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>icos</td>
+      <td>2.729361</td>
+      <td>162</td>
+      <td>0.413509</td>
+      <td>0.083477</td>
+      <td>85.185655</td>
+      <td>21.9454</td>
+      <td>123.058</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>icos</td>
+      <td>2.729361</td>
+      <td>642</td>
+      <td>0.052070</td>
+      <td>0.012434</td>
+      <td>427.432562</td>
+      <td>363951</td>
+      <td>4.1486e+06</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>icos</td>
+      <td>2.729361</td>
+      <td>642</td>
+      <td>0.052070</td>
+      <td>0.012434</td>
+      <td>427.432562</td>
+      <td>363951</td>
+      <td>4.1486e+06</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>icos</td>
+      <td>2.729361</td>
+      <td>2562</td>
+      <td>0.000367</td>
+      <td>0.000087</td>
+      <td>2050.982754</td>
+      <td>1.10624e+11</td>
+      <td>2.88733e+12</td>
+      <td>1.000000e+12</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>icos</td>
+      <td>2.729361</td>
+      <td>2562</td>
+      <td>0.000367</td>
+      <td>0.000087</td>
+      <td>2050.982754</td>
+      <td>1.10624e+11</td>
+      <td>2.88733e+12</td>
+      <td>1.000000e+12</td>
+    </tr>
+  </tbody>
+</table>
  
 <!--***************************************************************************
 *******************************************************************************

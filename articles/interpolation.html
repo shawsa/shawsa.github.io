@@ -191,6 +191,11 @@ When using 100 points, the RBF interpolant becomes even more accurate with the l
 <img src="interpolation/many_pnts.png" width=100%>
 <img src="interpolation/many_pnts_res.png" width=100%>
 
+<p>
+Now that we have established that RBF interpolation remains stable as the number of points increases we can consider convergence rates. The plot below shows the convergence to the underlying function when sampled at $n$ points on the interval $[0,1]$ for the function specified for several choices of RBF.
+</p>
+<img src="interpolation/rbf_interp_survey.png" width=100%>
+
 <h2>Higher Dimensions</h2>
 <p>
 Polynomial interpolation becomes more complicated when we move into higher dimensions. Firstly, given $4$ points there is no unique second degree polynomial that interpolates them. We could find an interpolant with the basis of $\{1, x, y, x^2\}$ for example, or we could choose a basis of $\{1, x, y, y^2\}$ which will give different interpolants if they interpolate at all! Indeed many selections of points will fail to interpolate with the wrong choice of basis. For example, if all the points are chosen on a circle centered at the origin, and we choose a basis including $\{1, x^2, y^2\}$ then these columns of the matrix will be linearly dependent. There is an elegant proof that shows that this will always be a problem in higher dimensions if the choice of basis is independent of the points.
@@ -221,11 +226,11 @@ Shape parameter selection matters a great deal and has yet to be mentioned. In t
 <img src="interpolation/eps_10000.png" class='center'>
 
 <p>
-The particular RBF used is $\phi(r) = e^{-(\varepsilon r)^2}$ and is known as the <i>gaussian</i> (the normal distribution or the bell curve). When $\varepsilon$ is large, the gaussian is essentially flat, except at zero where it forms a sharp peak. The sum of such gaussians centered at our points is essentially zero everywhere with sharp peaks at our points. Our interpolation matrix looks like the identity since the diagonal entries have a distance of $0$ which evaluates to $1$, and the off diagonal entries are not $0$ so the evaluate to essentially $0$.
+The particular RBF used is $\phi(r) = e^{-(\varepsilon r)^2}$ and is known as the <i>gaussian</i> (the normal distribution or the bell curve). When $\varepsilon$ is large, the gaussian is essentially flat, except at zero where it forms a sharp peak. The sum of such gaussians centered at our points is essentially zero everywhere with sharp peaks at our points. Our interpolation matrix looks like the identity since the diagonal entries have a distance of 0 which evaluates to 1, and the off diagonal entries are not $0$ so they evaluate to essentially 0.
 </p>
 
 <p>
-The identity matrix has a condition number of $1$. As the shape parameter decreases, the off-diagonal entries of the RBF interpolation matrix grow, the condition number of the matrix increases, and the interpolant becomes a better approximation of the underlying function. That is until the RBF matrix becomes sufficiently ill-conditioned. It is good practice to select a shape parameter so that the condition number of the matrix is "on the edge of ill-conditioning." More specifically, it is chosen so that the condition number large, but several orders of magnitude below the inverse of machine-epsilon. 
+The identity matrix has a condition number of 1. As the shape parameter decreases, the off-diagonal entries of the RBF interpolation matrix grow, the condition number of the matrix increases, and the interpolant becomes a better approximation of the underlying function. That is until the RBF matrix becomes sufficiently ill-conditioned. It is good practice to select a shape parameter so that the condition number of the matrix is "on the edge of ill-conditioning." More specifically, it is chosen so that the condition number is large, but several orders of magnitude below the inverse of machine-epsilon. 
 </p>
 
 <!--p>

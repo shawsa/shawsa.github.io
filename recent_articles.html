@@ -42,6 +42,7 @@
     \newcommand{\ZZ}{\mathbb{Z}}
     \newcommand{\CC}{\mathbb{C}}
     \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\LL}{\mathcal{L}}
     \newcommand{\MM}{\mathbb{M}}
     \renewcommand{\Re}{\operatorname{Re}}
     \renewcommand{\Im}{\operatorname{Im}}
@@ -59,8 +60,29 @@
 <div class="divContent"><p class="title_and_author">
 	<span class="title">Recent Articles</span>
 </p>
+<h2><a href="articles/rbf-fd.html">RBF Finite Differences</a></h2>
+<span class="mod_time">Sun Sep 23 01:35:56 2018</span>
+<p>
+
+This article discusses Radial Basis Function Finite Differnece methods for approximating differential operators and solving differential equations.
+
+</p>
+<h2><a href="articles/projection_method.html">Projection Method</a></h2>
+<span class="mod_time">Sun Sep 23 01:33:01 2018</span>
+<p>
+
+Radial Basis Function Finite Difference Methods rely on the calculation of the linear opperator applied to the RBF ($\LL \phi$) to be independent of position. This is not the case for many surface operators. For these, one needs a method that accounts for the local geometry of the surface in the calculation of the operator. The projection method is exactly that. This article looks at using the projection method along with iterated differentiation to approximate the surface Laplacian $\Delta_\SS$.
+
+</p>
+<h2><a href="articles/article_template.html">Article Template</a></h2>
+<span class="mod_time">Sun Sep 23 01:27:15 2018</span>
+<p>
+
+    This is a template for new articles.
+
+</p>
 <h2><a href="articles/interpolation.html">RBF-Interpolation</a></h2>
-<span class="mod_time">Fri Sep 21 23:13:59 2018</span>
+<span class="mod_time">Sun Sep 23 01:20:07 2018</span>
 <p>
 
 Given a set of distinct points $\{\vec{x}_i\}_{i=1}^n \subseteq D$ and function values $\{f_i\}_{i=1}^n \subseteq \RR$ (or $\CC$) at those points an interpolant $s : D \to \RR$ is a function such that $s(\vec{x}_i) = f_i$ for $i=1, 2, ..., n$. This article discusses RBF interpolation and compares it to polynomial interpolation.
@@ -101,25 +123,11 @@ Time stepping referes techniques that propagate initial condidtions of an ODE or
 This article outlines the RBF Orthogonal Gradients method for solving approximating surface operators as described in <span class="cite" src="PIRET2012"><b>[<a href="#bib1">1</a>]</b></span>.
 
 </p>
-<h2><a href="articles/rbf-fd.html">RBF Finite Differences</a></h2>
-<span class="mod_time">Wed Sep 19 00:16:48 2018</span>
-<p>
-
-This article discusses Radial Basis Function Finite Differnece methods for approximating differential operators and solving differential equations.
-
-</p>
 <h2><a href="articles/python_plot_surface.html">Python - Plotting Surfaces</a></h2>
 <span class="mod_time">Wed Sep 19 00:16:48 2018</span>
 <p>
 
     Example code for plotting surfaces in Python.
-
-</p>
-<h2><a href="articles/article_template.html">Article Template</a></h2>
-<span class="mod_time">Wed Sep 19 00:16:48 2018</span>
-<p>
-
-    This is a template for new articles.
 
 </p>
 <h2><a href="articles/node_selection.html">Node Selection</a></h2>
