@@ -1,0 +1,200 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Meeting Notes</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\MM}{\mathbb{M}}
+    \newcommand{\LL}{\mathcal{L}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../index.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Thursday September 27<sup>th</sup>, 2018</span> <br>
+<span class="author">Attendees: Daniel, Varun, Grady, Andrew, and Sage </span> <br>
+<span class="updated">Thu Sep 27 22:06:25 2018</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+We discussed some details of interpolation in one dimension and the benefits of various forms of interpolants. We reviewed Daniel's code for semi-Lagrangian advection and discussed how it can be addapted to use RBF interpolation.
+</p>
+
+<div class="contents">
+<ol>
+	<li>Sage's Tasks</li>
+	<ol>
+		<li>Code</li>
+		<li>Research</li>
+		<li>Writing</li>
+		<li>Misc</li>
+	</ol>
+	<li>One Dimensional Interpolation</li>
+	<li>Meeting Followup</li>
+	<li>References</li>
+</ol>
+</div>
+
+<!--************************************************************************-->
+<h1>Sage's Tasks</h1>
+<h2>Code</h2>
+<p>
+<ul>
+    <li><s>Fix calculation of eigenvalue with largest real component.</s></li>
+    <li>Implement the RBF Symmetric OGr method.</li>
+    <li>Implement time-stepping.</li>
+    <li>Improve performance of the high order OGr method.</li>
+    <li>Test RBF OGr interpolation.</li>
+    <li>Compare speed of Numpy, MATLAB, and C++.</li>
+</ul>
+</p>
+
+<h2>Research</h2>
+<p>
+<ul>
+    <li>Research the Skeel Condition Number<span class="cite" src="HIGHAM2002"><b>[<a href="#bib1">1</a>]</b></span>.</li>
+    <li>Research sphereical harmonics.</li>
+    <li>Research the Eigen and Armadillo libraries for C++.</li>
+    <li>Research and use BLAS libraries.</li>
+</ul>
+</p>
+
+<h2>Writing</h2>
+<p>
+<ul>
+    <li>Write the theorem for exactness.</li>
+    <li>Write RBF-FD article.</li>
+    <li>Write RBF-FD Projection Method article.</li>
+    <li>Write RBF-OGr article.</li>
+    <li><s>Write Numpy Efficiency article.</s> (matrx of vectors)</li>
+    <li>Python+Numpy Loops Experiment</li>
+    <li>Add local approximation to RBF Interpolation article.</li>
+</ul>
+</p>
+
+<h2>Misc</h2>
+<p>
+<ul>
+    <li>Select PhD programs.</li>
+    <li>Get access to a server.</li>
+</ul>
+</p>
+
+
+<!--************************************************************************-->
+<h1>One Dimensional Interpolation</h1>
+<p>
+Sage had observed that for equally spaced points in one dimension, RBF interpolation seems to do worse than cubic-spline interpolation (see the plots below). Grady and Varun confirmed that this is expected behaviour and that RBF alone will usually do worse than cubic splines for one dimensional problems especially with equally spaced points. 
+</p>
+<img src="20180927/rbf-cubic_interpolant.png" class="center">
+<img src="20180927/rbf-cubic_interpolant_res.png" class="center">
+
+<p>
+They also said that the Chebyshev points will minimize the max norm error for polynomial interpolation, and that the Legendre points will minimize the $L^2$ norm error for polynomial interpolation. Additionally, in 2005 Plate related RBF interpolation using gaussians on equally spaced points in one dimension back to polynomial interpolation to make conclusions about convergence and stability<span class="cite" src="PLATE2005"><b>[<a href="#bib2">2</a>]</b></span>. Grady coauthored a paper relating the third degree PHS to cubic interpolation that addresses the extreme error at the boundaries known as Runge phenomenon<span class="cite" src="FORNBERGWRIGHTLARSON2002"><b>[<a href="#bib3">3</a>]</b></span>.
+</p>
+
+<p>
+Lastly they noted that if one can choose the sample points for a one dimensional problem, then polynomial interpolation over the Chebyshev points will provide the best approximation.
+</p>
+
+<!--************************************************************************-->
+<h1>The Role of $\boldsymbol{\varepsilon}$</h1>
+<p>
+In the meeting followup for the <a href="20180920.html">previous meeting</a> Sage provided a plot showing convergence of RBF interpolation using the gaussian with $\varepsilon$ optimized for the first stencil on the finest nodeset. In these trials the RBF matrices were not augmented with polynomial basis terms. The question is, when augmenting with polynomial basis terms what is the role of $\varepsilon$? Does it provide accuracy? Does it provide stability? What effect does it have on the eigenvalues of the finite difference matrix?
+</p>
+
+
+
+<!--************************************************************************-->
+<h1>Meeting Followup</h1>
+ 
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+		<li id="bib1">
+			Nicholas&nbsp;J. Higham.
+<em>Accuracy and Stability of Numerical Algorithms</em>.
+University of Manchester, 2002.
+URL: <a href="https://epubs.siam.org/doi/abs/10.1137/1.9780898718027.fm">https://epubs.siam.org/doi/abs/10.1137/1.9780898718027.fm</a>, <a href="https://arxiv.org/abs/https://epubs.siam.org/doi/pdf/10.1137/1.9780898718027.fm">arXiv:https://epubs.siam.org/doi/pdf/10.1137/1.9780898718027.fm</a>, <a href="https://doi.org/10.1137/1.9780898718027.fm">doi:10.1137/1.9780898718027.fm</a>.
+		</li>
+		<li id="bib2">
+			Rodrigo&nbsp;B. Platte and Tobin&nbsp;A. Driscoll.
+Polynomials and potential theory for gaussian radial basis function interpolation.
+<em>SIAM Journal on Numerical Analysis</em>, 43(2):750&ndash;766, 2006.
+URL: <a href="http://www.jstor.org/stable/4101422">http://www.jstor.org/stable/4101422</a>.
+		</li>
+		<li id="bib3">
+			B&nbsp;Fornberg, G.&nbsp;B. Wright, and E&nbsp;Larsson.
+<span class="bibtex-protected">Some observations regarding interpolants in the limit of flat radial basis functions</span>.
+<em>Comput. Math. Appl.</em>, 47:37&ndash;55, 2004.
+URL: <a href="https://math.boisestate.edu/~wright/research/rbf_paper_final.pdf">https://math.boisestate.edu/~wright/research/rbf_paper_final.pdf</a>.
+		</li>
+	</ol>
+</p>
+</div>
+
+</div>
+</body>
+
+<script>includeHTML();</script>
+
+</html>

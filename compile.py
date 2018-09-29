@@ -204,7 +204,7 @@ def compile_main():
 #
 ##################################################################################
 
-replace_strings = [('\xe9', '&eacute;')]
+replace_strings = [('\xe9', '&eacute;'), ('–','&ndash;')]
 
 def build_bib_dict():
     pybtex_style = pybtex.plugin.find_plugin('pybtex.style.formatting', 'plain')()

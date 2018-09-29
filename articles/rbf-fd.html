@@ -65,7 +65,7 @@
 <p class="title_and_author">
 <span class="title">RBF Finite Differences</span> <br>
 <span class="author">Authors: Sage Shaw</span> <br>
-<span class="updated">Sun Sep 23 01:34:55 2018</span> <br>
+<span class="updated">Sat Sep 29 00:30:49 2018</span> <br>
 <span hidden id="status">c</span>
 <span id="status_message" class="status_message"></span>
 </p>
@@ -79,37 +79,133 @@ This article discusses Radial Basis Function Finite Differnece methods for appro
 <div class="contents">
 <ol>
 	<li>Classical Finite Differences</li>
-	<li>Method</li>
+	<li>Radial Basis Function Finite Differences</li>
 	<ol>
+		<li>The Method at a Point</li>
 		<li>Global RBF-FD</li>
+	</ol>
+	<li>Computational Complexity</li>
+	<ol>
 		<li>RBF-FD Stencils</li>
 	</ol>
-	<li>Derivation</li>
+	<li>Stability and Accuracy</li>
+	<ol>
+		<li>Orders of Convergence</li>
+		<li>Augmenting with Polynomial Basis Terms</li>
+	</ol>
+	<li>Orders of Convergence</li>
 	<li>References</li>
 </ol>
 </div>
-<!--************************************************************************-->
 
+<!--************************************************************************-->
 <h1>Classical Finite Differences</h1>
 <p>
     
 </p>
 
 <!--************************************************************************-->
-<h1>Method</h1>
+<h1>Radial Basis Function Finite Differences</h1>
 <p>
-    
+As in classical finite differences the approach is to approximate the linear operator by a weighted sum of the function values at a given set of points. RBF-FD is an instance of the method of undetermined coefficients. The method of undetermined coefficients asks what are the weights that make our approximation exact for a particular class of functions such as polynomials of a particular degree, or in the case of RBF-FD, a particular radial basis function centered at each of the points.
 </p>
+
+<h2>The Method at a Point</h2>
+<p>
+Given a set of points $\{\vec{x}_i\}_{i=1}^n \subseteq \RR^n$, a radial basis function $\phi(r)$, and a linear operator $\LL$, find the weights $\{\omega_i\}_{i=1}^n$ such that 
+$$
+\sum\limits_{i=1}^n \omega_i \phi(\norm{\vec{x}_j - \vec{x}_i}) = \LL\phi(\norm{\vec{x} - \vec{x}_j}) \vert_{\vec{x}=\vec{x}_1} \phantom{===} \text{ for } j=1,2,\dots, n.
+$$
+This is the set of weights that make the approximation of $\LL$ exact at $\vec{x}_1$ for each function $\phi(\norm{\vec{x} - \vec{x}_1})$.
+</p>
+
+<p>
+Once we have such weights, we claim that 
+$$
+\sum\limits_{i=1}^n \omega_i f(\vec{x}_i) \approx \LL f(\vec{x}) \vert_{\vec{x}=\vec{x}_1}
+$$
+where $f$ is any function that we can approximate with radial basis functions. This is not obvious. To see why we must consider the RBF <a href="interpolation.html">interpolant</a> of $f$. Suppose that $f$ is approximated by the RBF interpolant
+$$
+f(\vec{x}) \approx s(\vec{x}) = \sum\limits_{k=1}^n a_k \phi(\norm{\vec{x} - \vec{x}_k})
+$$
+then
+\begin{align*}
+    \sum\limits_{i=1}^n \omega_i f(\vec{x}_i) &\approx \sum\limits_{i=1}^n \omega_i s(\vec{x}_i) \\
+    &= \sum\limits_{i=1}^n \omega_i \sum\limits_{k=1}^n a_k \phi(\norm{\vec{x}_i - \vec{x}_k}) \\
+    &= \sum\limits_{k=1}^n a_k \sum\limits_{i=1}^n \omega_i \phi(\norm{\vec{x}_k - \vec{x}_i}) \\
+    &= \sum\limits_{k=1}^n a_k \LL\phi(\norm{\vec{x} - \vec{x}_k}) \vert_{\vec{x}=\vec{x}_1} \\
+    &= \LL \sum\limits_{k=1}^n a_k \phi(\norm{\vec{x} - \vec{x}_k}) \vert_{\vec{x}=\vec{x}_1} \\
+    &= \LL s(\vec{x}) \vert_{\vec{x}=\vec{x}_1} \\
+    & \approx \LL f(\vec{x}) \vert_{\vec{x}=\vec{x}_1}
+\end{align*}
+and we have reached our desired conclusion.
+</p>
+
+<p>
+It is easy to get lost in the notation. The important takeaway from this proof is that we approximate our operator without ever forming the interpolant $s(\vec{x})$ - it is merely a theoretical tool.
+</p>
+
+<h3>Computation of $\LL \phi$</h3>
+<p>
+Computation of $\LL$ applied to the radial basis function $\phi$ must be done with care. In particular, most choices of $\LL$ are defined in terms of the ambient space where $\phi$ is defined in terms of the distance. For example, if $\LL = \frac{d}{dx}$, then $\LL \phi \neq \frac{d \phi}{dr}$. Instead it is
+$$
+\frac{d}{dx} \phi(r) = \frac{d \phi}{dr} \frac{dr}{dx} = \text{sign}(x)\frac{d \phi}{dr} \text{.}
+$$
+Though it seems like an unnecessary complication, it will be more convenient to express it as
+$$
+\frac{d}{dx} \phi(r) = x\frac{1}{r} \phi'(r)\text{.}
+$$
+For most choices of RBF $\frac{1}{r} \phi'(r)$ has a removable discontinuity at $r=0$, and can be coded directly (opposed to calculating $\phi'$ and dividing by $r$). It appears often in these common operators:
+\begin{align*}
+    \frac{d}{dx} \phi(r) &= x\frac{1}{r} \phi'(r) & \frac{d^2}{dx^2} \phi(r) &= \phi''(r) \\
+    \frac{\partial}{\partial x_i} \phi(r) &= x_i\frac{1}{r} \phi'(r) & \frac{\partial^2}{\partial x_i^2} \phi(r) &= \frac{x_i^2}{r^2}\phi''(r) \\
+    \nabla \phi(r) &= \vec{x} \frac{1}{r} \phi'(r) & \Delta \phi(r) &= (n-1)\frac{1}{r} \phi'(r) + \phi''(r)
+\end{align*}
+where $x \in \RR$, and $\vec{x} \in \RR^n$.
+
+
+</p>
+
+<h3>Example</h3>
+<p>
+An example of approximating the first and second derivatives at a point in the domain is shown in this <a href="rbf-fd/rbf_fd_at_a_point.html">Jupyter Notebook</a> (<a href="rbf-fd/rbf_fd_at_a_point.ipynb" download>download</a>).
+</p>
+
 <h2>Global RBF-FD</h2>
+<p>
+Often it is desired not only to calculate the derivative at a point, but at many points in the domain. When the derivative is approximated at all points in the sample it is called Global RBF-FD. We simply extend the method at one point, to all points in our sample. In effect we solve for the weights
+\begin{align*}
+    \sum\limits_{i=1}^n \omega_{i1} \phi(\norm{\vec{x}_j - \vec{x}_i}) &= \LL\phi(\norm{\vec{x} - \vec{x}_j}) \vert_{\vec{x}=\vec{x}_1} \phantom{===} \text{ for } j=1,2,\dots n \\
+    \sum\limits_{i=1}^n \omega_{i2} \phi(\norm{\vec{x}_j - \vec{x}_i}) &= \LL\phi(\norm{\vec{x} - \vec{x}_j}) \vert_{\vec{x}=\vec{x}_2} \phantom{===} \text{ for } j=1,2,\dots n \\
+    & \vdots \\
+    \sum\limits_{i=1}^n \omega_{in} \phi(\norm{\vec{x}_j - \vec{x}_i}) &= \LL\phi(\norm{\vec{x} - \vec{x}_j}) \vert_{\vec{x}=\vec{x}_n} \phantom{===} \text{ for } j=1,2,\dots n. \\
+\end{align*}
+This is more cleanly represented in the following matrix system
+$$
+A W^T = L
+$$
+where $A_{ij} = \phi(\norm{\vec{x}_j - \vec{x}_i})$, $W_{ij} = \omega_{ij}$, and $L_{ij} = \LL\phi(\norm{\vec{x} - \vec{x}_i}) \vert_{\vec{x}=\vec{x}_j}$. Once $W$ is calculated, $\LL$ applied to a function $f$ is given by $W\vec{f} \approx \LL\vec{f}$ where $\vec{f}_k = f(x_k)$ and $\vec{f}'_k = f'(x_k)$.
+</p>
+
+<h3>Example</h3>
+<p>
+An example of approximating the first and second derivatives at many points in the domain is shown in this <a href="rbf-fd/rbf_fd_global.html">Jupyter Notebook</a> (<a href="rbf-fd/rbf_fd_global.ipynb" download>download</a>).
+</p>
+
+<!--************************************************************************-->
+<h1>Computational Complexity</h1>
 
 <h2>RBF-FD Stencils</h2>
 
 <!--************************************************************************-->
-<h1>Derivation</h1>
-<p>
-    
-</p>
+<h1>Stability and Accuracy</h1>
 
+<h2>Orders of Convergence</h2>
+
+<h2>Augmenting with Polynomial Basis Terms</h2>
+
+<!--************************************************************************-->
+<h1>Orders of Convergence</h1>
 
 
 
