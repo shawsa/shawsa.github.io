@@ -102,6 +102,7 @@ We discussed some details of interpolation in one dimension and the benefits of 
     <li>Improve performance of the high order OGr method.</li>
     <li>Test RBF OGr interpolation.</li>
     <li>Compare speed of Numpy, MATLAB, and C++.</li>
+    <li>Determine the role of $\varepsilon$ when augmenting with polynomials.</li>
 </ul>
 </p>
 
@@ -123,7 +124,6 @@ We discussed some details of interpolation in one dimension and the benefits of 
     <li>Write RBF-FD Projection Method article.</li>
     <li>Write RBF-OGr article.</li>
     <li><s>Write Numpy Efficiency article.</s> (matrx of vectors)</li>
-    <li>Python+Numpy Loops Experiment</li>
     <li>Add local approximation to RBF Interpolation article.</li>
 </ul>
 </p>
@@ -163,6 +163,33 @@ In the meeting followup for the <a href="20180920.html">previous meeting</a> Sag
 
 <!--************************************************************************-->
 <h1>Meeting Followup</h1>
+
+
+<h2>Questions</h2>
+<p>
+<b>What is a radial basis fuction?</b> <br/>
+The <b>Weierstrass approximation theorem</b> theorem tells us that we can sufficiently approximate any continuous function with polynomials. Since polynomial basis terms form a basis for polynomials, it makes sense to use them in interpolation. What extra criteria do we place on radial functions that make them basis functions. What space do our basis functions span? Does any sequence of centers make a basis or do we need some criteria on them to guarantee that their span is large enough for our purposes?
+</p>
+
+<p>
+I've been looking into the <a href="https://en.wikipedia.org/wiki/Stone%E2%80%93Weierstrass_theorem">Stone-Weierstrass</a> theorem. I think that it tells me that as long as a non-zero constant function is in the span of my basis, and my basis functions separate points, then I can approximate any continuous function with a uniformly convergent series of linear combinations of basis functions.
+</p>
+
+<p>
+Also, I think that uniqueness of the coefficients might be important...
+</p>
+
+<p><b>Even Powered PHSs</b><br>
+Why aren't $r^{2k}$ basis functions? I see that $x^2$ is singular for more than three points, but I don't have a strong intuition for this.
+</p>
+
+<p><b>Toeplitz Matrices</b> <br>
+I noticed that for equispaced grids in 1 dimension, the distance matrix, and hence the rbf matrix is a toeplitz matrix. I don't immediately see a way to take advantage of that, since I see no motivation to multiply with it. It looks like it isn't straightforward to solve systems using the method we developed in the HW. Is there some way to take advantage of this?
+</p>
+
+<p><b>Smoothness of Local Interpolation</b> <br>
+I haven't yet done local interpolation. As I understand it, I form the RBF interpolant for each stencil centered at points $x_i$, then if I want to interpolate to a point $z$ I find the closest $x_i$ and use the interpolant corresponding to the stencil centered at that point. Won't this be discontinuous? Have I missunderstood local interpolation?
+</p>
  
 <!--***************************************************************************
 *******************************************************************************

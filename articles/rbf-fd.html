@@ -184,7 +184,7 @@ This is more cleanly represented in the following matrix system
 $$
 A W^T = L
 $$
-where $A_{ij} = \phi(\norm{\vec{x}_j - \vec{x}_i})$, $W_{ij} = \omega_{ij}$, and $L_{ij} = \LL\phi(\norm{\vec{x} - \vec{x}_i}) \vert_{\vec{x}=\vec{x}_j}$. Once $W$ is calculated, $\LL$ applied to a function $f$ is given by $W\vec{f} \approx \LL\vec{f}$ where $\vec{f}_k = f(x_k)$ and $\vec{f}'_k = f'(x_k)$.
+where $A_{ij} = \phi(\norm{\vec{x}_j - \vec{x}_i})$, $W_{ij} = \omega_{ij}$, and $L_{ij} = \LL\phi(\norm{\vec{x} - \vec{x}_i}) \vert_{\vec{x}=\vec{x}_j}$. Once $W$ is calculated, $\LL\vec{f} \approx W\vec{f}$ where $\LL \vec{f}_k = \LL f(x)\vert_{x=x_k}$ and $\vec{f}_k = f(x_k)$.
 </p>
 
 <h3>Example</h3>

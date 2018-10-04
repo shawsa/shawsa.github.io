@@ -63,7 +63,7 @@
 <p class="title_and_author">
 <span class="title">RBF-Interpolation</span> <br>
 <span class="author">Authors: Sage Shaw</span> <br>
-<span class="updated">Fri Sep 21 23:13:27 2018</span> <br>
+<span class="updated">Sun Sep 30 01:06:40 2018</span> <br>
 <span hidden id="status">c</span>
 <span id="status_message" class="status_message"></span>
 </p>
@@ -198,7 +198,7 @@ Now that we have established that RBF interpolation remains stable as the number
 
 <h2>Higher Dimensions</h2>
 <p>
-Polynomial interpolation becomes more complicated when we move into higher dimensions. Firstly, given $4$ points there is no unique second degree polynomial that interpolates them. We could find an interpolant with the basis of $\{1, x, y, x^2\}$ for example, or we could choose a basis of $\{1, x, y, y^2\}$ which will give different interpolants if they interpolate at all! Indeed many selections of points will fail to interpolate with the wrong choice of basis. For example, if all the points are chosen on a circle centered at the origin, and we choose a basis including $\{1, x^2, y^2\}$ then these columns of the matrix will be linearly dependent. There is an elegant proof that shows that this will always be a problem in higher dimensions if the choice of basis is independent of the points.
+Polynomial interpolation becomes more complicated when we move into higher dimensions. Firstly, given $4$ points there is no unique second degree polynomial that interpolates them. We could find an interpolant with the basis of $\{1, x, y, x^2\}$ for example, or we could choose a basis of $\{1, x, y, y^2\}$ which will give different interpolants if they interpolate at all! Indeed many selections of points will fail to interpolate with the wrong choice of basis. For example, if all the points are chosen on a circle centered at the origin, and we choose a basis including $\{1, x^2, y^2\}$ then these columns of the matrix will be linearly dependent. This is the famed <i>Mairhuber-Curtis theorem</i><span class="cite" src="MAIRHUBER1956"><b>[<a href="#bib1">1</a>]</b></span><span class="cite" src="Curtis1959"><b>[<a href="#bib2">2</a>]</b></span> and it shows that this will always be a problem in higher dimensions if the choice of basis is independent of the points.
 </p>
 
 <h3>Proof:</h3>
@@ -230,8 +230,13 @@ The particular RBF used is $\phi(r) = e^{-(\varepsilon r)^2}$ and is known as th
 </p>
 
 <p>
-The identity matrix has a condition number of 1. As the shape parameter decreases, the off-diagonal entries of the RBF interpolation matrix grow, the condition number of the matrix increases, and the interpolant becomes a better approximation of the underlying function. That is until the RBF matrix becomes sufficiently ill-conditioned. It is good practice to select a shape parameter so that the condition number of the matrix is "on the edge of ill-conditioning." More specifically, it is chosen so that the condition number is large, but several orders of magnitude below the inverse of machine-epsilon. 
+The identity matrix has a condition number of 1. As the shape parameter decreases, the off-diagonal entries of the RBF interpolation matrix grow, the condition number of the matrix increases, and the interpolant becomes a better approximation of the underlying function. That is until the RBF matrix becomes sufficiently ill-conditioned. It is good practice to select a shape parameter so that the condition number of the matrix is "on the edge of ill-conditioning." More specifically, it is chosen so that the condition number is large, but several orders of magnitude below the inverse of $\varepsilon_M$ (machine-epsilon). 
 </p>
+
+<p>
+The plots below show the error in interpolating $f(x)=e^{x\cos(10 \pi x)}$ at $n=200$ equally spaced points on the interval of $0 \leq x \leq 1$. Notice how as $\varepsilon$ decreases the error smoothly decreases and the condition number smoothly increases until the condition number reaches $10^{16} = 1/\varepsilon_M$.
+</p>
+<img src="interpolation/edge_of_ill-conditioning.png" class='center'>
 
 <!--p>
 <a href="interpolation/sphere_interp.py" target="_download">Source code</a> for RBF interpolation on a sphere.
@@ -243,6 +248,18 @@ The identity matrix has a condition number of 1. As the shape parameter decrease
 <h1>References</h1>
 <p class="bibliography">
 	<ol>
+		<li id="bib1">
+			John&nbsp;C. Mairhuber.
+On haar's theorem concerning chebychev approximation problems having unique solutions.
+<em>Proceedings of the American Mathematical Society</em>, 7(4):609&ndash;615, 1956.
+URL: <a href="http://www.jstor.org/stable/2033359">http://www.jstor.org/stable/2033359</a>.
+		</li>
+		<li id="bib2">
+			Jr. Philip C.&nbsp;Curtis.
+N-parameter families and best approximation.
+<em>Pacific Journal of Mathematics</em>, 9(4):1013&ndash;1028, 1959.
+URL: <a href="https://msp.org/pjm/1959/9-4/pjm-v9-n4-p04-s.pdf">https://msp.org/pjm/1959/9-4/pjm-v9-n4-p04-s.pdf</a>.
+		</li>
 	</ol>
 </p>
 </div>
