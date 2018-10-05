@@ -332,7 +332,7 @@ def complie_article(file_path, bib_dict):
     for i, citation in enumerate(citations):
         html_bib += '\t\t<li id="bib' + str(i+1) + '">\n\t\t\t'
         html_bib += citation
-        html_bib += '\n\t\t</li>\n'
+        html_bib += '\n\t\t</li><br>\n'
     html_bib += '\t</ol>\n'
 
     bib_start = html.find('<p class="bibliography">')

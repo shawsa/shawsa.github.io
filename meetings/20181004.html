@@ -1,0 +1,207 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Meeting Notes</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\MM}{\mathbb{M}}
+    \newcommand{\LL}{\mathcal{L}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../index.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Thursday October 4<sup>th</sup>, 2018</span> <br>
+<span class="author">Attendees: Daniel, Grady, Andrew, and Sage </span> <br>
+<span class="updated">Thu Oct  4 21:40:20 2018</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+The majority of the meeting was spent discussing the questions posed in the meeting followup of the <a href="20180927.html">previous meeting</a>. All of the questions were addressed, but in particular we discussed what qualify as radial basis functions.
+</p>
+
+<div class="contents">
+<ol>
+	<li>Sage's Tasks</li>
+	<ol>
+		<li>Code</li>
+		<li>Research</li>
+		<li>Writing</li>
+		<li>Misc</li>
+	</ol>
+	<li>What is a Radial Basis Function</li>
+	<li>Why isn't $r^{2k}$ an RBF</li>
+	<li>Meeting Followup</li>
+	<ol>
+		<li>Questions</li>
+	</ol>
+	<li>References</li>
+</ol>
+</div>
+
+<!--************************************************************************-->
+<h1>Sage's Tasks</h1>
+<h2>Code</h2>
+<p>
+<ul>
+    <li>Implement the RBF Symmetric OGr method.</li>
+    <li>Implement time-stepping.</li>
+    <li>Improve performance of the high order OGr method.</li>
+    <li>Test RBF OGr interpolation.</li>
+    <li>Compare speed of Numpy, MATLAB, and C++.</li>
+    <li>Determine the role of $\varepsilon$ when augmenting with polynomials.</li>
+    <li>In Error and Condition number vs $\varepsilon$ plots, put error on log scale.</li>
+    <li>In shape parameter optimization function, use a root finding algorithm, not a minimizer (brentq in numpy).</li>
+</ul>
+</p>
+
+<h2>Research</h2>
+<p>
+<ul>
+    <li>Research the Skeel Condition Number<span class="cite" src="HIGHAM2002"><b>[<a href="#bib1">1</a>]</b></span>.</li>
+    <li>Research sphereical harmonics.</li>
+    <li>Research the Eigen and Armadillo libraries for C++.</li>
+    <li>Research and use BLAS libraries.</li>
+    <li>Research the moment conditions on PHS interpolation.</li>
+</ul>
+</p>
+
+<h2>Writing</h2>
+<p>
+<ul>
+    <li>Write the theorem for exactness.</li>
+    <li>Write RBF-FD article.</li>
+    <li>Write RBF-FD Projection Method article.</li>
+    <li>Write RBF-OGr article.</li>
+    <li><s>Write Numpy Efficiency article.</s> (matrx of vectors)</li>
+    <li>Add local approximation to RBF Interpolation article.</li>
+    <li>Improve <a href="https://en.wikipedia.org/wiki/Radial_basis_function">Wikipedia article on RBFs</a>.</li>
+</ul>
+</p>
+
+<h2>Misc</h2>
+<p>
+<ul>
+    <li>Select PhD programs.</li>
+    <li>Get access to a server.</li>
+</ul>
+</p>
+
+
+<!--************************************************************************-->
+<h1>What is a Radial Basis Function</h1>
+<p>
+Radial basis functions are radialy symmetric functions $\phi(r)$ centered at arbitrary points in a domain. In addition they have the property that $\psi (r) = \phi(\sqrt{r\ })$ is a completely monotone function. That is 
+$$
+(-1)^n \frac{d^n}{dr}\psi(r) > 0, \ \ \ \ \ \text{for all $n \in \NN$.}
+$$
+A basis of these shifted radial kernels turns out to be good for interpolating data and approximating continuous functions. 
+</p>
+
+<p>
+Grady listed some important people that I should look into:
+<ul>
+    <li>Schoenberg (1938)</li>
+    <li>Hardy</li>
+    <li>Micchelli (1985) - general results on completely monotone functions</li>
+    <li>Madych and Nelson - results with shape parameters showing exponential convergence</li>
+    <li>Schoenberg (1938)</li>
+    <li>Schoenberg (1938)</li>
+</ul>
+</p>
+
+<!--************************************************************************-->
+<h1>Why isn't $r^{2k}$ an RBF</h1>
+<p>
+The answer to this question was quite simple. These functions are not piecewise quadratics, they are in fact just quadratics. This is because $\norm{x - x_0}**{2k} = (x - x_0)**{2k}$ since the sign is positive anyway. The sum of quadratics is at most quadratic and thus three quadratics will span the space of all quadratics. Similarly only $2k+1$ radial functions of the form $r^{2k}$ can be linearly independent. 
+</p>
+
+<!--************************************************************************-->
+<h1>Meeting Followup</h1>
+
+
+<h2>Questions</h2>
+<p>
+<b></b> <br/>
+
+</p>
+
+ 
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+		<li id="bib1">
+			Nicholas&nbsp;J. Higham.
+<em>Accuracy and Stability of Numerical Algorithms</em>.
+University of Manchester, 2002.
+URL: <a href="https://epubs.siam.org/doi/abs/10.1137/1.9780898718027.fm">https://epubs.siam.org/doi/abs/10.1137/1.9780898718027.fm</a>, <a href="https://arxiv.org/abs/https://epubs.siam.org/doi/pdf/10.1137/1.9780898718027.fm">arXiv:https://epubs.siam.org/doi/pdf/10.1137/1.9780898718027.fm</a>, <a href="https://doi.org/10.1137/1.9780898718027.fm">doi:10.1137/1.9780898718027.fm</a>.
+		</li><br>
+	</ol>
+</p>
+</div>
+
+</div>
+</body>
+
+<script>includeHTML();</script>
+
+</html>
