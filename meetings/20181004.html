@@ -105,9 +105,10 @@ The majority of the meeting was spent discussing the questions posed in the meet
     <li>Improve performance of the high order OGr method.</li>
     <li>Test RBF OGr interpolation.</li>
     <li>Compare speed of Numpy, MATLAB, and C++.</li>
-    <li>Determine the role of $\varepsilon$ when augmenting with polynomials.</li>
-    <li>In Error and Condition number vs $\varepsilon$ plots, put error on log scale.</li>
-    <li>In shape parameter optimization function, use a root finding algorithm, not a minimizer (brentq in numpy).</li>
+    <li><s>Determine the role of $\varepsilon$ when augmenting with polynomials.</s></li>
+    <li><s>In Error and Condition number vs $\varepsilon$ plots, put error on log scale.</s></li>
+    <li><s>In shape parameter optimization function, use a root finding algorithm, not a minimizer (brentq in numpy).</s></li>
+    <li><s>Write RBF dictionary for modularity.</s></li>
 </ul>
 </p>
 
@@ -125,6 +126,7 @@ The majority of the meeting was spent discussing the questions posed in the meet
 <h2>Writing</h2>
 <p>
 <ul>
+    <li>Write Radial Basis Function Article</li>
     <li>Write the theorem for exactness.</li>
     <li>Write RBF-FD article.</li>
     <li>Write RBF-FD Projection Method article.</li>
@@ -161,20 +163,61 @@ Grady listed some important people that I should look into:
     <li>Hardy</li>
     <li>Micchelli (1985) - general results on completely monotone functions</li>
     <li>Madych and Nelson - results with shape parameters showing exponential convergence</li>
-    <li>Schoenberg (1938)</li>
-    <li>Schoenberg (1938)</li>
 </ul>
 </p>
 
 <!--************************************************************************-->
 <h1>Why isn't $r^{2k}$ an RBF</h1>
 <p>
-The answer to this question was quite simple. These functions are not piecewise quadratics, they are in fact just quadratics. This is because $\norm{x - x_0}**{2k} = (x - x_0)**{2k}$ since the sign is positive anyway. The sum of quadratics is at most quadratic and thus three quadratics will span the space of all quadratics. Similarly only $2k+1$ radial functions of the form $r^{2k}$ can be linearly independent. 
+The answer to this question was quite simple. These functions are not piecewise quadratics, they are in fact just quadratics. This is because $\norm{x - x_0}^{2k} = (x - x_0)^{2k}$ since the power is even. The sum of quadratics is at most quadratic and thus three quadratics will span the space of all quadratics. Similarly only $2k+1$ radial functions of the form $r^{2k}$ can be linearly independent. 
 </p>
 
 <!--************************************************************************-->
 <h1>Meeting Followup</h1>
 
+<h2>Defninition of Radial Basis Function</h2>
+<p>
+I've been reading the textbooks Grady lent me. I've made an attempt to define radial basis fuctions in the <a href='../articles/radial_basis_function.html'>Radial Basis Function Article</a>.
+</p>
+
+<h2>Role of $\varepsilon$ in RBF-FD</h2>
+<p>
+In an effort to understand the effect that shape parameters have in RBF-FD augmented with polynomial basis terms, I've decided to isolate a particular test case and examine how the shape parameter and number of polynomail basis terms affect the error. The particular problem I've chosen is approximating the second derivative of $\sin(2\pi x)$ on the interval $0 \leq x \leq 1$.
+</p>
+
+<h3>Stability vs. Accuracy</h3>
+<p>
+In the plots immediately below, I've fixed the number of points and the stencil size. As expected each additional basis term adds accuracy, and the error decreased as $\varepsilon \to 0$ until ill-conditioning is reached. This is the effect we expect to see when we do not add polynomial basis terms.
+</p>
+<img class='center' src='20181004/eps_role_fd_gaussian_n200.png'>
+<img class='center' src='20181004/eps_role_fd_multiquadric_n200.png'>
+
+<h3>Higher Degree Basis Terms $\implies$ Higher Order of Convergence</h3>
+<p>
+The plots immediately below, choose $\varepsilon$ so that the condition number of the interpolation matrix for the finiest nodeset with the highest degree of polynomial basis terms is optimized (roughly $10^{12}$). 
+</p>
+<img class='center' src='20181004/err_role_fd_gaussian.png'>
+<img class='center' src='20181004/err_role_fd_multiquadric.png'>
+
+<p>
+Compared these with the PHS RBFs.
+</p>
+<img class='center' src='20181004/err_role_fd_cubic.png'>
+<img class='center' src='20181004/err_role_fd_PHS9.png'>
+
+<h3>Order Independent of Shape Parameter</h3>
+<p>
+In these plots, $\varepsilon$ varies while appending fourth degree polynomial basis terms. They show that the order of convergence is largely independent of $\varepsilon$. 
+</p>
+<img class='center' src='20181004/order_role_fd_gaussian.png'>
+<img class='center' src='20181004/order_role_fd_multiquadric.png'>
+
+<h3>Order Independent of Stencil Size</h3>
+<p>
+It's unclear what the stencil size is doing. It might be the case for the second derivative in one dimension, that small stencils are sufficient, and that little to nothing is gained by increasing the stencil size beyond 10 points. 
+</p>
+<img class='center' src='20181004/k_role_fd_multiquadric.png'>
+<img class='center' src='20181004/k_role_fd_multiquadric2.png'>
 
 <h2>Questions</h2>
 <p>

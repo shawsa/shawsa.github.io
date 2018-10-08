@@ -1,0 +1,251 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Radial Basis Function</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\MM}{\mathbb{M}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../index.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Radial Basis Function</span> <br>
+<span class="author">Authors: Sage Shaw</span> <br>
+<span class="updated">Mon Oct  8 17:07:21 2018</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+This article defines radial basis fuctions (RBFs), describes several types of RBF, and discusses their motivation and applications. 
+</p>
+
+<div class="contents">
+<ol>
+	<li>History</li>
+	<li>Definition</li>
+	<li>Examples</li>
+	<ol>
+		<li>Shape Parameter RBFs</li>
+		<li>Polyharmonic Spline RBFs</li>
+		<li>Compactly Supported RBFs</li>
+	</ol>
+	<li>History</li>
+	<li>References</li>
+</ol>
+</div>
+
+<!--************************************************************************-->
+<h1>History</h1>
+<p>
+    
+</p>
+
+<!--************************************************************************-->
+<h1>Definition</h1>
+<p>
+The definition of radial basis functions is best understood through (and motivated by) the context of <a href="interpolation.html">interpolation</a>. The <i>Mairhuber-Curtis theorem</i> <span class="cite" src="MAIRHUBER1956"><b>[<a href="#bib1">1</a>]</b></span><span class="cite" src="CURTIS1959"><b>[<a href="#bib2">2</a>]</b></span> suggests that basis functions that do not depend on the sample points will be unreliable. Choosing radialy symmetric basis functions centered at the sample points avoids this. 
+</p>
+
+
+<p class='definition'>
+<b>Definition: Radial Kernel and Radial Function</b><br>
+A radial kernel is a function $\phi: [0, \infty) \to \RR$. When a radial kernal is paired with a metric on a vector space $\norm{\cdot}: V \times V \to [0, \infty)$ the function $\phi_\vec{c}: V \to \RR$ defined by $\phi_\vec{c}(\vec{x}) = \phi(\norm{\vec{x} - \vec{c}})$ is said to be a radial function centered at $\vec{c} \in V$.
+</p>
+
+<p>
+If we wish to interpolate a function at a set of points then a set of radial functions centered at those points may not be a valid basis. For example, the function $\phi(r)=r^2$ is a perfectly valid radial kernel but in one dimension using the standard euclidian distance, the set of functions $\{x^2, (x-1)^2, (x-2)^2, (x-3)^2\}$ are linearly dependent and thus can't be basis functions. More generally, one can guarantee a nonsingular interpolation matrix by criteria on the radial kernel.
+</p>
+
+
+<div class='definition'>
+<b>Definition: Completely Monotone Function</b><span class="cite" src="CHENEYLIGHT1999"><b>[<a href="#bib3">3</a>]</b></span><br>
+A function $\psi: [0, \infty) \to \RR$ is said to be completely monotone if
+    <ol>
+        <li>$\psi \in C[0, \infty)$</li>
+        <li>$\psi \in C^\infty (0, \infty)$ </li>
+        <li>$(-1)^k \frac{d^k \psi}{dt^k}(t) \geq 0$ for $t>0$ and $k = 0, 1, 2, \dots$</li>
+    </ol>
+</div>
+
+<p>
+Complete monotonicity is important to choosing radial kernenls so that our basis functions form good interpolants. We are now ready to define radial basis fuctions.
+</p>
+
+<p class="definition">
+<b>Definition: Radial Basis Function</b><br>
+(<i>possible definition - I have no source for this</i>)<br>
+Let $\phi$ be a radial kernel and let $\vec{y} \in X$ where $X$ is an inner product space. Definte $\psi(r) = \phi(\sqrt{r})$. If $\psi$ is continuous on $[0, \infty)$, $\psi'$ is non-constant and completely monotone on $(0, \infty)$ then $\phi_{\vec{y}}(\vec{x}): X \to \RR$ given by $\phi_{\vec{y}}(\vec{x}) = \phi(\norm{\vec{x}-\vec{y}})$ is said to be a radial basis function.
+</p>
+
+<p>
+The definition of radial basis function given above, is entirely motivated by the following theorem proved by Charles A. Micchelli (1986).
+</p>
+
+<p class="definition">
+<b>Theorem</b><span class="cite" src="MICHELLI1986"><b>[<a href="#bib4">4</a>]</b></span><br>
+Let $\{\vec{x}_i\}_{i=1}^n \subseteq X$, an inner product space. Let $\psi$ be a continuous radial kernel. Definie the matrix $A_{ij} = \psi \left( \norm{\vec{x}_i - \vec{x}_j}^2 \right)$. If $\psi'$ is non-constant and completely monotone on $(0, \infty)$ then $A$ is non-singular.
+</p>
+
+<p>
+When radial basis functions are defined as above Michelli's theorm proves that the interpolation matrix will be non-singular.
+</p>
+
+<!--************************************************************************-->
+<h1>Examples</h1>
+<p>
+The original radial kernel used by Hardy <span class="cite" src="HARDY1971"><b>[<a href="#bib5">5</a>]</b></span> is the multiquadric
+$$
+\phi(r) = \sqrt{1 + (\varepsilon r)^2}.
+$$
+
+Since then many other good choices for radial kernels have been discovered.
+</p>
+
+<h2>Shape Parameter RBFs</h2>
+<p>
+The multiquadric mentioned above has a parameter $\varepsilon$ known as the shape parameter. Generally speaking, as $\varepsilion \to 0$ the graph approaches a flat line as seen in the plot of the Gaussian below.
+</p>
+<img class='center' src='radial_basis_function/gaussian_shape.png'>
+
+<p>
+The following are a list of some shape-parameter RBFs used in practice. All satisfy Michelli's theorem above.
+\begin{align*}
+\textbf{Gaussian - } \phi(r)&= e^{-(\varepsilon r)^2} \\
+\textbf{Multiquadric - } \phi(r)&= \sqrt{1 + (\varepsilon r)^2} \\
+\textbf{Inverse Multiquadric - } \phi(r)&= \frac{1}{\sqrt{1 + (\varepsilon r)^2}} \\
+\textbf{Inverse Quadratic - } \phi(r)&= \frac{1}{1+(\varepsilon r)^2} \\
+\end{align*}
+</p>
+
+<h2>Polyharmonic Spline RBFs</h2>
+<p>
+Polyharmonic splines can be seen as a generalization of the cubic and thin-plate splines. In fact there are particular boundary conditions on cubic splines that are equivalent to RBF interpolation using $\phi(r)=r^3$ <span class="cite" src="FORNBERGWRIGHTDRISCOLL2002"><b>[<a href="#bib6">6</a>]</b></span>. The cubic splines are of this form
+
+\begin{align*}
+\phi(r) & = r^{2k+1} \text{   for } k \in \NN \\
+\phi(r) & = r^{2k}\log(r) \text{   for } k \in \NN \\
+\phi(r) & = r^3 &\text{(cubic spline - special case)} \\
+\phi(r) & = r^{2}\log(r) &\text{(thin-plate spline - special case)} \\
+\end{align*}
+</p>
+
+<p>
+Generally PHS RBFs have lower orders of convergence than shape parameter RBFs, however this can be remedied by adding a few low degree polynomials to the basis.
+</p>
+
+<h2>Compactly Supported RBFs</h2>
+
+<!--************************************************************************-->
+<h1>History</h1>
+<p>
+    
+</p>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+		<li id="bib1">
+			John&nbsp;C. Mairhuber.
+On haar's theorem concerning chebychev approximation problems having unique solutions.
+<em>Proceedings of the American Mathematical Society</em>, 7(4):609&ndash;615, 1956.
+URL: <a href="http://www.jstor.org/stable/2033359">http://www.jstor.org/stable/2033359</a>.
+		</li><br>
+		<li id="bib2">
+			Jr. Philip C.&nbsp;Curtis.
+N-parameter families and best approximation.
+<em>Pacific Journal of Mathematics</em>, 9(4):1013&ndash;1028, 1959.
+URL: <a href="https://msp.org/pjm/1959/9-4/pjm-v9-n4-p04-s.pdf">https://msp.org/pjm/1959/9-4/pjm-v9-n4-p04-s.pdf</a>.
+		</li><br>
+		<li id="bib3">
+			E.&nbsp;Ward Cheney and William&nbsp;A. Light.
+<em>A Course in Approximation Theory (The Brooks/Cole Series in Advanced Mathematics)</em>.
+Brooks Cole, 1999.
+ISBN 0534362249.
+		</li><br>
+		<li id="bib4">
+			Charles&nbsp;A. Micchelli.
+Interpolation of scattered data: distance matrices and conditionally positive definite functions.
+<em>Constructive Approximation</em>, 2(1):11&ndash;22, Dec 1986.
+URL: <a href="https://doi.org/10.1007/BF01893414">https://doi.org/10.1007/BF01893414</a>, <a href="https://doi.org/10.1007/BF01893414">doi:10.1007/BF01893414</a>.
+		</li><br>
+		<li id="bib5">
+			Rolland&nbsp;L. Hardy.
+Multiquadric equations of topography and other irregular surfaces.
+<em>Journal of Geophysical Research</em>, 76(8):1905&ndash;1915, 1971.
+URL: <a href="https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/JB076i008p01905">https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1029/JB076i008p01905</a>, <a href="https://arxiv.org/abs/https://agupubs.onlinelibrary.wiley.com/doi/pdf/10.1029/JB076i008p01905">arXiv:https://agupubs.onlinelibrary.wiley.com/doi/pdf/10.1029/JB076i008p01905</a>, <a href="https://doi.org/10.1029/JB076i008p01905">doi:10.1029/JB076i008p01905</a>.
+		</li><br>
+		<li id="bib6">
+			B&nbsp;Fornberg, T&nbsp;A Driscoll, G&nbsp;Wright, and R&nbsp;Charles.
+<span class="bibtex-protected">Observations on the behavior of radial basis functions near boundaries</span>.
+<em>Comput. Math. Appl.</em>, 43:473&ndash;490, 2002.
+URL: <a href="https://math.boisestate.edu/~wright/research/rbf_paper_final.pdf">https://math.boisestate.edu/~wright/research/rbf_paper_final.pdf</a>.
+		</li><br>
+	</ol>
+</p>
+</div>
+
+</div>
+</body>
+
+<script>includeHTML();</script>
+
+</html>

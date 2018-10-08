@@ -1,7 +1,8 @@
 /*
 Colors from https://brandstandards.boisestate.edu/colors/
-blue -      #0033A0
-orange -    #D64309
+blue -              #0033A0
+orange -            #D64309
+Pantone Cool Gray - #D9D9D6 
 */
 
 /*********************************************************
@@ -199,6 +200,16 @@ img.center {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.definition {
+    margin-left: 2em;
+    margin-right: 4em;
+    padding: 1em;
+    
+    border-radius: 1em 1em 1em 1em;
+
+    background-color: #D9D9D6;
 }
 
 /*********************************************************

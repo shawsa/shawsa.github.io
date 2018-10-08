@@ -5,6 +5,7 @@ cascsum
 experiments/ex002_rbf-fd_on_sphere/pnts/*
 articles/node_selection/pnts/*
 articles/projection_method/pnts/*
+lib/pnts/*
 
 *.pdf
 __pycache__
