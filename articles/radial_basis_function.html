@@ -64,7 +64,7 @@
 <p class="title_and_author">
 <span class="title">Radial Basis Function</span> <br>
 <span class="author">Authors: Sage Shaw</span> <br>
-<span class="updated">Mon Oct  8 17:07:21 2018</span> <br>
+<span class="updated">Wed Oct 17 14:57:49 2018</span> <br>
 <span hidden id="status">c</span>
 <span id="status_message" class="status_message"></span>
 </p>
@@ -77,7 +77,6 @@ This article defines radial basis fuctions (RBFs), describes several types of RB
 
 <div class="contents">
 <ol>
-	<li>History</li>
 	<li>Definition</li>
 	<li>Examples</li>
 	<ol>
@@ -91,12 +90,6 @@ This article defines radial basis fuctions (RBFs), describes several types of RB
 </div>
 
 <!--************************************************************************-->
-<h1>History</h1>
-<p>
-    
-</p>
-
-<!--************************************************************************-->
 <h1>Definition</h1>
 <p>
 The definition of radial basis functions is best understood through (and motivated by) the context of <a href="interpolation.html">interpolation</a>. The <i>Mairhuber-Curtis theorem</i> <span class="cite" src="MAIRHUBER1956"><b>[<a href="#bib1">1</a>]</b></span><span class="cite" src="CURTIS1959"><b>[<a href="#bib2">2</a>]</b></span> suggests that basis functions that do not depend on the sample points will be unreliable. Choosing radialy symmetric basis functions centered at the sample points avoids this. 
@@ -105,11 +98,11 @@ The definition of radial basis functions is best understood through (and motivat
 
 <p class='definition'>
 <b>Definition: Radial Kernel and Radial Function</b><br>
-A radial kernel is a function $\phi: [0, \infty) \to \RR$. When a radial kernal is paired with a metric on a vector space $\norm{\cdot}: V \times V \to [0, \infty)$ the function $\phi_\vec{c}: V \to \RR$ defined by $\phi_\vec{c}(\vec{x}) = \phi(\norm{\vec{x} - \vec{c}})$ is said to be a radial function centered at $\vec{c} \in V$.
+A radial function is a function on the radius: $\phi: [0, \infty) \to \RR$. When a radial function is paired with a metric on a vector space $\norm{\cdot}: V \to [0, \infty)$ the function $\phi_\vec{c}: V \to \RR$ defined by $\phi_\vec{c}(\vec{x}) = \phi(\norm{\vec{x} - \vec{c}})$ is said to be a radial kernel centered at $\vec{c} \in V$. For a set of distinct points in the domain $\{\vec{x}_i\}_{i=1}^n$ the radial kernels $\{\phi_{\vec{x}_i} \}_{i=1}^n$ are said to be radial basis functions if they are linearly independent (they are a basis for their span).
 </p>
 
 <p>
-If we wish to interpolate a function at a set of points then a set of radial functions centered at those points may not be a valid basis. For example, the function $\phi(r)=r^2$ is a perfectly valid radial kernel but in one dimension using the standard euclidian distance, the set of functions $\{x^2, (x-1)^2, (x-2)^2, (x-3)^2\}$ are linearly dependent and thus can't be basis functions. More generally, one can guarantee a nonsingular interpolation matrix by criteria on the radial kernel.
+If we wish to interpolate a function at a set of points then a set of radial kernels centered at those points may not be a valid basis. For example, the function $\phi(r)=r^2$ is a perfectly valid radial function but in one dimension using the standard euclidian distance, the set of functions $\{x^2, (x-1)^2, (x-2)^2, (x-3)^2\}$ are linearly dependent and thus can't be basis functions. More generally, one can guarantee a nonsingular interpolation matrix by criteria on the radial function.
 </p>
 
 
@@ -124,7 +117,11 @@ A function $\psi: [0, \infty) \to \RR$ is said to be completely monotone if
 </div>
 
 <p>
-Complete monotonicity is important to choosing radial kernenls so that our basis functions form good interpolants. We are now ready to define radial basis fuctions.
+Completely Monotone radial functions have desireable properites for the purposes of interpolation (and by extention RBF-FD). 
+</p>
+
+<!--p>
+Complete monotonicity is important to choosing radial functions so that our basis functions form good interpolants. We are now ready to define radial basis fuctions.
 </p>
 
 <p class="definition">
@@ -135,31 +132,31 @@ Let $\phi$ be a radial kernel and let $\vec{y} \in X$ where $X$ is an inner prod
 
 <p>
 The definition of radial basis function given above, is entirely motivated by the following theorem proved by Charles A. Micchelli (1986).
-</p>
+</p-->
 
 <p class="definition">
-<b>Theorem</b><span class="cite" src="MICHELLI1986"><b>[<a href="#bib4">4</a>]</b></span><br>
+<b>Michelli's Theorm</b><span class="cite" src="MICHELLI1986"><b>[<a href="#bib4">4</a>]</b></span><br>
 Let $\{\vec{x}_i\}_{i=1}^n \subseteq X$, an inner product space. Let $\psi$ be a continuous radial kernel. Definie the matrix $A_{ij} = \psi \left( \norm{\vec{x}_i - \vec{x}_j}^2 \right)$. If $\psi'$ is non-constant and completely monotone on $(0, \infty)$ then $A$ is non-singular.
 </p>
 
 <p>
-When radial basis functions are defined as above Michelli's theorm proves that the interpolation matrix will be non-singular.
+When our radial function is completely monotone Michelli's theorm proves that the RBf interpolation matrix will be non-singular.
 </p>
 
 <!--************************************************************************-->
 <h1>Examples</h1>
 <p>
-The original radial kernel used by Hardy <span class="cite" src="HARDY1971"><b>[<a href="#bib5">5</a>]</b></span> is the multiquadric
+The original radial function used by Hardy <span class="cite" src="HARDY1971"><b>[<a href="#bib5">5</a>]</b></span> is the multiquadric
 $$
 \phi(r) = \sqrt{1 + (\varepsilon r)^2}.
 $$
 
-Since then many other good choices for radial kernels have been discovered.
+Since then many other good choices for radial functions have been discovered.
 </p>
 
 <h2>Shape Parameter RBFs</h2>
 <p>
-The multiquadric mentioned above has a parameter $\varepsilon$ known as the shape parameter. Generally speaking, as $\varepsilion \to 0$ the graph approaches a flat line as seen in the plot of the Gaussian below.
+The multiquadric mentioned above has a parameter $\varepsilon$ known as the shape parameter. Generally speaking, as $\varepsilon \to 0$ the graph approaches a flat line as seen in the plot of the Gaussian below.
 </p>
 <img class='center' src='radial_basis_function/gaussian_shape.png'>
 
