@@ -1,0 +1,219 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Meeting Notes</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\MM}{\mathbb{M}}
+    \newcommand{\LL}{\mathcal{L}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../index.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Thursday October 25<sup>th</sup>, 2018</span> <br>
+<span class="author">Attendees: Daniel, Grady, Andrew, and Sage </span> <br>
+<span class="updated">Sun Oct 28 16:22:56 2018</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+Varun and Grady discussed and explained the Tangent Plane method for solving PDEs on Surfaces.
+</p>
+
+<div class="contents">
+<ol>
+	<li>Sage's Tasks</li>
+	<ol>
+		<li>Code</li>
+		<li>Research</li>
+		<li>Writing</li>
+		<li>Misc</li>
+	</ol>
+	<li>Tangent Plane Method</li>
+	<li>Symmetric OGR</li>
+	<li>Meeting Followup</li>
+	<li>References</li>
+</ol>
+</div>
+
+<!--************************************************************************-->
+<h1>Sage's Tasks</h1>
+<h2>Code</h2>
+<p>
+<ul>
+    <li>Account for the hessian to fix the code for the RBF Symmetric OGr method.</li>
+    <li>Implement time-stepping.</li>
+    <li>Improve performance of the high order OGr method.</li>
+    <li>Test RBF OGr interpolation.</li>
+    <li>Compare speed of Numpy, MATLAB, and C++.</li>
+    <li>Test surface diffusion methods on a torus.</li>
+</ul>
+</p>
+
+<h2>Research</h2>
+<p>
+<ul>
+    <li>Research the Skeel Condition Number<span class="cite" src="HIGHAM2002"><b>[<a href="#bib1">1</a>]</b></span>.</li>
+    <li>Research sphereical harmonics.</li>
+    <li>Research the Eigen and Armadillo libraries for C++.</li>
+    <li>Research and use BLAS libraries.</li>
+    <li>Research the moment conditions on PHS interpolation. (read Grady's <a href="../documents/memo05.pdf" target=blank>Memo 5</a>)</li>
+</ul>
+</p>
+
+<h2>Writing</h2>
+<p>
+<ul>
+    <li>Write Radial Basis Function Article</li>
+    <li>Write the theorem for exactness.</li>
+    <li>Write RBF-FD article.</li>
+    <li>Write RBF-FD Projection Method article.</li>
+    <li>Write RBF-OGr article.</li>
+    <li><s>Write Numpy Efficiency article.</s> (matrx of vectors)</li>
+    <li>Add local approximation to RBF Interpolation article.</li>
+    <li>Improve <a href="https://en.wikipedia.org/wiki/Radial_basis_function">Wikipedia article on RBFs</a>.</li>
+</ul>
+</p>
+
+<h2>Misc</h2>
+<p>
+<ul>
+    <li>Select PhD programs.</li>
+    <li>Get access to a server.</li>
+</ul>
+</p>
+
+
+<!--************************************************************************-->
+<h1>Tangent Plane Method</h1>
+<p>
+Grady is reviewing a paper in which approximations to the function weights for numerically approximating the Laplacian are being obtained by projecting neighboring points onto the tangent plane and calculating the weights that approximate the 2D Laplacian in the tangent plane.
+</p>
+
+<p>
+An efficient method for performing this computation at the point $\vec{x}$ is to form the rotation matrix $R_{\vec{x}} = [\vec{t}_1 \vec{t}_2 \vec{n}]$ which rotates all vectors to the $z$-axis while preserving their length. Then the matrix 
+$$
+E = \begin{bmatrix}1&0&0\\0&1&0\\0&0&0\end{bmatrix}
+$$
+when used as a weighting will ignore the $z$-component of the rotated vector, effectivly projecting it onto the tangent plane before calculating the distance. Thus for any vector $\vec{x}_i$, the weighted distance is given by
+\begin{align*}
+d(\vec{x}, \vec{x}_i) &= \big[ ER_{\vec{x}}(\vec{x} - \vec{x}_i) \big]^T \big[ ER_{\vec{x}}(\vec{x} - \vec{x}_i) \big] \\
+                      &= (\vec{x} - \vec{x}_i)^T R_{\vec{x}}^T E^T E R_{\vec{x}} (\vec{x} - \vec{x}_i) \\
+                      &= (\vec{x} - \vec{x}_i)^T R_{\vec{x}}^T E R_{\vec{x}} (\vec{x} - \vec{x}_i) \\
+                      &= (\vec{x} - \vec{x}_i)^T W_{\vec{x}} (\vec{x} - \vec{x}_i) \\
+\end{align*}
+where $W_{\vec{x}} = R_{\vec{x}}^T E R_{\vec{x}}$. Using this weighted distance we can compute the stencil weights using RBF-FD applied to the 2D Laplacian.
+</p>
+
+<!--************************************************************************-->
+<h1>Symmetric OGR</h1>
+<p>
+Grady coded up Symmetric OGR as described and was getting the same results as Sage - correct weights up to a scaling factor. Grady thinks that the issue is that the hessian is not being accounted for. A 2002 paper by Xu and Zhao<span class="cite" src="XU2002"><b>[<a href="#bib2">2</a>]</b></span> gives
+$$
+\nabla_\SS^2 f = \nabla^2 f - \frac{\partial^2 f }{\partial \vec{n}^2} - \kappa \frac{\partial f }{\partial \vec{n}}
+$$
+where $\kappa$ is the mean curvature. This shows that we require not only the gradient to be zero but the hessian to be zero as well since $\frac{\partial^2 f }{\partial \vec{n}^2} = \vec{n}^T H(f) \vec{n}$.
+
+
+<!--We use the fact that
+\begin{align*}
+\nabla f    & = \partial_\vec{n}f \vec{n} + \partial_{\vec{t}_1}f \vec{t}_1 + \partial_{\vec{t}_2}f \vec{t}_2 \\
+            & = (\partial_\vec{n} \vec{n} + \partial_{\vec{t}_1} \vec{t}_1 + \partial_{\vec{t}_2} \vec{t}_2) f \\
+\Delta f = \nabla^2 f &= (\partial_\vec{n} \vec{n} + \partial_{\vec{t}_1} \vec{t}_1 + \partial_{\vec{t}_2} \vec{t}_2) \cdot (\partial_\vec{n} \vec{n} + \partial_{\vec{t}_1} \vec{t}_1 + \partial_{\vec{t}_2} \vec{t}_2) f \\
+            & = 
+\end{align*}-->
+</p>
+
+
+
+<!--************************************************************************-->
+<h1>Meeting Followup</h1>
+<p>
+
+</p>
+
+ 
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+		<li id="bib1">
+			Nicholas&nbsp;J. Higham.
+<em>Accuracy and Stability of Numerical Algorithms</em>.
+University of Manchester, 2002.
+URL: <a href="https://epubs.siam.org/doi/abs/10.1137/1.9780898718027.fm">https://epubs.siam.org/doi/abs/10.1137/1.9780898718027.fm</a>, <a href="https://arxiv.org/abs/https://epubs.siam.org/doi/pdf/10.1137/1.9780898718027.fm">arXiv:https://epubs.siam.org/doi/pdf/10.1137/1.9780898718027.fm</a>, <a href="https://doi.org/10.1137/1.9780898718027.fm">doi:10.1137/1.9780898718027.fm</a>.
+		</li><br>
+		<li id="bib2">
+			Jian-Jun Xu and Hong-Kai Zhao.
+An eulerian formulation for solving partial differential equations along a moving interface.
+<em>Journal of Scientific Computing</em>, 19(1):573&ndash;594, Dec 2003.
+URL: <a href="https://doi.org/10.1023/A:1025336916176">https://doi.org/10.1023/A:1025336916176</a>, <a href="https://doi.org/10.1023/A:1025336916176">doi:10.1023/A:1025336916176</a>.
+		</li><br>
+	</ol>
+</p>
+</div>
+
+</div>
+</body>
+
+<script>includeHTML();</script>
+
+</html>

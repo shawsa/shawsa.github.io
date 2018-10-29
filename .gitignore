@@ -7,6 +7,7 @@ articles/node_selection/pnts/*
 articles/projection_method/pnts/*
 lib/pnts/*
 
+
 *.pdf
 __pycache__
 
@@ -230,3 +231,12 @@ TSWLatexianTemp*
 
 # expex forward references with \gathertags
 *-tags.tex
+
+
+
+######################################################################
+#
+# Include commands
+#
+######################################################################
+!/documents/*
