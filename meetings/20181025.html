@@ -99,10 +99,10 @@ Varun and Grady discussed and explained the Tangent Plane method for solving PDE
 <ul>
     <li>Account for the hessian to fix the code for the RBF Symmetric OGr method.</li>
     <li>Implement time-stepping.</li>
-    <li>Improve performance of the high order OGr method.</li>
     <li>Test RBF OGr interpolation.</li>
     <li>Compare speed of Numpy, MATLAB, and C++.</li>
     <li>Test surface diffusion methods on a torus.</li>
+    <li><s>Code the Tangent Plane Method.</s></li>
 </ul>
 </p>
 
@@ -113,7 +113,8 @@ Varun and Grady discussed and explained the Tangent Plane method for solving PDE
     <li>Research sphereical harmonics.</li>
     <li>Research the Eigen and Armadillo libraries for C++.</li>
     <li>Research and use BLAS libraries.</li>
-    <li>Research the moment conditions on PHS interpolation. (read Grady's <a href="../documents/memo05.pdf" target=blank>Memo 5</a>)</li>
+    <li><s>Research the moment conditions on PHS interpolation. (read Grady's <a href="../documents/memo05.pdf" target=blank>Memo 5</a>)</s></li>
+    <li><s>Read Grady's <a href="../documents/memo06.pdf" target=blank>Memo 6</a> on the Tangent Plane Method.</s></li>
 </ul>
 </p>
 
@@ -184,8 +185,50 @@ where $\kappa$ is the mean curvature. This shows that we require not only the gr
 
 <!--************************************************************************-->
 <h1>Meeting Followup</h1>
-<p>
 
+<h2>Tangent Plane Method - Memo 06</h2>
+<p>
+Grady's <a href="../documents/memo06.pdf" target=blank>Memo 6</a> demonstrates that the distance between points projected to the tangent plane using the stencil-center normal projection can be written as a weighted inner product in the ambient space. He conjectures that no such  weighted inner product does the same for the stencil-normals projection. I've worked out a counter example that shows that in general one does not exist.
+</p>
+
+<h3>Proof:</h3>
+<p>
+Consider points on the unit circle being projected onto the line $x=1$ as seen below.
+</p>
+
+<img src="20181025/stencil-normals_projection.png" class="center">
+
+<p>
+The projection maps each point via $[\cos \theta, \sin \theta]^T \mapsto [1, \tan \theta]^T$. Suppose there were a weight matrix $W$ such that for any two points $\vec{x}_1, \vec{x}_2$ corresponding to the angles $\theta_1$ and  $\theta_2$ we have
+$$
+(\vec{x}_2 - \vec{x}_1)^T W (\vec{x}_2 - \vec{x}_1) = \tan \theta_2 - \tan \theta_1.
+$$
+Denote 
+$$
+W = \begin{bmatrix}a & b \\ c & d \end{bmatrix}.
+$$
+Then the left hand side of our equation can be expressed as
+\begin{align*}
+    (\vec{x}_2 - \vec{x}_1)^T W (\vec{x}_2 - \vec{x}_1) & = 
+    \begin{bmatrix}\cos \theta_2 - \cos \theta_1 & \sin \theta_2 - \sin \theta_1 \end{bmatrix}
+    \begin{bmatrix}a & b \\ c & d \end{bmatrix}
+    \begin{bmatrix}\cos \theta_2 - \cos \theta_1 \\ \sin \theta_2 - \sin \theta_1 \end{bmatrix} \\
+    &= a \big( \cos^{2}{\left (\theta_2 \right )} - 2 \cos{\left (\theta_2 \right )} \cos{\left (\theta_1 \right )} +  \cos^{2}{\left (\theta_1 \right )} \big) \\
+    &\phantom{==}+ b \big( \sin{\left (\theta_2 \right )} \cos{\left (\theta_2 \right )} -  \sin{\left (\theta_2 \right )} \cos{\left (\theta_1 \right )} -  \sin{\left (\theta_1 \right )} \cos{\left (\theta_2 \right )} + \sin{\left (\theta_1 \right )} \cos{\left (\theta_1 \right )} \big) \\
+    &\phantom{==} + c \big( \sin{\left (\theta_2 \right )} \cos{\left (\theta_2 \right )} -  \sin{\left (\theta_2 \right )} \cos{\left (\theta_1 \right )} - \sin{\left (\theta_1 \right )} \cos{\left (\theta_2 \right )} + \sin{\left (\theta_1 \right )} \cos{\left (\theta_1 \right )} \big) \\
+    &\phantom{==} + d \big( \sin^{2}{\left (\theta_2 \right )} - 2 \sin{\left (\theta_2 \right )} \sin{\left (\theta_1 \right )} + \sin^{2}{\left (\theta_1 \right )} \big) \\
+    &= \left[\begin{matrix}\left(\cos{\left (\theta_2 \right )} - \cos{\left (\theta_1 \right )}\right)^{2}\\\left(\sin{\left (\theta_2 \right )} - \sin{\left (\theta_1 \right )}\right) \left(\cos{\left (\theta_2 \right )} - \cos{\left (\theta_1 \right )}\right)\\\left(\sin{\left (\theta_2 \right )} - \sin{\left (\theta_1 \right )}\right)^{2}\end{matrix}\right]^T
+    \begin{bmatrix}a \\ (b+c) \\ d\end{bmatrix}
+\end{align*}
+which must be equal to $\tan \theta_2 - \tan \theta_1$ for any pair $\theta_2, \theta_1$. If we fix $\theta_1$ and choose at least 4 more angles for $\theta_2$ we will have a $4 \times 3$ over determined linear system. In order to be consistent the least squares solution to this over determined system must have a residual of exactly 0.
+</p>
+
+<p>
+Choosing the angles $\theta_i = \arctan(.2(i-1))$ for $i=1, 2, ..., 6$ (the angles in the diagram above) gives a residual of $0.00183405$ which is not zero. Thus no choice of weight matrix can make the distance between projected points equivalent to the weighted inner product.
+</p>
+
+<p align="right">
+$\blacksquare$
 </p>
 
  
