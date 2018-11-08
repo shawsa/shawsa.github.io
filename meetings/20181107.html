@@ -1,0 +1,200 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Meeting Notes</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\MM}{\mathbb{M}}
+    \newcommand{\LL}{\mathcal{L}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../index.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Wednesday November 7<sup>th</sup>, 2018</span> <br>
+<span class="author">Attendees: Daniel, Grady, Andrew, and Sage </span> <br>
+<span class="updated">Wed Nov  7 17:16:06 2018</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+We discussed the Tangent Plane Method, using both the center-normal projection and the stencil-normals projection. We discussed Symmetric OGR.
+</p>
+
+<div class="contents">
+<ol>
+	<li>Sage's Tasks</li>
+	<ol>
+		<li>Code</li>
+		<li>Research</li>
+		<li>Writing</li>
+		<li>Misc</li>
+	</ol>
+	<li>Symmetric OGR</li>
+	<ol>
+		<li></li>
+	</ol>
+	<li>References</li>
+</ol>
+</div>
+
+<!--************************************************************************-->
+<h1>Sage's Tasks</h1>
+<h2>Code</h2>
+<p>
+<ul>
+    <li>Account for the hessian to fix the code for the RBF Symmetric OGr method.</li>
+    <li>Implement time-stepping.</li>
+    <li>Test RBF OGr interpolation.</li>
+    <li>Compare speed of Numpy, MATLAB, and C++.</li>
+    <li>Test surface diffusion methods on a torus.</li>
+    <li><s>Code the Tangent Plane Method.</s></li>
+</ul>
+</p>
+
+<h2>Research</h2>
+<p>
+<ul>
+    <li>Research the Skeel Condition Number<span class="cite" src="HIGHAM2002"><b>[<a href="#bib1">1</a>]</b></span>.</li>
+    <li>Research sphereical harmonics.</li>
+    <li>Research the Eigen and Armadillo libraries for C++.</li>
+    <li>Research and use BLAS libraries.</li>
+    <li><s>Research the moment conditions on PHS interpolation. (read Grady's Memo 5)</s></li>
+    <li><s>Read Grady's Memo 6 on the Tangent Plane Method.</s></li>
+</ul>
+</p>
+
+<h2>Writing</h2>
+<p>
+<ul>
+    <li>Write Radial Basis Function Article</li>
+    <li>Write the theorem for exactness.</li>
+    <li>Write RBF-FD article.</li>
+    <li>Write RBF-FD Projection Method article.</li>
+    <li>Write RBF-OGr article.</li>
+    <li><s>Write Numpy Efficiency article.</s> (matrx of vectors)</li>
+    <li>Add local approximation to RBF Interpolation article.</li>
+</ul>
+</p>
+
+<h2>Misc</h2>
+<p>
+<ul>
+    <li>Select PhD programs.</li>
+    <li>Get access to a server.</li>
+</ul>
+</p>
+
+<!--************************************************************************-->
+<h1>Symmetric OGR</h1>
+<p>
+The idea is to create the surface reconstruction in the ambient space, but unlike the High Order OGR method in Piret 2012<span class="cite" src="PIRET2012"><b>[<a href="#bib2">2</a>]</b></span> we do not require that the recostruction interpolates points projected off the surface. Instead we use the moment conditions to enforce that both $\frac{\partial s}{\partial \vec{n}}$ and $\frac{\partial^2 s}{\partial^2 \vec{n}}$ are zero at the stencil center. This will ensure that the evaluation of the Laplacian of the interpolant in the ambient space is equal to the surface laplacian (only at the stencil center). Thus our interpolant will have the form
+\begin{align*}
+    s(\vec{x}) &= \sum_{i=1}^n c_i \phi(\norm{\vec{x} - \vec{x}_i}) + d \nabla_\SS \phi(\norm{\vec{x} - \vec{x}_1}) + e (\vec{n}^TH(\phi)\vec{n})(\norm{\vec{x} - \vec{x}_1}) \\
+    &= \sum_{i=1}^n c_i \phi(\norm{\vec{x} - \vec{x}_i}) + d (\vec{n} \cdot \nabla) \phi(\norm{\vec{x} - \vec{x}_1}) + e (\vec{n} \cdot \nabla)(\vec{n} \cdot \nabla) \phi(\norm{\vec{x} - \vec{x}_1})
+\end{align*}
+
+subject to
+
+\begin{align*}
+    (\vec{n} \cdot \nabla)S(\vec{x}) \vert_{\vec{x} = \vec{x}_1} &= 0 \\
+    (\vec{n} \cdot \nabla)(\vec{n} \cdot \nabla)S(\vec{x}) \vert_{\vec{x} = \vec{x}_1} &= 0.
+\end{align*}
+
+This will involve the computation of $(\vec{n} \cdot \nabla)(\vec{n} \cdot \nabla)(\vec{n} \cdot \nabla)(\vec{n} \cdot \nabla)\phi(\vec{x})$.
+</p>
+
+
+
+<!--************************************************************************-->
+<!--h1>Meeting Followup</h1>
+
+<h2></h2>
+<p>
+
+</p-->
+
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+		<li id="bib1">
+			Nicholas&nbsp;J. Higham.
+<em>Accuracy and Stability of Numerical Algorithms</em>.
+University of Manchester, 2002.
+URL: <a href="https://epubs.siam.org/doi/abs/10.1137/1.9780898718027.fm">https://epubs.siam.org/doi/abs/10.1137/1.9780898718027.fm</a>, <a href="https://arxiv.org/abs/https://epubs.siam.org/doi/pdf/10.1137/1.9780898718027.fm">arXiv:https://epubs.siam.org/doi/pdf/10.1137/1.9780898718027.fm</a>, <a href="https://doi.org/10.1137/1.9780898718027.fm">doi:10.1137/1.9780898718027.fm</a>.
+		</li><br>
+		<li id="bib2">
+			C&eacute;cile Piret.
+The orthogonal gradients method: a radial basis functions method for solving partial differential equations on arbitrary surfaces.
+<em>Journal of Computational Physics</em>, 231(14):4662 &ndash; 4675, 2012.
+URL: <a href="http://www.sciencedirect.com/science/article/pii/S0021999112001477">http://www.sciencedirect.com/science/article/pii/S0021999112001477</a>, <a href="https://doi.org/https://doi.org/10.1016/j.jcp.2012.03.007">doi:https://doi.org/10.1016/j.jcp.2012.03.007</a>.
+		</li><br>
+	</ol>
+</p>
+</div>
+
+</div>
+</body>
+
+<script>includeHTML();</script>
+
+</html>
