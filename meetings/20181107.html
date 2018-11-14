@@ -101,7 +101,7 @@ We discussed the Tangent Plane Method, using both the center-normal projection a
     <li>Account for the hessian to fix the code for the RBF Symmetric OGr method.</li>
     <li>Implement time-stepping.</li>
     <li>Test RBF OGr interpolation.</li>
-    <li>Compare speed of Numpy, MATLAB, and C++.</li>
+    <li><s>Compare speed of Numpy, MATLAB, and C++.</s></li>
     <li>Test surface diffusion methods on a torus.</li>
     <li><s>Code the Tangent Plane Method.</s></li>
 </ul>
@@ -112,8 +112,8 @@ We discussed the Tangent Plane Method, using both the center-normal projection a
 <ul>
     <li>Research the Skeel Condition Number<span class="cite" src="HIGHAM2002"><b>[<a href="#bib1">1</a>]</b></span>.</li>
     <li>Research sphereical harmonics.</li>
-    <li>Research the Eigen and Armadillo libraries for C++.</li>
-    <li>Research and use BLAS libraries.</li>
+    <li>Research the <s>Eigen</s> and Armadillo libraries for C++.</li>
+    <li><s>Research and use BLAS libraries.</s></li>
     <li><s>Research the moment conditions on PHS interpolation. (read Grady's Memo 5)</s></li>
     <li><s>Read Grady's Memo 6 on the Tangent Plane Method.</s></li>
 </ul>
@@ -162,12 +162,102 @@ This will involve the computation of $(\vec{n} \cdot \nabla)(\vec{n} \cdot \nabl
 
 
 <!--************************************************************************-->
-<!--h1>Meeting Followup</h1>
+<h1>Meeting Followup</h1>
 
-<h2></h2>
+<h2>Language Timings</h2>
+<p>
+Since I need to learn Armadillo I thought I might motivate myself by comparing some timings of RBF interpolation. These are my results:
+<table class="dataframe" align="center">
+    <tr>
+        <th></th><th>Time (s)</th>
+    </tr>
+    <tr>
+        <td>Octave</td><td>3.23</td>
+    </tr>
+    <tr>
+        <td>Python+Numpy+OpenBLAS</td><td>3.17</td>
+    </tr>
+    <tr>
+        <td>Julia+OpenBLAS</td><td>2.32</td>
+    </tr>
+    <tr>
+        <td>Armadillo+OpenBLAS</td><td>0.415</td>
+    </tr>
+    <tr>
+        <td>MATLAB</td><td>0.409</td>
+    </tr>
+</table>
+
+</p>
+
 <p>
 
-</p-->
+In particular I would like to discuss my Armadillo code:
+<pre><code class="language-cpp">#define ARMA_DONT_PRINT_ERRORS
+#include &lt;armadillo>
+#include &lt;chrono>
+using namespace arma;
+
+int main(){
+
+    const int runs = 10;
+    double times[runs];
+
+    const int n = 1000;
+    const int m = 10000;
+
+    const double epsilon = 45.0;
+
+    const double PI = datum::pi;
+
+    arma::arma_rng::set_seed_random();
+    
+    vec x = linspace&lt;vec>(0, 2*PI, n);
+    vec z = linspace&lt;vec>(0, 2*PI, m);
+    vec y = sin(x);
+
+    mat A;
+    vec c, u;
+
+    for(int r=0; r&lt;runs; r++){
+        auto start = std::chrono::high_resolution_clock::now();
+
+        A = repmat(x, 1, n) - repmat(x.t(), n, 1);
+        A = exp( -pow( epsilon*abs(A) , 2) );
+        c = solve(A, y);
+        A = repmat(z, 1, n) - repmat(x.t(), m, 1);
+        A = exp( -pow( epsilon*abs(A) , 2) );
+        u = A*c;
+
+        auto finish = std::chrono::high_resolution_clock::now();
+        std::chrono::duration&lt;double> elapsed = finish - start;
+        times[r] = elapsed.count();
+    }
+    u.save("u_sine.dat", raw_ascii);
+
+    double best = times[0];
+    for(int r=1; r&lt;runs; r++){
+        if(times[r] &lt; best){
+            best = times[r];
+        }
+    }
+    printf("Best of %d runs: \t%fs\n", runs, best);
+
+    /*
+    for(int i=0; i&lt;n; i++){
+        for(int j=0; j&lt;n; j++){
+            printf("%f\t", A(i,j));
+        }
+        printf("\n");
+    }*/
+
+    return 0;
+}
+</code></pre>
+
+I imagine we may want to also inspect my <a href="20181107/rbf_interp.m" target=download>MATLAB code</a>.
+
+</p>
 
 
 <!--***************************************************************************
