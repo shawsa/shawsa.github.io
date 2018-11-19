@@ -48,13 +48,6 @@ int main(){
     }
     printf("Best of %d runs: \t%fs\n", runs, best);
 
-    /*
-    for(int i=0; i<n; i++){
-        for(int j=0; j<n; j++){
-            printf("%f\t", A(i,j));
-        }
-        printf("\n");
-    }*/
 
     return 0;
 }

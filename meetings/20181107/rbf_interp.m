@@ -15,14 +15,12 @@ y = sin(x);
 times = zeros(runs, 1);
 
 for i=1:runs
-    tic;
 
-    A = eps.*abs(x - x');
-    A = exp(-A.^2);
+    tic;
+    A = exp(-eps*abs(x - x').^2);
     c = A\y;
-    A = eps.*abs(z - x');
-    A = exp(-A.^2);
-    u = A*c;
+    A = exp(-eps*abs(z - x').^2);
+    u =  A * c;
 
     times(i) = toc;
 end
