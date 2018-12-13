@@ -1,6 +1,7 @@
 #from ctypes import *
 import ctypes
 import numpy as np
+import numpy.linalg as la
 from numpy.ctypeslib import ndpointer
 
 libtest = ctypes.cdll.LoadLibrary("libtest.so")
@@ -13,8 +14,6 @@ y = np.random.randn(n)
 
 w = x+y
 
-#libtest.py_my_vec_sum.restype = ndpointer(dtype=ctypes.c_double, shape=(n,))
+test = np.empty(n)
+libtest.py_my_sum(x.ctypes.data, y.ctypes.data, n, test.ctypes.data)
 
-res = libtest.py_my_vec_sum(x.ctypes.data, y.ctypes.data, n)
-
-print(type(res))
