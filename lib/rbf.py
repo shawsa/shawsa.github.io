@@ -37,12 +37,15 @@ def chi(r, eps):
 	return 4*eps**4*np.exp(-eps**2*r**2)
 def beta(r, eps):
 	return -8*eps**6*np.exp(-eps**2*r**2)
+def gamma(r, eps):
+	return 16*eps**8*np.exp(-eps**2*r**2)
 def drbf(r, eps):
 	return -2*eps**2*r*np.exp(-eps**2*r**2)
 def d2rbf(r, eps):
 	return eps**2*(4*eps**2*r**2 - 2)*np.exp(-eps**2*r**2)
 rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
-            'zeta':zeta, 'chi':chi, 'beta':beta, 'drbf':drbf, 'd2rbf':d2rbf}
+            'zeta':zeta, 'chi':chi, 'beta':beta, 'gamma':gamma, 
+            'drbf':drbf, 'd2rbf':d2rbf}
 rbf_dict[label] = rbf_obj
 shape_labels += [label]
 
@@ -280,6 +283,7 @@ def functional(eps, rbf, dist_mat, P, target_cond):
     else:
         k = len(P[0])
         AP = np.block([[A, P],[P.T, np.zeros((k,k))]])
+    #print(np.log( la.cond(AP) / target_cond))
     return np.log( la.cond(AP) / target_cond)
 
 def optimize_eps(rbf, dist_mat, P=None, target_cond=10**12):

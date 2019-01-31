@@ -63,9 +63,9 @@
 ****************************************************************************-->
 
 <p class="title_and_author">
-<span class="title">Wednesday November 28<sup>th</sup>, 2018</span> <br>
-<span class="author">Attendees: Daniel, Grady, Andrew, and Sage </span> <br>
-<span class="updated">Tue Dec  4 13:37:33 2018</span> <br>
+<span class="title">Wednesday December 12<sup>th</sup>, 2018</span> <br>
+<span class="author">Attendees: Grady, Varun, Daniel, Andrew, and Sage </span> <br>
+<span class="updated">Sat Dec 29 17:09:14 2018</span> <br>
 <span hidden id="status">c</span>
 <span id="status_message" class="status_message"></span>
 </p>
@@ -73,7 +73,7 @@
 <hr>
 
 <p class="intro">
-We reviewed Sage's first attempt at armadillo code and made some suggestions. 
+We discussed the Numerical PDEs final and set goals for winter break.
 </p>
 
 <div class="contents">
@@ -81,14 +81,11 @@ We reviewed Sage's first attempt at armadillo code and made some suggestions.
 	<li>Sage's Tasks</li>
 	<ol>
 		<li>Code</li>
-		<li>Research</li>
 		<li>Writing</li>
-		<li>Misc</li>
 	</ol>
-	<li>Armadillo Efficiency</li>
 	<li>Meeting Followup</li>
 	<ol>
-		<li>C++</li>
+		<li>temp</li>
 	</ol>
 	<li>References</li>
 </ol>
@@ -108,13 +105,12 @@ We reviewed Sage's first attempt at armadillo code and made some suggestions.
 </ul>
 </p>
 
-<h2>Research</h2>
+<!--h2>Research</h2>
 <p>
 <ul>
-    <li>Research the Skeel Condition Number<span class="cite" src="HIGHAM2002"><b>[<a href="#bib1">1</a>]</b></span>.</li>
-    <li>Research sphereical harmonics.</li>
+    <li></li>
 </ul>
-</p>
+</p-->
 
 <h2>Writing</h2>
 <p>
@@ -128,55 +124,19 @@ We reviewed Sage's first attempt at armadillo code and made some suggestions.
 </ul>
 </p>
 
-<h2>Misc</h2>
+<!--h2>Misc</h2>
 <p>
 <ul>
-    <li><s>Select PhD programs.</s></li>
+    <li></li>
 </ul>
-</p>
-
-<!--************************************************************************-->
-<h1>Armadillo Efficiency</h1>
-<p>
-Varun had several pointers to help get me started with optimizing my Armadillo code:
-<ul>
-    <li>Use the -fOpenMP flag</li>
-    <li>Ensure 64-bit at compile time.</li>
-    <li>Use the #ARMA_NO_DEBUG preprocessing command for timings.</li>
-    <li>Use the C++11 standard.</li>
-    <li>Remember that in C++ loops are fast.</li>
-</ul>
-</p>
+</p-->
 
 <!--************************************************************************-->
 <h1>Meeting Followup</h1>
 
-<h2>C++</h2>
+<h2>temp</h2>
 <p>
-Now that I've dived into Varun's repo I've realized that I have a lot to learn about C++. In theory it's just an extension of C, but in practice it's almost an entirely different language. Thus I think the place to start is to learn more about the basics of C++.
-</p>
 
-<p>
-While exploring the GNU debugger and the <span class="snipet"><tt>auto</tt></span> keyword I learned something very surprising about Armadillo. The use of the <span class="snipet"><tt>auto</tt></span> keyword when typing the sum of two vectors gives different results than when choosing the type to be <span class="snipet"><tt>arma::vec</tt></span> as one would expect. The code below will give different results when the commented line is used instead of the type-defined line.
-</p>
-<pre><code class="language-cpp">int n = 3;
-arma::vec x = arma::ones(n);
-arma::vec y = arma::ones(n);
-
-//arma::vec z = x+y;
-auto z = x+y; 
-
-x[0] = 2;
-
-std::cout << z << std::endl;
-</code></pre>
-</p>
-<p>
-It seems the reason is that the <span class="snipet"><tt>+</tt></span> operator returns an <span class="snipet"><tt>arma::eGlue</tt></span> object that avoids the actual evaluation of the operator until necessary: i.e. until the print statement after the reassignment <span class="snipet"><tt>x[0]=2;</tt></span>.
-</p>
-
-<p>
-My conclusion is that the <span class="snipet"><tt>auto</tt></span> keword ought be avoided. Is this a valid conclusion or is this more nuanced? I can imagine for example, that it might be useful in templates.
 </p>
 
 <!--***************************************************************************
@@ -185,12 +145,6 @@ My conclusion is that the <span class="snipet"><tt>auto</tt></span> keword ought
 <h1>References</h1>
 <p class="bibliography">
 	<ol>
-		<li id="bib1">
-			Nicholas&nbsp;J. Higham.
-<em>Accuracy and Stability of Numerical Algorithms</em>.
-University of Manchester, 2002.
-URL: <a href="https://epubs.siam.org/doi/abs/10.1137/1.9780898718027.fm">https://epubs.siam.org/doi/abs/10.1137/1.9780898718027.fm</a>, <a href="https://arxiv.org/abs/https://epubs.siam.org/doi/pdf/10.1137/1.9780898718027.fm">arXiv:https://epubs.siam.org/doi/pdf/10.1137/1.9780898718027.fm</a>, <a href="https://doi.org/10.1137/1.9780898718027.fm">doi:10.1137/1.9780898718027.fm</a>.
-		</li><br>
 	</ol>
 </p>
 </div>
