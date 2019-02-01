@@ -265,6 +265,13 @@ rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
             'zeta':zeta, 'chi':chi, 'beta':beta, 'drbf':drbf, 'd2rbf':d2rbf}
 rbf_dict[label] = rbf_obj
 phs_labels += [label]
+label = 'r^9'
+rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
+            'zeta':zeta, 'chi':chi, 'beta':beta, 'drbf':drbf, 'd2rbf':d2rbf}
+rbf_dict[label] = rbf_obj
+phs_labels += [label]
+
+
 
 # define list of all labels
 rbf_labels = shape_labels + phs_labels
