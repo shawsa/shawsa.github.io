@@ -148,8 +148,6 @@ def TPM(nodes, normals, rbf_obj=rbf_dict['multiquadric'], epsilon=None, stencil_
             A = rbf(dist_mat, epsilon)
             rhs = Lrbf(dist_mat[0], epsilon) / scale**2
             weights[i] = la.solve(A, rhs.flatten())
-        if i==0:
-            print('cond(A): %g' % cond(A))
 
     C = sp.csc_matrix((weights.ravel(), (row_index, col_index.ravel())),shape=(n,n))
     return C
@@ -212,6 +210,8 @@ def grad_rbf_outer(nodes, centers, zeta, epsilon):
 
 def SWM(nodes, normals, rbf_obj=rbf_dict['multiquadric'], epsilon=None, 
         stencil_size=15, poly_deg=None, poly_type='s'):
+
+    assert poly_type in 'ps'
     n = len(nodes)
     k = stencil_size
     rbf = rbf_obj['rbf']
@@ -267,7 +267,7 @@ def SWM(nodes, normals, rbf_obj=rbf_dict['multiquadric'], epsilon=None,
             weights[i] += (weights_grad@weights_grad)[0]
 
             rhs = rhsAs[:,:,2] # only the z coordinates
-            weights_grad = la.solve(A, rhs)[:stencil_size,:].T
+            weights_grad = la.solve(A, rhs).T
             weights[i] += (weights_grad@weights_grad)[0]
         else:
             weights_grad = schur_solve(A, P, rhsAs[:,:,0], rhs_x)[0].T

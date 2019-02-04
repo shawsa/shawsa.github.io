@@ -3,10 +3,11 @@
 texaux/*
 cascsum
 experiments/ex002_rbf-fd_on_sphere/pnts/*
-experiments/ex006_comparison_of_methods/pnts/*
+experiments/ex006_comparison_of_methods/pickles/*
 articles/node_selection/pnts/*
 articles/projection_method/pnts/*
 lib/pnts/*
+
 
 
 *.pdf
