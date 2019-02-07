@@ -65,7 +65,7 @@
 <p class="title_and_author">
 <span class="title">Thursday January 17<sup>th</sup>, 2019</span> <br>
 <span class="author">Attendees: Grady, Varun, Daniel, Andrew, and Sage </span> <br>
-<span class="updated">Sat Jan 19 20:29:52 2019</span> <br>
+<span class="updated">Sun Feb  3 21:35:47 2019</span> <br>
 <span hidden id="status">c</span>
 <span id="status_message" class="status_message"></span>
 </p>
@@ -85,8 +85,9 @@ We discussed the to-do lists that Grady made in preparation for the upcomming SI
 		<li>Writing</li>
 	</ol>
 	<li>Sage's List</li>
+	<li>Meeting Followup</li>
 	<ol>
-		<li>temp</li>
+		<li>Convergence Plots for Shankar-Wright and Tangent Plane methods</li>
 	</ol>
 	<li>References</li>
 </ol>
@@ -97,11 +98,11 @@ We discussed the to-do lists that Grady made in preparation for the upcomming SI
 <h2>For Poster</h2>
 <p>
 <ul>
-    <li>Shankar-Wright RBF-FD Method</li>
+    <li><s>Shankar-Wright RBF-FD Method</s></li>
         <ul>
-            <li>Adapt for singular stencils</li>
+            <li><s>Adapt for singular stencils</s></li>
         </ul>
-    <li>Tangent Plane Method</li>
+    <li><s>Tangent Plane Method</s></li>
         <ul>
             <li><s>Implement</s></li>
             <li><s>Include Polynomials</s></li>
@@ -194,10 +195,250 @@ We discussed the to-do lists that Grady made in preparation for the upcomming SI
         
 </ol>
 
-<h2>temp</h2>
+<h1>Meeting Followup</h1>
+<h2>Convergence Plots for Shankar-Wright and Tangent Plane methods</h2>
 <p>
-
+The following plots are show the error in the computation of the derivative of the sum of seven arbitrarily placed Gaussians on the sphere. When a shape parameter was required, it was optimized so that the condition number of the RBF matrix was roughly $10^{12}$. 
 </p>
+
+<h3>By Polynomial Degree</h3>
+
+<img src='20190117/TPM_gaussian_k50.png'>
+<img src='20190117/TPM_r9_k50.png'>
+<img src='20190117/SWM_gaussian_k50.png'>
+<p>
+The error for degree 2 at $\sqrt{N}=\sqrt{400}$ is interesting. That it is only seen for degree 2 polynomial terms (the lowest degree for which the augmented RBF matrix will be singular) suggests that there may be some error in the method/code, however, in a later plot we see that the spike also occurs when using spherical harmonic terms, for which the matrix is not singular. 
+</p>
+
+<img src='20190117/SWM_r9_k50.png'>
+
+<h3>By Method</h3>
+<p>Note that (s) denotes that only spherical harmoics were used while (p) denotes that all polynomials up to a given degree were used.</p>
+<img src='20190117/gaussian_k50_d2.png'>
+<img src='20190117/r9_k50_d2.png'>
+
+<p>
+Again we see the spike in error at $\sqrt{N}=\sqrt{400}$. Examining the eigenvalues we see that there is an eigenvalue with large real component.
+</p>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>surface</th>
+      <th>nodeset</th>
+      <th>N</th>
+      <th>k</th>
+      <th>method</th>
+      <th>rbf</th>
+      <th>epsilon</th>
+      <th>poly_type</th>
+      <th>deg</th>
+      <th>rel_L2_error</th>
+      <th>max_error</th>
+      <th>Re_eig</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>100</td>
+      <td>50</td>
+      <td>SWM</td>
+      <td>r^9</td>
+      <td>None</td>
+      <td>p</td>
+      <td>2</td>
+      <td>0.122685</td>
+      <td>2.554740</td>
+      <td>1.433287e-13</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>100</td>
+      <td>50</td>
+      <td>SWM</td>
+      <td>r^9</td>
+      <td>None</td>
+      <td>s</td>
+      <td>2</td>
+      <td>0.122685</td>
+      <td>2.554740</td>
+      <td>8.908315e-15</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>200</td>
+      <td>50</td>
+      <td>SWM</td>
+      <td>r^9</td>
+      <td>None</td>
+      <td>p</td>
+      <td>2</td>
+      <td>0.021647</td>
+      <td>0.379995</td>
+      <td>3.028059e-13</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>200</td>
+      <td>50</td>
+      <td>SWM</td>
+      <td>r^9</td>
+      <td>None</td>
+      <td>s</td>
+      <td>2</td>
+      <td>0.021647</td>
+      <td>0.379995</td>
+      <td>7.273739e-14</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>400</td>
+      <td>50</td>
+      <td>SWM</td>
+      <td>r^9</td>
+      <td>None</td>
+      <td>p</td>
+      <td>2</td>
+      <td>34.993947</td>
+      <td>2158.137251</td>
+      <td>9.762728e<font color='red'>+04</font></td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>400</td>
+      <td>50</td>
+      <td>SWM</td>
+      <td>r^9</td>
+      <td>None</td>
+      <td>s</td>
+      <td>2</td>
+      <td>34.993950</td>
+      <td>2158.137419</td>
+      <td>9.762728e<font color='red'>+04</font></td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>800</td>
+      <td>50</td>
+      <td>SWM</td>
+      <td>r^9</td>
+      <td>None</td>
+      <td>p</td>
+      <td>2</td>
+      <td>0.001562</td>
+      <td>0.028865</td>
+      <td>-5.139624e-12</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>800</td>
+      <td>50</td>
+      <td>SWM</td>
+      <td>r^9</td>
+      <td>None</td>
+      <td>s</td>
+      <td>2</td>
+      <td>0.001562</td>
+      <td>0.028865</td>
+      <td>-1.126623e-14</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>1600</td>
+      <td>50</td>
+      <td>SWM</td>
+      <td>r^9</td>
+      <td>None</td>
+      <td>p</td>
+      <td>2</td>
+      <td>0.000944</td>
+      <td>0.027381</td>
+      <td>-3.229788e-11</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>1600</td>
+      <td>50</td>
+      <td>SWM</td>
+      <td>r^9</td>
+      <td>None</td>
+      <td>s</td>
+      <td>2</td>
+      <td>0.000944</td>
+      <td>0.027381</td>
+      <td>-3.468708e-12</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>3200</td>
+      <td>50</td>
+      <td>SWM</td>
+      <td>r^9</td>
+      <td>None</td>
+      <td>p</td>
+      <td>2</td>
+      <td>0.000216</td>
+      <td>0.004452</td>
+      <td>-9.367603e-11</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>3200</td>
+      <td>50</td>
+      <td>SWM</td>
+      <td>r^9</td>
+      <td>None</td>
+      <td>s</td>
+      <td>2</td>
+      <td>0.000216</td>
+      <td>0.004452</td>
+      <td>7.241566e-14</td>
+    </tr>
+  </tbody>
+</table>
+
+<img src='20190117/gaussian_k50_d3.png'>
+<img src='20190117/r9_k50_d3.png'>
+
+<h3>By Stencil Size</h3>
+<p>
+We expect that both methods will increase in accuracy as the stencil size increases, particlarly if we use RBFs with a shape parameter, however with the Tangent Plane Method we expect that when the stencil becomes large enough, the stencil will not be roughly co-planer and the projection will be a poor approximation of the stencil. 
+</p>
+
+<img src='20190117/SWM_multiquadric_n800.png'>
+<img src='20190117/SWM_r9_n800.png'>
+<img src='20190117/TPM_multiquadric_n800.png'>
+<img src='20190117/TPM_r9_n800.png'>
+<p>
+As predicted, for the Tangent Plane method there is an optimal stencil size (perhaps a stencil radius).
+</p>
+
 
 <!--***************************************************************************
 *******************************************************************************
