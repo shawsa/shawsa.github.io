@@ -302,6 +302,16 @@ where $A \in \RR^{n \times n}, \vec{L} \in \RR^n, \vec{H} \in \RR^n$ and
 \end{align*}
 </p>
 
+<!--************************************************************************-->
+<h2 id="">Take the Laplacian</h2>
+<p>
+Once the interpolant is formed it has the property that $\Delta s = \Delta_\SS s$ however we still must calculate $\Delta s$.To do so we must compute $\Delta \phi, \Delta\mathcal{L}_\vec{x}\phi$, and $\mathcal{H}_\vec{x}\phi$. From earlier work we have that $\Delta \phi(r) = 2\phi_1(r) + \phi''(r)$. In the notation of <i>Lemma 1</i>, let $\vec{x} = \begin{bmatrix} x & y & z \end{bmatrix}^T, \vec{y} = \begin{bmatrix} a & b & c \end{bmatrix}^T$, and $r = ||\vec{x} - \vec{y}||$. Then we have that
+\begin{align*}
+    \frac{d}{dx}\mathcal{L}_\vec{x} \phi(r) &= \frac{d}{dx}\vec{n}\cdot(\vec{x}-\vec{y}) \phi_{1}(r) \\
+        &= n_x\phi_1(r) + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)(x-a)\phi_2(r) \\
+    \frac{d^2}{dx^2}\mathcal{L}_\vec{x} \phi(r) &= n_x(x-a)\phi_2(r) + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)\phi_2(r) + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)(x-a)^2\phi_3(r)
+\end{align*}
+</p>
 
 
 <!--***************************************************************************
