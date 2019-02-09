@@ -266,6 +266,7 @@ We next observe that
 
 <p>
 Finally we have our interpolation matrix equation
+<!--
 $$
 \begin{bmatrix} 
     \phi(|| \vec{x}_i-\vec{x}_j ||) & \mathcal{L}_\vec{x}\phi(|| \vec{x}-\vec{x}_1 ||)\vert_{\vec{x} = \vec{x}_i} & \mathcal{H}_\vec{x}\phi(|| \vec{x}-\vec{x}_1 ||)\vert_{\vec{x} = \vec{x}_i} \\
@@ -279,6 +280,26 @@ $$
 \end{bmatrix} 
 = \begin{bmatrix} \vec{f} \\ 0 \\0 \end{bmatrix}
 $$
+-->
+$$
+\begin{bmatrix} 
+    A & \vec{L} & \vec{H} \\
+    -\vec{L}^T & -\mathcal{H}_\vec{x}\phi(r)\vert_{r=0} & -\mathcal{L}_\vec{x}\mathcal{H}_\vec{x}\phi(r)\vert_{r=0} \\
+    \vec{H}^T & \mathcal{L}_\vec{x}\mathcal{H}_\vec{x}\phi(r)\vert_{r=0} & \mathcal{H}_\vec{x}\mathcal{H}_\vec{x} \phi(r)\vert_{r=0} \\
+\end{bmatrix} 
+\begin{bmatrix} 
+    \vec{c} \\
+    d \\
+    e     
+\end{bmatrix} 
+= \begin{bmatrix} \vec{f} \\ 0 \\0 \end{bmatrix}
+$$
+where $A \in \RR^{n \times n}, \vec{L} \in \RR^n, \vec{H} \in \RR^n$ and 
+\begin{align*}
+    A_{ij} &= \phi(|| \vec{x}_i-\vec{x}_j ||) \\
+    \vec{L}_i &= \mathcal{L}_\vec{x}\phi(|| \vec{x}-\vec{x}_1 ||)\vert_{\vec{x} = \vec{x}_i} \\
+    \vec{H}_i &= \mathcal{H}_\vec{x}\phi(|| \vec{x}-\vec{x}_1 ||)\vert_{\vec{x} = \vec{x}_i}.
+\end{align*}
 </p>
 
 
