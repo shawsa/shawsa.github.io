@@ -140,7 +140,7 @@ Then we simply calculate a closed form for $\Delta s(\vec{x})$.
 <!--************************************************************************-->
 <h2 id="">Lemmas</h2>
 <p>
-It will be helpful to have some lemmas. These lemmas use the same notation as specified in the Overview section. Additionally we we adopt the notation that for a given radial basis function $\phi$ (or $\phi_0$), define $\phi_1(r) = \frac{1}{r}\frac{d}{dr}\phi$ and for $i>1$ define $\phi_{i+1}(r) = \frac{1}{r}\frac{d}{dr}\phi_i$.
+These lemmas use the same notation as specified in the Overview section. Additionally we we adopt the notation that for a given radial basis function $\phi$ (or $\phi_0$), define $\phi_1(r) = \frac{1}{r}\frac{d}{dr}\phi$ and for $i>1$ define $\phi_{i+1}(r) = \frac{1}{r}\frac{d}{dr}\phi_i$.
 </p>
 
 <!--*********************-->
@@ -309,10 +309,50 @@ Once the interpolant is formed it has the property that $\Delta s = \Delta_\SS s
 \begin{align*}
     \frac{d}{dx}\mathcal{L}_\vec{x} \phi(r) &= \frac{d}{dx}\vec{n}\cdot(\vec{x}-\vec{y}) \phi_{1}(r) \\
         &= n_x\phi_1(r) + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)(x-a)\phi_2(r) \\
-    \frac{d^2}{dx^2}\mathcal{L}_\vec{x} \phi(r) &= n_x(x-a)\phi_2(r) + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)\phi_2(r) + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)(x-a)^2\phi_3(r)
+    \frac{d^2}{dx^2}\mathcal{L}_\vec{x} \phi(r) &= n_x(x-a)\phi_2(r) + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)\phi_2(r) + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)(x-a)^2\phi_3(r) \\
+    \Delta \mathcal{L}_\vec{x}\phi(r) &= \vec{n}\cdot(\vec{x}-\vec{y})\phi_2(r) + 3\vec{n}\cdot(\vec{x}-\vec{y})\phi_2(r) + r^2 \big( \vec{n}\cdot(\vec{x}-\vec{y})\big) \phi_3(r) \\
+        &= 4 \big(\vec{n}\cdot(\vec{x}-\vec{y}) \big) \phi_2(r) + r^2 \big( \vec{n}\cdot(\vec{x}-\vec{y})\big) \phi_3(r).
+\end{align*}
+
+And lastly
+
+\begin{align*}
+    \frac{d}{dx}\mathcal{H}_\vec{x} \phi(r) &= \frac{d}{dx} \bigg( \phi_1(r) + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^2 \phi_2(r) \big) \bigg) \\
+        &= (x-a)\phi_2(r) + 2\big(\vec{n}\cdot(\vec{x}-\vec{y})\big) n_x \phi_2(r) + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^2 (x-a) \phi_3(r) \\
+    \frac{d^2}{dx^2}\mathcal{H}_\vec{x} \phi(r) &= \frac{d}{dx} \bigg( (x-a)\phi_2(r) + 2\big(\vec{n}\cdot(\vec{x}-\vec{y})\big) n_x \phi_2(r) + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^2 (x-a) \phi_3(r) \bigg) \\
+        &= \phi_2(r) + (x-a)^2\phi_3(r) + 2n_x^2\phi_2(r) + 2\big(\vec{n}\cdot(\vec{x}-\vec{y})\big) n_x(x-a) \phi_3(r) + \\
+        &\phantom{====} 2\big(\vec{n}\cdot(\vec{x}-\vec{y})\big) n_x (x-a) \phi_3(r) + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^2 (x-a)^2\phi_4(r) + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^2 \phi_3(r) \\
+    \Delta \mathcal{H}_\vec{x} \phi(r) &= 3\phi_2(r) + r^2\phi_3(r) + 2\phi_2(r) + 4\big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^2 \phi_3(r) + \\
+        &\phantom{====} \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^2 r^2 \phi_4(r) + 3\big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^2 \phi_3(r) \\
+        &= 5\phi_2(r) + \bigg( r^2 + 7\big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^2 \bigg) \phi_3(r) + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^2 r^2 \phi_4(r).
 \end{align*}
 </p>
 
+<p>
+These values occur in our expression of
+$$
+\Delta_\SS s(\vec{x}) = \Delta s(\vec{x}) = \sum c_i \Delta\phi(||\vec{x} - \vec{x}_i||) + d \Delta\mathcal{L}_x \phi(||\vec{x} - \vec{y}||)+ e \Delta\mathcal{H}_x \phi(||\vec{x} - \vec{y}||)
+$$
+which in matrix form is
+
+$$
+\begin{bmatrix} \Delta A & \Delta \vec{L} & \Delta \vec{H} \end{bmatrix} \begin{bmatrix} \vec{c} \\ d \\e \end{bmatrix} = \Delta \vec{f}.
+$$
+
+Substituting our expression for the interpolant we have
+
+$$
+\begin{bmatrix} \Delta A & \Delta \vec{L} & \Delta \vec{H} \end{bmatrix} 
+\begin{bmatrix} 
+    A & \vec{L} & \vec{H} \\
+    -\vec{L}^T & -\mathcal{H}_\vec{x}\phi(r)\vert_{r=0} & -\mathcal{L}_\vec{x}\mathcal{H}_\vec{x}\phi(r)\vert_{r=0} \\
+    \vec{H}^T & \mathcal{L}_\vec{x}\mathcal{H}_\vec{x}\phi(r)\vert_{r=0} & \mathcal{H}_\vec{x}\mathcal{H}_\vec{x} \phi(r)\vert_{r=0} \\
+\end{bmatrix}^{-1}
+\begin{bmatrix} \vec{f} \\ 0 \\0 \end{bmatrix}
+ = \Delta \vec{f}.
+$$
+
+</p>
 
 <!--***************************************************************************
 *******************************************************************************
