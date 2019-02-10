@@ -1,0 +1,220 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Meeting Notes</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\MM}{\mathbb{M}}
+    \newcommand{\LL}{\mathcal{L}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../index.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Thursday February  7<sup>th</sup>, 2019</span> <br>
+<span class="author">Attendees: Grady, Andrew, and Sage </span> <br>
+<span class="updated">Sun Feb 10 01:03:03 2019</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+Reviewed convergece plots for Tangent Plane Method vs Shankar-Wright method. Addressed some of Sage's mistakes with Symmetric OGr.
+</p>
+
+<div class="contents">
+<ol>
+	<li>Sage's Tasks</li>
+	<ol>
+		<li>For Poster</li>
+		<li>Code</li>
+		<li>Writing</li>
+	</ol>
+	<li>Sage's List</li>
+	<li>Meeting Followup</li>
+	<li>References</li>
+</ol>
+</div>
+
+<!--************************************************************************-->
+<h1>Sage's Tasks</h1>
+<h2>For Poster</h2>
+<p>
+<ul>
+    <li>Symmetric RBF-OGr</li>
+        <ul>
+            <li>Implement</li>
+            <li>Include Polynomials</li>
+        </ul>
+    <li>Solutions on a Torus</li>
+    <li>MLS on tangent-plane</li>
+
+</ul>
+</p>
+
+<h2>Code</h2>
+<p>
+<ul>
+    <li>Account for the hessian to fix the code for the RBF Symmetric OGr method.</li>
+    <li>Implement time-stepping.</li>
+    <li>Test RBF OGr interpolation.</li>
+    <li>Test surface diffusion methods on a torus.</li>
+    <li>Become familiar with Varun's repo.</li>
+</ul>
+</p>
+
+<!--h2>Research</h2>
+<p>
+<ul>
+    <li></li>
+</ul>
+</p-->
+
+<h2>Writing</h2>
+<p>
+<ul>
+    <li>Write Radial Basis Function Article</li>
+    <li>Write the theorem for exactness.</li>
+    <li>Write RBF-FD article.</li>
+    <li>Write RBF-FD Projection Method article.</li>
+    <li>Write RBF-OGr article.</li>
+    <li>Add local approximation to RBF Interpolation article.</li>
+</ul>
+</p>
+
+<!--h2>Misc</h2>
+<p>
+<ul>
+    <li></li>
+</ul>
+</p-->
+
+<!--************************************************************************-->
+<h1>Sage's List</h1>
+<ol>
+    <li>Pick some test problems to solve on surfaces.  I suggest</li>
+        <ul>
+            <li>Diffusion of sum of Gaussians</li>
+            <li>Diffusion on torus</li>
+        </ul>
+    <li>Implement local OGRr method for surfaces</li>
+        <ul>
+            <li>Use exact normals</li>
+            <li>Generate convergence results on the test problems from 1.</li>
+            <li>Examine eigenvalues of the discrete Laplace-Beltrami operator.</li>
+        </ul>
+    <li>Implement Shankar-Wright RBF-FD method using RBF+polynomials (in $\RR^3$)</li>
+        <ul>
+            <li>Use exact normals</li>
+            <li>Generate convergence results on the test problems from 1.</li>
+            <li>Examine eigenvalues of the discrete Laplace-Beltrami operator.</li>
+        </ul>
+    <li>Implement RBF-FD tangent-plane method using RBF+polynomials (in $\RR^2$)</li>
+        <ul>
+            <li>Use exact normals</li>
+            <li>Generate convergence results on the test problems from 1.</li>
+            <li>Examine eigenvalues of the discrete Laplace-Beltrami operator.</li>
+        </ul>
+    <li>Implement moving least squares (MLS) method on tangent-plane using polynomials (in $\RR^2$)</li>
+        <ul>
+            <li>Use exact normals</li>
+            <li>Generate convergence results on the test problems from 1.</li>
+            <li>Examine eigenvalues of the discrete Laplace-Beltrami operator.</li>
+        </ul>
+    <li>Create poster with results from 2-4</li>
+        <ul>
+            <li>Include 5 if time permits.</li>
+        </ul>
+        
+</ol>
+
+<h1>Meeting Followup</h1>
+<h2 id="">Eigenvalue Plots</h2>
+<p>
+In the last meeting Grady requested some plots showing the eigenvalues of the weight matrices for each method. The plots below show these eigenvalues for spiral nodes on a sphere. Where not specified, the shape paramater was optimized. In the plots below $n$ is the total number of points, $k$ is the stencil size, and $d$ is the degree of polynomials appended. 
+</p>
+<img src='20190207/eigen_method_multiquadric.png'/>
+<img src='20190207/eigen_method_r9.png'/>
+<img src='20190207/eigen_SWM_rbf.png'/>
+<img src='20190207/eigen_TPM_rbf.png'/>
+<img src='20190207/eigen_TPM_k.png'/>
+<p>
+The plot above corresponds to a convergence plot for the meeting before last. It appears below for reference.
+</p>
+<img src='20190117/TPM_multiquadric_n800.png'>
+<h2 id="">Symmetric OGr</h2>
+<p>
+I think there are some mistakes in <a href='../articles/rbf-ogr.html'>my derivations</a>. Presently the code isn't working.
+</p>
+
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+	</ol>
+</p>
+</div>
+
+</div>
+</body>
+
+<script>includeHTML();</script>
+
+</html>
