@@ -140,13 +140,13 @@ Then we simply calculate a closed form for $\Delta s(\vec{x})$.
 <!--************************************************************************-->
 <h2 id="">Lemmas</h2>
 <p>
-These lemmas use the same notation as specified in the Overview section. Additionally we we adopt the notation that for a given radial basis function $\phi$ (or $\phi_0$), define $\phi_1(r) = \frac{1}{r}\frac{d}{dr}\phi$ and for $i>1$ define $\phi_{i+1}(r) = \frac{1}{r}\frac{d}{dr}\phi_i$.
+These lemmas use the same notation as specified in the Overview section. Additionally we we adopt the notation that for a given radial basis function $\phi$ (or $\phi_0$), define $\phi_1(r) = \frac{1}{r}\frac{d}{dr}\phi$ and for $i>1$ define $\phi_{i+1}(r) = \frac{1}{r}\frac{d}{dr}\phi_i$. The expression $\vec{n}\cdot(\vec{x}-\vec{y})$ occurs frequently so we will let $p = \vec{n}\cdot(\vec{x}-\vec{y})$.
 </p>
 
 <!--*********************-->
 <h3 id="">Lemma 1</h3>
 $$
-\mathcal{L}_\vec{x} \phi_n(r) = \vec{n}\cdot(\vec{x}-\vec{y}) \phi_{n+1}(r)
+\mathcal{L}_\vec{x} \phi_n(r) = p\phi_{n+1}(r)
 $$
 <b>Proof:</b><br>
 <p style='padding-left: 4em'>
@@ -165,7 +165,10 @@ $$
 <!--*********************-->
 <h3 id="">Lemma 2</h3>
 <p>
-For $n \in \NN, \mathcal{L}_\vec{x}\big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^{n+1} = (n+1)\big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^n$.
+For $n \in \NN$, 
+$$
+\mathcal{L}_\vec{x}p^{n+1} = (n+1)p^n.
+$$
 </p>
 <b>Proof:</b><br>
 <p style='padding-left: 4em'>
@@ -186,38 +189,17 @@ For $n \in \NN, \mathcal{L}_\vec{x}\big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^{n+1}
 
 <!--************************************************************************-->
 <h2 id="">Construct the Interpolant</h2>
-
-<!--p>
-We wish to form an interpolant of the form 
-$$
-s(\vec{x}) = \sum c_i \phi(||\vec{x} - \vec{x}_i||) + d \mathcal{L}_x \phi(||\vec{x} - \vec{y}||)+ e \mathcal{H}_x \phi(||\vec{x} - \vec{y}||)
-$$
-where $\vec{y} = \vec{x}_1$ (for notational convenience), $\mathcal{L}_\vec{x} = \vec{n}\cdot \nabla_\vec{x}$, and $\mathcal{H}_\vec{x} = \vec{n}^TH_\vec{x}(\cdot)\vec{n} = \mathcal{L}_\vec{x}\mathcal{L}_\vec{x}$. Here $H_\vec{x}(\phi)$ denotes the hermitian with respect to $\vec{x}$ of $\phi$ and $\vec{n}$ is the outward oriented unit normal vector to the surface at $\vec{x}$. For a given radial basis function $\phi$, define $\phi_1(r) = \frac{1}{r}\frac{d}{dr}\phi$ and for $i>1$ define $\phi_{i+1}(r) = \frac{1}{r}\frac{d}{dr}\phi_i$.
-</p>
-
-<p>
-Then note that if $\vec{x} = \begin{bmatrix} x & y & z \end{bmatrix}^T, \vec{y} = \begin{bmatrix} a & b & c \end{bmatrix}^T$, and $r = ||\vec{x} - \vec{y}||$ then
-\begin{align*}
-    \frac{dr}{dx} &= \frac{d}{dr} \big((x-a)^2 + (y-b)^2 + (z-c)^2 \big)^{1/2} \\
-        &= 2(x-a)\frac{1}{2}\frac{d}{dr} \big((x-a)^2 + (y-b)^2 + (z-c)^2 \big)^{-1/2} \\
-        &= (x-a)\frac{1}{r} \\
-    \frac{d}{dx}\phi(r) &= \phi'(r)\frac{dr}{dx} = (x-a) \phi_1(r) \\
-&\text{and similarly} \\
-    \nabla_\vec{x} \phi(r) &= (\vec{x}-\vec{y}) \phi_1(r) \\
-    \mathcal{L}_\vec{x}\phi(r) &= \vec{n}\cdot\nabla_\vec{x} \phi(r) = \vec{n}\cdot(\vec{x}-\vec{y}) \phi_1(r).
-\end{align*}
-</p-->
 <p>
 We wish to form an interpolant of the form 
 $$
 s(\vec{x}) = \sum c_i \phi(||\vec{x} - \vec{x}_i||) + d \mathcal{L}_x \phi(||\vec{x} - \vec{y}||)+ e \mathcal{H}_x \phi(||\vec{x} - \vec{y}||).
 $$
-From <i>Lemma 1</i> we have that $\mathcal{L}_x \phi(r) = \vec{n}\cdot(\vec{x}-\vec{y}) \phi_1(r)$. We must also calculate 
+From <i>Lemma 1</i> we have that $\mathcal{L}_x \phi(r) = p \phi_1(r)$. We must also calculate 
 \begin{align*}
     \mathcal{H}_\vec{x} \phi(r) &= \mathcal{L}_\vec{x}\mathcal{L}_\vec{x} \phi(r) \\
-        &= \mathcal{L}_\vec{x} \big( \vec{n}\cdot(\vec{x}-\vec{y}) \phi_1(r) \big)  \\
-        &= \phi_1(r)\mathcal{L}_\vec{x} \big( \vec{n}\cdot(\vec{x}-\vec{y}) \big) + \vec{n}\cdot(\vec{x}-\vec{y}) \mathcal{L}_\vec{x} \phi_1(r) \\
-    &= \phi_1(r) + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^2 \phi_2(r) \big) \\
+        &= \mathcal{L}_\vec{x} \big( p \phi_1(r) \big)  \\
+        &= \phi_1(r)\mathcal{L}_\vec{x} p + p \mathcal{L}_\vec{x} \phi_1(r) \\
+    &= \phi_1(r) + p^2 \phi_2(r) \\
 \end{align*}
 </p>
 
@@ -250,17 +232,15 @@ $$
 <p>
 We next observe that
 \begin{align*}
-    \mathcal{L}_\vec{x}\mathcal{H}_\vec{x}\phi(r) &= \mathcal{L}_\vec{x} \bigg( \phi_1(r) + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^2 \phi_2(r) \big) \bigg) \\
-    &=  \mathcal{L}_\vec{x} \phi_1(r) + \phi_2(r)\mathcal{L}_\vec{x}\big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^2 + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^2 \mathcal{L}_\vec{x} \phi_2(r) \\
-    &= \vec{n}\cdot(\vec{x}-\vec{y})\phi_2(r) + 2\vec{n} \cdot (\vec{x}-\vec{y}) \phi_2(r) + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^3 \phi_3(r) \\
-    &= 3\vec{n} \cdot (\vec{x}-\vec{y}) \phi_2(r) + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^3 \phi_3(r) \\
+    \mathcal{L}_\vec{x}\mathcal{H}_\vec{x}\phi(r) &= \mathcal{L}_\vec{x} \big( \phi_1(r) + p^2 \phi_2(r) \big) \\
+    &=  \mathcal{L}_\vec{x} \phi_1(r) + \phi_2(r)\mathcal{L}_\vec{x}p^2 + p^2 \mathcal{L}_\vec{x} \phi_2(r) \\
+    &= p\phi_2(r) + 2p \phi_2(r) + p^3 \phi_3(r) \\
+    &= 3p \phi_2(r) + p^3 \phi_3(r) \\
 \mathcal{H}_\vec{x}\mathcal{H}_\vec{x} \phi(r) &= \mathcal{L}_\vec{x}\mathcal{L}_\vec{x}\mathcal{H}_\vec{x} \\
-    &= \mathcal{L}_\vec{x} \bigg( 3\vec{n} \cdot (\vec{x}-\vec{y}) \phi_2(r) + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^3 \phi_3(r) \bigg) \\
-    &= 3\phi_2(r)\mathcal{L}_\vec{x}\big(\vec{n} \cdot (\vec{x}-\vec{y})\big) + 3\vec{n} \cdot (\vec{x}-\vec{y})\mathcal{L}_\vec{x}\phi_2(r) + \\
-        &\phantom{=====} \phi_3(r) \mathcal{L}_\vec{x} \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^3 + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^3 \mathcal{L}_\vec{x} \phi_3(r) \\
-    &= 3\phi_2(r) + 3\big(\vec{n} \cdot (\vec{x}-\vec{y})\big)^2\phi_3(r) + \\
-        &\phantom{=====} 3\big(\vec{n} \cdot (\vec{x}-\vec{y})\big)^2\phi_3(r) + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^4 \phi_4(r) \\
-    &= 3\phi_2(r) + 6\big(\vec{n} \cdot (\vec{x}-\vec{y})\big)^2\phi_3(r) + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^4 \phi_4(r)    
+    &= \mathcal{L}_\vec{x} \big( 3p\phi_2(r) + p^3 \phi_3(r) \big) \\
+    &= 3\phi_2(r)\mathcal{L}_\vec{x}p + 3p\mathcal{L}_\vec{x}\phi_2(r) + \phi_3(r) \mathcal{L}_\vec{x} p^3 + p^3 \mathcal{L}_\vec{x} \phi_3(r) \\
+    &= 3\phi_2(r) + 3p^2\phi_3(r) + 3p^2\phi_3(r) + p^4 \phi_4(r) \\
+    &= 3\phi_2(r) + 6p^2\phi_3(r) + p^4 \phi_4(r)    
 \end{align*}
 </p>
 
@@ -304,7 +284,7 @@ where $A \in \RR^{n \times n}, \vec{L} \in \RR^n, \vec{H} \in \RR^n$ and
 
 <!--************************************************************************-->
 <h2 id="">Take the Laplacian</h2>
-<p>
+<!--p>
 Once the interpolant is formed it has the property that $\Delta s = \Delta_\SS s$ however we still must calculate $\Delta s$.To do so we must compute $\Delta \phi, \Delta\mathcal{L}_\vec{x}\phi$, and $\mathcal{H}_\vec{x}\phi$. From earlier work we have that $\Delta \phi(r) = 2\phi_1(r) + \phi''(r)$. In the notation of <i>Lemma 1</i>, let $\vec{x} = \begin{bmatrix} x & y & z \end{bmatrix}^T, \vec{y} = \begin{bmatrix} a & b & c \end{bmatrix}^T$, and $r = ||\vec{x} - \vec{y}||$. Then we have that
 \begin{align*}
     \frac{d}{dx}\mathcal{L}_\vec{x} \phi(r) &= \frac{d}{dx}\vec{n}\cdot(\vec{x}-\vec{y}) \phi_{1}(r) \\
@@ -325,6 +305,55 @@ And lastly
     \Delta \mathcal{H}_\vec{x} \phi(r) &= 3\phi_2(r) + r^2\phi_3(r) + 2\phi_2(r) + 4\big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^2 \phi_3(r) + \\
         &\phantom{====} \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^2 r^2 \phi_4(r) + 3\big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^2 \phi_3(r) \\
         &= 5\phi_2(r) + \bigg( r^2 + 7\big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^2 \bigg) \phi_3(r) + \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^2 r^2 \phi_4(r).
+\end{align*}
+</p>
+
+<p>
+These values occur in our expression of
+$$
+\Delta_\SS s(\vec{x}) = \Delta s(\vec{x}) = \sum c_i \Delta\phi(||\vec{x} - \vec{x}_i||) + d \Delta\mathcal{L}_x \phi(||\vec{x} - \vec{y}||)+ e \Delta\mathcal{H}_x \phi(||\vec{x} - \vec{y}||)
+$$
+which in matrix form is
+
+$$
+\begin{bmatrix} \Delta A & \Delta \vec{L} & \Delta \vec{H} \end{bmatrix} \begin{bmatrix} \vec{c} \\ d \\e \end{bmatrix} = \Delta \vec{f}.
+$$
+
+Substituting our expression for the interpolant we have
+
+$$
+\begin{bmatrix} \Delta A & \Delta \vec{L} & \Delta \vec{H} \end{bmatrix} 
+\begin{bmatrix} 
+    A & \vec{L} & \vec{H} \\
+    -\vec{L}^T & -\mathcal{H}_\vec{x}\phi(r)\vert_{r=0} & -\mathcal{L}_\vec{x}\mathcal{H}_\vec{x}\phi(r)\vert_{r=0} \\
+    \vec{H}^T & \mathcal{L}_\vec{x}\mathcal{H}_\vec{x}\phi(r)\vert_{r=0} & \mathcal{H}_\vec{x}\mathcal{H}_\vec{x} \phi(r)\vert_{r=0} \\
+\end{bmatrix}^{-1}
+\begin{bmatrix} \vec{f} \\ 0 \\0 \end{bmatrix}
+ = \Delta \vec{f}.
+$$
+
+</p-->
+
+<p>
+Once the interpolant is formed it has the property that $\Delta s = \Delta_\SS s$ however we still must calculate $\Delta s$.To do so we must compute $\Delta \phi, \Delta\mathcal{L}_\vec{x}\phi$, and $\Delta\mathcal{H}_\vec{x}\phi$. From earlier work we have that $\Delta \phi(r) = 2\phi_1(r) + \phi''(r)$. In the notation of <i>Lemma 1</i>, let $\vec{x} = \begin{bmatrix} x & y & z \end{bmatrix}^T, \vec{y} = \begin{bmatrix} a & b & c \end{bmatrix}^T$, and $r = ||\vec{x} - \vec{y}||$. Additinally we will use the notation that  Then we have that $p = \vec{n}\cdot(\vec{x}-\vec{y})$.
+\begin{align*}
+    \frac{d}{dx}\mathcal{L}_\vec{x} \phi(r) &= \frac{d}{dx}p \phi_{1}(r) \\
+        &= n_x\phi_1(r) + p(x-a)\phi_2(r) \\
+    \frac{d^2}{dx^2}\mathcal{L}_\vec{x} \phi(r) &= n_x(x-a)\phi_2(r) + n_x(x-a)\phi_2(r) + p\phi_2(r) + p(x-a)^2 \phi_3(r) \\
+        &= 2n_x(x-a)\phi_2(r) + p\phi_2(r) + p(x-a)^2 \phi_3(r) \\
+    \Delta \mathcal{L}_\vec{x}\phi(r) &= 5p\phi_2(r) + r^2 p \phi_3(r).
+\end{align*}
+
+And lastly
+
+\begin{align*}
+    \frac{d}{dx}\mathcal{H}_\vec{x} \phi(r) &= \frac{d}{dx} \big( \phi_1(r) + p^2 \phi_2(r) \big) \\
+        &= (x-a)\phi_2(r) + 2p n_x \phi_2(r) + p^2 (x-a) \phi_3(r) \\
+    \frac{d^2}{dx^2}\mathcal{H}_\vec{x} \phi(r) &= \phi_2(r) + (x-a)^2\phi_3(r) + 2n_x^2\phi_2(r) + 2p n_x(x-a) \phi_3(r) + \\
+        &\phantom{====} 2p n_x (x-a) \phi_3(r) + p^2 \phi_3(r) + p^2 (x-a)^2\phi_4(r) \\
+        &= \phi_2(r) + (x-a)^2\phi_3(r) + 2n_x^2\phi_2(r) + 4p n_x(x-a) \phi_3(r) + p^2 \phi_3(r) + p^2 (x-a)^2\phi_4(r) \\
+    \Delta \mathcal{H}_\vec{x} \phi(r) &= 3\phi_2(r) + r^2\phi_3(r) + 2\phi_2(r) + 4p^2 \phi_3(r) + 3p^2\phi_3(r) + p^2 r^2 \phi_4(r) \\
+        &= 5\phi_2(r) + \big( r^2 + 7p^2 \big) \phi_3(r) + p^2 r^2 \phi_4(r).
 \end{align*}
 </p>
 
