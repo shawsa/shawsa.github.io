@@ -95,10 +95,10 @@ Reviewed convergece plots for Tangent Plane Method vs Shankar-Wright method. Add
 <h2>For Poster</h2>
 <p>
 <ul>
-    <li>Symmetric RBF-OGr</li>
+    <li><s>Symmetric RBF-OGr</s></li>
         <ul>
-            <li>Implement</li>
-            <li>Include Polynomials</li>
+            <li><s>Implement</s></li>
+            <li><s>Include Polynomials</s></li>
         </ul>
     <li>Solutions on a Torus</li>
     <li>MLS on tangent-plane</li>
@@ -109,9 +109,8 @@ Reviewed convergece plots for Tangent Plane Method vs Shankar-Wright method. Add
 <h2>Code</h2>
 <p>
 <ul>
-    <li>Account for the hessian to fix the code for the RBF Symmetric OGr method.</li>
+    <li><s>Account for the hessian to fix the code for the RBF Symmetric OGr method.</s></li>
     <li>Implement time-stepping.</li>
-    <li>Test RBF OGr interpolation.</li>
     <li>Test surface diffusion methods on a torus.</li>
     <li>Become familiar with Varun's repo.</li>
 </ul>
@@ -198,8 +197,17 @@ The plot above corresponds to a convergence plot for the meeting before last. It
 <img src='20190117/TPM_multiquadric_n800.png'>
 <h2 id="">Symmetric OGr</h2>
 <p>
-I think there are some mistakes in <a href='../articles/rbf-ogr.html'>my derivations</a>. Presently the code isn't working.
+We have successfully coded <a href='../articles/rbf-ogr.html'>Symmetric Orthogonal Gradients</a>, including scaling and appending polynomial basis terms. For some reason it fails for PHS RBFs.
 </p>
+
+<p>
+The following plots are show the error in the computation of the derivative of the sum of seven arbitrarily placed Gaussians on the sphere. When a shape parameter was required, it was optimized so that the condition number of the RBF matrix was roughly $10^{12}$. 
+</p>
+<img src='20190207/OGr_multiquadric_k50_dNone.png'/>
+<img src='20190207/OGr_multiquadric_k50_d0.png'/>
+<img src='20190207/OGr_multiquadric_k50_d5.png'/>
+
+<img src='20190207/eigen_method_multiquadric_OGr.png'/>
 
 
 <!--***************************************************************************

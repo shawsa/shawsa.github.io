@@ -287,7 +287,8 @@ def SWM(nodes, normals, rbf_obj=rbf_dict['multiquadric'], epsilon=None,
 #######################################################
 def SOGr(nodes, normals, rbf_obj=rbf_dict['multiquadric'], eps=None, 
         stencil_size=15, poly_deg=None, poly_type='p'):
-
+    if poly_deg is -1:
+        poly_deg = None
     assert poly_type is 'p'
     
     n = len(nodes)
