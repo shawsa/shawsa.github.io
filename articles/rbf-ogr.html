@@ -122,19 +122,19 @@ The idea is to set up an orthogonal gradients interpolant as before using only p
 $$
 \Delta_\SS f = \Delta f -  \frac{\partial^2 f}{\partial \vec{n}^2} - \kappa \frac{\partial f}{\partial \vec{n}}
 $$
-where $\kappa$ is the mean curvature. For notational convenience let $\mathcal{L}_\vec{x} = \frac{\partial f}{\partial \vec{n}} =  \vec{n}\cdot \nabla_\vec{x}$, and $\mathcal{H}_\vec{x} = \frac{\partial^2 f}{\partial \vec{n}^2} = \vec{n}^TH_\vec{x}(\cdot)\vec{n} = \mathcal{L}_\vec{x}\mathcal{L}_\vec{x}$. Here $H_\vec{x}(\phi)$ denotes the hermitian with respect to $\vec{x}$ of $\phi$ and $\vec{n}$ is the outward oriented unit normal vector to the surface at $\vec{x}$. Thus if we require that at a stencil center $\vec{y}$ we have $\mathcal{H}_\vec{y}s(\vec{x}) \vert_{\vec{x}=\vec{y}} = 0$ and $\mathcal{L}_\vec{y}s(\vec{x}) \vert_{\vec{x}=\vec{y}} = 0$ we will have the key property in the Orthogonal Gradients method: $\Delta s = \Delta_\SS s$, at least at $\vec{y}$.
+where $\kappa$ is the mean curvature. For notational convenience let $\mathcal{L}_\vec{x} = \frac{\partial f}{\partial \vec{n}} =  \vec{n}\cdot \nabla_\vec{x}$, and $\mathcal{H}_\vec{x} = \frac{\partial^2 f}{\partial \vec{n}^2} = \vec{n}^TH_\vec{x}(\cdot)\vec{n}$. Here $H_\vec{x}(\phi)$ denotes the hessian with respect to $\vec{x}$ of $\phi$ and $\vec{n}$ is the outward oriented unit normal vector to the surface at $\vec{x}$. Thus if we require that at a stencil center $\vec{y}$ we have $\mathcal{H}_\vec{x}s(\vec{x}) \vert_{\vec{x}=\vec{y}} = 0$ and $\mathcal{L}_\vec{x}s(\vec{x}) \vert_{\vec{x}=\vec{y}} = 0$ we will have the key property in the Orthogonal Gradients method: $\Delta s = \Delta_\SS s$, at least at $\vec{y}$.
 </p>
 
 <p>
 Using a similar method to the moment conditions, we will Let
 $$
-s(\vec{x}) = \sum c_i \phi(||\vec{x} - \vec{x}_i||) + d \mathcal{L}_x \phi(||\vec{x} - \vec{y}||)+ e \mathcal{H}_x \phi(||\vec{x} - \vec{y}||)
+s(\vec{x}) = \sum c_i \phi(||\vec{x} - \vec{x}_i||) + d \mathcal{L}_\vec{y} \phi(||\vec{x} - \vec{y}||)+ e \mathcal{H}_\vec{y} \phi(||\vec{x} - \vec{y}||)
 $$
-where $\vec{y} = \vec{x}_1$ is the stencil center, and require that $s$ interpolates the surface, $\mathcal{H}_\vec{y}s(\vec{x}) \vert_{\vec{x}=\vec{y}} = 0$, and $\mathcal{L}_\vec{y}s(\vec{x}) \vert_{\vec{x}=\vec{y}} = 0$.
+where $\vec{y} = \vec{x}_1$ is the stencil center, and require that $s$ interpolates the surface, $\mathcal{H}_\vec{x}s(\vec{x}) \vert_{\vec{x}=\vec{y}} = 0$, and $\mathcal{L}_\vec{x}s(\vec{x}) \vert_{\vec{x}=\vec{y}} = 0$.
 </p>
 
 <p>
-Then we simply calculate a closed form for $\Delta s(\vec{x})$.
+Then we calculate a closed form for $\Delta s(\vec{x})$.
 </p>
 
 <!--************************************************************************-->
@@ -146,7 +146,7 @@ These lemmas use the same notation as specified in the Overview section. Additio
 <!--*********************-->
 <h3 id="">Lemma 1</h3>
 $$
-\mathcal{L}_\vec{x} \phi_n(r) = p\phi_{n+1}(r)
+\mathcal{L}_\vec{x} \phi_n(r) = p\phi_{n+1}(r) = -\mathcal{L}_\vec{y}
 $$
 <b>Proof:</b><br>
 <p style='padding-left: 4em'>
@@ -155,11 +155,13 @@ $$
     \frac{dr}{dx} &= \frac{d}{dr} \big((x-a)^2 + (y-b)^2 + (z-c)^2 \big)^{1/2} \\
         &= 2(x-a)\frac{1}{2}\frac{d}{dr} \big((x-a)^2 + (y-b)^2 + (z-c)^2 \big)^{-1/2} \\
         &= (x-a)\frac{1}{r} \\
-    \frac{d}{dx}\phi(r) &= \phi'(r)\frac{dr}{dx} = (x-a) \phi_1(r) \\
+    \frac{d}{dx}\phi_n(r) &= \phi_n'(r)\frac{dr}{dx} = (x-a) \phi_{n+1}(r) \\
 &\text{and similarly} \\
-    \nabla_\vec{x} \phi(r) &= (\vec{x}-\vec{y}) \phi_1(r) \\
-    \mathcal{L}_\vec{x}\phi(r) &= \vec{n}\cdot\nabla_\vec{x} \phi(r) = \vec{n}\cdot(\vec{x}-\vec{y}) \phi_1(r).
+    \nabla_\vec{x} \phi_n(r) &= (\vec{x}-\vec{y}) \phi_{n+1}(r) \\
+    \mathcal{L}_\vec{x}\phi_n(r) &= \vec{n}\cdot(\vec{x}-\vec{y}) \phi_{n+1}(r) \\
+        &= p\phi_{n+1}(r).\\
 \end{align*}
+Also since $\frac{d}{da} \phi(r) = -(x-a)\phi_1(r) = - \frac{d}{dx}\phi(r)$ it follows that $\mathcal{L}_\vec{y} = -\mathcal{L}_\vec{y}$.
 </p><p align='right'>$\blacksquare$</p>
 
 <!--*********************-->
@@ -183,45 +185,66 @@ $$
         &= (n+1) \big(\vec{n}\cdot(\vec{x}-\vec{y})\big)^{n} 
 \end{align*}
 
-
 </p><p align='right'>$\blacksquare$ </p>
 
+<!--*********************-->
+<h3 id="">Lemma 3</h3>
+<p>
+For a radial basis function $\phi$, we have that $\mathcal{H}_\vec{x} \phi(r) = \mathcal{L}_\vec{x}\mathcal{L}_\vec{x} \phi(r) = \phi_1(r) + p^2 \phi_2(r)$. Also that $\mathcal{H}_\vec{x}\phi = \mathcal{H}_\vec{y}\phi$.
+</p>
+
+<b>Proof:</b><br>
+<p style='padding-left: 4em'>
+From <i>Lemma 1</i> we have that $\mathcal{L}_x \phi(r) = p \phi_1(r)$. Then
+\begin{align*}
+    \mathcal{L}_\vec{x}\mathcal{L}_\vec{x} \phi(r)
+        &= \mathcal{L}_\vec{x} \big( p \phi_1(r) \big)  \\
+        &= \phi_1(r)\mathcal{L}_\vec{x} p + p \mathcal{L}_\vec{x} \phi_1(r) \\
+    &= \phi_1(r) + p^2 \phi_2(r). \\
+\end{align*}
+Next consider
+\begin{align*}
+    \frac{\partial}{\partial x} \phi(r) &= (x-a)\phi_1(r) \\
+    \frac{\partial^2}{\partial x^2} \phi(r) &= \phi_1(r) + (x-a)^2\phi_2(r) \\
+    \frac{\partial^2}{\partial xy} \phi(r) &= (x-a)(y-b)\phi_2(r)    
+\end{align*}
+These will be useful in the caluculation of the Hessian below
+\begin{align*}
+    \mathcal{H}_\vec{x} \phi(r) &= \vec{n}^T 
+\begin{bmatrix} 
+\frac{\partial^2\phi}{\partial x^2}  & \frac{\partial^2\phi}{\partial xy} & \frac{\partial^2\phi}{\partial xz} \\
+\frac{\partial^2\phi}{\partial xy}  & \frac{\partial^2\phi}{\partial y^2} & \frac{\partial^2\phi}{\partial yz} \\
+\frac{\partial^2\phi}{\partial xz}  & \frac{\partial^2\phi}{\partial yy} & \frac{\partial^2\phi}{\partial z^2} 
+\end{bmatrix} \vec{n} \\
+    &= n_x^2\frac{\partial^2\phi}{\partial x^2} + n_y^2\frac{\partial^2\phi}{\partial y^2} + n_z^2\frac{\partial^2\phi}{\partial z^2} + 2 n_x n_y\frac{\partial^2\phi}{\partial xy} + 2 n_x n_z\frac{\partial^2\phi}{\partial xz} + 2 n_y n_z\frac{\partial^2\phi}{\partial yz} \\
+    &= (n_x^2 + n_y^2 + n_z^2)\phi_1(r) + \big( n_x(x-a) + n_y(y-b) + n_z(z-c) \big)^2\phi_2(r) \\
+    &= \phi_1(r) + p^2\phi_2(r).
+\end{align*}
+And lastly we have that $\mathcal{H}_\vec{x}\phi = \mathcal{L}_\vec{x}\mathcal{L}_\vec{x}\phi = (-\mathcal{L}_\vec{y})(-\mathcal{L}_\vec{y})\phi = \mathcal{H}_\vec{y}\phi$.
+</p><p align='right'>$\blacksquare$ </p>
 
 <!--************************************************************************-->
 <h2 id="">Construct the Interpolant</h2>
 <p>
 We wish to form an interpolant of the form 
 $$
-s(\vec{x}) = \sum c_i \phi(||\vec{x} - \vec{x}_i||) + d \mathcal{L}_x \phi(||\vec{x} - \vec{y}||)+ e \mathcal{H}_x \phi(||\vec{x} - \vec{y}||).
+s(\vec{x}) = \sum c_i \phi(||\vec{x} - \vec{x}_i||) + d \mathcal{L}_\vec{y} \phi(||\vec{x} - \vec{y}||)+ e \mathcal{H}_\vec{y} \phi(||\vec{x} - \vec{y}||).
 $$
-From <i>Lemma 1</i> we have that $\mathcal{L}_x \phi(r) = p \phi_1(r)$. We must also calculate 
-\begin{align*}
-    \mathcal{H}_\vec{x} \phi(r) &= \mathcal{L}_\vec{x}\mathcal{L}_\vec{x} \phi(r) \\
-        &= \mathcal{L}_\vec{x} \big( p \phi_1(r) \big)  \\
-        &= \phi_1(r)\mathcal{L}_\vec{x} p + p \mathcal{L}_\vec{x} \phi_1(r) \\
-    &= \phi_1(r) + p^2 \phi_2(r) \\
-\end{align*}
+From <i>Lemmas 1</i> and <i>3</i> we have that $\mathcal{L}_\vec{y} \phi(r) = -p \phi_1(r)$ and $\mathcal{H}_\vec{y} = \phi_1(r) + p^2 \phi_2(r)$.
 </p>
 
 <p>
 We also require that at the stencil center $\vec{y}$ we have $\mathcal{H}_\vec{y}s(\vec{x}) \vert_{\vec{x}=\vec{y}} = 0$ and $\mathcal{L}_\vec{y}s(\vec{x}) \vert_{\vec{x}=\vec{y}} = 0$. Enforcing this will require us to evaluate the following six expressions:
 \begin{align*}
-    &\mathcal{L}_\vec{y} \phi(r) && \mathcal{L}_\vec{y}\mathcal{L}_\vec{x}\phi(r) && \mathcal{L}_\vec{y}\mathcal{H}_\vec{x}\phi(r) \\
-    &\mathcal{H}_\vec{y} \phi(r) && \mathcal{H}_\vec{y}\mathcal{L}_\vec{x}\phi(r) && \mathcal{H}_\vec{y}\mathcal{H}_\vec{x}\phi(r).
+    &\mathcal{L}_\vec{x} \phi(||\vec{x}-\vec{x}_1||)|_{\vec{x}=\vec{y}} && \mathcal{L}_\vec{x}\mathcal{L}_\vec{y}\phi(r)|_{r=0} && \mathcal{L}_\vec{x}\mathcal{H}_\vec{y}\phi(r)|_{r=0} \\
+    &\mathcal{H}_\vec{x} \phi(||\vec{x}-\vec{x}_1||)|_{\vec{x}=\vec{y}} && \mathcal{H}_\vec{x}\mathcal{L}_\vec{y}\phi(r)|_{r=0} && \mathcal{H}_\vec{x}\mathcal{H}_\vec{y}\phi(r)|_{r=0}.
 \end{align*}
 From above we have that 
 \begin{align*}
-    \mathcal{L}_\vec{y}\phi(r) &= \vec{n}\cdot(\vec{y}-\vec{x}) \phi_1(r) \\
-        &= -\mathcal{L}_\vec{x}\phi(r) \\
-    \mathcal{H}_\vec{y} \phi(r) &= \phi_1(r) + \big(\vec{n}\cdot(\vec{y}-\vec{x})\big)^2 \phi_2(r) \big) \\
-        &= \mathcal{H}_\vec{x} \phi(r) \\
-\end{align*}
-from which it follows that
-\begin{align*}
-    \mathcal{L}_\vec{y}\mathcal{L}_\vec{x}\phi(r) &= -\mathcal{H}_\vec{x}\phi(r) \\
-    \mathcal{L}_\vec{y}\mathcal{H}_\vec{x}\phi(r) &= -\mathcal{L}_\vec{x}\mathcal{H}_\vec{x}\phi(r) \\
-    \mathcal{H}_\vec{y}\mathcal{L}_\vec{x}\phi(r) &= \mathcal{H}_\vec{x}\mathcal{L}_\vec{x}\phi(r)  = \mathcal{L}_\vec{x}^3 = \mathcal{L}_\vec{x}\mathcal{H}_\vec{x}\phi(r)  \\
-    \mathcal{H}_\vec{y}\mathcal{H}_\vec{x}\phi(r) &= \mathcal{H}_\vec{x}\mathcal{H}_\vec{x}\phi(r).
+    \mathcal{L}_\vec{x}\mathcal{L}_\vec{y}\phi(r) &= -\mathcal{H}_\vec{x}\phi(r) \\
+    \mathcal{L}_\vec{x}\mathcal{H}_\vec{y}\phi(r) &= -\mathcal{L}_\vec{x}\mathcal{H}_\vec{x}\phi(r) \\
+    \mathcal{H}_\vec{x}\mathcal{L}_\vec{y}\phi(r) &= \mathcal{H}_\vec{x}\mathcal{L}_\vec{x}\phi(r)  = \mathcal{L}_\vec{x}^3 = \mathcal{L}_\vec{x}\mathcal{H}_\vec{x}\phi(r)  \\
+    \mathcal{H}_\vec{x}\mathcal{H}_\vec{y}\phi(r) &= \mathcal{H}_\vec{x}\mathcal{H}_\vec{x}\phi(r).
 \end{align*}
 and thus we need only calculate two expressions:
 $$

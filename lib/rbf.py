@@ -9,9 +9,8 @@ Each RBF in the dictionary should have the following values defined
     label           the text label for the rbf
     tex             the tex code for the formula
     shape           True iff it requires a shape parameter
-    zeta            1/r* d/dr of the radial kernel
-    chi             1/r d/dr of zeta
-    beta            1/r d/dr of chi
+    phi1            1/r* d/dr of the radial kernel
+    phi n+1         1/r d/dr of phi n
 '''
 
 
@@ -31,13 +30,13 @@ label = 'gaussian'
 tex = '$e^{-(\\varepsilon r)^2}$'
 def rbf(r, eps):
     return np.exp( -(eps*r)**2 )
-def zeta(r, eps):
+def phi1(r, eps):
 	return -2*eps**2*np.exp(-eps**2*r**2)
-def chi(r, eps):
+def phi2(r, eps):
 	return 4*eps**4*np.exp(-eps**2*r**2)
-def beta(r, eps):
+def phi3(r, eps):
 	return -8*eps**6*np.exp(-eps**2*r**2)
-def gamma(r, eps):
+def phi4(r, eps):
 	return 16*eps**8*np.exp(-eps**2*r**2)
 def phi5(r, eps):
 	return -32*eps**10*np.exp(-eps**2*r**2)
@@ -46,7 +45,7 @@ def drbf(r, eps):
 def d2rbf(r, eps):
 	return eps**2*(4*eps**2*r**2 - 2)*np.exp(-eps**2*r**2)
 rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
-            'zeta':zeta, 'chi':chi, 'beta':beta, 'gamma':gamma, 
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'phi4':phi4, 
             'phi5': phi5, 'drbf':drbf, 'd2rbf':d2rbf}
 rbf_dict[label] = rbf_obj
 shape_labels += [label]
@@ -55,11 +54,11 @@ label = 'multiquadric'
 tex = '$\sqrt{1+(\\varepsilon r)^2}$'
 def rbf(r, eps):
     return np.sqrt(1+(eps*r)**2)
-def zeta(r, eps):
+def phi1(r, eps):
 	return eps**2/np.sqrt(eps**2*r**2 + 1)
-def chi(r, eps):
+def phi2(r, eps):
 	return -eps**4/(eps**2*r**2 + 1)**(3/2)
-def beta(r, eps):
+def phi3(r, eps):
 	return 3*eps**6/(eps**2*r**2 + 1)**(5/2)
 def phi5(r, eps):
 	return 105*eps**10/(eps**2*r**2 + 1)**(9/2)
@@ -68,7 +67,7 @@ def drbf(r, eps):
 def d2rbf(r, eps):
 	return -eps**4*r**2/(eps**2*r**2 + 1)**(3/2) + eps**2/np.sqrt(eps**2*r**2 + 1)
 rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
-            'zeta':zeta, 'chi':chi, 'beta':beta, 'gamma':gamma, 
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'phi4':phi4, 
             'phi5': phi5, 'drbf':drbf, 'd2rbf':d2rbf}
 rbf_dict[label] = rbf_obj
 shape_labels += [label]
@@ -77,18 +76,18 @@ label = 'inverse quadratic'
 tex = '$\\frac{1}{1+(\\varepsilon r)^2}$'
 def rbf(r, eps):
     return 1/(1+(eps*r)**2)
-def zeta(r, eps):
+def phi1(r, eps):
 	return -2*eps**2/(eps**2*r**2 + 1)**2
-def chi(r, eps):
+def phi2(r, eps):
 	return 8*eps**4/(eps**2*r**2 + 1)**3
-def beta(r, eps):
+def phi3(r, eps):
 	return -48*eps**6/(eps**2*r**2 + 1)**4
 def drbf(r, eps):
 	return -2*eps**2*r/(eps**2*r**2 + 1)**2
 def d2rbf(r, eps):
 	return 8*eps**4*r**2/(eps**2*r**2 + 1)**3 - 2*eps**2/(eps**2*r**2 + 1)**2
 rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
-            'zeta':zeta, 'chi':chi, 'beta':beta, 'drbf':drbf, 'd2rbf':d2rbf}
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'drbf':drbf, 'd2rbf':d2rbf}
 rbf_dict[label] = rbf_obj
 shape_labels += [label]
 
@@ -96,18 +95,18 @@ label = 'inverse multiquadric'
 tex = '$\\frac{1}{\\sqrt{1+(\\varepsilon r)^2}}$'
 def rbf(r, eps):
     return 1/np.sqrt(1+(eps*r)**2)
-def zeta(r, eps):
+def phi1(r, eps):
 	return -eps**2/(eps**2*r**2 + 1)**(3/2)
-def chi(r, eps):
+def phi2(r, eps):
 	return 3*eps**4/(eps**2*r**2 + 1)**(5/2)
-def beta(r, eps):
+def phi3(r, eps):
 	return -15*eps**6/(eps**2*r**2 + 1)**(7/2)
 def drbf(r, eps):
 	return -eps**2*r/(eps**2*r**2 + 1)**(3/2)
 def d2rbf(r, eps):
 	return 3*eps**4*r**2/(eps**2*r**2 + 1)**(5/2) - eps**2/(eps**2*r**2 + 1)**(3/2)
 rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
-            'zeta':zeta, 'chi':chi, 'beta':beta, 'drbf':drbf, 'd2rbf':d2rbf}
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'drbf':drbf, 'd2rbf':d2rbf}
 rbf_dict[label] = rbf_obj
 shape_labels += [label]
 
@@ -123,18 +122,18 @@ label = 'thin plate spline'
 tex = '$\\log(r)r^2$'
 def rbf(r,eps):
     return r**2 * np.log(r+MEPS)
-def zeta(r, eps):
+def phi1(r, eps):
 	return 2*np.log(MEPS + r) + 1
-def chi(r, eps):
+def phi2(r, eps):
 	return 2/r**2
-def beta(r, eps):
+def phi3(r, eps):
 	return -4/r**4
 def drbf(r, eps):
 	return r*(2*np.log(MEPS + r) + 1)
 def d2rbf(r, eps):
 	return 2*np.log(MEPS + r) + 3
 rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
-            'zeta':zeta, 'chi':chi, 'beta':beta, 'drbf':drbf, 'd2rbf':d2rbf}
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'drbf':drbf, 'd2rbf':d2rbf}
 rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
@@ -142,18 +141,18 @@ label = 'fourth degree PHS'
 tex = '$\\log(r)r^4$'
 def rbf(r,eps):
     return r**4 * np.log(r+MEPS)
-def zeta(r, eps):
+def phi1(r, eps):
 	return r**2*(4*np.log(MEPS + r) + 1)
-def chi(r, eps):
+def phi2(r, eps):
 	return 8*np.log(MEPS + r) + 6
-def beta(r, eps):
+def phi3(r, eps):
 	return 8/r**2
 def drbf(r, eps):
 	return r**3*(4*np.log(MEPS + r) + 1)
 def d2rbf(r, eps):
 	return r**2*(12*np.log(MEPS + r) + 7)
 rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
-            'zeta':zeta, 'chi':chi, 'beta':beta, 'drbf':drbf, 'd2rbf':d2rbf}
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'drbf':drbf, 'd2rbf':d2rbf}
 rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
@@ -161,18 +160,18 @@ label = 'sixth degree PHS'
 tex = '$\\log(r)r^6$'
 def rbf(r,eps):
     return r**6 * np.log(r+MEPS)
-def zeta(r, eps):
+def phi1(r, eps):
 	return r**4*(6*np.log(MEPS + r) + 1)
-def chi(r, eps):
+def phi2(r, eps):
 	return r**2*(24*np.log(MEPS + r) + 10)
-def beta(r, eps):
+def phi3(r, eps):
 	return 48*np.log(MEPS + r) + 44
 def drbf(r, eps):
 	return r**5*(6*np.log(MEPS + r) + 1)
 def d2rbf(r, eps):
 	return r**4*(30*np.log(MEPS + r) + 11)
 rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
-            'zeta':zeta, 'chi':chi, 'beta':beta, 'drbf':drbf, 'd2rbf':d2rbf}
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'drbf':drbf, 'd2rbf':d2rbf}
 rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
@@ -180,18 +179,18 @@ label = 'eighth degree PHS'
 tex = '$\\log(r)r^8$'
 def rbf(r,eps):
     return r**8 * np.log(r+MEPS)
-def zeta(r, eps):
+def phi1(r, eps):
 	return r**6*(8*np.log(MEPS + r) + 1)
-def chi(r, eps):
+def phi2(r, eps):
 	return r**4*(48*np.log(MEPS + r) + 14)
-def beta(r, eps):
+def phi3(r, eps):
 	return r**2*(192*np.log(MEPS + r) + 104)
 def drbf(r, eps):
 	return r**7*(8*np.log(MEPS + r) + 1)
 def d2rbf(r, eps):
 	return r**6*(56*np.log(MEPS + r) + 15)
 rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
-            'zeta':zeta, 'chi':chi, 'beta':beta, 'drbf':drbf, 'd2rbf':d2rbf}
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'drbf':drbf, 'd2rbf':d2rbf}
 rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
@@ -199,18 +198,18 @@ label = 'cubic spline'
 tex = '$r^3$'
 def rbf(r,eps):
     return r**3
-def zeta(r, eps):
+def phi1(r, eps):
 	return 3*r
-def chi(r, eps):
+def phi2(r, eps):
 	return 3/r
-def beta(r, eps):
+def phi3(r, eps):
 	return -3/r**3
 def drbf(r, eps):
 	return 3*r**2
 def d2rbf(r, eps):
 	return 6*r
 rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
-            'zeta':zeta, 'chi':chi, 'beta':beta, 'drbf':drbf, 'd2rbf':d2rbf}
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'drbf':drbf, 'd2rbf':d2rbf}
 rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
@@ -218,18 +217,18 @@ label = 'fith degree PHS'
 tex = '$r^5$'
 def rbf(r,eps):
     return r**5
-def zeta(r, eps):
+def phi1(r, eps):
 	return 5*r**3
-def chi(r, eps):
+def phi2(r, eps):
 	return 15*r
-def beta(r, eps):
+def phi3(r, eps):
 	return 15/r
 def drbf(r, eps):
 	return 5*r**4
 def d2rbf(r, eps):
 	return 20*r**3
 rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
-            'zeta':zeta, 'chi':chi, 'beta':beta, 'drbf':drbf, 'd2rbf':d2rbf}
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'drbf':drbf, 'd2rbf':d2rbf}
 rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
@@ -237,18 +236,18 @@ label = 'seventh degree PHS'
 tex = '$r^7$'
 def rbf(r,eps):
     return r**7
-def zeta(r, eps):
+def phi1(r, eps):
 	return 7*r**5
-def chi(r, eps):
+def phi2(r, eps):
 	return 35*r**3
-def beta(r, eps):
+def phi3(r, eps):
 	return 105*r
 def drbf(r, eps):
 	return 7*r**6
 def d2rbf(r, eps):
 	return 42*r**5
 rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
-            'zeta':zeta, 'chi':chi, 'beta':beta, 'drbf':drbf, 'd2rbf':d2rbf}
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'drbf':drbf, 'd2rbf':d2rbf}
 rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
@@ -256,23 +255,23 @@ label = 'ninth degree PHS'
 tex = '$r^9$'
 def rbf(r,eps):
     return r**9
-def zeta(r, eps):
+def phi1(r, eps):
 	return 9*r**7
-def chi(r, eps):
+def phi2(r, eps):
 	return 63*r**5
-def beta(r, eps):
+def phi3(r, eps):
 	return 315*r**3
 def drbf(r, eps):
 	return 9*r**8
 def d2rbf(r, eps):
 	return 72*r**7
 rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
-            'zeta':zeta, 'chi':chi, 'beta':beta, 'drbf':drbf, 'd2rbf':d2rbf}
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'drbf':drbf, 'd2rbf':d2rbf}
 rbf_dict[label] = rbf_obj
 phs_labels += [label]
 label = 'r^9'
 rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
-            'zeta':zeta, 'chi':chi, 'beta':beta, 'drbf':drbf, 'd2rbf':d2rbf}
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'drbf':drbf, 'd2rbf':d2rbf}
 rbf_dict[label] = rbf_obj
 phs_labels += [label]
 

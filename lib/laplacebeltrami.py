@@ -36,9 +36,9 @@ def TPM_old(nodes, normals, rbf_obj=rbf_dict['multiquadric'], epsilon=None, sten
     n = len(nodes)
     k = stencil_size
     rbf = rbf_obj['rbf']
-    zeta  = rbf_obj['zeta']
+    phi1  = rbf_obj['phi1']
     d2rbf = rbf_obj['d2rbf']
-    Lrbf = lambda r,epsilon: 1*zeta(r,epsilon) + d2rbf(r,epsilon)
+    Lrbf = lambda r,epsilon: 1*phi1(r,epsilon) + d2rbf(r,epsilon)
 
     tree = cKDTree(np.array(nodes))
 
@@ -85,9 +85,9 @@ def TPM(nodes, normals, rbf_obj=rbf_dict['multiquadric'], epsilon=None, stencil_
     n = len(nodes)
     k = stencil_size
     rbf = rbf_obj['rbf']
-    zeta  = rbf_obj['zeta']
+    phi1  = rbf_obj['phi1']
     d2rbf = rbf_obj['d2rbf']
-    Lrbf = lambda r,epsilon: zeta(r,epsilon) + d2rbf(r,epsilon)
+    Lrbf = lambda r,epsilon: phi1(r,epsilon) + d2rbf(r,epsilon)
 
     tree = cKDTree(np.array(nodes))
 
@@ -201,12 +201,12 @@ def grad_poly(nodes, projectors, deg):
         rhs_z[:,i] = p[0,2]*rhs_dx[:,i] + p[1,2]*rhs_dy[:,i] + p[2,2]*rhs_dz[:,i]
     return P, rhs_x, rhs_y, rhs_z
 
-def grad_rbf_outer(nodes, centers, zeta, epsilon):
+def grad_rbf_outer(nodes, centers, phi1, epsilon):
     n_len = len(nodes)
     c_len = len(centers)
     r = dist_outer(nodes, centers)[:,:,np.newaxis]
     xs = (np.array(nodes).reshape((1,n_len,3)) - np.array(centers).reshape((c_len,1,3)))
-    return zeta(r, epsilon) * xs
+    return phi1(r, epsilon) * xs
 
 def SWM(nodes, normals, rbf_obj=rbf_dict['multiquadric'], epsilon=None, 
         stencil_size=15, poly_deg=None, poly_type='s'):
@@ -215,7 +215,7 @@ def SWM(nodes, normals, rbf_obj=rbf_dict['multiquadric'], epsilon=None,
     n = len(nodes)
     k = stencil_size
     rbf = rbf_obj['rbf']
-    zeta = rbf_obj['zeta']
+    phi1 = rbf_obj['phi1']
     
     weights = np.zeros((n, stencil_size))
     row_index = [r for r in range(n) for c in range(stencil_size)]
@@ -253,7 +253,7 @@ def SWM(nodes, normals, rbf_obj=rbf_dict['multiquadric'], epsilon=None,
             print('epsilon set: %g' % epsilon)
             
         A = rbf(dist_mat, epsilon)
-        rhsAs = np.matmul(nn_proj, grad_rbf_outer(nn, nn, zeta, epsilon).reshape(
+        rhsAs = np.matmul(nn_proj, grad_rbf_outer(nn, nn, phi1, epsilon).reshape(
                 (stencil_size,stencil_size,3,1))).reshape((stencil_size,stencil_size,3))
         rhsAs /= scale
         
@@ -280,9 +280,128 @@ def SWM(nodes, normals, rbf_obj=rbf_dict['multiquadric'], epsilon=None,
     C = sp.csc_matrix((weights.ravel(), (row_index, col_index.ravel())),shape=(n,n))
     return C
 
+#######################################################
+#
+# Symmetric Orthogonal Gradients
+#
+#######################################################
+def SOGr(nodes, normals, rbf_obj=rbf_dict['multiquadric'], eps=None, 
+        stencil_size=15, poly_deg=None, poly_type='p'):
 
+    assert poly_type is 'p'
+    
+    n = len(nodes)
+    k = stencil_size
+    phi  = rbf_obj['rbf']
+    phi1 = rbf_obj['phi1']
+    phi2 = rbf_obj['phi2']
+    phi3 = rbf_obj['phi3']
+    phi4 = rbf_obj['phi4']
+    def Gx(r, d, eps):
+        return d*phi1(r,eps)
+    def Hx(r, d,eps):
+        return phi1(r,eps) + d**2 * phi2(r,eps)
+    def GHx(r, d,eps):
+        return 3*d*phi2(r,eps) + d**3 * phi3(r,eps)
+    def HHx(r, d,eps):
+        return 3*phi2(r,eps) + 6 * d**2 * phi3(r,eps) + d**4 * phi4(r,eps)
+    def Lphi(r, eps):
+        return 3*phi1(r,eps) + r**2 * phi2(r,eps)
+    def LG(r, d,eps):
+        return 5*d*phi2(r,eps) + r**2 * d * phi3(r,eps)
+    def LH(r,d,eps):
+        return 5*phi2(r,eps) + (r**2 + 7*d**2)*phi3(r,eps) + (d*r)**2 * phi4(r,eps)
+    
+    weights = np.zeros((n, stencil_size))
+    row_index = [r for r in range(n) for c in range(stencil_size)]
+    col_index = np.zeros((n, stencil_size))
+    
+    tree = cKDTree(np.array(nodes))
+    
+    for i, node in enumerate(nodes):
+        stencil = tree.query(nodes[i], k)[1]
+        col_index[i] = stencil
+        nn = np.array([nodes[i] for i in stencil])
+        # center stencil
+        nn -= nn[0]
+        # scale stencil
+        scale = np.max(np.abs(nn))
+        nn /= scale
+        
+        r = dist_outer(nn,nn)
+        
+        if i==0 and eps is None and rbf_obj['shape']:
+            eps = optimize_eps(phi, r, P=None, target_cond=10**12)
+            print('epsilon set: %g' % eps)
 
+        d = nn @ normals[i]
 
+        if poly_deg is None:
+            A = np.zeros((k+2,k+2))
+
+            A[:k, :k] = phi(r, eps)
+            A[:k, -2] = -Gx(r[0], d, eps)/scale
+            A[:k, -1] = Hx(r[0], d, eps)/scale**2
+            A[-2, -2] = -Hx(0, 0, eps)/scale**2
+            A[-2, -1] = -GHx(0, 0, eps)/scale**3
+            A[-1, -1] = HHx(0, 0, eps)/scale**4
+            A[-2, :k] = A[:k, -2]
+            A[-1, :-1] = A[:-1, -1]
+
+            B = np.zeros(k+2)
+            B[:k] = Lphi(r[0], eps)/scale**2
+            B[-2] = LG(0, 0, eps)/scale**3
+            B[-1] = LH(0, 0, eps)/scale**4
+
+            weights[i] = la.solve(A, B)[:k]
+        else:
+            P, *trash = grad_poly(nn, [], poly_deg)
+            terms = P.shape[1]
+            
+            A = np.zeros((k+2+terms,k+2+terms))
+
+            B = np.zeros(k+2+terms)
+            B[:k] = Lphi(r[0], eps)/scale**2
+            B[k] = LG(0, 0, eps)/scale**3
+            B[k+1] = LH(0, 0, eps)/scale**4
+            
+            A[:k, k+2:] = P
+            A[k+2:, :k] = P.T
+
+            if poly_deg >= 1:
+                # Lp
+                A[k, k+3:k+6] = normals[i]/scale
+                A[k+3:k+6, k] = normals[i]/scale
+            if poly_deg >= 2:
+                # Hp
+                nHn = 2*np.outer(normals[i], normals[i])/scale**2
+                A[k+1, k+6:k+9] = nHn[0]
+                A[k+1, k+9:k+11] = nHn[1, 1:]
+                A[k+1, k+11] = nHn[2,2]
+                A[k+6:k+12, k+1] = A[k+1, k+6:k+12]
+                
+                B[k+6] = 2/scale**2
+                B[k+9] = 2/scale**2
+                B[k+11] = 2/scale**2
+
+            A[:k,  :k] = phi(r, eps)
+            A[:k,   k] = -Gx(r[0], d, eps)/scale
+            A[:k, k+1] = Hx(r[0], d, eps)/scale**2
+
+            A[ k, k] = -Hx(0, 0, eps)/scale**2
+            A[k, k+1] = -GHx(0, 0, eps)/scale**3
+            A[k+1, k+1] = HHx(0, 0, eps)/scale**4
+
+            A[k, :k] = A[:k, k]
+            A[k+1, :k+1] = A[:k+1, k+1]
+            
+            try:
+                weights[i] = schur_solve(A[:k+2,:k+2], A[:k+2, k+2:], B[:k+2], B[k+2:])[0][:k]
+            except:
+                weights[i] = la.solve(A, B)[:k]
+
+    C = sp.csc_matrix((weights.ravel(), (row_index, col_index.ravel())),shape=(n,n))
+    return C
 
 
 
