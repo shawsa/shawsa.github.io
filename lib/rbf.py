@@ -128,7 +128,7 @@ shape_labels += [label]
 #########################################################################
 shape = False
 
-label = 'thin plate spline'
+label = 'r^2 log(r)'
 tex = '$\\log(r)r^2$'
 def rbf(r,eps):
     return r**2 * np.log(r+MEPS)
@@ -153,7 +153,7 @@ rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
 rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
-label = 'fourth degree PHS'
+label = 'r^4 log(r)'
 tex = '$\\log(r)r^4$'
 def rbf(r,eps):
     return r**4 * np.log(r+MEPS)
@@ -177,7 +177,7 @@ rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
 rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
-label = 'sixth degree PHS'
+label = 'r^6 log(r)'
 tex = '$\\log(r)r^6$'
 def rbf(r,eps):
     return r**6 * np.log(r+MEPS)
@@ -201,7 +201,7 @@ rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
 rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
-label = 'eighth degree PHS'
+label = 'r^8 log(r)'
 tex = '$\\log(r)r^8$'
 def rbf(r,eps):
     return r**8 * np.log(r+MEPS)
@@ -225,64 +225,202 @@ rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
 rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
-label = 'cubic spline'
+label = 'r^10 log(r)'
+tex = '$\\log(r)r^{10}$'
+def rbf(r, eps):
+	return r**10*np.log(MEPS + r)
+def phi1(r, eps):
+	return r**8*(10*np.log(MEPS + r) + 1)
+def phi2(r, eps):
+	return r**6*(80*np.log(MEPS + r) + 18)
+def phi3(r, eps):
+	return r**4*(480*np.log(MEPS + r) + 188)
+def phi4(r, eps):
+	return r**2*(1920*np.log(MEPS + r) + 1232)
+def phi5(r, eps):
+	return 3840*np.log(MEPS + r) + 4384
+def drbf(r, eps):
+	return r**9*(10*np.log(MEPS + r) + 1)
+def d2rbf(r, eps):
+	return r**8*(90*np.log(MEPS + r) + 19)
+rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'phi4':phi4, 
+            'phi5': phi5, 'drbf':drbf, 'd2rbf':d2rbf}
+rbf_dict[label] = rbf_obj
+phs_labels += [label]
+
+label = 'r^12 log(r)'
+tex = '$\\log(r)r^{12}$'
+def rbf(r, eps):
+	return r**12*np.log(MEPS + r)
+def phi1(r, eps):
+	return r**10*(12*np.log(MEPS + r) + 1)
+def phi2(r, eps):
+	return r**8*(120*np.log(MEPS + r) + 22)
+def phi3(r, eps):
+	return r**6*(960*np.log(MEPS + r) + 296)
+def phi4(r, eps):
+	return r**4*(5760*np.log(MEPS + r) + 2736)
+def phi5(r, eps):
+	return r**2*(23040*np.log(MEPS + r) + 16704)
+def drbf(r, eps):
+	return r**11*(12*np.log(MEPS + r) + 1)
+def d2rbf(r, eps):
+	return r**10*(132*np.log(MEPS + r) + 23)
+rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'phi4':phi4, 
+            'phi5': phi5, 'drbf':drbf, 'd2rbf':d2rbf}
+rbf_dict[label] = rbf_obj
+phs_labels += [label]
+
+label = 'r^14 log(r)'
+tex = '$\\log(r)r^{14}$'
+def rbf(r, eps):
+	return r**14*np.log(MEPS + r)
+def phi1(r, eps):
+	return r**12*(14*np.log(MEPS + r) + 1)
+def phi2(r, eps):
+	return r**10*(168*np.log(MEPS + r) + 26)
+def phi3(r, eps):
+	return r**8*(1680*np.log(MEPS + r) + 428)
+def phi4(r, eps):
+	return r**6*(13440*np.log(MEPS + r) + 5104)
+def phi5(r, eps):
+	return r**4*(80640*np.log(MEPS + r) + 44064)
+def drbf(r, eps):
+	return r**13*(14*np.log(MEPS + r) + 1)
+def d2rbf(r, eps):
+	return r**12*(182*np.log(MEPS + r) + 27)
+rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'phi4':phi4, 
+            'phi5': phi5, 'drbf':drbf, 'd2rbf':d2rbf}
+rbf_dict[label] = rbf_obj
+phs_labels += [label]
+
+label = 'r^16 log(r)'
+tex = '$\\log(r)r^{16}$'
+def rbf(r, eps):
+	return r**16*np.log(MEPS + r)
+def phi1(r, eps):
+	return r**14*(16*np.log(MEPS + r) + 1)
+def phi2(r, eps):
+	return r**12*(224*np.log(MEPS + r) + 30)
+def phi3(r, eps):
+	return r**10*(2688*np.log(MEPS + r) + 584)
+def phi4(r, eps):
+	return r**8*(26880*np.log(MEPS + r) + 8528)
+def phi5(r, eps):
+	return r**6*(215040*np.log(MEPS + r) + 95104)
+def drbf(r, eps):
+	return r**15*(16*np.log(MEPS + r) + 1)
+def d2rbf(r, eps):
+	return r**14*(240*np.log(MEPS + r) + 31)
+rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'phi4':phi4, 
+            'phi5': phi5, 'drbf':drbf, 'd2rbf':d2rbf}
+rbf_dict[label] = rbf_obj
+phs_labels += [label]
+
+label = 'r^18 log(r)'
+tex = '$\\log(r)r^{18}$'
+def rbf(r, eps):
+	return r**18*np.log(MEPS + r)
+def phi1(r, eps):
+	return r**16*(18*np.log(MEPS + r) + 1)
+def phi2(r, eps):
+	return r**14*(288*np.log(MEPS + r) + 34)
+def phi3(r, eps):
+	return r**12*(4032*np.log(MEPS + r) + 764)
+def phi4(r, eps):
+	return r**10*(48384*np.log(MEPS + r) + 13200)
+def phi5(r, eps):
+	return r**8*(483840*np.log(MEPS + r) + 180384)
+def drbf(r, eps):
+	return r**17*(18*np.log(MEPS + r) + 1)
+def d2rbf(r, eps):
+	return r**16*(306*np.log(MEPS + r) + 35)
+rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'phi4':phi4, 
+            'phi5': phi5, 'drbf':drbf, 'd2rbf':d2rbf}
+rbf_dict[label] = rbf_obj
+phs_labels += [label]
+
+
+
+
+label = 'r^3'
 tex = '$r^3$'
-def rbf(r,eps):
-    return r**3
+def rbf(r, eps):
+	return r**3
 def phi1(r, eps):
 	return 3*r
 def phi2(r, eps):
 	return 3/r
 def phi3(r, eps):
 	return -3/r**3
+def phi4(r, eps):
+	return 9/r**5
+def phi5(r, eps):
+	return -45/r**7
 def drbf(r, eps):
 	return 3*r**2
 def d2rbf(r, eps):
 	return 6*r
 rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
-            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'drbf':drbf, 'd2rbf':d2rbf}
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'phi4':phi4, 
+            'phi5': phi5, 'drbf':drbf, 'd2rbf':d2rbf}
 rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
-label = 'fith degree PHS'
+label = 'r^5'
 tex = '$r^5$'
-def rbf(r,eps):
-    return r**5
+def rbf(r, eps):
+	return r**5
 def phi1(r, eps):
 	return 5*r**3
 def phi2(r, eps):
 	return 15*r
 def phi3(r, eps):
 	return 15/r
+def phi4(r, eps):
+	return -15/r**3
+def phi5(r, eps):
+	return 45/r**5
 def drbf(r, eps):
 	return 5*r**4
 def d2rbf(r, eps):
 	return 20*r**3
 rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
-            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'drbf':drbf, 'd2rbf':d2rbf}
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'phi4':phi4, 
+            'phi5': phi5, 'drbf':drbf, 'd2rbf':d2rbf}
 rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
-label = 'seventh degree PHS'
+label = 'r^7'
 tex = '$r^7$'
-def rbf(r,eps):
-    return r**7
+def rbf(r, eps):
+	return r**7
 def phi1(r, eps):
 	return 7*r**5
 def phi2(r, eps):
 	return 35*r**3
 def phi3(r, eps):
 	return 105*r
+def phi4(r, eps):
+	return 105/r
+def phi5(r, eps):
+	return -105/r**3
 def drbf(r, eps):
 	return 7*r**6
 def d2rbf(r, eps):
 	return 42*r**5
 rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
-            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'drbf':drbf, 'd2rbf':d2rbf}
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'phi4':phi4, 
+            'phi5': phi5, 'drbf':drbf, 'd2rbf':d2rbf}
 rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
-label = 'ninth degree PHS'
+label = 'r^9'
 tex = '$r^9$'
 def rbf(r,eps):
     return r**9
@@ -305,7 +443,73 @@ rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
             'phi5': phi5, 'drbf':drbf, 'd2rbf':d2rbf}
 rbf_dict[label] = rbf_obj
 phs_labels += [label]
-label = 'r^9'
+
+label = 'r^11'
+tex = '$r^{11}$'
+def rbf(r, eps):
+	return r**11
+def phi1(r, eps):
+	return 11*r**9
+def phi2(r, eps):
+	return 99*r**7
+def phi3(r, eps):
+	return 693*r**5
+def phi4(r, eps):
+	return 3465*r**3
+def phi5(r, eps):
+	return 10395*r
+def drbf(r, eps):
+	return 11*r**10
+def d2rbf(r, eps):
+	return 110*r**9
+rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'phi4':phi4, 
+            'phi5': phi5, 'drbf':drbf, 'd2rbf':d2rbf}
+rbf_dict[label] = rbf_obj
+phs_labels += [label]
+
+label = 'r^13'
+tex = '$r^{13}$'
+def rbf(r, eps):
+	return r**13
+def phi1(r, eps):
+	return 13*r**11
+def phi2(r, eps):
+	return 143*r**9
+def phi3(r, eps):
+	return 1287*r**7
+def phi4(r, eps):
+	return 9009*r**5
+def phi5(r, eps):
+	return 45045*r**3
+def drbf(r, eps):
+	return 13*r**12
+def d2rbf(r, eps):
+	return 156*r**11
+rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'phi4':phi4, 
+            'phi5': phi5, 'drbf':drbf, 'd2rbf':d2rbf}
+rbf_dict[label] = rbf_obj
+phs_labels += [label]
+
+label = 'r^15'
+tex = '$r^{15}$'
+def rbf(r, eps):
+	return r**15
+def phi1(r, eps):
+	return 15*r**13
+def phi2(r, eps):
+	return 195*r**11
+def phi3(r, eps):
+	return 2145*r**9
+def phi4(r, eps):
+	return 19305*r**7
+def phi5(r, eps):
+	return 135135*r**5
+def drbf(r, eps):
+	return 15*r**14
+def d2rbf(r, eps):
+	return 210*r**13
 rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
             'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'phi4':phi4, 
             'phi5': phi5, 'drbf':drbf, 'd2rbf':d2rbf}
@@ -313,10 +517,33 @@ rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
 
+label = 'r^17'
+tex = '$r^{17}$'
+def rbf(r, eps):
+	return r**17
+def phi1(r, eps):
+	return 17*r**15
+def phi2(r, eps):
+	return 255*r**13
+def phi3(r, eps):
+	return 3315*r**11
+def phi4(r, eps):
+	return 36465*r**9
+def phi5(r, eps):
+	return 328185*r**7
+def drbf(r, eps):
+	return 17*r**16
+def d2rbf(r, eps):
+	return 272*r**15
+rbf_obj = {'label':label, 'tex':tex, 'shape':shape, 'rbf':rbf,
+            'phi1':phi1, 'phi2':phi2, 'phi3':phi3, 'phi4':phi4, 
+            'phi5': phi5, 'drbf':drbf, 'd2rbf':d2rbf}
+rbf_dict[label] = rbf_obj
+phs_labels += [label]
+
 
 # define list of all labels
 rbf_labels = shape_labels + phs_labels
-
 
 #########################################################################
 #

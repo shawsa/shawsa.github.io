@@ -1,0 +1,280 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Meeting Notes</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\MM}{\mathbb{M}}
+    \newcommand{\LL}{\mathcal{L}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../index.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Thursday February  14<sup>th</sup>, 2019</span> <br>
+<span class="author">Attendees: Grady, Varun, Andrew, Daniel, and Sage </span> <br>
+<span class="updated">Fri Feb 15 11:47:58 2019</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+We discussed the name of the new method. We discussed the convergence plots and eigenvalue plots of all three methods so far. We discussed the posters for SIAM CSE19.
+</p>
+
+<div class="contents">
+<ol>
+	<li>Sage's Tasks</li>
+	<ol>
+		<li>For Poster</li>
+		<li>Code</li>
+		<li>Writing</li>
+	</ol>
+	<li>Sage's List</li>
+	<li>Hermite RBF-FD</li>
+	<li>Meeting Followup</li>
+	<li>References</li>
+</ol>
+</div>
+
+<!--************************************************************************-->
+<h1>Sage's Tasks</h1>
+<h2>For Poster</h2>
+<p>
+<ul>
+    <li>Solutions on a Torus</li>
+    <li>MLS on tangent-plane</li>
+
+</ul>
+</p>
+
+<h2>Code</h2>
+<p>
+<ul>
+    <li><s>Account for the hessian to fix the code for the RBF Symmetric OGr method.</s></li>
+    <li>Implement time-stepping.</li>
+    <li>Test surface diffusion methods on a torus.</li>
+    <li>Become familiar with Varun's repo.</li>
+</ul>
+</p>
+
+<!--h2>Research</h2>
+<p>
+<ul>
+    <li></li>
+</ul>
+</p-->
+
+<h2>Writing</h2>
+<p>
+<ul>
+    <li>Write Radial Basis Function Article</li>
+    <li>Write the theorem for exactness.</li>
+    <li>Write RBF-FD article.</li>
+    <li>Write RBF-FD Projection Method article.</li>
+    <li>Write RBF-OGr article.</li>
+    <li>Add local approximation to RBF Interpolation article.</li>
+</ul>
+</p>
+
+<!--h2>Misc</h2>
+<p>
+<ul>
+    <li></li>
+</ul>
+</p-->
+
+<!--************************************************************************-->
+<h1>Sage's List</h1>
+<ol>
+    <li>Pick some test problems to solve on surfaces.  I suggest</li>
+        <ul>
+            <li>Diffusion of sum of Gaussians</li>
+            <li>Diffusion on torus</li>
+        </ul>
+    <li>Implement local OGRr method for surfaces</li>
+        <ul>
+            <li>Use exact normals</li>
+            <li>Generate convergence results on the test problems from 1.</li>
+            <li>Examine eigenvalues of the discrete Laplace-Beltrami operator.</li>
+        </ul>
+    <li>Implement Shankar-Wright RBF-FD method using RBF+polynomials (in $\RR^3$)</li>
+        <ul>
+            <li>Use exact normals</li>
+            <li>Generate convergence results on the test problems from 1.</li>
+            <li>Examine eigenvalues of the discrete Laplace-Beltrami operator.</li>
+        </ul>
+    <li>Implement RBF-FD tangent-plane method using RBF+polynomials (in $\RR^2$)</li>
+        <ul>
+            <li>Use exact normals</li>
+            <li>Generate convergence results on the test problems from 1.</li>
+            <li>Examine eigenvalues of the discrete Laplace-Beltrami operator.</li>
+        </ul>
+    <li>Implement moving least squares (MLS) method on tangent-plane using polynomials (in $\RR^2$)</li>
+        <ul>
+            <li>Use exact normals</li>
+            <li>Generate convergence results on the test problems from 1.</li>
+            <li>Examine eigenvalues of the discrete Laplace-Beltrami operator.</li>
+        </ul>
+    <li>Create poster with results from 2-4</li>
+        <ul>
+            <li>Include 5 if time permits.</li>
+        </ul>
+        
+</ol>
+
+<h1 id="">Hermite RBF-FD</h1>
+<p>
+There has been some doubt as to whether the method we have been calling <i>Symmetric Orthogonal Gradients</i> is actually the method that Dr. Pir&eacute;t developed based on her High-Order Orthogonal Gradients method and RBF-FD techniques. If it is not the case that it is her method, then we will name it the Hermite RBF-FD method. 
+</p>
+
+<h1>Meeting Followup</h1>
+<h2 id="">Error Regarding $\frac{\partial^2 f}{\partial \vec{n}^2}$</h2>
+<p>
+In the meeting I relayed the information that Grady and had learned from stack exchange that
+$$
+\vec{n}\cdot \nabla(\vec{n} \cdot \nabla f) \neq \vec{n}^TH(f)\vec{n}.
+$$
+This was in fact untrue. They are equal and the notation is not ambiguous:
+$$
+\frac{\partial^2 f}{\partial \vec{n}^2} = \vec{n}\cdot \nabla(\vec{n} \cdot \nabla f) = \vec{n}^TH(f)\vec{n}.
+$$
+<b>Proof:</b><br>
+<p style='padding-left: 4em'>
+    Let $\vec{n} = \begin{bmatrix} a & b &c \end{bmatrix}^T$ be a unit normal vector of a surface in $\RR^3$. First we show that $\vec{n}\cdot \nabla\vec{n} = \vec{n}^T\nabla\vec{n} = \vec{0}^T$. Consider that
+\begin{align*}
+    1 &= a^2 + b^2 + c^2 \\
+    0 &= 2a a_x + 2b b_x + 2c c_x \\
+    0 &= \vec{n} \cdot \vec{n}_x \\
+\text{ and similarly } & \\
+    0 &= \vec{n} \cdot \vec{n}_y \\
+    0 &= \vec{n} \cdot \vec{n}_z \\
+\text{ which together imply }& \\
+    \begin{bmatrix} 0 & 0 & 0 \end{bmatrix} &= \vec{n}^T \nabla \vec{n}.
+\end{align*}
+    Then we have that 
+\begin{align*}
+    \vec{n} \cdot \nabla f &= af_x + b f_y + c f_z \\
+    \nabla( \vec{n} \cdot \nabla f) &= 
+\begin{bmatrix} 
+af_{xx} + b f_{xy} + c f_{xz} \\
+af_{xy} + b f_{yy} + c f_{yz} \\
+af_{xz} + b f_{yz} + c f_{zz}
+\end{bmatrix} 
++ 
+\begin{bmatrix} 
+a_x f_x + b_x f_y + c_x f_z \\
+a_y f_x + b_y f_y + c_y f_z \\
+a_z f_x + b_z f_y + c_z f_z 
+\end{bmatrix} \\
+    &= H(f)\vec{n} + (\nabla\vec{n} \nabla f) \\
+\vec{n} \cdot \nabla( \vec{n} \cdot \nabla f) &= \vec{n}^T H(f) \vec{n} + \vec{n} \cdot (\nabla\vec{n} \nabla f) \\
+    &= \vec{n}^T H(f) \vec{n} + \underbrace{\vec{n}^T \nabla\vec{n}}_{\vec{0}^T} \nabla f \\
+    &= \vec{n}^T H(f) \vec{n}
+\end{align*}    
+</p><p align='right'>$\blacksquare$ </p>
+</p>
+
+<h1 id="">Hermite RBf-FD Failures</h1>
+<p>
+In my inital tests, the PHS RBFs were failing to approximate the derivative. The first limitation is that $\phi_4(r)$ must be defined at $r=0$ which limits us to degree 9 and higher. Uppon further examination I found that the method was failing for all odd powers of PHS. This is due to the pecular fact that $\phi, \vec{n}\cdot\nabla\phi, \vec{n}^TH(\phi)\vec{n}$ are linearly dependent on the sphere for $\phi(r) = r^{2k+1}$. <br>
+<b>Proof:</b><br>
+<p style='padding-left: 4em'>
+    Let $d = \vec{n} \cdot (\vec{x}-\vec{x}_0)$ where $\vec{x}_0$ is the stencil center. Note that $d$ is negative since we orient the normal outward. We have that
+\begin{align*}
+    \phi(r) &= r^{2k+1} \\
+    \vec{n}\cdot\nabla\phi (r) &= d \phi_1(r) = d (2k+1)r^{2k-1} \\
+    \vec{n}^TH(\phi)\vec{n}(r) &= \phi_1(r) + d^2 \phi_2(r) = (2k+1)r^{2k-1} + d^2(4k^2-1)r^{2k-3}.
+\end{align*}
+<img src='20190214/HRBF-FD_failure_sphere.png' align='left'>
+    We will show that $d = -\frac{r^2}{2R}$ which will cause all three functions to be linear multiples of $r^{2k+1}$. <br>
+    Let $R$ be the radius of the sphere and $r = ||\vec{x} - \vec{x}_0||$. Let $L^2 = r^2 - d^2$, and we have values for the diagram in Figure 1 (technically $d$ is negative, but the magnitudes are all correct). <br>
+Then we have that
+\begin{align*}
+    R^2 &= (R+d)^2 + L^2 \\
+        &= R^2 + 2Rd + d^2 + L^2 \\
+    0   &= 2Rd + r^2 \\
+    d &= \frac{r^2}{-2R}.
+\end{align*}
+</p><p align='right'>$\blacksquare$ </p>
+</p>
+<p>
+The sphere is not the only case in which Hermite RBF-FD fails. In fact for the plane, we have that $\vec{n}\cdot (\vec{x} - \vec{x}_0) = 0$ which imlies that $\vec{n}\cdot\nabla \phi = 0$ for any $\phi$. 
+</p>
+
+<h2 id="">Schur Complement Error</h2>
+<p>
+I have tested my code for the Schur complement soution to the block matrix system that commonly arrises. I had naively inverted $P^TA^{-1}P$ which is necessarily singular if $P$ is rank deficient. I am instead now using the Moore-Penrose inverse and the results are slightly different in some of the test cases. It appears that $P^TA^{-1}P$ has a large condition number, but that is numerically invertable. I susspect that the choice of the multiquadric RBF may have lead to the apparant artificial stability. This may explain why the eigenvalue plots of the gaussian were so strange. I have deleted the saved weight matrices. All previous data should be reconfirmed.
+</p>
+
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+	</ol>
+</p>
+</div>
+
+</div>
+</body>
+
+<script>includeHTML();</script>
+
+</html>

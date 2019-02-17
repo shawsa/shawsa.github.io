@@ -16,7 +16,7 @@ sym_t_design_Ns = list(sym_t_design_files.keys())
 def gen_symmetric_t_design_nodes(n_try):
     n = np.argmin(np.abs([n_try - Ni for Ni in sym_t_design_Ns]))
     file_path = sym_t_design_files[sym_t_design_Ns[n]]
-    file_path = os.path.join('pnts','sym_t_design', file_path)
+    file_path = os.path.join(os.path.dirname( os.path.realpath( __file__ )), 'pnts','sym_t_design', file_path)
     nodes = np.loadtxt(file_path)
     return len(nodes), nodes
 
@@ -27,7 +27,7 @@ min_energy_Ns += [4900, 5041, 5184, 5329, 5476, 5625, 5776, 5929, 6084, 6241, 64
 
 def gen_min_energy_nodes(n_try):
     n = np.argmin(np.abs([n_try - Ni for Ni in min_energy_Ns]))
-    file_path = os.path.join('pnts','min_energy', 'me%05d.mat'%n)
+    file_path = os.path.join(os.path.dirname( os.path.realpath( __file__ )), 'pnts','min_energy', 'me%05d.mat'%n)
     nodes = loadmat(file_path)['x']
     return len(nodes), nodes
 
@@ -36,7 +36,7 @@ max_det_Ns = [4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 2
 def gen_max_det_nodes(n_try):
     i = np.argmin(np.abs([n_try - Ni for Ni in max_det_Ns]))
     n = max_det_Ns[i]
-    file_path = os.path.join('pnts','max_determinant', 'md%05d.mat'%n)
+    file_path = os.path.join(os.path.dirname( os.path.realpath( __file__ )), 'pnts','max_determinant', 'md%05d.mat'%n)
     nodes = loadmat(file_path)['x']
     return len(nodes), nodes
 
@@ -44,7 +44,24 @@ equ_area_icos_Ns = [12, 42, 162, 642, 2562, 10242, 40962]
 def gen_equ_area_icos_nodes(n_try):
     i = np.argmin(np.abs([n_try - Ni for Ni in equ_area_icos_Ns]))
     n = equ_area_icos_Ns[i]
-    file_path = os.path.join('pnts','equal_area_mesh_icos', 'eami%05d.mat'%n)
+    file_path = os.path.join( os.path.dirname( os.path.realpath( __file__ )), 'pnts','equal_area_mesh_icos', 'eami%05d.mat'%n)
     nodes = loadmat(file_path)['x']
     return len(nodes), nodes
+
+def gen_sphere_nodes(node_set, n_try):
+    if node_set == 'spiral':
+        n = n_try
+        nodes = gen_spiral_nodes(n)
+    elif node_set == 'sym_t_design':
+        n, nodes = gen_symmetric_t_design_nodes(n_try)
+    elif node_set == 'min_energy':
+        n, nodes = gen_min_energy_nodes(n_try)
+    elif node_set == 'max_det':
+        n, nodes = gen_max_det_nodes(n_try)
+    elif node_set == 'icos':
+        n, nodes = gen_equ_area_icos_nodes(n_try)
+    return n, nodes
+
+def test():
+    return os.path.dirname(os.path.realpath(__file__))
 

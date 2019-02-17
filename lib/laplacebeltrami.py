@@ -16,71 +16,6 @@ from math import factorial as fac
 # Tangent Plane Method
 #
 #######################################################
-'''
-# Weighted distance function
-def dist_outerW(nodes1, nodes2, W):
-    d = len(nodes1[0]) # the dimension of each vector
-    n1 = len(nodes1)
-    n2 = len(nodes2)
-    # create a row vector of d-dimensional vectors
-    row = nodes1.reshape((1,n1,d)) 
-    # create a column vector of d-dimensional vectors
-    col = nodes2.reshape((n2,1,d)) 
-    diff = row-col
-    ret = diff @ W * diff
-    #ret = (row-col)**2
-    ret = np.sum(ret,2) #sum each d-dimensional vector
-    return np.sqrt(ret)
-
-def TPM_old(nodes, normals, rbf_obj=rbf_dict['multiquadric'], epsilon=None, stencil_size=15):
-    n = len(nodes)
-    k = stencil_size
-    rbf = rbf_obj['rbf']
-    phi1  = rbf_obj['phi1']
-    d2rbf = rbf_obj['d2rbf']
-    Lrbf = lambda r,epsilon: 1*phi1(r,epsilon) + d2rbf(r,epsilon)
-
-    tree = cKDTree(np.array(nodes))
-
-    weights = np.zeros((n, stencil_size))
-    row_index = [r for r in range(n) for c in range(stencil_size)]
-    col_index = np.zeros((n, stencil_size))
-
-    e1, e2, e3 = np.eye(3)
-    E = np.eye(3)
-    E[2,2] = 0
-    
-    for i, (node, normal) in enumerate(zip(nodes, normals)):
-        t1 = e2 - np.dot(normal, e2)*normal
-        t1 /= la.norm(t1)
-        t2 = e3 - np.dot(normal, e3)*normal - np.dot(t1, e3)*t1
-        t2 /= la.norm(t2)
-        
-        R = np.zeros((3,3))
-        R[:,0] = t1
-        R[:,1] = t2
-        R[:,2] = normal
-        W = R @ E @ R.T
-
-        stencil = tree.query(nodes[i], k)[1]
-        col_index[i] = stencil
-        nn = np.array([nodes[i] for i in stencil])
-
-        if epsilon==None:
-            dist_mat = dist_outerW(nn, nn, W)
-            epsilon = optimize_eps(rbf, dist_mat, P=None, target_cond=10**12)
-            print('epsilon = %g' %epsilon)
-
-        A = rbf(dist_outerW(nn, nn, W), epsilon)
-        if i==0:
-            print('cond(A): %g' % cond(A))
-        rhs = Lrbf(dist_outerW(nn,nn[0].reshape((1,3)), W), epsilon)
-        weights[i] = la.solve(A, rhs.flatten())
-
-    C = sp.csc_matrix((weights.ravel(), (row_index, col_index.ravel())),shape=(n,n))
-    return C
-'''
-
 def TPM(nodes, normals, rbf_obj=rbf_dict['multiquadric'], epsilon=None, stencil_size=15, poly_deg=None):
     n = len(nodes)
     k = stencil_size
@@ -158,7 +93,8 @@ def TPM(nodes, normals, rbf_obj=rbf_dict['multiquadric'], epsilon=None, stencil_
 #
 #######################################################
 def schur_solve(A, P, f, g):
-    lam = la.solve(P.T @ la.solve(A, P), P.T @ la.solve(A,f) - g)
+    # lam = la.solve(P.T @ la.solve(A, P), P.T @ la.solve(A,f) - g)
+    lam = la.pinv(P.T @ la.solve(A, P)) @  (P.T @ la.solve(A,f) - g)
     w = la.solve(A, f- P@lam)
     return w, lam
 
