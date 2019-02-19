@@ -21,8 +21,13 @@ def torus_phyllotaxis_points(N):
     normals = np.zeros((N,3))
     normals[:, 0] = r*np.cos(p)*np.cos(t)*(R+r*np.cos(p))
     normals[:, 1] = r*np.cos(p)*np.sin(t)*(R+r*np.cos(p))
-    normals[:, 2] = r*np.sin(p) * (R + r*np.cos(p)) * np.cos(t)**2 + \
-        r*np.sin(p) * (R+r*np.cos(p)) * np.sin(t)**2
+    normals[:, 2] = r*np.sin(p) * (R + r*np.cos(p)) * np.cos(t)**2 + r*np.sin(p) * (R+r*np.cos(p))*np.sin(t)**2
+    
+    lengths = np.sqrt(normals[:,0]**2 + normals[:,1]**2 + normals[:,2]**2)
+    
+    normals[:,0] /= lengths
+    normals[:,1] /= lengths
+    normals[:,2] /= lengths
     
     return nodes, normals
 
@@ -39,36 +44,36 @@ def torus_to_cart(theta, phi, R, r):
     return nodes
 
 def torus_forcing(nodes):
-    # I don't know what these are... maybe related to curvature?
-    # they seem to affect the way the gaussians spread along each
-    # axis of rotation
-    a, b = 9, 3
-    s = 0
+#     a, b = np.sqrt(4), np.sqrt(20)
+    a, b = 2, 2*3
     
     # create gaussian centers
     theta_cs = np.array([0, .5,   1,    2, 4, 5, 3.141])
     phi_cs   = np.array([0,  4, 1.5, -1.5, 0, 4, 3.141/2])
-    centers = torus_to_cart(theta_cs, phi_cs, 1, 1/3)
+    shapes = [1, .5, 2, .1, .7, .9, .3]
     
     thetas, phis = get_parameters(nodes, 1, 1/3)
     
-    N = len(nodes)
-    K = len(centers)
+    N, K = len(nodes), len(theta_cs)
     
     us = np.zeros(N)
-    fs = np.zeros(N)
+    lap = np.zeros(N)
     
-    cth, sth = np.cos(thetas), np.sin(thetas)
+    ct, st = np.cos(thetas), np.sin(thetas)
+    cp, sp = np.cos(phis), np.sin(phis)
     for k in range(K):
-        slak = np.sin(phis - phi_cs[k])
-        clak = np.cos(phis - phi_cs[k])
-        sthk = np.sin(thetas - theta_cs[k])
-        cthk = np.cos(thetas - theta_cs[k])
+        s = shapes[k]
+        spk = np.sin(phis - phi_cs[k])
+        cpk = np.cos(phis - phi_cs[k])
+        stk = np.sin(thetas - theta_cs[k])
+        ctk = np.cos(thetas - theta_cs[k])
         
-        uk = np.exp(-a**2*(1-clak) - b**2*(1-cthk))
-        C = a**4*slak**2-9*b**2*cthk-a**2*clak+9*b**4*sthk**2-6*b**2*cthk*cth+ \
-               3*b**2*sthk*sth-b**2*cthk*cth**2+6*b**4*sthk**2*cth+b**4*sthk**2*cth**2+ \
-               b**2*sthk*cth*sth
-        fs += (-s - 9*C/(cth+3)**2)*uk
+        uk = np.exp(-s* (a**2*(1-cpk) + b**2*(1-ctk))  )
+        C = 1*a**4*s**2*spk**2*cp*ct + 3*a**4*s**2*spk**2*cp + \
+            3*a**4*s**2*spk**2*ct + 9*a**4*s**2*spk**2 - 1*a**2*s*cp*ct*cpk \
+            - 3*a**2*s*cp*cpk - 3*a**2*s*ct*cpk - 9*a**2*s*cpk \
+            + b**4*s**2*stk**2 - b**2*s*ctk
+        C /= (1+cp/3)**2
+        lap += C*uk
         us += uk
-    return us, fs
+    return us, lap

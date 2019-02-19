@@ -48,7 +48,7 @@ def TPM(nodes, normals, rbf_obj=rbf_dict['multiquadric'], epsilon=None, stencil_
         col_index[i] = stencil
         nn = np.array([nodes[i] for i in stencil])
 
-        nn = nn @ R
+        nn = (nn-nn[0]) @ R
         scale = np.max(np.abs(nn))
         nn /= scale
         
