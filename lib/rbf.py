@@ -129,7 +129,7 @@ shape_labels += [label]
 shape = False
 
 label = 'r^2 log(r)'
-tex = '$\\log(r)r^2$'
+tex = '$r^2 \\log(r)$'
 def rbf(r,eps):
     return r**2 * np.log(r+MEPS)
 def phi1(r, eps):
@@ -154,7 +154,7 @@ rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
 label = 'r^4 log(r)'
-tex = '$\\log(r)r^4$'
+tex = '$r^4 \\log(r)$'
 def rbf(r,eps):
     return r**4 * np.log(r+MEPS)
 def phi1(r, eps):
@@ -178,7 +178,7 @@ rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
 label = 'r^6 log(r)'
-tex = '$\\log(r)r^6$'
+tex = '$r^6 \\log(r)$'
 def rbf(r,eps):
     return r**6 * np.log(r+MEPS)
 def phi1(r, eps):
@@ -202,7 +202,7 @@ rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
 label = 'r^8 log(r)'
-tex = '$\\log(r)r^8$'
+tex = '$r^8 \\log(r)$'
 def rbf(r,eps):
     return r**8 * np.log(r+MEPS)
 def phi1(r, eps):
@@ -226,7 +226,7 @@ rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
 label = 'r^10 log(r)'
-tex = '$\\log(r)r^{10}$'
+tex = '$r^{10} \\log(r)$'
 def rbf(r, eps):
 	return r**10*np.log(MEPS + r)
 def phi1(r, eps):
@@ -250,7 +250,7 @@ rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
 label = 'r^12 log(r)'
-tex = '$\\log(r)r^{12}$'
+tex = '$r^{12} \\log(r)$'
 def rbf(r, eps):
 	return r**12*np.log(MEPS + r)
 def phi1(r, eps):
@@ -274,7 +274,7 @@ rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
 label = 'r^14 log(r)'
-tex = '$\\log(r)r^{14}$'
+tex = '$r^{14} \\log(r)$'
 def rbf(r, eps):
 	return r**14*np.log(MEPS + r)
 def phi1(r, eps):
@@ -298,7 +298,7 @@ rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
 label = 'r^16 log(r)'
-tex = '$\\log(r)r^{16}$'
+tex = '$r^{16} \\log(r)$'
 def rbf(r, eps):
 	return r**16*np.log(MEPS + r)
 def phi1(r, eps):
@@ -322,7 +322,7 @@ rbf_dict[label] = rbf_obj
 phs_labels += [label]
 
 label = 'r^18 log(r)'
-tex = '$\\log(r)r^{18}$'
+tex = '$r^{18} \\log(r)$'
 def rbf(r, eps):
 	return r**18*np.log(MEPS + r)
 def phi1(r, eps):
@@ -654,6 +654,30 @@ def rbf_interp_local_1D(xs, fs, zs, rbf, stencil_size=10, eps=1, optimize_shape=
         A = rbf(dist_mat, eps)
         cs = la.solve(A, fs_local)
         dist_mat = np.abs(np.subtract.outer(zs_local,xs_local))
+        A = rbf(dist_mat, eps)
+        us_local = A @ cs
+        us[close_to_c_ids] = us_local
+    return us
+
+def rbf_interp_local(xs, fs, zs, rbf_obj, k=25, eps=None):
+    rbf = rbf_obj['rbf']
+    us = np.zeros(len(zs))
+    full_dist_mat = dist_outer(xs, zs)
+    closest_ids = np.argmin(full_dist_mat, axis=1)
+    # in a zoop build surface around each sample point
+    for i in range(len(xs)):
+        c = xs[i]
+        close_to_c_ids = closest_ids == i
+        zs_local = zs[close_to_c_ids]
+        x_ids = get_closest_indices(i, len(xs), k)
+        xs_local = xs[x_ids]
+        fs_local = fs[x_ids]
+        dist_mat = dist_outer(xs_local,xs_local)
+        if rbf_obj['shape'] and eps is None:   
+            eps = optimize_eps(rbf, dist_mat)
+        A = rbf(dist_mat, eps)
+        cs = la.solve(A, fs_local)
+        dist_mat = dist_outer(xs_local, zs_local)
         A = rbf(dist_mat, eps)
         us_local = A @ cs
         us[close_to_c_ids] = us_local

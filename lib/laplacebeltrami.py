@@ -92,9 +92,8 @@ def TPM(nodes, normals, rbf_obj=rbf_dict['multiquadric'], epsilon=None, stencil_
 # Shankar-Wright Method
 #
 #######################################################
-def schur_solve(A, P, f, g):
-    # lam = la.solve(P.T @ la.solve(A, P), P.T @ la.solve(A,f) - g)
-    lam = la.pinv(P.T @ la.solve(A, P)) @  (P.T @ la.solve(A,f) - g)
+def schur_solve(A, P, f, g, rcond=1e-15):
+    lam = la.pinv(P.T @ la.solve(A, P), rcond=rcond) @  (P.T @ la.solve(A,f) - g)
     w = la.solve(A, f- P@lam)
     return w, lam
 
@@ -103,6 +102,15 @@ def grad_poly(nodes, projectors, deg):
     x = nodes[:,0]
     y = nodes[:,1]
     z = nodes[:,2]
+
+    poly_scale_x = np.max(np.abs(x))
+    poly_scale_y = np.max(np.abs(y))
+    poly_scale_z = np.max(np.abs(z))
+    
+    x = x / poly_scale_x
+    y = y / poly_scale_y
+    z = z / poly_scale_z
+
     cols = fac(deg+3)//(fac(deg)*fac(3))
     P = np.zeros((n, cols))
     rhs_dx = np.zeros((cols, n))
@@ -131,11 +139,14 @@ def grad_poly(nodes, projectors, deg):
                 else:
                     rhs_dz[i] = c * x**a * y**b * z**(c-1)
                 i += 1
+    rhs_dx /= poly_scale_x
+    rhs_dy /= poly_scale_y
+    rhs_dz /= poly_scale_z
     for i, p in enumerate(projectors):
         rhs_x[:,i] = p[0,0]*rhs_dx[:,i] + p[1,0]*rhs_dy[:,i] + p[2,0]*rhs_dz[:,i]
         rhs_y[:,i] = p[0,1]*rhs_dx[:,i] + p[1,1]*rhs_dy[:,i] + p[2,1]*rhs_dz[:,i]
         rhs_z[:,i] = p[0,2]*rhs_dx[:,i] + p[1,2]*rhs_dy[:,i] + p[2,2]*rhs_dz[:,i]
-    return P, rhs_x, rhs_y, rhs_z
+    return P, rhs_x, rhs_y, rhs_z, poly_scale_x, poly_scale_y, poly_scale_z
 
 def grad_rbf_outer(nodes, centers, phi1, epsilon):
     n_len = len(nodes)
@@ -145,7 +156,7 @@ def grad_rbf_outer(nodes, centers, phi1, epsilon):
     return phi1(r, epsilon) * xs
 
 def SWM(nodes, normals, rbf_obj=rbf_dict['multiquadric'], epsilon=None, 
-        stencil_size=15, poly_deg=None, poly_type='s'):
+        stencil_size=15, poly_deg=None, poly_type='p', rcond=1e-15):
 
     assert poly_type in 'ps'
     n = len(nodes)
@@ -175,7 +186,7 @@ def SWM(nodes, normals, rbf_obj=rbf_dict['multiquadric'], epsilon=None,
             P = None
         else:
             if poly_type == 'p':
-                P, rhs_x, rhs_y, rhs_z = grad_poly(nn, nn_proj, poly_deg)
+                P, rhs_x, rhs_y, rhs_z, *trash = grad_poly(nn, nn_proj, poly_deg)
             elif poly_type == 's':
                 P, rhs_x, rhs_y, rhs_z = gen_sphere_harm_basis(poly_deg, nn, nn_proj)
             rhs_x /= scale
@@ -206,11 +217,11 @@ def SWM(nodes, normals, rbf_obj=rbf_dict['multiquadric'], epsilon=None,
             weights_grad = la.solve(A, rhs).T
             weights[i] += (weights_grad@weights_grad)[0]
         else:
-            weights_grad = schur_solve(A, P, rhsAs[:,:,0], rhs_x)[0].T
+            weights_grad = schur_solve(A, P, rhsAs[:,:,0], rhs_x, rcond=rcond)[0].T
             weights[i] = (weights_grad@weights_grad)[0]
-            weights_grad = schur_solve(A, P, rhsAs[:,:,1], rhs_y)[0].T
+            weights_grad = schur_solve(A, P, rhsAs[:,:,1], rhs_y, rcond=rcond)[0].T
             weights[i] += (weights_grad@weights_grad)[0]
-            weights_grad = schur_solve(A, P, rhsAs[:,:,2], rhs_z)[0].T
+            weights_grad = schur_solve(A, P, rhsAs[:,:,2], rhs_z, rcond=rcond)[0].T
             weights[i] += (weights_grad@weights_grad)[0]
 
     C = sp.csc_matrix((weights.ravel(), (row_index, col_index.ravel())),shape=(n,n))
@@ -222,7 +233,7 @@ def SWM(nodes, normals, rbf_obj=rbf_dict['multiquadric'], epsilon=None,
 #
 #######################################################
 def SOGr(nodes, normals, rbf_obj=rbf_dict['multiquadric'], eps=None, 
-        stencil_size=15, poly_deg=None, poly_type='p'):
+        stencil_size=15, poly_deg=None, poly_type='p', rcond=1e-15):
     if poly_deg is -1:
         poly_deg = None
     assert poly_type is 'p'
@@ -292,7 +303,7 @@ def SOGr(nodes, normals, rbf_obj=rbf_dict['multiquadric'], eps=None,
 
             weights[i] = la.solve(A, B)[:k]
         else:
-            P, *trash = grad_poly(nn, [], poly_deg)
+            P, rhs_x, rhs_y, rhs_z, poly_scale_x, poly_scale_y, poly_scale_z = grad_poly(nn, [], poly_deg)
             terms = P.shape[1]
             
             A = np.zeros((k+2+terms,k+2+terms))
@@ -304,22 +315,30 @@ def SOGr(nodes, normals, rbf_obj=rbf_dict['multiquadric'], eps=None,
             
             A[:k, k+2:] = P
             A[k+2:, :k] = P.T
+            
+            normal_scale = normals[i]/scale
+            normal_scale[0] /= poly_scale_x
+            normal_scale[1] /= poly_scale_y
+            normal_scale[2] /= poly_scale_z
 
             if poly_deg >= 1:
                 # Lp
-                A[k, k+3:k+6] = normals[i]/scale
-                A[k+3:k+6, k] = normals[i]/scale
+
+                A[k, k+3:k+6] = normal_scale
+                A[k+3:k+6, k] = normal_scale
+                
             if poly_deg >= 2:
                 # Hp
-                nHn = 2*np.outer(normals[i], normals[i])/scale**2
+                nHn = 2*np.outer(normal_scale, normal_scale)
                 A[k+1, k+6:k+9] = nHn[0]
                 A[k+1, k+9:k+11] = nHn[1, 1:]
                 A[k+1, k+11] = nHn[2,2]
-                A[k+6:k+12, k+1] = A[k+1, k+6:k+12]
                 
-                B[k+6] = 2/scale**2
-                B[k+9] = 2/scale**2
-                B[k+11] = 2/scale**2
+                A[k+6:k+12, k+1] = A[k+1, k+6:k+12]           
+                
+                B[k+6 ] = 2/scale**2 / poly_scale_x**2
+                B[k+9 ] = 2/scale**2 / poly_scale_y**2
+                B[k+11] = 2/scale**2 / poly_scale_z**2
 
             A[:k,  :k] = phi(r, eps)
             A[:k,   k] = -Gx(r[0], d, eps)/scale
@@ -333,12 +352,10 @@ def SOGr(nodes, normals, rbf_obj=rbf_dict['multiquadric'], eps=None,
             A[k+1, :k+1] = A[:k+1, k+1]
             
             try:
-                weights[i] = schur_solve(A[:k+2,:k+2], A[:k+2, k+2:], B[:k+2], B[k+2:])[0][:k]
+                weights[i] = schur_solve(A[:k+2,:k+2], A[:k+2, k+2:], B[:k+2], B[k+2:], rcond=rcond)[0][:k]
             except:
                 weights[i] = la.solve(A, B)[:k]
 
     C = sp.csc_matrix((weights.ravel(), (row_index, col_index.ravel())),shape=(n,n))
     return C
-
-
 

@@ -1,0 +1,186 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Meeting Notes</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\MM}{\mathbb{M}}
+    \newcommand{\LL}{\mathcal{L}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../index.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Thursday February  21<sup>st</sup>, 2019</span> <br>
+<span class="author">Attendees: Grady, Varun, Andrew, and Sage </span> <br>
+<span class="updated">Fri Feb 22 13:33:51 2019</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+We reviewed our posters for SIAM CSE19.
+</p>
+
+<div class="contents">
+<ol>
+	<li>Sage's Tasks</li>
+	<ol>
+		<li>For Poster</li>
+		<li>Code</li>
+		<li>Writing</li>
+	</ol>
+	<li>Sage's List</li>
+	<li>Error Plots</li>
+	<li>Meeting Followup</li>
+	<ol>
+		<li>Fast OGr</li>
+	</ol>
+	<li>References</li>
+</ol>
+</div>
+
+<!--************************************************************************-->
+<h1>Sage's Tasks</h1>
+<h2>For Poster</h2>
+<p>
+<ul>
+    <li><s>Solutions on a Torus</s></li>
+    <li>MLS on tangent-plane</li>
+</ul>
+</p>
+
+<h2>Code</h2>
+<p>
+<ul>
+    <li>Implement time-stepping.</li>
+    <li><s>Test surface diffusion methods on a torus.</s></li>
+    <li>Become familiar with Varun's repo.</li>
+</ul>
+</p>
+
+<!--h2>Research</h2>
+<p>
+<ul>
+    <li></li>
+</ul>
+</p-->
+
+<h2>Writing</h2>
+<p>
+<ul>
+    <li>Write Radial Basis Function Article</li>
+    <li>Write the theorem for exactness.</li>
+    <li>Write RBF-FD article.</li>
+    <li>Write RBF-FD Projection Method article.</li>
+    <li>Write RBF-OGr article.</li>
+    <li>Add local approximation to RBF Interpolation article.</li>
+</ul>
+</p>
+
+<!--h2>Misc</h2>
+<p>
+<ul>
+    <li></li>
+</ul>
+</p-->
+
+<!--************************************************************************-->
+<h1>Sage's List</h1>
+
+<h1 id="">Error Plots</h1>
+<p>
+The error plot below shows a superset of the data that was included in Sage's poster for approximation of the Laplace-Beltrami operator at the spiral points on the sphere using a stencil size of $k=100$ and appending with fourth degree polynomials. Something clearly goes wrong after $\sqrt{N}=8000$. This is also observed for fifth degree polynomials and for both fourth and fifth degree polynomials on the torus.
+</p>
+<img src="20190221/sphere_d5_largeN.png">
+<p>
+Since both methods fail at the same point and seem to follow the same decline in accuracy we susspected that they each have a common cause. At this point it was determined that there were two errors in Sage's implementation. The first was that he had been scaling the stencils by the same amount in all three dimensions, effectively scaling the stencil to the unit disk. Instead they should be scaled to fill $[-1,1]^3$. The second was that in the Schur complement method he had been using the default cuttoff of $1\times 10^{-15}$ as the tolerance for the SVD truncation. After fixing these the errors for Iterated RBF-FD seem to have been fixed but the errors for Hermite RBF-FD remain roughly the same as seen in the new plot below.
+</p>
+<img src="20190221/fixed.png">
+
+<h1>Meeting Followup</h1>
+<h2 id="">Fast OGr</h2>
+<p>
+We finally have <a href="https://aip.scitation.org/doi/10.1063/1.4965351">Dr. Piret's paper</a> on what we though was called Symmetric Orgthogonal Gradients<span class="cite" src="PIRET2016"><b>[<a href="#bib1">1</a>]</b></span>. We had susspected that the new method we began calling Hermite RBF-FD was significantly different, but now it seems it is only marginally different. 
+</p>
+
+<p>
+There are three main differences between the methods. The first and most straightforward is that we append polynomial terms and use PHS RBFs. The second is that they only enforce that $\frac{\partial f}{\partial \vec{n}}=0$ and do not enforce that $\frac{\partial^2 f}{\partial \vec{n}^2}=0$. Finally, they use the interpolant to approximate $P\cdot\nabla f$ and use iterated differentiation to find weights for the laplacian.
+</p>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+		<li id="bib1">
+			C&eacute;cile Piret and Jarrett Dunn.
+Fast rbf ogr for solving pdes on arbitrary surfaces.
+<em>AIP Conference Proceedings</em>, 1776(1):070005, 2016.
+URL: <a href="https://aip.scitation.org/doi/abs/10.1063/1.4965351">https://aip.scitation.org/doi/abs/10.1063/1.4965351</a>, <a href="https://arxiv.org/abs/https://aip.scitation.org/doi/pdf/10.1063/1.4965351">arXiv:https://aip.scitation.org/doi/pdf/10.1063/1.4965351</a>, <a href="https://doi.org/10.1063/1.4965351">doi:10.1063/1.4965351</a>.
+		</li><br>
+	</ol>
+</p>
+</div>
+
+</div>
+</body>
+
+<script>includeHTML();</script>
+
+</html>

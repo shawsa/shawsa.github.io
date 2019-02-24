@@ -32,3 +32,5 @@ def get_sphere_gaussians():
     exact = lambda x: L_gauss(x, sigmas, ys)
 
     return foo, exact
+
+
