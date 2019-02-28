@@ -232,6 +232,11 @@ def SWM(nodes, normals, rbf_obj=rbf_dict['multiquadric'], epsilon=None,
 # Symmetric Orthogonal Gradients
 #
 #######################################################
+def schur_solve_full(A, P, Q, f, g, rcond=1e-15):
+    lam = la.pinv(P.T @ la.solve(A, P) - Q, rcond=rcond) @  (P.T @ la.solve(A,f) - g)
+    w = la.solve(A, f- P@lam)
+    return w, lam
+
 def SOGr(nodes, normals, rbf_obj=rbf_dict['multiquadric'], eps=None, 
         stencil_size=15, poly_deg=None, poly_type='p', rcond=1e-15):
     if poly_deg is -1:
@@ -352,7 +357,8 @@ def SOGr(nodes, normals, rbf_obj=rbf_dict['multiquadric'], eps=None,
             A[k+1, :k+1] = A[:k+1, k+1]
             
             try:
-                weights[i] = schur_solve(A[:k+2,:k+2], A[:k+2, k+2:], B[:k+2], B[k+2:], rcond=rcond)[0][:k]
+#                weights[i] = schur_solve(A[:k+2,:k+2], A[:k+2, k+2:], B[:k+2], B[k+2:], rcond=rcond)[0][:k]
+                weights[i] = schur_solve(A[:k,:k], A[:k,k:], A[:k,:k], B[:k], B[k:], rcond=rcond)[0]
             except:
                 weights[i] = la.solve(A, B)[:k]
 
