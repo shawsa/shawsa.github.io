@@ -1,0 +1,187 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+
+    <!-- Plotly -->
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Using Plotly to Display Data</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\MM}{\mathbb{M}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../index.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Using Plotly</span> <br>
+<span class="author">Authors: Sage</span> <br>
+<span class="updated">Sat Mar  2 13:29:33 2019</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+    This is to test the functionality of plotly in the context of sharing scientific data.
+</p>
+
+<div class="contents">
+<ol>
+	<li>Dynamically Plotting Data</li>
+	<li>References</li>
+</ol>
+</div>
+<!--************************************************************************-->
+
+<h1>Dynamically Plotting Data</h1>
+<p>
+    surface: 
+    <select id='plot1_select_rbf'>
+        <option value="all">all</option>
+    </select>
+    nodeset: 
+    <select id='plot1_select_rbf'>
+        <option value="all">all</option>
+    </select>
+    k: 
+    <select id='plot1_select_rbf'>
+        <option value="all">all</option>
+    </select>
+    method: 
+    <select id='plot1_select_rbf'>
+        <option value="all">all</option>
+    </select>
+    rbf: 
+    <select id='plot1_select_rbf'>
+        <option value="all">all</option>
+    </select>
+    RBF: 
+    <select id='plot1_select_rbf'>
+        <option value="all">all</option>
+    </select>
+    RBF: 
+    <select id='plot1_select_rbf'>
+        <option value="all">all</option>
+    </select>
+    RBF: 
+    <select id='plot1_select_rbf'>
+        <option value="all">all</option>
+    </select>
+</p>
+<div id='plot1'>
+</div>
+<script src='plotly/data1.js'></script>
+<script>
+cols = ['surface', 'nodeset', 'N', 'k', 'method', 'rbf', 'epsilon', 'poly_type', 'deg']
+
+var my_select = document.getElementById("plot1_select_rbf");
+var my_surfs = []
+for (var surf in my_data['rbf']){
+    
+    var option = document.createElement("option");
+    if(my_surfs.indexOf(my_data['rbf'][surf]) == -1){
+        my_surfs.push(my_data['rbf'][surf]);
+        option.text = my_data['rbf'][surf];
+        my_select.add(option);
+    }
+}
+
+alert(my_surfs);
+var trace1 = {
+  x: [1, 2, 3, 4],
+  y: [10, 15, 13, 17],
+  type: 'scatter',
+};
+
+var trace2 = {
+  x: [1, 2, 3, 4],
+  y: [16, 5, 11, 9],
+  type: 'scatter'
+};
+
+var data = [trace1, trace2];
+var layout = {
+    title: 'Convergence on Sphere',
+  xaxis: {
+    type: 'log',
+    autorange: true,
+    title: 'N'
+  },
+  yaxis: {
+    type: 'log',
+    autorange: true,
+    title: 'Relative L2 Error'
+  }
+};
+
+Plotly.newPlot('plot1', data, layout);
+</script>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+	</ol>
+</p>
+</div>
+
+</div>
+</body>
+
+<script>includeHTML();</script>
+
+</html>
