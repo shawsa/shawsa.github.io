@@ -77,3 +77,37 @@ def torus_forcing(nodes):
         lap += C*uk
         us += uk
     return us, lap
+
+def torus_time(nodes, t):
+#     a, b = np.sqrt(4), np.sqrt(20)
+    a, b = 2, 2*3
+    
+    # create gaussian centers
+    theta_cs = np.array([0, .5,   1,    2, 4, 5, 3.141])
+    phi_cs   = np.array([0,  4, 1.5, -1.5, 0, 4, 3.141/2])
+    #shapes = [1, .5, 2, 1, .7, .9, .3]
+    shapes = [1]*len(phi_cs)
+    
+    thetas, phis = get_parameters(nodes, 1, 1/3)
+    
+    N, K = len(nodes), len(theta_cs)
+    
+    us = np.zeros(N)
+    lap = np.zeros(N)
+    
+    ct, st = np.cos(thetas), np.sin(thetas)
+    cp, sp = np.cos(phis), np.sin(phis)
+    for k in range(K):
+        s = shapes[k]
+        spk = np.sin(phis - phi_cs[k])
+        cpk = np.cos(phis - phi_cs[k])
+        stk = np.sin(thetas - theta_cs[k])
+        ctk = np.cos(thetas - theta_cs[k])
+        
+        uk = np.exp(-s* (a**2*(1-cpk) + b**2*(1-ctk))  )
+        C = 1*a**4*s**2*spk**2*cp**2 + 6*a**4*s**2*spk**2*cp + 9*a**4*s**2*spk**2 \
+                + 1*a**2*s*sp*spk*cp + 3*a**2*s*sp*spk - 1*a**2*s*cp**2*cpk - 6*a**2*s*cp*cpk \
+                - 9*a**2*s*cpk + b**4*s**2*stk**2 - b**2*s*ctk
+        C /= (1+cp/3)**2
+        us += uk*np.exp(-s*t)
+    return us
