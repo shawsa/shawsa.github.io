@@ -1,0 +1,180 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Meeting Notes</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\MM}{\mathbb{M}}
+    \newcommand{\LL}{\mathcal{L}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../index.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Thursday March 14<sup>st</sup>, 2019</span> <br>
+<span class="author">Attendees: Grady, Andrew, Daniel, and Sage </span> <br>
+<span class="updated">Mon Mar 18 16:54:12 2019</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+Discussed moving least squares interpolation.
+</p>
+
+<div class="contents">
+<ol>
+	<li>Sage's Tasks</li>
+	<ol>
+		<li>Code</li>
+		<li>Writing</li>
+	</ol>
+	<li>Plots</li>
+	<li>Moving Least Squares Approximation</li>
+	<li>Meeting Followup</li>
+	<li>References</li>
+</ol>
+</div>
+
+<!--************************************************************************-->
+<h1>Sage's Tasks</h1>
+<h2>Code</h2>
+<p>
+<ul>
+    <li>MLS approximation in 1D</li>
+    <li>MLS approximation in 2D</li>
+    <li>MLS approximation of derivative</li>
+    <li>MLS on tangent-plane</li>
+    <li>Implement time-stepping.</li>
+    <li>Become familiar with Varun's repo.</li>
+</ul>
+</p>
+
+<!--h2>Research</h2>
+<p>
+<ul>
+    <li></li>
+</ul>
+</p-->
+
+<h2>Writing</h2>
+<p>
+<ul>
+    <li><s>Start Thesis</s></li>
+</ul>
+</p>
+
+<!--h2>Misc</h2>
+<p>
+<ul>
+    <li></li>
+</ul>
+</p-->
+
+<!--************************************************************************-->
+<h1>Plots</h1>
+<p>
+Grady would like to see steady state solution error plots, when one point is set at a value, opposed to using a lagrange multiplier. We would also like to see the eigenvalue plots for the fixed algorithms.
+</p>
+
+<h1 id="">Moving Least Squares Approximation</h1>
+<p>
+Moving least squares (MLS) is a modification of weighted least squares regressions where the weighting moves with the evaluation point. To begin, a radial kernel is chosen, idealy with compact support such as
+$$
+\phi(r) = 1-\left(\frac{r}{\delta}\right)**2
+$$
+which has a support of $[0, \delta)$ for some chosen parameter $\delta$.
+</p>
+<p>
+For a given set of data $\{(\vec{x}_i, f_i)\}_{i=1}^N$, we approximate $f$ at the point $\vec{y}$ by evaluating the polynomial $P_d(\vec{x}) \big|_{\vec{x}=\vec{y}}$ where $P_d(\vec{x})$ is a $d$-degree polynomial chosen to minimize
+$$
+\sum_{n=1}^N (P_d(\vec{x}_i) - f_i)^2 \phi(|| \vec{x_i} - \vec{x}||),
+$$
+in effect: weighted least squares under the weighting $W(\vec{y}) = \phi(||\vec{y} - \vec{x}||)$.
+</p>
+<p>
+This produces a continuous interpolant that has the same smoothness as the kernel $\phi$. It may not interpolate, but it will converge to the function as $N \to \infty$ while varying $\delta$ to keep approximately the same number of points in the support of $\phi(||\vec{x} - \vec{y}||)$. 
+</p>
+<p>
+For reference see <span class="cite" src="FASSHAUER2007"><b>[<a href="#bib1">1</a>]</b></span>.
+</p>
+
+
+<h1>Meeting Followup</h1>
+
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+		<li id="bib1">
+			Gregory&nbsp;E. Fasshauer.
+<em>Meshfree approximation methods with MATLAB</em>.
+Singapore: World Scientific, 2007.
+		</li><br>
+	</ol>
+</p>
+</div>
+
+</div>
+</body>
+
+<script>includeHTML();</script>
+
+</html>
