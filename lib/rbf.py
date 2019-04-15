@@ -561,13 +561,13 @@ def functional(eps, rbf, dist_mat, P, target_cond):
     #print(np.log( la.cond(AP) / target_cond))
     return np.log( la.cond(AP) / target_cond)
 
-def optimize_eps(rbf, dist_mat, P=None, target_cond=10**12):
+def optimize_eps(rbf, dist_mat, P=None, target_cond=10**12, interval=[MEPS, 10]):
     n = dist_mat.shape[0]
     eps_guess = 1/np.min(dist_mat+np.diag([np.max(dist_mat)]*n))
     
     #try:
     root = brentq(functional, 
-            MEPS, 10,
+            interval[0], interval[1],
             args=(rbf, dist_mat, P, target_cond))
     #except ValueError:
     #    root = eps_guess
@@ -596,7 +596,7 @@ def dist_outer(nodes1, nodes2):
 #
 #########################################################################
 
-def rbf_interp(xs, fs, zs, rbf, eps=1, optimize_shape=False, target_cond=10**12, return_cond=False):
+def rbf_interp(xs, fs, zs, rbf, eps=1, optimize_shape=False, target_cond=10**12, return_cond=False, eps_interval=[MEPS, 10]):
     # generate distance matrix
     if xs.ndim == 1:
         dist_mat = np.abs(np.subtract.outer(xs,xs))
@@ -604,7 +604,7 @@ def rbf_interp(xs, fs, zs, rbf, eps=1, optimize_shape=False, target_cond=10**12,
         dist_mat = dist_outer(xs,xs)
     # optimize shape parameter
     if optimize_shape:
-        eps = optimize_eps(rbf, dist_mat, target_cond=target_cond)
+        eps = optimize_eps(rbf, dist_mat, target_cond=target_cond, interval=eps_interval)
 
     A = rbf(dist_mat, eps)
 

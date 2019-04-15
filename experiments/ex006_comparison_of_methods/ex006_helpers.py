@@ -7,7 +7,6 @@ import scipy.sparse.linalg as spla
 
 import pickle
 import os.path
-import itertools
 
 from poly_basis import *
 from rbf import *

@@ -1,0 +1,160 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<title>Meeting Notes</title>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+
+</head>
+
+<body><div class="wrapper">
+    <!-- Tex Commands -->
+    $\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+    \newcommand{\sint}{\text{s}\kern-5pt\int}
+    \newcommand{\powerset}{\mathcal{P}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\SS}{\mathbb{S}}
+    \newcommand{\MM}{\mathbb{M}}
+    \newcommand{\LL}{\mathcal{L}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+    \renewcommand{\vec}[1]{\mathbf{#1}}$
+
+<div class="divHeader">
+    <a href="../index.html">
+    <img id="logo" src="../images/RBFRG_logo.png" alt="RBF Research Group">
+    </a>
+</div>
+
+<div class="divSidebar" w3-include-html="../sidebar-sub.html">
+</div>
+
+<div class="divContent">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<p class="title_and_author">
+<span class="title">Thursday April 4<sup>th</sup>, 2019</span> <br>
+<span class="author">Attendees: Grady, Andrew, Daniel, and Sage </span> <br>
+<span class="updated">Mon Apr 15 11:35:00 2019</span> <br>
+<span hidden id="status">c</span>
+<span id="status_message" class="status_message"></span>
+</p>
+
+<hr>
+
+<p class="intro">
+RBF-LOI preliminary error plots.
+</p>
+
+<div class="contents">
+<ol>
+	<li>Sage's Tasks</li>
+	<ol>
+		<li>Code</li>
+		<li>Writing</li>
+	</ol>
+	<li>Preliminary Convergence Plots</li>
+	<li>Meeting Followup</li>
+	<li>References</li>
+</ol>
+</div>
+
+<!--************************************************************************-->
+<h1>Sage's Tasks</h1>
+<h2>Code</h2>
+<p>
+<ul>
+    <li>MLS approximation in 2D</li>
+    <li>MLS approximation of derivative</li>
+    <li>MLS on tangent-plane</li>
+    <li>Implement time-stepping.</li>
+    <li>Become familiar with Varun's repo.</li>
+</ul>
+</p>
+
+<!--h2>Research</h2>
+<p>
+<ul>
+    <li></li>
+</ul>
+</p-->
+
+<h2>Writing</h2>
+<p>
+<ul>
+    <li>Thesis</li>
+    <li><s>Create Repo for Paper</s></li>
+    <li><s>Get LOI code from Varun</s></li>
+    <li><s>Get style files for JCP</s></li>
+    <li>Write Paper</li>
+</ul>
+</p>
+
+<!--h2>Misc</h2>
+<p>
+<ul>
+    <li></li>
+</ul>
+</p-->
+
+<!--************************************************************************-->
+<h1>Preliminary Convergence Plots</h1>
+<p>
+The following tests were using Fibonaci nodes on a sphere, and show the error in approximating the surface difussion of a function that is the sum of seven Gaussians. 
+</p>
+<img src='20190404/proj_loi_test1/deg2.png' style="width:49%;" align="left">
+<img src='20190404/proj_loi_test1/deg3.png' style="width:49%;" align="left">
+<img src='20190404/proj_loi_test1/deg4.png' style="width:49%;" align="left">
+<img src='20190404/proj_loi_test1/deg5.png' style="width:49%;" align="left">
+
+
+
+<h1>Meeting Followup</h1>
+
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<h1>References</h1>
+<p class="bibliography">
+	<ol>
+	</ol>
+</p>
+</div>
+
+</div>
+</body>
+
+<script>includeHTML();</script>
+
+</html>
