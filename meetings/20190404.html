@@ -137,7 +137,1094 @@ The following tests were using Fibonaci nodes on a sphere, and show the error in
 <img src='20190404/proj_loi_test1/deg4.png' style="width:49%;" align="left">
 <img src='20190404/proj_loi_test1/deg5.png' style="width:49%;" align="left">
 
+<p>
+	deg = 2
+</p>
 
+<table>
+	<tr>
+		<td></td>
+		<td>TPM</td>
+		<td>Proj-LOI</td>
+		<td>Hermite</td>
+		<td>Proj-SVD</td>
+	</tr>
+	<tr>
+		<td>2000</td>
+		<td>-1.11861E-13</td>
+		<td>2.73894E-13</td>
+		<td>-1.40109E-13</td>
+		<td>2.66574E-13</td>
+	</tr>
+	<tr>
+		<td>4000</td>
+		<td>-7.34968E-14</td>
+		<td>5.49425<font color="red">E+</font>03</td>
+		<td>2.72130E-14</td>
+		<td>-2.25597E-13</td>
+	</tr>
+	<tr>
+		<td>8000</td>
+		<td>-8.97060E-14</td>
+		<td>-4.71225E-13</td>
+		<td>-1.88455E-13</td>
+		<td>-1.03028E-12</td>
+	</tr>
+	<tr>
+		<td>16000</td>
+		<td>4.40402E-12</td>
+		<td>-1.59098E-10</td>
+		<td>-1.26133E-09</td>
+		<td>1.12420E-09</td>
+	</tr>
+</table>
+
+<p>
+	deg = 3
+</p>
+
+<table>
+	<tr>
+		<td></td>
+		<td>TPM</td>
+		<td>Proj-LOI</td>
+		<td>Hermite</td>
+		<td>Proj-SVD</td>
+	</tr>
+	<tr>
+		<td>2000</td>
+		<td>1.34143E-13</td>
+		<td>-1.16327E-13</td>
+		<td>-2.62410E-13</td>
+		<td>1.06928E-13</td>
+	</tr>
+	<tr>
+		<td>4000</td>
+		<td>4.81706E-14</td>
+		<td>-1.60050E-13</td>
+		<td>-1.92069E-13</td>
+		<td>5.30727<font color="red">E+</font>04</td>
+	</tr>
+	<tr>
+		<td>8000</td>
+		<td>-4.02254E-14</td>
+		<td>-1.38820E-13</td>
+		<td>-3.60526E-13</td>
+		<td>8.32907E-13</td>
+	</tr>
+	<tr>
+		<td>16000</td>
+		<td>1.41685E-11</td>
+		<td>-2.66511E-10</td>
+		<td>-5.58063E-10</td>
+		<td>1.95616E-09</td>
+	</tr>
+</table>
+
+<p>
+	deg = 4
+</p>
+
+<table>
+	<tr>
+		<td></td>
+		<td>TPM</td>
+		<td>Proj-LOI</td>
+		<td>Hermite</td>
+		<td>Proj-SVD</td>
+	</tr>
+	<tr>
+		<td>2000</td>
+		<td>-1.54670E-13</td>
+		<td>1.68937E-13</td>
+		<td>-1.33913E-13</td>
+		<td>-1.32622E-12</td>
+	</tr>
+	<tr>
+		<td>4000</td>
+		<td>2.74753E-14</td>
+		<td>-1.15904E-14</td>
+		<td>1.18622E-13</td>
+		<td>-5.12570E-14</td>
+	</tr>
+	<tr>
+		<td>8000</td>
+		<td>1.05127<font color="red">E+</font>03</td>
+		<td>3.97904E-13</td>
+		<td>9.67115E-14</td>
+		<td>-8.31335E-13</td>
+	</tr>
+	<tr>
+		<td>16000</td>
+		<td>3.58774<font color="red">E+</font>04</td>
+		<td>-7.48135E-10</td>
+		<td>3.93966E-08</td>
+		<td>4.02871E-08</td>
+	</tr>
+</table>
+
+<p>
+	deg = 5
+</p>
+
+<table>
+	<tr>
+		<td></td>
+		<td>TPM</td>
+		<td>Proj-LOI</td>
+		<td>Hermite</td>
+		<td>Proj-SVD</td>
+	</tr>
+	<tr>
+		<td>2000</td>
+		<td>-2.04674E-14</td>
+		<td>-2.46142E-13</td>
+		<td>3.47409E-13</td>
+		<td>-1.17231E-13</td>
+	</tr>
+	<tr>
+		<td>4000</td>
+		<td>8.61533E-14</td>
+		<td>-1.61575E-13</td>
+		<td>9.24960<font color="red">E+</font>04</td>
+		<td>4.14012<font color="red">E+</font>06</td>
+	</tr>
+	<tr>
+		<td>8000</td>
+		<td>6.84410E-14</td>
+		<td>5.01099E-14</td>
+		<td>7.81597E-14</td>
+		<td>3.38719E-10</td>
+	</tr>
+	<tr>
+		<td>16000</td>
+		<td>9.78416E-09</td>
+		<td>1.44964E-08</td>
+		<td>-1.05611E-08</td>
+		<td>-1.57737E-08</td>
+	</tr>
+</table>
+
+
+<p>
+All data:
+</p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>surface</th>
+      <th>nodeset</th>
+      <th>N</th>
+      <th>k</th>
+      <th>method</th>
+      <th>rbf</th>
+      <th>epsilon</th>
+      <th>deg</th>
+      <th>rel_L2_error</th>
+      <th>max_error</th>
+      <th>Re_eig</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>2000</td>
+      <td>100</td>
+      <td>TPM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>2</td>
+      <td>9.099228e-06</td>
+      <td>1.239109e-05</td>
+      <td>-1.118613e-13</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>2000</td>
+      <td>100</td>
+      <td>TPM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>3</td>
+      <td>7.640071e-07</td>
+      <td>1.865108e-06</td>
+      <td>1.341428e-13</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>2000</td>
+      <td>100</td>
+      <td>TPM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>4</td>
+      <td>9.095815e-07</td>
+      <td>1.977066e-06</td>
+      <td>-1.546702e-13</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>2000</td>
+      <td>100</td>
+      <td>TPM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>5</td>
+      <td>7.019292e-07</td>
+      <td>1.729400e-06</td>
+      <td>-2.046745e-14</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>2000</td>
+      <td>100</td>
+      <td>Proj</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>2</td>
+      <td>2.132303e-05</td>
+      <td>2.771614e-05</td>
+      <td>-7.349676e-14</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>2000</td>
+      <td>100</td>
+      <td>Proj</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>3</td>
+      <td>5.107278e-06</td>
+      <td>1.022900e-05</td>
+      <td>4.817064e-14</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>2000</td>
+      <td>100</td>
+      <td>Proj</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>4</td>
+      <td>2.980761e-06</td>
+      <td>7.033072e-06</td>
+      <td>2.747527e-14</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>2000</td>
+      <td>100</td>
+      <td>Proj</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>5</td>
+      <td>1.816477e-06</td>
+      <td>5.977584e-06</td>
+      <td>8.615331e-14</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>2000</td>
+      <td>100</td>
+      <td>SOGr</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>2</td>
+      <td>3.689546e-06</td>
+      <td>4.282443e-06</td>
+      <td>-8.970602e-14</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>2000</td>
+      <td>100</td>
+      <td>SOGr</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>3</td>
+      <td>8.437444e-07</td>
+      <td>2.152938e-06</td>
+      <td>-4.022545e-14</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>2000</td>
+      <td>100</td>
+      <td>SOGr</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>4</td>
+      <td>4.058365e-05</td>
+      <td>1.161151e-04</td>
+      <td>1.051272e+03</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>2000</td>
+      <td>100</td>
+      <td>SOGr</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>5</td>
+      <td>5.479202e-07</td>
+      <td>1.520399e-06</td>
+      <td>6.844101e-14</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>2000</td>
+      <td>100</td>
+      <td>SWM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>2</td>
+      <td>9.294742e-06</td>
+      <td>1.344630e-05</td>
+      <td>4.404020e-12</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>2000</td>
+      <td>100</td>
+      <td>SWM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>3</td>
+      <td>3.791962e-06</td>
+      <td>8.582959e-06</td>
+      <td>1.416848e-11</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>2000</td>
+      <td>100</td>
+      <td>SWM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>4</td>
+      <td>7.150795e-04</td>
+      <td>2.966491e-03</td>
+      <td>3.587738e+04</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>2000</td>
+      <td>100</td>
+      <td>SWM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>5</td>
+      <td>1.797829e-06</td>
+      <td>5.725871e-06</td>
+      <td>9.784161e-09</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>4000</td>
+      <td>100</td>
+      <td>TPM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>2</td>
+      <td>4.984948e-06</td>
+      <td>7.321200e-06</td>
+      <td>2.738942e-13</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>4000</td>
+      <td>100</td>
+      <td>TPM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>3</td>
+      <td>2.640353e-07</td>
+      <td>8.017336e-07</td>
+      <td>-1.163270e-13</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>4000</td>
+      <td>100</td>
+      <td>TPM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>4</td>
+      <td>2.655759e-07</td>
+      <td>5.827396e-07</td>
+      <td>1.689373e-13</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>4000</td>
+      <td>100</td>
+      <td>TPM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>5</td>
+      <td>2.006596e-07</td>
+      <td>5.572881e-07</td>
+      <td>-2.461421e-13</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>4000</td>
+      <td>100</td>
+      <td>Proj</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>2</td>
+      <td>1.207694e-04</td>
+      <td>2.219133e-04</td>
+      <td>5.494253e+03</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>4000</td>
+      <td>100</td>
+      <td>Proj</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>3</td>
+      <td>1.489986e-06</td>
+      <td>3.598750e-06</td>
+      <td>-1.600505e-13</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>4000</td>
+      <td>100</td>
+      <td>Proj</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>4</td>
+      <td>1.022642e-06</td>
+      <td>2.714515e-06</td>
+      <td>-1.159042e-14</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>4000</td>
+      <td>100</td>
+      <td>Proj</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>5</td>
+      <td>7.891822e-07</td>
+      <td>1.842200e-06</td>
+      <td>-1.615745e-13</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>4000</td>
+      <td>100</td>
+      <td>SOGr</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>2</td>
+      <td>1.794194e-06</td>
+      <td>2.567128e-06</td>
+      <td>-4.712249e-13</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>4000</td>
+      <td>100</td>
+      <td>SOGr</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>3</td>
+      <td>3.227277e-07</td>
+      <td>6.404216e-07</td>
+      <td>-1.388204e-13</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>4000</td>
+      <td>100</td>
+      <td>SOGr</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>4</td>
+      <td>2.979233e-07</td>
+      <td>7.248013e-07</td>
+      <td>3.979039e-13</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>4000</td>
+      <td>100</td>
+      <td>SOGr</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>5</td>
+      <td>2.034143e-07</td>
+      <td>4.453286e-07</td>
+      <td>5.010995e-14</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>4000</td>
+      <td>100</td>
+      <td>SWM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>2</td>
+      <td>5.613309e-06</td>
+      <td>8.796369e-06</td>
+      <td>-1.590976e-10</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>4000</td>
+      <td>100</td>
+      <td>SWM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>3</td>
+      <td>1.070243e-06</td>
+      <td>2.253962e-06</td>
+      <td>-2.665114e-10</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>4000</td>
+      <td>100</td>
+      <td>SWM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>4</td>
+      <td>1.038418e-06</td>
+      <td>2.928663e-06</td>
+      <td>-7.481349e-10</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>4000</td>
+      <td>100</td>
+      <td>SWM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>5</td>
+      <td>8.540529e-07</td>
+      <td>1.913226e-06</td>
+      <td>1.449637e-08</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>8000</td>
+      <td>100</td>
+      <td>TPM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>2</td>
+      <td>2.966360e-06</td>
+      <td>4.538783e-06</td>
+      <td>-1.401086e-13</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>8000</td>
+      <td>100</td>
+      <td>TPM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>3</td>
+      <td>1.108805e-07</td>
+      <td>3.091406e-07</td>
+      <td>-2.624096e-13</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>8000</td>
+      <td>100</td>
+      <td>TPM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>4</td>
+      <td>7.026559e-08</td>
+      <td>1.176301e-07</td>
+      <td>-1.339126e-13</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>8000</td>
+      <td>100</td>
+      <td>TPM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>5</td>
+      <td>4.085165e-08</td>
+      <td>9.085347e-08</td>
+      <td>3.474087e-13</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>8000</td>
+      <td>100</td>
+      <td>Proj</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>2</td>
+      <td>3.882247e-06</td>
+      <td>4.810529e-06</td>
+      <td>2.721302e-14</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>8000</td>
+      <td>100</td>
+      <td>Proj</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>3</td>
+      <td>3.177779e-07</td>
+      <td>8.757449e-07</td>
+      <td>-1.920686e-13</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>8000</td>
+      <td>100</td>
+      <td>Proj</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>4</td>
+      <td>2.893757e-07</td>
+      <td>7.910807e-07</td>
+      <td>1.186218e-13</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>8000</td>
+      <td>100</td>
+      <td>Proj</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>5</td>
+      <td>2.394876e-07</td>
+      <td>1.809168e-06</td>
+      <td>9.249598e+04</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>8000</td>
+      <td>100</td>
+      <td>SOGr</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>2</td>
+      <td>9.916020e-07</td>
+      <td>1.242752e-06</td>
+      <td>-1.884548e-13</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>8000</td>
+      <td>100</td>
+      <td>SOGr</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>3</td>
+      <td>1.861213e-07</td>
+      <td>3.762879e-07</td>
+      <td>-3.605259e-13</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>8000</td>
+      <td>100</td>
+      <td>SOGr</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>4</td>
+      <td>6.031364e-08</td>
+      <td>1.698286e-07</td>
+      <td>9.671147e-14</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>8000</td>
+      <td>100</td>
+      <td>SOGr</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>5</td>
+      <td>4.005992e-08</td>
+      <td>1.089034e-07</td>
+      <td>7.815970e-14</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>8000</td>
+      <td>100</td>
+      <td>SWM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>2</td>
+      <td>3.744142e-06</td>
+      <td>4.789529e-06</td>
+      <td>-1.261330e-09</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>8000</td>
+      <td>100</td>
+      <td>SWM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>3</td>
+      <td>5.804995e-07</td>
+      <td>1.315843e-06</td>
+      <td>-5.580626e-10</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>8000</td>
+      <td>100</td>
+      <td>SWM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>4</td>
+      <td>2.220949e-07</td>
+      <td>6.384104e-07</td>
+      <td>3.939662e-08</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>8000</td>
+      <td>100</td>
+      <td>SWM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>5</td>
+      <td>1.683745e-07</td>
+      <td>5.136626e-07</td>
+      <td>-1.056113e-08</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>16000</td>
+      <td>100</td>
+      <td>TPM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>2</td>
+      <td>1.896143e-06</td>
+      <td>2.942427e-06</td>
+      <td>2.665739e-13</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>16000</td>
+      <td>100</td>
+      <td>TPM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>3</td>
+      <td>7.340980e-08</td>
+      <td>1.862775e-07</td>
+      <td>1.069276e-13</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>16000</td>
+      <td>100</td>
+      <td>TPM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>4</td>
+      <td>2.266060e-08</td>
+      <td>4.011100e-08</td>
+      <td>-1.326221e-12</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>16000</td>
+      <td>100</td>
+      <td>TPM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>5</td>
+      <td>1.183824e-08</td>
+      <td>3.107703e-08</td>
+      <td>-1.172309e-13</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>16000</td>
+      <td>100</td>
+      <td>Proj</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>2</td>
+      <td>3.117819e-06</td>
+      <td>3.920998e-06</td>
+      <td>-2.255973e-13</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>16000</td>
+      <td>100</td>
+      <td>Proj</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>3</td>
+      <td>9.790217e-07</td>
+      <td>5.192219e-06</td>
+      <td>5.307265e+04</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>16000</td>
+      <td>100</td>
+      <td>Proj</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>4</td>
+      <td>3.235813e-07</td>
+      <td>6.391632e-07</td>
+      <td>-5.125695e-14</td>
+    </tr>
+    <tr>
+      <th>55</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>16000</td>
+      <td>100</td>
+      <td>Proj</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>5</td>
+      <td>8.968077e-08</td>
+      <td>2.336978e-07</td>
+      <td>4.140119e+06</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>16000</td>
+      <td>100</td>
+      <td>SOGr</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>2</td>
+      <td>5.762765e-07</td>
+      <td>6.625801e-07</td>
+      <td>-1.030282e-12</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>16000</td>
+      <td>100</td>
+      <td>SOGr</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>3</td>
+      <td>6.635780e-08</td>
+      <td>9.170285e-08</td>
+      <td>8.329067e-13</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>16000</td>
+      <td>100</td>
+      <td>SOGr</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>4</td>
+      <td>1.842212e-08</td>
+      <td>4.263192e-08</td>
+      <td>-8.313350e-13</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>16000</td>
+      <td>100</td>
+      <td>SOGr</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>5</td>
+      <td>1.312798e-08</td>
+      <td>2.958772e-08</td>
+      <td>3.387193e-10</td>
+    </tr>
+    <tr>
+      <th>60</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>16000</td>
+      <td>100</td>
+      <td>SWM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>2</td>
+      <td>1.941374e-06</td>
+      <td>2.258942e-06</td>
+      <td>1.124204e-09</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>16000</td>
+      <td>100</td>
+      <td>SWM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>3</td>
+      <td>1.809150e-07</td>
+      <td>2.916716e-07</td>
+      <td>1.956165e-09</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>16000</td>
+      <td>100</td>
+      <td>SWM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>4</td>
+      <td>8.640252e-08</td>
+      <td>1.755752e-07</td>
+      <td>4.028710e-08</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>S</td>
+      <td>spiral</td>
+      <td>16000</td>
+      <td>100</td>
+      <td>SWM</td>
+      <td>r^10 log(r)</td>
+      <td>None</td>
+      <td>5</td>
+      <td>5.345262e-08</td>
+      <td>1.225947e-07</td>
+      <td>-1.577372e-08</td>
+    </tr>
+  </tbody>
+</table>
 
 <h1>Meeting Followup</h1>
 
