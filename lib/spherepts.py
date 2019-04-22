@@ -14,7 +14,8 @@ sym_t_design_files = {3: 'sf001.00003', 6: 'sf002.00006', 8: 'sf003.00008', 14: 
 sym_t_design_Ns = list(sym_t_design_files.keys())
 
 def gen_symmetric_t_design_nodes(n_try):
-    n = np.argmin(np.abs([n_try - Ni for Ni in sym_t_design_Ns]))
+    i = np.argmin(np.abs([n_try - Ni for Ni in sym_t_design_Ns]))
+    n = sym_t_design_Ns[i]
     file_path = sym_t_design_files[sym_t_design_Ns[n]]
     file_path = os.path.join(os.path.dirname( os.path.realpath( __file__ )), 'pnts','sym_t_design', file_path)
     nodes = np.loadtxt(file_path)
@@ -23,10 +24,11 @@ def gen_symmetric_t_design_nodes(n_try):
 min_energy_Ns = list(range(3,4101))
 min_energy_Ns += list(range(4145,4174,2))
 min_energy_Ns += list(range(4174, 4717))
-min_energy_Ns += [4900, 5041, 5184, 5329, 5476, 5625, 5776, 5929, 6084, 6241, 6400, 6561, 6724, 6889, 7056, 7225, 7396, 7569, 7744, 7921, 8100, 8281, 8464, 8649, 8836, 9025, 9216, 9409, 9604, 9801, 10000, 10201, 16000, 16384, 25000, 36864, 40000, 62500, 90000]
+min_energy_Ns += [4900, 5041, 5184, 5329, 5476, 5625, 5776, 5929, 6084, 6241, 6400, 6561, 6724, 6889, 7056, 7225, 7396, 7569, 7744, 7921, 8100, 8281, 8464, 8649, 8836, 9025, 9216, 9409, 9604, 9801, 10000, 10201, 16384, 25000, 36864, 40000, 62500, 90000]
 
 def gen_min_energy_nodes(n_try):
-    n = np.argmin(np.abs([n_try - Ni for Ni in min_energy_Ns]))
+    i = np.argmin(np.abs([n_try - Ni for Ni in min_energy_Ns]))
+    n = min_energy_Ns[i]
     file_path = os.path.join(os.path.dirname( os.path.realpath( __file__ )), 'pnts','min_energy', 'me%05d.mat'%n)
     nodes = loadmat(file_path)['x']
     return len(nodes), nodes
