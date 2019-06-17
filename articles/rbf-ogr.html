@@ -152,8 +152,8 @@ $$
 <p style='padding-left: 4em'>
     Denote $\vec{x} = \begin{bmatrix} x & y & z \end{bmatrix}^T, \vec{y} = \begin{bmatrix} a & b & c \end{bmatrix}^T$, and $r = ||\vec{x} - \vec{y}||$. Then
 \begin{align*}
-    \frac{dr}{dx} &= \frac{d}{dr} \big((x-a)^2 + (y-b)^2 + (z-c)^2 \big)^{1/2} \\
-        &= 2(x-a)\frac{1}{2}\frac{d}{dr} \big((x-a)^2 + (y-b)^2 + (z-c)^2 \big)^{-1/2} \\
+    \frac{dr}{dx} &= \frac{d}{dx} \big((x-a)^2 + (y-b)^2 + (z-c)^2 \big)^{1/2} \\
+        &= 2(x-a)\frac{1}{2} \big((x-a)^2 + (y-b)^2 + (z-c)^2 \big)^{-1/2} \\
         &= (x-a)\frac{1}{r} \\
     \frac{d}{dx}\phi_n(r) &= \phi_n'(r)\frac{dr}{dx} = (x-a) \phi_{n+1}(r) \\
 &\text{and similarly} \\
@@ -161,7 +161,7 @@ $$
     \mathcal{L}_\vec{x}\phi_n(r) &= \vec{n}\cdot(\vec{x}-\vec{y}) \phi_{n+1}(r) \\
         &= p\phi_{n+1}(r).\\
 \end{align*}
-Also since $\frac{d}{da} \phi(r) = -(x-a)\phi_1(r) = - \frac{d}{dx}\phi(r)$ it follows that $\mathcal{L}_\vec{y} = -\mathcal{L}_\vec{y}$.
+Also since $\frac{d}{da} \phi(r) = -(x-a)\phi_1(r) = - \frac{d}{dx}\phi(r)$ it follows that $\mathcal{L}_\vec{y} = -\mathcal{L}_\vec{x}$.
 </p><p align='right'>$\blacksquare$</p>
 
 <!--*********************-->
@@ -195,7 +195,7 @@ For a radial basis function $\phi$, we have that $\mathcal{H}_\vec{x} \phi(r) = 
 
 <b>Proof:</b><br>
 <p style='padding-left: 4em'>
-From <i>Lemma 1</i> we have that $\mathcal{L}_x \phi(r) = p \phi_1(r)$. Then
+From <i>Lemma 1</i> we have that $\mathcal{L}_\vec{x} \phi(r) = p \phi_1(r)$. Then
 \begin{align*}
     \mathcal{L}_\vec{x}\mathcal{L}_\vec{x} \phi(r)
         &= \mathcal{L}_\vec{x} \big( p \phi_1(r) \big)  \\
@@ -206,9 +206,9 @@ Next consider
 \begin{align*}
     \frac{\partial}{\partial x} \phi(r) &= (x-a)\phi_1(r) \\
     \frac{\partial^2}{\partial x^2} \phi(r) &= \phi_1(r) + (x-a)^2\phi_2(r) \\
-    \frac{\partial^2}{\partial xy} \phi(r) &= (x-a)(y-b)\phi_2(r)    
+    \frac{\partial^2}{\partial xy} \phi(r) &= (x-a)(y-b)\phi_2(r).  
 \end{align*}
-These will be useful in the caluculation of the Hessian below
+These will be useful in the calculation of the Hessian below
 \begin{align*}
     \mathcal{H}_\vec{x} \phi(r) &= \vec{n}^T 
 \begin{bmatrix} 
@@ -259,7 +259,7 @@ We next observe that
     &=  \mathcal{L}_\vec{x} \phi_1(r) + \phi_2(r)\mathcal{L}_\vec{x}p^2 + p^2 \mathcal{L}_\vec{x} \phi_2(r) \\
     &= p\phi_2(r) + 2p \phi_2(r) + p^3 \phi_3(r) \\
     &= 3p \phi_2(r) + p^3 \phi_3(r) \\
-\mathcal{H}_\vec{x}\mathcal{H}_\vec{x} \phi(r) &= \mathcal{L}_\vec{x}\mathcal{L}_\vec{x}\mathcal{H}_\vec{x} \\
+\mathcal{H}_\vec{x}\mathcal{H}_\vec{x} \phi(r) &= \mathcal{L}_\vec{x}\mathcal{L}_\vec{x}\mathcal{H}_\vec{x} \phi(r) \\
     &= \mathcal{L}_\vec{x} \big( 3p\phi_2(r) + p^3 \phi_3(r) \big) \\
     &= 3\phi_2(r)\mathcal{L}_\vec{x}p + 3p\mathcal{L}_\vec{x}\phi_2(r) + \phi_3(r) \mathcal{L}_\vec{x} p^3 + p^3 \mathcal{L}_\vec{x} \phi_3(r) \\
     &= 3\phi_2(r) + 3p^2\phi_3(r) + 3p^2\phi_3(r) + p^4 \phi_4(r) \\
@@ -358,7 +358,7 @@ $$
 </p-->
 
 <p>
-Once the interpolant is formed it has the property that $\Delta s = \Delta_\SS s$ however we still must calculate $\Delta s$.To do so we must compute $\Delta \phi, \Delta\mathcal{L}_\vec{x}\phi$, and $\Delta\mathcal{H}_\vec{x}\phi$. From earlier work we have that $\Delta \phi(r) = 2\phi_1(r) + \phi''(r)$. In the notation of <i>Lemma 1</i>, let $\vec{x} = \begin{bmatrix} x & y & z \end{bmatrix}^T, \vec{y} = \begin{bmatrix} a & b & c \end{bmatrix}^T$, and $r = ||\vec{x} - \vec{y}||$. Additinally we will use the notation that  Then we have that $p = \vec{n}\cdot(\vec{x}-\vec{y})$.
+Once the interpolant is formed it has the property that $\Delta s = \Delta_\SS s$ however we still must calculate $\Delta s$.To do so we must compute $\Delta \phi, \Delta\mathcal{L}_\vec{x}\phi$, and $\Delta\mathcal{H}_\vec{x}\phi$. From earlier work we have that $\Delta \phi(r) = 2\phi_1(r) + \phi''(r)$. In the notation of <i>Lemma 1</i>, let $\vec{x} = \begin{bmatrix} x & y & z \end{bmatrix}^T, \vec{y} = \begin{bmatrix} a & b & c \end{bmatrix}^T$, and $r = ||\vec{x} - \vec{y}||$. Additionally we will use the notation that  Then we have that $p = \vec{n}\cdot(\vec{x}-\vec{y})$.
 \begin{align*}
     \frac{d}{dx}\mathcal{L}_\vec{x} \phi(r) &= \frac{d}{dx}p \phi_{1}(r) \\
         &= n_x\phi_1(r) + p(x-a)\phi_2(r) \\

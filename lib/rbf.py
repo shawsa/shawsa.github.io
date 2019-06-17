@@ -2,6 +2,7 @@ import numpy as np
 MEPS = np.finfo(float).eps
 import numpy.linalg as la
 from scipy.optimize import brentq
+from scipy.spatial import cKDTree
 
 '''
 Each RBF in the dictionary should have the following values defined
@@ -617,7 +618,7 @@ def rbf_interp(xs, fs, zs, rbf, eps=1, optimize_shape=False, target_cond=10**12,
     if xs.ndim == 1:
         dist_mat = np.abs(np.subtract.outer(zs,xs))
     else:
-        dist_mat = dist_outer(zs,xs)
+        dist_mat = dist_outer(xs,zs)
     A = rbf(dist_mat, eps)
     return A @ cs, eps, A_cond
 
@@ -635,9 +636,12 @@ def get_closest_indices(i, n, k):
     else:
         return np.arange(n-k,n)
 
-def rbf_interp_local_1D(xs, fs, zs, rbf, stencil_size=10, eps=1, optimize_shape=False, target_cond=10**12, return_cond=False):
+def rbf_interp_local_1D(xs, fs, zs, rbf, stencil_size=10, eps=1, 
+                        optimize_shape=False, target_cond=10**12, 
+                        return_cond=False, eps_interval=[MEPS, 10]):
     k = stencil_size    
     us = np.zeros(len(zs))
+    A_cond = None
     full_dist_mat = np.abs(np.subtract.outer(zs,xs))
     closest_ids = np.argmin(full_dist_mat, axis=1)
     # in a zoop build surface around each sample point
@@ -650,26 +654,31 @@ def rbf_interp_local_1D(xs, fs, zs, rbf, stencil_size=10, eps=1, optimize_shape=
         fs_local = fs[x_ids]
         dist_mat = np.abs(np.subtract.outer(xs_local,xs_local))
         if optimize_shape:   
-            eps = optimize_eps(rbf, dist_mat)
+            eps = optimize_eps(rbf, dist_mat, target_cond=target_cond, interval=eps_interval)
+            optimize_shape = False
         A = rbf(dist_mat, eps)
+        if return_cond and A_cond is None:
+            A_cond = la.cond(A)
+            return_cond = False
         cs = la.solve(A, fs_local)
         dist_mat = np.abs(np.subtract.outer(zs_local,xs_local))
         A = rbf(dist_mat, eps)
         us_local = A @ cs
         us[close_to_c_ids] = us_local
-    return us
+    return us, eps, A_cond
 
 def rbf_interp_local(xs, fs, zs, rbf_obj, k=25, eps=None):
     rbf = rbf_obj['rbf']
     us = np.zeros(len(zs))
-    full_dist_mat = dist_outer(xs, zs)
-    closest_ids = np.argmin(full_dist_mat, axis=1)
+    tree = cKDTree(np.array(xs))
+    #full_dist_mat = dist_outer(xs, zs)
+    closest_ids = tree.query(zs, 1)[1]
     # in a zoop build surface around each sample point
     for i in range(len(xs)):
         c = xs[i]
         close_to_c_ids = closest_ids == i
         zs_local = zs[close_to_c_ids]
-        x_ids = get_closest_indices(i, len(xs), k)
+        x_ids = tree.query(c, k)[1]
         xs_local = xs[x_ids]
         fs_local = fs[x_ids]
         dist_mat = dist_outer(xs_local,xs_local)

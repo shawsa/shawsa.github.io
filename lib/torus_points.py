@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.optimize import fsolve
+from scipy.spatial import Delaunay
 
 def torus_phyllotaxis_points(N):
     R, r = 1, 1/3
@@ -31,6 +32,20 @@ def torus_phyllotaxis_points(N):
     
     return nodes, normals
 
+fib_nums = [1, 1]
+for i in range(50):
+    fib_nums += [fib_nums[-1] + fib_nums[-2]]
+
+def gen_torus_nodes(nodeset, n_try,):
+    assert nodeset in ['phyllotaxis']
+
+    if nodeset is 'phyllotaxis':
+        i = np.argmin(np.abs([n_try - Ni for Ni in fib_nums]))
+        n = fib_nums[i]
+        nodes, normals = torus_phyllotaxis_points(n)
+        return n, nodes, normals
+    
+
 def get_parameters(x, R, r):
     theta = np.arctan2(x[:,1], x[:,0])
     phi = np.arctan2(x[:,2], np.sqrt(x[:,0]**2 + x[:,1]**2) - R)
@@ -50,8 +65,6 @@ def torus_forcing(nodes):
     # create gaussian centers
     theta_cs = np.array([0, .5,   1,    2, 4, 5, 3.141])
     phi_cs   = np.array([0,  4, 1.5, -1.5, 0, 4, 3.141/2])
-    #shapes = [1, .5, 2, 1, .7, .9, .3]
-    shapes = [1]*len(phi_cs)
     
     thetas, phis = get_parameters(nodes, 1, 1/3)
     
@@ -63,7 +76,7 @@ def torus_forcing(nodes):
     ct, st = np.cos(thetas), np.sin(thetas)
     cp, sp = np.cos(phis), np.sin(phis)
     for k in range(K):
-        s = shapes[k]
+        s = 1
         spk = np.sin(phis - phi_cs[k])
         cpk = np.cos(phis - phi_cs[k])
         stk = np.sin(thetas - theta_cs[k])
@@ -79,26 +92,19 @@ def torus_forcing(nodes):
     return us, lap
 
 def torus_time(nodes, t):
-#     a, b = np.sqrt(4), np.sqrt(20)
     a, b = 2, 2*3
     
     # create gaussian centers
     theta_cs = np.array([0, .5,   1,    2, 4, 5, 3.141])
     phi_cs   = np.array([0,  4, 1.5, -1.5, 0, 4, 3.141/2])
-    #shapes = [1, .5, 2, 1, .7, .9, .3]
-    shapes = [1]*len(phi_cs)
-    
     thetas, phis = get_parameters(nodes, 1, 1/3)
-    
     N, K = len(nodes), len(theta_cs)
-    
     us = np.zeros(N)
-    lap = np.zeros(N)
-    
+    lapu = np.zeros(N)
     ct, st = np.cos(thetas), np.sin(thetas)
     cp, sp = np.cos(phis), np.sin(phis)
     for k in range(K):
-        s = shapes[k]
+        s = 1
         spk = np.sin(phis - phi_cs[k])
         cpk = np.cos(phis - phi_cs[k])
         stk = np.sin(thetas - theta_cs[k])
@@ -109,5 +115,60 @@ def torus_time(nodes, t):
                 + 1*a**2*s*sp*spk*cp + 3*a**2*s*sp*spk - 1*a**2*s*cp**2*cpk - 6*a**2*s*cp*cpk \
                 - 9*a**2*s*cpk + b**4*s**2*stk**2 - b**2*s*ctk
         C /= (1+cp/3)**2
-        us += uk*np.exp(-s*t)
-    return us
+        lapu += C*uk
+        us += uk
+    us *= np.exp(-t)
+    lapu *= np.exp(-t)
+    f = -us - lapu
+    return us, f
+
+def torus_triangulate(nodes):
+    extend_range = .5
+    #def torus_tri(nodes):
+    theta, phi = get_parameters(nodes, 1, 1/3)
+    nmap = np.arange(len(nodes))
+    # extend theta
+    ids = theta > np.pi-extend_range
+    theta = np.concatenate((theta, theta[ids]-2*np.pi))
+    phi = np.concatenate((phi, phi[ids]))
+    nmap = np.concatenate((nmap, nmap[ids]))
+    ids = theta < -np.pi+extend_range
+    theta = np.concatenate((theta, theta[ids]+2*np.pi))
+    phi = np.concatenate((phi, phi[ids]))
+    nmap = np.concatenate((nmap, nmap[ids]))
+    # extend phi
+    ids = phi > np.pi-extend_range
+    theta = np.concatenate((theta, theta[ids]))
+    phi = np.concatenate((phi, phi[ids]-2*np.pi))
+    nmap = np.concatenate((nmap, nmap[ids]))
+    ids = phi < -np.pi+extend_range
+    theta = np.concatenate((theta, theta[ids]))
+    phi = np.concatenate((phi, phi[ids]+2*np.pi))
+    nmap = np.concatenate((nmap, nmap[ids]))
+
+    map_max = len(nmap)
+
+    # extend theta
+    ids = theta > np.pi
+    theta = np.concatenate((theta, theta[ids]-2*np.pi-2*extend_range))
+    phi = np.concatenate((phi, phi[ids]))
+    ids = theta < -np.pi
+    theta = np.concatenate((theta, theta[ids]+2*np.pi+2*extend_range))
+    phi = np.concatenate((phi, phi[ids]))
+    # extend phi
+    ids = phi > np.pi
+    theta = np.concatenate((theta, theta[ids]))
+    phi = np.concatenate((phi, phi[ids]-2*np.pi-2*extend_range))
+    ids = phi < -np.pi
+    theta = np.concatenate((theta, theta[ids]))
+    phi = np.concatenate((phi, phi[ids]+2*np.pi+2*extend_range))
+
+    # Triangulate
+    tri = Delaunay(np.block([[theta], [phi]]).T).simplices
+    # remove boundary faces
+    tri = tri[np.logical_not(np.any(tri>map_max, axis=1))]
+    # map to original nodes
+    tri[tri>=len(nodes)] = nmap[tri[tri>=len(nodes)]]
+    # remove duplicates
+    tri = np.unique(tri, axis=0)
+    return tri

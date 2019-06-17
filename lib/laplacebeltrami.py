@@ -1,5 +1,4 @@
 import numpy as np
-from numpy.linalg import cond, norm, inv
 
 import scipy.linalg as la
 import scipy.sparse as sp
@@ -8,6 +7,7 @@ from scipy.spatial import cKDTree
 
 from rbf import *
 from poly_basis import *
+
 
 from math import factorial as fac
 
@@ -35,6 +35,11 @@ def TPM(nodes, normals, rbf_obj=rbf_dict['multiquadric'], epsilon=None, stencil_
     E[2,2] = 0
     
     for i, (node, normal) in enumerate(zip(nodes, normals)):
+        e1, e2, e3 = np.eye(3)
+        if np.abs(np.dot(normal, e2)) >.9: 
+            e2 = e1
+        elif np.abs(np.dot(normal, e3)) >.9:
+            e3 = e1    
         t1 = e2 - np.dot(normal, e2)*normal
         t1 /= la.norm(t1)
         t2 = e3 - np.dot(normal, e3)*normal - np.dot(t1, e3)*t1
@@ -356,11 +361,10 @@ def SOGr(nodes, normals, rbf_obj=rbf_dict['multiquadric'], eps=None,
             A[k, :k] = A[:k, k]
             A[k+1, :k+1] = A[:k+1, k+1]
             
-            try:
-#                weights[i] = schur_solve(A[:k+2,:k+2], A[:k+2, k+2:], B[:k+2], B[k+2:], rcond=rcond)[0][:k]
-                weights[i] = schur_solve(A[:k,:k], A[:k,k:], A[:k,:k], B[:k], B[k:], rcond=rcond)[0]
-            except:
-                weights[i] = la.solve(A, B)[:k]
+            #try:
+            weights[i] = schur_solve_full(A[:k,:k], A[:k,k:], A[k:,k:], B[:k], B[k:], rcond=rcond)[0]
+            #except:
+            #    weights[i] = la.solve(A, B)[:k]
 
     C = sp.csc_matrix((weights.ravel(), (row_index, col_index.ravel())),shape=(n,n))
     return C
