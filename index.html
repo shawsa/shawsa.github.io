@@ -45,7 +45,7 @@
 
 <h1 id="Title">May 20th, 2012</h1>
 <p id="summary">
-    This is a summary.
+    I examined two models incorporating negative feedback that alow for traveling pulses: the Pinto-Ermentrout model (reference: <a href="https://epubs.siam.org/doi/10.1137/070699214">Kilpatrick et al. 2008</a>) and the Kilpatrick-Bressloff model (reference: <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a>). I have simulated each numerically and found parameters and initial conditions that induce traveling pulses. My pulse-profiles do not seem to quite match the profiles in <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a> Figures 2 and 4. I susspect a small bug in my implementation.
 </p>
 
 <hr><!--********************************************************************-->
@@ -70,23 +70,63 @@
 
 <hr><!--********************************************************************-->
 
-Lorem ipsem.
+<h1 id="">Pinto-Ermentrout Model</h1>
 
-    <video controls autoplay muted loop>
-        <source src="reports/report20210520/PE_pulse.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+<p>
+    The Pinto-Ermentrout model is given in <a href="https://epubs.siam.org/doi/10.1137/070699214">Kilpatrick et al. 2008</a> by
+$$\begin{align*}
+    \tau_m u_t &= -u + \int_{-\infty}^{\infty} w(x,x^\prime) f( u(x^\prime,t) ) dx^\prime - \beta v \\
+    \frac{1}{\alpha} v_t &= -v + u
+\end{align*}$$
+where $u$ is a measure of synaptic activity, $v$ is a local negative-feedback mechanism, $w$ describes the connectivity between neurons, $f$ is the firing-rate function, and $\tau_m, \beta,$ and $\alpha$ are constants.
+</p>
 
-    <video controls autoplay muted loop>
-        <source src="reports/report20210520/KB10_pulse.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+<p>
+    Below, we have chosen $w(x,x^\prime) = \frac{1}{2}\exp(|x-x^\prime|)$, $f(u) = H(u - 0.2)$ where $H$ is the heaviside function. The constants are $\alpha = 0.04$, $\beta = 2$, and $\tau_m = 1$. The initial conditions for both $u$ and $v$ are cosine bells, centered at $x=0$ and $x=-\pi$ respetively. The profile of $u$ seems to match the dashed line in Figure 6 of <a href="https://epubs.siam.org/doi/10.1137/070699214">Kilpatrick et al. 2008</a>.
+</p>
+
+<video controls autoplay muted loop>
+    <source src="reports/report20210520/PE_pulse.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<hr><!--********************************************************************-->
+<h1 id="">The Kilpatrick-Bressloff Model</h1>
+<p>
+    <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a> use a model incorporating a "hyperpolarizing adaptation current" (similar to the negative-feedback variable $v$ from the Pinto-Ermentrout model above) and also a synaptic scaling factor that represents available synaptic resourses. The model is given by
+$$\begin{align*}
+    \mu u_t &= -u + \int_{-\infty}^\infty w(x,x^\prime) q(x^\prime,t) f( u(x^\prime,t) - a(x^\prime,t)) \ dx^\prime \\
+    q_t &= \frac{1 - q}{\alpha} - \beta q f(u - a) \\
+    \epsilon a_t &= -a + \gamma f(u - a)
+\end{align*}$$
+where $u$ is the synaptic activity, $q$ is the available synaptic resourses, and $a$ is the adaptation current (negative feed-back).
+</p>
+
+<p>
+    Again we choose $w(x,x^\prime) = \frac{1}{2}\exp(|x-x^\prime|)$, $f(u) = H(u - 0.2)$, and the constants $\alpha = 20, \beta = 0.2, \epsilon = 5, \gamma = 0.05,$ and $\mu = 1$. For the initial conditions, we take $u$ to be a cosine bell with width 20, $a=0$ and $q=1$. The simulation below does exhibit traveling pulses, but they do not quite match the profile of Figure 2 in <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a>. In the limit as $x \to -\infty$ $u \to 0.2$ instead of $0.15$. I'm not sure why.
+</p>
+
+<video controls autoplay muted loop>
+    <source src="reports/report20210520/KB10_pulse1.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<p>
+    Chaning the parameters to $\alpha = 20, \beta = 0.4, \epsilon = 5, \gamma = 0.1,$ and $\mu = 1$; we also exhibit a traveling pulse, close to but  Figure 4 in <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a>. This profile again is close, but is it does not appear to dip below $u = 0$ near the trailing edge. I'm also not sure why.
+</p>
+
+<video controls autoplay muted loop>
+    <source src="reports/report20210520/KB10_pulse1.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+
 
 <hr><!--********************************************************************-->
 <h1 id="">Questions</h1>
 <ul>
     <li>What is an <i>Evans function</i>?</li>
-    <li></li>
+    <li>What could be causing the discrepancies in my wave-profiles?</li>
 </ul>
 
 <!--***************************************************************************
