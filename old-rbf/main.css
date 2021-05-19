@@ -1,0 +1,229 @@
+/*
+Colors from https://brandstandards.boisestate.edu/colors/
+navy blue -         #1e3975
+blue -              #0033A0
+orange -            #D64309
+Pantone Cool Gray - #D9D9D6 
+*/
+
+/*********************************************************
+* Main Divs
+*********************************************************/
+body {
+    /*background-color: #0033A0;*/
+    background-color: #1e3975;
+    margin: 0px;
+    padding: 0px;
+    font-family: "Arial";
+}
+
+.wrapper {
+    margin: 0px 0px 20px 0px;
+    padding: 0px;
+    /*max-width: 1100px;*/
+    display: grid;
+    grid-template-columns: 200px auto;
+    grid-template-rows: 100px 21em auto;
+    gap: 0px;
+}
+.divHeader {
+    margin: 0px;
+    padding: 0px;
+    /*border-radius: 0 0 25px 0;*/
+    grid-column: 1/3;
+    grid-row: 1;
+    background-color: white;
+}
+.divSidebar { 
+    grid-column: 1;
+    grid-row: 2;
+    width: 100%;
+    height: auto;
+    border-radius: 0 0 25px 0;
+    background-color: #D64309;    
+}
+div.divSidebar > p{
+    padding-left: 10px;
+}
+.divContent{
+    grid-column: 2;
+    grid-row: 2/4;
+    background-color: white;
+    border-radius: 25px 0px 0px 0px;
+
+    margin: 20px 0px 0px 20px;
+    padding: 0px 20px 0px 20px;
+}
+
+#logo{
+    width:200px;
+}
+
+object {
+    width: 100%;
+    height: 100%;
+}
+
+.sidebar{
+    color: white;
+}
+
+
+/*********************************************************
+* Small Screen Support
+*********************************************************/
+@media  screen and (max-device-width: 8in), 
+        screen and (max-width: 800px){
+
+    .wrapper {
+        /*max-width: 800px;*/
+        width: 100%;
+        grid-template-columns: auto;
+        grid-template-rows: 100px auto auto;
+        grid-row-gap: 10px;
+    }
+    .divHeader {
+        border-radius: 0 0 25px 25px;
+        grid-column: 1/3;
+        grid-row: 1;
+    }
+    .divSidebar { 
+        border-radius: 25px;
+        grid-column: 1/3;
+        grid-row: 2; 
+    }
+    .divSidebar > p{
+        text-align: center;
+    }
+    .divContent{
+        margin: 0px;
+        padding: 0px 10px 0px 10px;
+        grid-column: 1/3;
+        grid-row: 3/4;
+    }
+}
+
+/*********************************************************
+* Headers and TOC
+*********************************************************/
+h1 {
+    color: #003a70;
+}
+
+h2 {
+    color: #D64309;
+}
+
+div.contents {
+    /*background-color: #006BA6;*/
+    display: inline-block;
+    border-style: solid;
+    border-width: 3px;
+    border-color: #0033A0;
+    /*float: left;*/
+    margin: 0px 20px 0px 0px;
+    padding: 0px 10px 0px 0px;
+    border-radius: 10px;
+}
+
+div.contents > ol ol {
+    list-style-type: lower-roman;
+}
+
+/*********************************************************
+* Sidebar
+*********************************************************/
+div.divSidebar > p { 
+    color:white;
+    font-family: 'Lucida Console', Monaco, monospace;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+div.divSidebar > p > a {
+    color: white;
+    text-decoration: none;
+}
+div.divSidebar > p:hover {
+    background-color: #0033A0;
+}
+
+/*********************************************************
+* Article Fomatting
+*********************************************************/
+
+span.title{
+    font-size: 3em;
+}
+span.author{
+    color: gray;
+}
+span.updated{
+    font-style: italic;
+    font-size: .9em;
+}
+span.mod_time{
+    font-style: italic;
+    color: gray;
+}
+
+span.mono{
+    font-family: "Lucida Console", Monaco, monospace;
+    background-color: lightgray;
+}
+
+table, th, td{
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 5px;
+    font-family: "Times New Roman";
+}
+
+table.data > tbody >td{
+    text-align: right;
+    font-family: "Lucida Console", Monaco, monospace;
+    padding-left: 15px;
+}
+
+table.center {
+    margin-left:auto; 
+    margin-right:auto;
+}
+
+pre code {
+    word-wrap: normal;
+}
+
+.warning{
+    color: red;
+}
+
+img.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.definition {
+    margin-left: 2em;
+    margin-right: 4em;
+    padding: 1em;
+    
+    border-radius: 1em 1em 1em 1em;
+
+    background-color: #D9D9D6;
+}
+
+/*********************************************************
+* Pandas Table Formatting
+*********************************************************/
+
+/*********************************************************
+* Misc
+*********************************************************/
+span.snipet {
+    background-color: lightgrey;
+}
+

@@ -1,0 +1,78 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
+    
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    
+    <!--Prisim for code highlighting -->
+    <script src="prism.js"></script>    
+    <link rel="stylesheet" href="prism.css">
+    
+<!--************************************************************************-->
+<title>Shaw Research Notes</title>
+</head>
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<body>
+
+<div class="top-bar">
+    <a href="../index.html"><img src="../frame/boulder-logo.png"></a>
+</div>
+
+<div class="side-bar" w3-include-html="sidebar.html">
+    <p><a href="../reports/reports.html" target="_top">Reports</a></p>
+    <p><a href="../todo/todo.html" target="_top">To Do List</a></p>
+    <p><a href="../about/about.html" target="_top">About</a></p>
+    <hr>
+    <p><a id="current" href="../reports/report20210520.html" target="_top">Recent</a></p>
+</div>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<div class="page-content">
+
+    <h1 id="">Elevator Pitch</h1>
+    <p>
+        Neural tissue is composed of cells called neurons. These neurons connect to each other forming complex networks. Information can travel through these networks in form of electrical activity. The state and structure of these networks is responsible for all functionality we associate with brains and neural cortices: memory, object detection, higher reasoning, etc.
+    </p>
+    <p>
+        Studying these networks is mathematically intractible, so instead we examine simplified models that capture the relevant dynamics. For example, corticol slices have been shown to exhibit traveling waves of electrical activity. When electrically stimiulated in a region the electrical activity spreads at a measurable speed.
+    </p>
+    <p><a href="https://doi.org/10.1103/PhysRevE.85.021910" target="blank">Kilpatrick and Ermentrout 2012</a> modeled this by the integro-differential equation
+$$
+    u_t = -u + \int_{-\infty}^\infty \tfrac{1}{2}e^{-|x-y|} H(u - \theta) \ dy + I(x,t)
+$$
+    where $u(x,t)$ is a measure of electrical activity at location $x$ and time $t$, $H$ is the heaviside function, $\theta$ is the firing-rate threshold (how much activity does it take for a neuron to "fire"), and $I(x,t)$ is some external stimulus. This model captures the traveling front dynamics and can be used to show that temporary stimuli have the ultimate effect of shifting the traveling front forward (or backward) as seen in the simulation below, where the stimulus is a spatially homogeneous pulse at time $t = 1$ given by $I(x,t) = 0.15 \delta(t - 1)$.
+    </p>
+
+    <video controls autoplay muted loop>
+        <source src="response.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+</div>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+<script>
+includeHTML();
+</script>
+</body>
+</html>

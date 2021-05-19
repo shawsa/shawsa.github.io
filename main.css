@@ -1,229 +1,178 @@
-/*
-Colors from https://brandstandards.boisestate.edu/colors/
-navy blue -         #1e3975
-blue -              #0033A0
-orange -            #D64309
-Pantone Cool Gray - #D9D9D6 
-*/
+/***********************************************
 
-/*********************************************************
-* Main Divs
-*********************************************************/
+https://www.colorado.edu/brand/how-use/color
+
+CU Gold         -   #CFB87C
+Black           -   #000000
+CU Dark Gray    -   #565A5C
+CU Light Gray   -   #A2A4A3
+
+***********************************************/
+
+/***********************************************
+
+Structure
+
+***********************************************/
+
 body {
-    /*background-color: #0033A0;*/
-    background-color: #1e3975;
+    padding: 0px;
     margin: 0px;
-    padding: 0px;
-    font-family: "Arial";
-}
-
-.wrapper {
-    margin: 0px 0px 20px 0px;
-    padding: 0px;
-    /*max-width: 1100px;*/
     display: grid;
-    grid-template-columns: 200px auto;
-    grid-template-rows: 100px 21em auto;
-    gap: 0px;
-}
-.divHeader {
-    margin: 0px;
-    padding: 0px;
-    /*border-radius: 0 0 25px 0;*/
-    grid-column: 1/3;
-    grid-row: 1;
-    background-color: white;
-}
-.divSidebar { 
-    grid-column: 1;
-    grid-row: 2;
-    width: 100%;
-    height: auto;
-    border-radius: 0 0 25px 0;
-    background-color: #D64309;    
-}
-div.divSidebar > p{
-    padding-left: 10px;
-}
-.divContent{
-    grid-column: 2;
-    grid-row: 2/4;
-    background-color: white;
-    border-radius: 25px 0px 0px 0px;
-
-    margin: 20px 0px 0px 20px;
-    padding: 0px 20px 0px 20px;
-}
-
-#logo{
-    width:200px;
-}
-
-object {
-    width: 100%;
+    grid-template-columns: 15em auto;
+    grid-template-rows: auto 1fr;
     height: 100%;
+    width: 100%;
 }
 
-.sidebar{
-    color: white;
+.top-bar {
+    grid-row: 1;
+    grid-column: 1/3;
+    /*height: auto;*/
 }
 
+.side-bar {
+    grid-row: 2;
+    grid-column: 1;
+    background-color: #565A5C;
+    width: auto;
+}
 
-/*********************************************************
-* Small Screen Support
-*********************************************************/
+.page-content {
+    grid-row: 2;
+    grid-column: 2;
+    max-width: 800px;
+}
+
+/* Small Screen Support*/
 @media  screen and (max-device-width: 8in), 
         screen and (max-width: 800px){
 
-    .wrapper {
+    body {
         /*max-width: 800px;*/
         width: 100%;
         grid-template-columns: auto;
-        grid-template-rows: 100px auto auto;
-        grid-row-gap: 10px;
+        grid-template-rows: auto auto auto;
+        grid-row-gap: 0px;
     }
-    .divHeader {
-        border-radius: 0 0 25px 25px;
+    .top-bar {
         grid-column: 1/3;
         grid-row: 1;
     }
-    .divSidebar { 
-        border-radius: 25px;
+
+    .imgLogo {
+        width: 100%;
+    }    
+
+    .side-bar { 
+        width: 100%;
         grid-column: 1/3;
         grid-row: 2; 
     }
-    .divSidebar > p{
+    .side-bar > p{
         text-align: center;
     }
-    .divContent{
+    .page-content{
         margin: 0px;
         padding: 0px 10px 0px 10px;
         grid-column: 1/3;
-        grid-row: 3/4;
+        grid-row: 3;
     }
 }
 
-/*********************************************************
-* Headers and TOC
-*********************************************************/
+
+/***********************************************
+
+Top Bar
+
+***********************************************/
+
+.top-bar {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+/***********************************************
+
+Side Bar
+
+***********************************************/
+
+.side-bar {
+    background-color: #565A5C;
+    font-family: helvetica;
+    font-size: 1.5em;
+    color: #FFFFFF
+}
+
+.side-bar p {
+    padding-left: 1em;
+    padding-right: 1em;
+    text-align: center;
+    font-weight: bold;
+}
+
+.side-bar a {
+    color: #FFFFFF;
+    text-decoration: none
+}
+
+.side-bar p:hover {
+    background-color: #000000;
+}
+
+.side-bar p:hover > a {
+    color: #CFB87C;
+}
+
+.side-bar hr {
+    color: #CFB87C;
+    background-color:#CFB87C;
+    height: .1em;
+    border-width: 0px;
+    width: 95%;
+}
+
+/***********************************************
+
+Page Content
+
+***********************************************/
+
+.page-content {
+    background-color: #FFFFFF;
+    padding: 2em;
+}
+
 h1 {
-    color: #003a70;
+    font-weight: bold;
 }
 
 h2 {
-    color: #D64309;
+    color: #565A5C;
 }
 
-div.contents {
-    /*background-color: #006BA6;*/
-    display: inline-block;
-    border-style: solid;
-    border-width: 3px;
-    border-color: #0033A0;
-    /*float: left;*/
-    margin: 0px 20px 0px 0px;
-    padding: 0px 10px 0px 0px;
-    border-radius: 10px;
+.page-content hr {
+    color: #CFB87C;
+    background-color:#CFB87C;
+    height: .2em;
+    border-width: 0px;
+    width: 100%;
 }
 
-div.contents > ol ol {
-    list-style-type: lower-roman;
-}
-
-/*********************************************************
-* Sidebar
-*********************************************************/
-div.divSidebar > p { 
-    color:white;
-    font-family: 'Lucida Console', Monaco, monospace;
-    text-transform: uppercase;
-    font-weight: bold;
-}
-div.divSidebar > p > a {
-    color: white;
-    text-decoration: none;
-}
-div.divSidebar > p:hover {
-    background-color: #0033A0;
-}
-
-/*********************************************************
-* Article Fomatting
-*********************************************************/
-
-span.title{
-    font-size: 3em;
-}
-span.author{
-    color: gray;
-}
-span.updated{
-    font-style: italic;
-    font-size: .9em;
-}
-span.mod_time{
-    font-style: italic;
-    color: gray;
-}
-
-span.mono{
-    font-family: "Lucida Console", Monaco, monospace;
-    background-color: lightgray;
-}
-
-table, th, td{
-    border: 2px solid black;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 5px;
-    font-family: "Times New Roman";
-}
-
-table.data > tbody >td{
-    text-align: right;
-    font-family: "Lucida Console", Monaco, monospace;
-    padding-left: 15px;
-}
-
-table.center {
-    margin-left:auto; 
-    margin-right:auto;
-}
-
-pre code {
-    word-wrap: normal;
-}
-
-.warning{
-    color: red;
-}
-
-img.center {
-    display: block;
+video {
+    max-width: 100%;
+    height: auto;
     margin-left: auto;
     margin-right: auto;
+    display: block
 }
 
-.definition {
-    margin-left: 2em;
-    margin-right: 4em;
-    padding: 1em;
-    
-    border-radius: 1em 1em 1em 1em;
-
-    background-color: #D9D9D6;
+.report_link a {
+    color: #000000;
+    text-decoration: underline;
+    font-size: 2em;
 }
 
-/*********************************************************
-* Pandas Table Formatting
-*********************************************************/
 
-/*********************************************************
-* Misc
-*********************************************************/
-span.snipet {
-    background-color: lightgrey;
-}
 

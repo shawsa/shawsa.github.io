@@ -1,8 +1,8 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="main.css">
-    <script src="main.js"></script>
+    <link rel="stylesheet" href="../main.css">
+    <script src="../main.js"></script>
     
     
     <!-- Mathjax scripts -->
@@ -30,19 +30,36 @@
 <body>
 
 <div class="top-bar">
-    <a href="index.html"><img src="frame/boulder-logo.png"></a>
+    <a href="../index.html"><img src="../frame/boulder-logo.png"></a>
 </div>
 
 <div class="side-bar" w3-include-html="sidebar.html">
-    <p><a href="reports/reports.html" target="_top">Reports</a></p>
-    <p><a href="todo/todo.html" target="_top">To Do List</a></p>
-    <p><a href="about/about.html" target="_top">About</a></p>
+    <p><a href="../reports/reports.html" target="_top">Reports</a></p>
+    <p><a href="../todo/todo.html" target="_top">To Do List</a></p>
+    <p><a href="../about/about.html" target="_top">About</a></p>
     <hr>
-    <p><a id="current" href="reports/report20210520.html" target="_top">Recent</a></p>
+    <p><a id="current" href="../reports/report20210520.html" target="_top">Recent</a></p>
 </div>
 
 <div class="page-content">
-    Hello world!
+    <h1>To Do List</h1>
+    <p>
+        <ul>
+            <li>Simulate the negative feedback model in Killpatrick et al 2008.</li>
+                <ul>
+                    <li>Numerically time-step the system.</li>
+                    <li>Analytically find the traveling wave solution.</li>
+                </ul>
+            <li>Simulate the negative feedback model in Killpatrick &amp; Bressloff 2010.</li>
+                <ul>
+                    <li>Numerically time-step the system.</li>
+                    <li>Analytically find the traveling wave solution.</li>
+                </ul>
+            <li>Read Coombes 2004.</li>
+            <li>Read Folias &amp; Bressloff 2005.</li>
+            <li>Read Faye &amp; Kilpatrick 2018.</li>
+        </ul>
+    </p>
 </div>
 
 
@@ -55,3 +72,7 @@ includeHTML();
 </script>
 </body>
 </html>
+
+
+
+    
