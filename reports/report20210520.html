@@ -45,19 +45,19 @@
 
 <h1 id="Title">May 20th, 2012</h1>
 <p id="summary">
-    I examined two models incorporating negative feedback that alow for traveling pulses: the Pinto-Ermentrout model (reference: <a href="https://epubs.siam.org/doi/10.1137/070699214">Kilpatrick et al. 2008</a>) and the Kilpatrick-Bressloff model (reference: <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a>). I have simulated each numerically and found parameters and initial conditions that induce traveling pulses. My pulse-profiles do not seem to quite match the profiles in <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a> Figures 2 and 4. I susspect a small bug in my implementation.
+    I examined two models incorporating negative feedback that allow for traveling pulses: the Pinto-Ermentrout model (reference: <a href="https://epubs.siam.org/doi/10.1137/070699214">Kilpatrick et al. 2008</a>) and the Kilpatrick-Bressloff model (reference: <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a>). I have simulated each numerically and found parameters and initial conditions that induce traveling pulses. My pulse-profiles do not seem to quite match the profiles in <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a> Figures 2 and 4. I suspect a small bug in my implementation.
 </p>
 
 <hr><!--********************************************************************-->
 <h1 id="">To-Do List Snapshot</h1>
     <p>
     <ul>
-        <li>Simulate the negative feedback model in Killpatrick et al 2008.</li>
+        <li>Simulate the negative feedback model in Kilpatrick et al 2008.</li>
             <ul>
                 <li><s>Numerically time-step the system.</s></li>
                 <li>Analytically find the traveling wave solution.</li>
             </ul>
-        <li>Simulate the negative feedback model in Killpatrick &amp; Bressloff 2010.</li>
+        <li>Simulate the negative feedback model in Kilpatrick &amp; Bressloff 2010.</li>
             <ul>
                 <li><s>Numerically time-step the system.</s></li>
                 <li>Analytically find the traveling wave solution.</li>
@@ -82,7 +82,7 @@ where $u$ is a measure of synaptic activity, $v$ is a local negative-feedback me
 </p>
 
 <p>
-    Below, we have chosen $w(x,x^\prime) = \frac{1}{2}\exp(|x-x^\prime|)$, $f(u) = H(u - 0.2)$ where $H$ is the heaviside function. The constants are $\alpha = 0.04$, $\beta = 2$, and $\tau_m = 1$. The initial conditions for both $u$ and $v$ are cosine bells, centered at $x=0$ and $x=-\pi$ respetively. The profile of $u$ seems to match the dashed line in Figure 6 of <a href="https://epubs.siam.org/doi/10.1137/070699214">Kilpatrick et al. 2008</a>.
+    Below, we have chosen $w(x,x^\prime) = \frac{1}{2}\exp(|x-x^\prime|)$, $f(u) = H(u - 0.2)$ where $H$ is the Heaviside function. The constants are $\alpha = 0.04$, $\beta = 2$, and $\tau_m = 1$. The initial conditions for both $u$ and $v$ are cosine bells, centered at $x=0$ and $x=-\pi$ respectively. The profile of $u$ seems to match the dashed line in Figure 6 of <a href="https://epubs.siam.org/doi/10.1137/070699214">Kilpatrick et al. 2008</a>.
 </p>
 
 <video controls autoplay muted loop>
@@ -93,13 +93,13 @@ where $u$ is a measure of synaptic activity, $v$ is a local negative-feedback me
 <hr><!--********************************************************************-->
 <h1 id="">The Kilpatrick-Bressloff Model</h1>
 <p>
-    <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a> use a model incorporating a "hyperpolarizing adaptation current" (similar to the negative-feedback variable $v$ from the Pinto-Ermentrout model above) and also a synaptic scaling factor that represents available synaptic resourses. The model is given by
+    <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a> use a model incorporating a "hyper-polarizing adaptation current" (similar to the negative-feedback variable $v$ from the Pinto-Ermentrout model above) and also a synaptic scaling factor that represents available synaptic resources. The model is given by
 $$\begin{align*}
     \mu u_t &= -u + \int_{-\infty}^\infty w(x,x^\prime) q(x^\prime,t) f( u(x^\prime,t) - a(x^\prime,t)) \ dx^\prime \\
     q_t &= \frac{1 - q}{\alpha} - \beta q f(u - a) \\
     \epsilon a_t &= -a + \gamma f(u - a)
 \end{align*}$$
-where $u$ is the synaptic activity, $q$ is the available synaptic resourses, and $a$ is the adaptation current (negative feed-back).
+where $u$ is the synaptic activity, $q$ is the available synaptic resources, and $a$ is the adaptation current (negative feed-back).
 </p>
 
 <p>
@@ -112,7 +112,7 @@ where $u$ is the synaptic activity, $q$ is the available synaptic resourses, and
 </video>
 
 <p>
-    Chaning the parameters to $\alpha = 20, \beta = 0.4, \epsilon = 5, \gamma = 0.1,$ and $\mu = 1$; we also exhibit a traveling pulse, close to but  Figure 4 in <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a>. This profile again is close, but is it does not appear to dip below $u = 0$ near the trailing edge. I'm also not sure why.
+    Changing the parameters to $\alpha = 20, \beta = 0.4, \epsilon = 5, \gamma = 0.1,$ and $\mu = 1$; we also exhibit a traveling pulse, close to but  Figure 4 in <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a>. This profile again is close, but is it does not appear to dip below $u = 0$ near the trailing edge. I'm also not sure why.
 </p>
 
 <video controls autoplay muted loop>
@@ -126,8 +126,39 @@ where $u$ is the synaptic activity, $q$ is the available synaptic resourses, and
 <h1 id="">Questions</h1>
 <ul>
     <li>What is an <i>Evans function</i>?</li>
+        <ul>
+            <li><b>A:</b> They are functions that arise in the analysis of traveling wave solutions. See Coombes 2004.</li>
+        </ul>        
     <li>What could be causing the discrepancies in my wave-profiles?</li>
+        <ul>
+            <li><b>A:</b> Figures 4 and 6 in <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a> have $J = u-a$ on the vertical axis. This explains both wave-profile discrepancies.</li>
+        </ul>
+        
 </ul>
+
+<hr><!--********************************************************************-->
+<h1 id="">Meeting Notes</h1>
+<p>
+    For simplicity of analysis, I will remove the synaptic depression $q$ from the Kilpatrick and Bressloff 2010 (KB10) model. This may necessitate increasing $\gamma$ in order to allow for traveling pulse solutions. We discussed three possible topics going forward: wave-train analysis, wave-responses to stimuli, and colliding pulses.
+</p>
+
+<h2 id="">Wave-Train Analysis</h2>
+<p>
+    Looking for non-trivial periodic solutions to KB10 could be interesting. In particular, what is the largest frequency that allows for non-trivial solutions. I think I read the phrase "wave-train" in one of the papers. Perhaps start with a literature review to see what has been done and with which models.
+</p>
+
+<h2 id="">Wave-Response Function</h2>
+<p>
+    Similar to <a href="https://link.aps.org/doi/10.1103/PhysRevE.85.021910">Kilpatrick and Ermentrout 2012</a>, examine the effects of stimuli on the KB10 model. 
+</p>
+
+<h2 id="">Colliding Pulses</h2>
+<p>
+    These seems to be the least interesting idea, but should be easy enough to simulate. Since stable pulses are unique up to direction and translation invariance, the only way they can collide is if they are traveling in opposite directions. We expect that they will simply annihilate, but it should be easy enough to simulate.
+</p>
+
+
+
 
 <!--***************************************************************************
 *******************************************************************************
