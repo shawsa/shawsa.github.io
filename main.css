@@ -139,6 +139,12 @@ Page Content
 
 ***********************************************/
 
+.report_link a {
+    color: #000000;
+    text-decoration: underline;
+    font-size: 2em;
+}
+
 .page-content {
     background-color: #FFFFFF;
     padding: 2em;
@@ -168,11 +174,25 @@ video {
     display: block
 }
 
-.report_link a {
-    color: #000000;
-    text-decoration: underline;
-    font-size: 2em;
+ul {
+  list-style: none;
 }
 
+ul li::before {
+  content: "\2022";
+  color: #000000;
+  font-weight: bold;
+  display: inline-block; 
+  width: 1em;
+  margin-left: -1em;
+}
+
+ul ul {
+    list-style-type: dash;
+}
+
+ul ul li::before {
+    color: #CFB87C;
+}
 
 
