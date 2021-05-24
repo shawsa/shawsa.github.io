@@ -1,0 +1,217 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    
+    <!--Prisim for code highlighting -->
+    <script src="prism.js"></script>    
+    <link rel="stylesheet" href="prism.css">
+    
+<!--************************************************************************-->
+<title>Shaw Research Notes</title>
+</head>
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<body>
+
+<div class="top-bar">
+    <a href="../index.html"><img src="../frame/boulder-logo.png"></a>
+</div>
+
+<div id="side-bar" class="side-bar">
+    <p><a href="../reports/reports.html" target="_top">Reports</a></p>
+    <p><a href="../todo/todo.html" target="_top">To Do List</a></p>
+    <p><a href="../about/about.html" target="_top">About</a></p>
+    <hr>
+    <p><a href="../old-rbf/index.html" target="_top">Old Site</a></p>
+</div>
+
+<div class="page-content">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<h1 id="Title">May 27<sup>th</sup>, 2021</h1>
+<p id="summary">
+    Lorem ipsum
+</p>
+
+<hr><!--********************************************************************-->
+<h1 id="">To-Do List Snapshot</h1>
+<p>
+<ul>
+    <li><s>Simulate the KB10 model, but without $q$. Find parameters that admit traveling pulse solutions.</s></li>
+    <li>Analytically find the traveling pulse/front solutions.</li>
+    <li>Investigate wave-response function.</li>
+    <ul>
+        <li>Spatially homogeneous pulse.</li>
+        <li>Spatially homogeneous, temporally finite.</li>
+        <li>Local pulses.</li>
+    </ul>
+    <li>Wave-train Analysis</li>
+    <ul>
+        <li>Search the literature.</li>
+        <li>Find periodic solutions.</li>
+        <li>Compare frequency to a pair of pulses.</li>
+    </ul>
+    <li>Experiment with colliding pulses.</li>
+    <li>Reading</li>
+    <ul>
+        <li>Coombes 2004.</li>
+        <li>Folias &amp; Bressloff 2005.</li>
+        <li>Faye &amp; Kilpatrick 2018.</li>
+    </ul>
+</ul>
+</p>
+
+<hr><!--********************************************************************-->
+
+<h1 id="">Modified KB10 Simulation</h1>
+<p>
+    What I am calling the modifed KB10 model is the model from <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a> (KB10) but with the synaptic depression ($q$) removed. This is equivalent to setting $\beta = 0$ and initializing $q = 0$ in their model. The result is then
+$$\begin{align*}
+    \mu u_t &= -u + \int_{-\infty}^\infty w(x,x^\prime) f( u(x^\prime,t) - a(x^\prime,t)) \ dx^\prime \\
+    \alpha a_t &= -a + \gamma f(u - a).
+\end{align*}$$
+Note that we have re-labeled the parameters $\epsilon \to \alpha$ and the old $\alpha$ is not present.
+</p>
+
+<p>
+    With the removal of the synaptic depression variable, we will need to find new parameter sets that admit traveling wave solutions. In particular, in KB10 with their choice of parameters, the synaptic depression appeared to be the primary restorative force, with hyperpolarizing adaptation current ($a$) playing a minor role. With our removal of the synaptic depression we will need to tune the parameters so that the hyperpolarizing adaptation current can provide sufficient restoration. This suggests increasing $\gamma$. Below, Figure 1 does exactly this and we indeed have a traveling pulse.
+</p>
+<figure>
+    <video controls autoplay muted loop>
+        <source src="./report20210527/modified_KB10_pulse.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+        
+    </video>
+    <figcaption><b>Fig 1.</b> The modified KB10 model with $w(x,y) = \frac{1}{2}e^{-|x-y|}$, $f(u) = H(u-\theta)$, and parameters: $\theta = 0.1, \alpha = 5, \gamma = 1, \mu = 1$. The initial condition is $a=0$ and $u$ is a cosine bell with height 1 and width 50.</figcaption>
+</figure>
+
+<p>
+    Figure 2 (below) shows the same parameter choices, but with the initial conditions set to create two pulses traveling in opposite directions. As predicted, they simply annihilate eachother. Since the traveling pulse solutions to the modified KB10 model are unique (as it is a special case of the KB10 model) there are essentially no other configurations to test. I don't think that there is anything interesting to study for colliding pulses in one dimension.
+</p>
+<figure>
+    <video controls autoplay muted loop>
+        <source src="./report20210527/modified_KB10_cancelation.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+        
+    </video>
+    <figcaption><b>Fig 2.</b> The modified KB10 model with $w(x,y) = \frac{1}{2}e^{-|x-y|}$, $f(u) = H(u-\theta)$, and parameters: $\theta = 0.1, \alpha = 5, \gamma = 1, \mu = 1$. The initial condition is $a=0$ and $u$ is a sum of cosine bells with height 1 and width 50 and centers $x=0, 500$. The traveling pulses of opposite direction annihilate.</figcaption>
+</figure>
+
+<hr><!--********************************************************************-->
+
+<h1 id="">Traveling Pulse Solutions</h1>
+
+<p>
+    Since we are working with a special case of the KB10 model, we can re-use the analysis from <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a>. In particular, their Equations 3.30-31 give that our wave speed $c$ and pulse width $\Delta$ are given as the solution to the following system
+$$\begin{align*}
+	E &= e^{- \Delta}\\
+	0 &= - \frac{E}{2 \theta} - c - 1 + \frac{1}{2 \theta}\\
+	0 &= - E^{\frac{1}{c}} + \frac{\left(E - 1\right) \left(c + 1\right)}{2} + \left(c^{2} - 1\right) \left(- E^{\frac{1}{c}} + \gamma \left(E^{\frac{\alpha}{c}} - 1\right) - \theta + 1\right) + 1.
+\end{align*}$$
+</p>
+
+
+<button class="accordion">Derivation</button>
+<div class="panel">
+<p>
+We begin with
+$$\begin{align*}
+	0 &= K_{0} - K_{1} e^{- \Delta} - K_{2} e^{- \Delta} e^{\frac{\Delta \left(- \alpha \beta - 1\right)}{\alpha c}} - \theta\\
+	0 &= L_{0} + L_{1} e^{- \Delta} + L_{2} e^{\frac{\Delta \left(- \alpha \beta - 1\right)}{\alpha c}} - L_{3} e^{- \frac{\Delta}{c}} + \gamma e^{- \frac{\Delta}{\epsilon c}} - \theta\\
+	K_{0} &= \frac{\alpha c + 1}{\left(2 c + 2\right) \left(\alpha \beta + \alpha c + 1\right)}\\
+	K_{1} &= \frac{1}{\left(2 c + 2\right) \left(\alpha \beta + 1\right)}\\
+	K_{2} &= \frac{\alpha^{2} \beta c}{\left(2 c + 2\right) \left(\alpha \beta + 1\right) \left(\alpha \beta + \alpha c + 1\right)}\\
+	L_{0} &= - \gamma + \frac{c + \frac{1}{2}}{\left(c + 1\right) \left(\alpha \beta + 1\right)}\\
+	L_{1} &= \frac{\alpha c - 1}{\left(2 c - 2\right) \left(- \alpha \beta + \alpha c - 1\right)}\\
+	L_{2} &= \frac{\alpha^{4} \beta c^{2}}{\left(\alpha \beta + 1\right) \left(\alpha^{2} c^{2} - \left(\alpha \beta + 1\right)^{2}\right) \left(- \alpha \beta + \alpha - 1\right)} - \frac{\alpha^{2} \beta c}{2 \left(c + 1\right) \left(\alpha \beta + 1\right) \left(\alpha \beta + \alpha c + 1\right)}\\
+	L_{3} &= \frac{\frac{\alpha^{4} \beta c^{2}}{\left(\alpha^{2} c^{2} - \left(\alpha \beta + 1\right)^{2}\right) \left(- \alpha \beta + \alpha - 1\right)} + 1}{\alpha \beta + 1} + \frac{\alpha^{2} c^{2} \left(\beta + 1\right) - \alpha \beta - 1}{\left(c^{2} - 1\right) \left(\alpha^{2} c^{2} - \left(\alpha \beta + 1\right)^{2}\right)}.
+\end{align*}$$
+Then set $\beta=0$ to obtain
+$$\begin{align*}
+	0 &= K_{0} - K_{1} e^{- \Delta} - K_{2} e^{- \Delta} e^{- \frac{\Delta}{\alpha c}} - \theta\\
+	0 &= L_{0} + L_{1} e^{- \Delta} + L_{2} e^{- \frac{\Delta}{\alpha c}} - L_{3} e^{- \frac{\Delta}{c}} + \gamma e^{- \frac{\Delta}{\epsilon c}} - \theta\\
+	K_{0} &= \frac{1}{2 \left(c + 1\right)}\\
+	K_{1} &= \frac{1}{2 c + 2}\\
+	K_{2} &= 0\\
+	L_{0} &= - \gamma + \frac{c + \frac{1}{2}}{c + 1}\\
+	L_{1} &= \frac{1}{2 c - 2}\\
+	L_{2} &= 0\\
+	L_{3} &= 1 + \frac{1}{c^{2} - 1}.
+\end{align*}$$
+Substituting, we find
+$$\begin{align*}
+	0 &= - \theta c - \theta + \frac{1}{2} - \frac{e^{- \Delta}}{2}\\
+	0 &= - \gamma c^{2} + \gamma c^{2} e^{- \frac{\Delta}{\epsilon c}} + \gamma - \gamma e^{- \frac{\Delta}{\epsilon c}} - \theta c^{2} + \theta + c^{2} - c^{2} e^{- \frac{\Delta}{c}} - \frac{c}{2} + \frac{c e^{- \Delta}}{2} - \frac{1}{2} + \frac{e^{- \Delta}}{2}.
+\end{align*}$$
+Simplifing, we arrive at the following system of equations
+$$\begin{align*}
+	c &= -1 + \frac{1}{2 \theta} - \frac{e^{- \Delta}}{2 \theta}\\
+	0 &= c^{2} \left(1 - e^{- \frac{\Delta}{c}}\right) - \frac{\left(1 - e^{- \Delta}\right) \left(c + 1\right)}{2} - \left(c^{2} - 1\right) \left(\gamma \left(1 - e^{- \frac{\Delta}{\epsilon c}}\right) + \theta\right).
+\end{align*}$$
+Making the substitution
+$$E = e^{- \Delta}$$
+we then have
+$$\begin{align*}
+	0 &= - \frac{E}{2 \theta} - c - 1 + \frac{1}{2 \theta}\\
+	0 &= - E^{\frac{1}{c}} + \frac{\left(E - 1\right) \left(c + 1\right)}{2} + \left(c^{2} - 1\right) \left(- E^{\frac{1}{c}} + \gamma \left(E^{\frac{1}{\epsilon c}} - 1\right) - \theta + 1\right) + 1.
+\end{align*}$$
+In our notation, we replace $\epsilon \to 1/\alpha$ to obtain
+$$\begin{align*}
+	E &= e^{- \Delta}\\
+	0 &= - \frac{E}{2 \theta} - c - 1 + \frac{1}{2 \theta}\\
+	0 &= - E^{\frac{1}{c}} + \frac{\left(E - 1\right) \left(c + 1\right)}{2} + \left(c^{2} - 1\right) \left(- E^{\frac{1}{c}} + \gamma \left(E^{\frac{\alpha}{c}} - 1\right) - \theta + 1\right) + 1.
+\end{align*}$$
+</p>
+<p>
+    Most of this was done using SymPy. See <a href="./report20210527/pulse-analysis.html" target="blank">here</a> for the code.
+</p>
+
+</div>
+
+
+
+
+
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+</div>
+
+<!-- Accordion script -->
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+}
+</script>
+
+</body>
+    
+</html>
