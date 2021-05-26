@@ -46,7 +46,7 @@
 
 <h1 id="Title">May 27<sup>th</sup>, 2021</h1>
 <p id="summary">
-    Lorem ipsum <code class="language-python">test = lambda x: x*x</code> is the square-function.
+    We simulate the modified KB10 model (perhaps we will call it the $\beta$-null regime of the KB10 model) and find parameters that appear to admit traveling pulse solutions. We analyzed equations 3.30-3.31 from <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a> in this case, but they appear inconsistent with observations. Perhaps the assumption that $\beta \ne 0$ was essential in their derivation. We may have to re-derive the traveling-pulse solution from scratch.
 </p>
 
 <hr><!--********************************************************************-->
@@ -67,7 +67,7 @@
         <li>Find periodic solutions.</li>
         <li>Compare frequency to a pair of pulses.</li>
     </ul>
-    <li>Experiment with colliding pulses.</li>
+    <li><s>Experiment with colliding pulses.</s></li>
     <li>Reading</li>
     <ul>
         <li>Coombes 2004.</li>
@@ -81,7 +81,7 @@
 
 <h1 id="">Modified KB10 Simulation</h1>
 <p>
-    What I am calling the modifed KB10 model is the model from <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a> (KB10) but with the synaptic depression ($q$) removed. This is equivalent to setting $\beta = 0$ and initializing $q = 0$ in their model. The result is then
+    What we are calling the modifed KB10 model is the model from <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a> (KB10) but with the synaptic depression ($q$) removed. This is equivalent to setting $\beta = 0$ and initializing $q = 1$ in their model. The result is then
 $$\begin{align*}
     \mu u_t &= -u + \int_{-\infty}^\infty w(x,x^\prime) f( u(x^\prime,t) - a(x^\prime,t)) \ dx^\prime \\
     \alpha a_t &= -a + \gamma f(u - a).
@@ -90,7 +90,7 @@ Note that we have re-labeled the parameters $\epsilon \to \alpha$ and the old $\
 </p>
 
 <p>
-    With the removal of the synaptic depression variable, we will need to find new parameter sets that admit traveling wave solutions. In particular, in KB10 with their choice of parameters, the synaptic depression appeared to be the primary restorative force, with hyperpolarizing adaptation current ($a$) playing a minor role. With our removal of the synaptic depression we will need to tune the parameters so that the hyperpolarizing adaptation current can provide sufficient restoration. This suggests increasing $\gamma$. Below, Figure 1 does exactly this and we indeed have a traveling pulse.
+    With the removal of the synaptic depression variable, we will need to find new parameter-sets that admit traveling wave solutions. In particular, in KB10 with their choice of parameters, the synaptic depression appeared to be the primary restorative force, with hyperpolarizing adaptation current ($a$) playing a minor role. With our removal of the synaptic depression we will need to tune the parameters so that the hyperpolarizing adaptation current can provide sufficient restoration. This suggests increasing $\gamma$. Below, Figure 1 does exactly this and we indeed have a traveling pulse.
 </p>
 <figure>
     <video controls autoplay muted loop>
@@ -98,7 +98,7 @@ Note that we have re-labeled the parameters $\epsilon \to \alpha$ and the old $\
         Your browser does not support the video tag.
         
     </video>
-    <figcaption><b>Fig 1.</b> The modified KB10 model with $w(x,y) = \frac{1}{2}e^{-|x-y|}$, $f(u) = H(u-\theta)$, and parameters: $\theta = 0.1, \alpha = 5, \gamma = 1, \mu = 1$. The initial condition is $a=0$ and $u$ is a cosine bell with height 1 and width 50. The pulse-width here is approximately $\Delta = 38.83$ (the measure of $\{x : J(x)>\theta\}$) and the pulse-speed is approximately $c=3.924$.</figcaption>
+    <figcaption><b>Fig 1.</b> The modified KB10 model with $w(x,y) = \frac{1}{2}e^{-|x-y|}$, $f(u) = H(u-\theta)$, and parameters: $\theta = 0.1, \alpha = 5, \gamma = 1, \mu = 1$. The initial condition is $a=0$ and $u$ is a cosine bell with height 1 and width 50. The pulse-width here is approximately $\Delta = 38.83$ (the measure of $\{x : J(x)>\theta\}$) and the pulse-speed is approximately $c=3.924$. (<a href="../reports/report20210527/simulation.html" target=blank>simulation code</a> [<a href="../reports/report20210527/simulation.ipynb" download>notebook download</a>])</figcaption>
 </figure>
 
 <p>
@@ -110,7 +110,7 @@ Note that we have re-labeled the parameters $\epsilon \to \alpha$ and the old $\
         Your browser does not support the video tag.
         
     </video>
-    <figcaption><b>Fig 2.</b> The modified KB10 model with $w(x,y) = \frac{1}{2}e^{-|x-y|}$, $f(u) = H(u-\theta)$, and parameters: $\theta = 0.1, \alpha = 5, \gamma = 1, \mu = 1$. The initial condition is $a=0$ and $u$ is a sum of cosine bells with height 1 and width 50 and centers $x=0, 500$. The traveling pulses of opposite direction annihilate.</figcaption>
+    <figcaption><b>Fig 2.</b> The modified KB10 model with $w(x,y) = \frac{1}{2}e^{-|x-y|}$, $f(u) = H(u-\theta)$, and parameters: $\theta = 0.1, \alpha = 5, \gamma = 1, \mu = 1$. The initial condition is $a=0$ and $u$ is a sum of cosine bells with height 1 and width 50 and centers $x=0, 500$. The traveling pulses of opposite direction annihilate. (<a href="../reports/report20210527/simulation.html" target=blank>simulation code</a> [<a href="../reports/report20210527/simulation.ipynb" download>notebook download</a>])</figcaption>
 </figure>
 
 <hr><!--********************************************************************-->
@@ -118,24 +118,14 @@ Note that we have re-labeled the parameters $\epsilon \to \alpha$ and the old $\
 <h1 id="">Traveling Pulse Solutions</h1>
 
 <p>
-    Since we are working with a special case of the KB10 model, we can re-use the analysis from <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a>. In particular, their Equations 3.30-31 give that our wave speed $c$ and pulse width $\Delta$ are given as the solution to the following system (derivation below)
+    Since we are working with a special case of the KB10 model, should be able to re-use the analysis from <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a>. In particular, their Equations 3.30-31 give that our wave speed $c$ and pulse width $\Delta$ are given as the solution to the following system (derivation below)
 $$\begin{align*}
 	\Delta &= \log{\left(\frac{1}{- 2 \theta \left(c + 1\right) + 1} \right)}\\
 	0 &= \gamma \left(\left(- 2 \theta \left(c + 1\right) + 1\right)^{\frac{\alpha}{c}} - 1\right) + \frac{- 2 \theta c + c^{2} \left(- 2 \theta - \left(- 2 \theta \left(c + 1\right) + 1\right)^{\frac{1}{c}} + 1\right)}{c^{2} - 1}.
 \end{align*}$$
 </p>
 
-<!--pre><code class="language-python">def rbf(r, eps):
-    return np.exp(-eps*r**2)
-def dist(x,y):
-    return np.abs(x-y)
 
-n = 50
-eps = .3
-
-xs = np.linspace(0,1,n)
-A = np.array([[rbf(dist(x,y), eps) for y in xs] for x in xs])
-</code></pre-->
 
 
 
@@ -188,6 +178,11 @@ $$\begin{align*}
 \end{align*}$$
 </p>
 
+<p>
+    (<a href="../reports/report20210527/pulse-analysis.html" target=blank>code</a> [<a href="../reports/report20210527/pulse-analysis.ipynb" download>notebook download</a>])
+</p>
+
+
 </div>
 
 <p>
@@ -196,13 +191,21 @@ $$\begin{align*}
 
 <figure>
     <img src="./report20210527/rootfinding.png">
-    <figcaption><b>Fig 3.</b>The RHS of the second equation, as a function of $c$ with parameters given by $\gamma = 1, \theta=0.1, \alpha=5$. We can see that the expression is bounded above by $-0.2$ and thus our system is not consistent.</figcaption>
+    <figcaption><b>Fig 3.</b>The RHS of the second equation, as a function of $c$ with parameters given by $\gamma = 1, \theta=0.1, \alpha=5$. We can see that the expression is bounded above by $-0.2$ and thus our system is not consistent. (<a href="../reports/report20210527/pulse-analysis.html" target=blank>code</a> [<a href="../reports/report20210527/pulse-analysis.ipynb" download>notebook download</a>])</figcaption>
 </figure>
 
+<p>
+    
+</p>
+
+<p>
+    For reference, here is the generated code for the function depicted in Figure 3, above.
+</p>
 
 
-
-
+<pre><code class="language-python">def c_implicit(c, γ, α, θ=0.1):
+    return γ*(( lambda base, exponent: base**exponent )(-2*θ*(c + 1) + 1, α/c) - 1) + (-2*θ*c + ( lambda base, exponent: base**exponent )(c, 2)*(-2*θ - ( lambda base, exponent: base**exponent )(-2*θ*(c + 1) + 1, 1.0/c) + 1))/(( lambda base, exponent: base**exponent )(c, 2) - 1)
+</code></pre>
 
 <!--***************************************************************************
 *******************************************************************************

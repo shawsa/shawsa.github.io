@@ -2,6 +2,7 @@
 
 <head>
     <link rel="stylesheet" href="./main.css">
+    
     <!-- Mathjax scripts -->
     <script type="text/x-mathjax-config">
         MathJax.Hub.Config({
@@ -14,8 +15,8 @@
 
     
     <!--Prisim for code highlighting -->
-    <script src="prism.js"></script>    
-    <link rel="stylesheet" href="prism.css">
+    <script src="./prism.js"></script>    
+    <link rel="stylesheet" href="./prism.css">
     
 <!--************************************************************************-->
 <title>Shaw Research Notes</title>
@@ -43,126 +44,192 @@
 *******************************************************************************
 ****************************************************************************-->
 
-<h1 id="Title">May 20th, 2021</h1>
+<h1 id="Title">May 27<sup>th</sup>, 2021</h1>
 <p id="summary">
-    I examined two models incorporating negative feedback that allow for traveling pulses: the Pinto-Ermentrout model (reference: <a href="https://epubs.siam.org/doi/10.1137/070699214">Kilpatrick et al. 2008</a>) and the Kilpatrick-Bressloff model (reference: <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a>). I have simulated each numerically and found parameters and initial conditions that induce traveling pulses. My pulse-profiles do not seem to quite match the profiles in <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a> Figures 2 and 4. I suspect a small bug in my implementation.
+    We simulate the modified KB10 model (perhaps we will call it the $\beta$-null regime of the KB10 model) and find parameters that appear to admit traveling pulse solutions. We analyzed equations 3.30-3.31 from <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a> in this case, but they appear inconsistent with observations. Perhaps the assumption that $\beta \ne 0$ was essential in their derivation. We may have to re-derive the traveling-pulse solution from scratch.
 </p>
 
 <hr><!--********************************************************************-->
 <h1 id="">To-Do List Snapshot</h1>
-    <p>
-    <ul>
-        <li>Simulate the negative feedback model in Kilpatrick et al 2008.</li>
-            <ul>
-                <li><s>Numerically time-step the system.</s></li>
-                <li>Analytically find the traveling wave solution.</li>
-            </ul>
-        <li>Simulate the negative feedback model in Kilpatrick &amp; Bressloff 2010.</li>
-            <ul>
-                <li><s>Numerically time-step the system.</s></li>
-                <li>Analytically find the traveling wave solution.</li>
-            </ul>
-        <li>Read Coombes 2004.</li>
-        <li>Read Folias &amp; Bressloff 2005.</li>
-        <li>Read Faye &amp; Kilpatrick 2018.</li>
-    </ul>
-</p>
-
-<hr><!--********************************************************************-->
-
-<h1 id="">Pinto-Ermentrout Model</h1>
-
 <p>
-    The Pinto-Ermentrout model is given in <a href="https://epubs.siam.org/doi/10.1137/070699214">Kilpatrick et al. 2008</a> by
-$$\begin{align*}
-    \tau_m u_t &= -u + \int_{-\infty}^{\infty} w(x,x^\prime) f( u(x^\prime,t) ) dx^\prime - \beta v \\
-    \frac{1}{\alpha} v_t &= -v + u
-\end{align*}$$
-where $u$ is a measure of synaptic activity, $v$ is a local negative-feedback mechanism, $w$ describes the connectivity between neurons, $f$ is the firing-rate function, and $\tau_m, \beta,$ and $\alpha$ are constants.
-</p>
-
-<p>
-    Below, we have chosen $w(x,x^\prime) = \frac{1}{2}\exp(|x-x^\prime|)$, $f(u) = H(u - 0.2)$ where $H$ is the Heaviside function. The constants are $\alpha = 0.04$, $\beta = 2$, and $\tau_m = 1$. The initial conditions for both $u$ and $v$ are cosine bells, centered at $x=0$ and $x=-\pi$ respectively. The profile of $u$ seems to match the dashed line in Figure 6 of <a href="https://epubs.siam.org/doi/10.1137/070699214">Kilpatrick et al. 2008</a>.
-</p>
-
-<video controls autoplay muted loop>
-    <source src="reports/report20210520/PE_pulse.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
-
-<hr><!--********************************************************************-->
-<h1 id="">The Kilpatrick-Bressloff Model</h1>
-<p>
-    <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a> use a model incorporating a "hyper-polarizing adaptation current" (similar to the negative-feedback variable $v$ from the Pinto-Ermentrout model above) and also a synaptic scaling factor that represents available synaptic resources. The model is given by
-$$\begin{align*}
-    \mu u_t &= -u + \int_{-\infty}^\infty w(x,x^\prime) q(x^\prime,t) f( u(x^\prime,t) - a(x^\prime,t)) \ dx^\prime \\
-    q_t &= \frac{1 - q}{\alpha} - \beta q f(u - a) \\
-    \epsilon a_t &= -a + \gamma f(u - a)
-\end{align*}$$
-where $u$ is the synaptic activity, $q$ is the available synaptic resources, and $a$ is the adaptation current (negative feed-back).
-</p>
-
-<p>
-    Again we choose $w(x,x^\prime) = \frac{1}{2}\exp(|x-x^\prime|)$, $f(u) = H(u - 0.2)$, and the constants $\alpha = 20, \beta = 0.2, \epsilon = 5, \gamma = 0.05,$ and $\mu = 1$. For the initial conditions, we take $u$ to be a cosine bell with width 20, $a=0$ and $q=1$. The simulation below does exhibit traveling pulses, but they do not quite match the profile of Figure 2 in <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a>. In the limit as $x \to -\infty$ $u \to 0.2$ instead of $0.15$. I'm not sure why.
-</p>
-
-<video controls autoplay muted loop>
-    <source src="reports/report20210520/KB10_pulse1.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
-
-<p>
-    Changing the parameters to $\alpha = 20, \beta = 0.4, \epsilon = 5, \gamma = 0.1,$ and $\mu = 1$; we also exhibit a traveling pulse, close to but  Figure 4 in <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a>. This profile again is close, but is it does not appear to dip below $u = 0$ near the trailing edge. I'm also not sure why.
-</p>
-
-<video controls autoplay muted loop>
-    <source src="reports/report20210520/KB10_pulse2.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
-
-
-
-<hr><!--********************************************************************-->
-<h1 id="">Questions</h1>
 <ul>
-    <li>What is an <i>Evans function</i>?</li>
-        <ul>
-            <li><b>A:</b> They are functions that arise in the analysis of traveling wave solutions. See Coombes 2004.</li>
-        </ul>        
-    <li>What could be causing the discrepancies in my wave-profiles?</li>
-        <ul>
-            <li><b>A:</b> Figures 4 and 6 in <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a> have $J = u-a$ on the vertical axis. This explains both wave-profile discrepancies.</li>
-        </ul>
-        
+    <li><s>Simulate the KB10 model, but without $q$. Find parameters that admit traveling pulse solutions.</s></li>
+    <li>Analytically find the traveling pulse/front solutions.</li>
+    <li>Investigate wave-response function.</li>
+    <ul>
+        <li>Spatially homogeneous pulse.</li>
+        <li>Spatially homogeneous, temporally finite.</li>
+        <li>Local pulses.</li>
+    </ul>
+    <li>Wave-train Analysis</li>
+    <ul>
+        <li>Search the literature.</li>
+        <li>Find periodic solutions.</li>
+        <li>Compare frequency to a pair of pulses.</li>
+    </ul>
+    <li><s>Experiment with colliding pulses.</s></li>
+    <li>Reading</li>
+    <ul>
+        <li>Coombes 2004.</li>
+        <li>Folias &amp; Bressloff 2005.</li>
+        <li>Faye &amp; Kilpatrick 2018.</li>
+    </ul>
 </ul>
+</p>
 
 <hr><!--********************************************************************-->
-<h1 id="">Meeting Notes</h1>
+
+<h1 id="">Modified KB10 Simulation</h1>
 <p>
-    For simplicity of analysis, I will remove the synaptic depression $q$ from the Kilpatrick and Bressloff 2010 (KB10) model. This may necessitate increasing $\gamma$ in order to allow for traveling pulse solutions. We discussed three possible topics going forward: wave-train analysis, wave-responses to stimuli, and colliding pulses.
+    What we are calling the modifed KB10 model is the model from <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a> (KB10) but with the synaptic depression ($q$) removed. This is equivalent to setting $\beta = 0$ and initializing $q = 1$ in their model. The result is then
+$$\begin{align*}
+    \mu u_t &= -u + \int_{-\infty}^\infty w(x,x^\prime) f( u(x^\prime,t) - a(x^\prime,t)) \ dx^\prime \\
+    \alpha a_t &= -a + \gamma f(u - a).
+\end{align*}$$
+Note that we have re-labeled the parameters $\epsilon \to \alpha$ and the old $\alpha$ is not present.
 </p>
 
-<h2 id="">Wave-Train Analysis</h2>
 <p>
-    Looking for non-trivial periodic solutions to KB10 could be interesting. In particular, what is the largest frequency that allows for non-trivial solutions. I think I read the phrase "wave-train" in one of the papers. Perhaps start with a literature review to see what has been done and with which models.
+    With the removal of the synaptic depression variable, we will need to find new parameter-sets that admit traveling wave solutions. In particular, in KB10 with their choice of parameters, the synaptic depression appeared to be the primary restorative force, with hyperpolarizing adaptation current ($a$) playing a minor role. With our removal of the synaptic depression we will need to tune the parameters so that the hyperpolarizing adaptation current can provide sufficient restoration. This suggests increasing $\gamma$. Below, Figure 1 does exactly this and we indeed have a traveling pulse.
+</p>
+<figure>
+    <video controls autoplay muted loop>
+        <source src="./reports/report20210527/modified_KB10_pulse.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+        
+    </video>
+    <figcaption><b>Fig 1.</b> The modified KB10 model with $w(x,y) = \frac{1}{2}e^{-|x-y|}$, $f(u) = H(u-\theta)$, and parameters: $\theta = 0.1, \alpha = 5, \gamma = 1, \mu = 1$. The initial condition is $a=0$ and $u$ is a cosine bell with height 1 and width 50. The pulse-width here is approximately $\Delta = 38.83$ (the measure of $\{x : J(x)>\theta\}$) and the pulse-speed is approximately $c=3.924$. (<a href="./reports/reports/report20210527/simulation.html" target=blank>simulation code</a> [<a href="./reports/reports/report20210527/simulation.ipynb" download>notebook download</a>])</figcaption>
+</figure>
+
+<p>
+    Figure 2 (below) shows the same parameter choices, but with the initial conditions set to create two pulses traveling in opposite directions. As predicted, they simply annihilate eachother. Since the traveling pulse solutions to the modified KB10 model are unique (as it is a special case of the KB10 model) there are essentially no other configurations to test. I don't think that there is anything interesting to study for colliding pulses in one dimension.
+</p>
+<figure>
+    <video controls autoplay muted loop>
+        <source src="./reports/report20210527/modified_KB10_cancelation.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+        
+    </video>
+    <figcaption><b>Fig 2.</b> The modified KB10 model with $w(x,y) = \frac{1}{2}e^{-|x-y|}$, $f(u) = H(u-\theta)$, and parameters: $\theta = 0.1, \alpha = 5, \gamma = 1, \mu = 1$. The initial condition is $a=0$ and $u$ is a sum of cosine bells with height 1 and width 50 and centers $x=0, 500$. The traveling pulses of opposite direction annihilate. (<a href="./reports/reports/report20210527/simulation.html" target=blank>simulation code</a> [<a href="./reports/reports/report20210527/simulation.ipynb" download>notebook download</a>])</figcaption>
+</figure>
+
+<hr><!--********************************************************************-->
+
+<h1 id="">Traveling Pulse Solutions</h1>
+
+<p>
+    Since we are working with a special case of the KB10 model, should be able to re-use the analysis from <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a>. In particular, their Equations 3.30-31 give that our wave speed $c$ and pulse width $\Delta$ are given as the solution to the following system (derivation below)
+$$\begin{align*}
+	\Delta &= \log{\left(\frac{1}{- 2 \theta \left(c + 1\right) + 1} \right)}\\
+	0 &= \gamma \left(\left(- 2 \theta \left(c + 1\right) + 1\right)^{\frac{\alpha}{c}} - 1\right) + \frac{- 2 \theta c + c^{2} \left(- 2 \theta - \left(- 2 \theta \left(c + 1\right) + 1\right)^{\frac{1}{c}} + 1\right)}{c^{2} - 1}.
+\end{align*}$$
 </p>
 
-<h2 id="">Wave-Response Function</h2>
+
+
+
+
+<button class="accordion">Derivation</button>
+<div class="panel">
 <p>
-    Similar to <a href="https://link.aps.org/doi/10.1103/PhysRevE.85.021910">Kilpatrick and Ermentrout 2012</a>, examine the effects of stimuli on the KB10 model. 
+We begin with
+$$\begin{align*}
+	0 &= K_{0} - K_{1} e^{- \Delta} - K_{2} e^{- \Delta} e^{\frac{\Delta \left(- \alpha \beta - 1\right)}{\alpha c}} - \theta\\
+	0 &= L_{0} + L_{1} e^{- \Delta} + L_{2} e^{\frac{\Delta \left(- \alpha \beta - 1\right)}{\alpha c}} - L_{3} e^{- \frac{\Delta}{c}} + \gamma e^{- \frac{\Delta}{\epsilon c}} - \theta\\
+	K_{0} &= \frac{\alpha c + 1}{\left(2 c + 2\right) \left(\alpha \beta + \alpha c + 1\right)}\\
+	K_{1} &= \frac{1}{\left(2 c + 2\right) \left(\alpha \beta + 1\right)}\\
+	K_{2} &= \frac{\alpha^{2} \beta c}{\left(2 c + 2\right) \left(\alpha \beta + 1\right) \left(\alpha \beta + \alpha c + 1\right)}\\
+	L_{0} &= - \gamma + \frac{c + \frac{1}{2}}{\left(c + 1\right) \left(\alpha \beta + 1\right)}\\
+	L_{1} &= \frac{\alpha c - 1}{\left(2 c - 2\right) \left(- \alpha \beta + \alpha c - 1\right)}\\
+	L_{2} &= \frac{\alpha^{4} \beta c^{2}}{\left(\alpha \beta + 1\right) \left(\alpha^{2} c^{2} - \left(\alpha \beta + 1\right)^{2}\right) \left(- \alpha \beta + \alpha - 1\right)} - \frac{\alpha^{2} \beta c}{2 \left(c + 1\right) \left(\alpha \beta + 1\right) \left(\alpha \beta + \alpha c + 1\right)}\\
+	L_{3} &= \frac{\frac{\alpha^{4} \beta c^{2}}{\left(\alpha^{2} c^{2} - \left(\alpha \beta + 1\right)^{2}\right) \left(- \alpha \beta + \alpha - 1\right)} + 1}{\alpha \beta + 1} + \frac{\alpha^{2} c^{2} \left(\beta + 1\right) - \alpha \beta - 1}{\left(c^{2} - 1\right) \left(\alpha^{2} c^{2} - \left(\alpha \beta + 1\right)^{2}\right)}.
+\end{align*}$$
+Then set $\beta=0$ to obtain
+$$\begin{align*}
+	0 &= K_{0} - K_{1} e^{- \Delta} - K_{2} e^{- \Delta} e^{- \frac{\Delta}{\alpha c}} - \theta\\
+	0 &= L_{0} + L_{1} e^{- \Delta} + L_{2} e^{- \frac{\Delta}{\alpha c}} - L_{3} e^{- \frac{\Delta}{c}} + \gamma e^{- \frac{\Delta}{\epsilon c}} - \theta\\
+	K_{0} &= \frac{1}{2 \left(c + 1\right)}\\
+	K_{1} &= \frac{1}{2 c + 2}\\
+	K_{2} &= 0\\
+	L_{0} &= - \gamma + \frac{c + \frac{1}{2}}{c + 1}\\
+	L_{1} &= \frac{1}{2 c - 2}\\
+	L_{2} &= 0\\
+	L_{3} &= 1 + \frac{1}{c^{2} - 1}.
+\end{align*}$$
+Substituting, we find
+$$\begin{align*}
+	0 &= - \theta - \frac{e^{- \Delta}}{2 c + 2} + \frac{1}{2 \left(c + 1\right)}\\
+	0 &= \gamma \left(-1 + e^{- \frac{\Delta}{\epsilon c}}\right) - \theta + \frac{c}{c + 1} - e^{- \frac{\Delta}{c}} - \frac{1}{c^{2} e^{\frac{\Delta}{c}} - e^{\frac{\Delta}{c}}} + \frac{e^{- \Delta}}{2 c - 2} + \frac{1}{2 \left(c + 1\right)}.
+\end{align*}$$
+Solving the first equation for $e^{-\Delta}$ and substituting, we obtain
+$$\begin{align*}
+	e^{- \Delta} &= - 2 \theta c - 2 \theta + 1\\
+	0 &= \gamma \left(\left(- 2 \theta c - 2 \theta + 1\right)^{\frac{1}{\epsilon c}} - 1\right) - \theta + \frac{c}{c + 1} - \left(- 2 \theta c - 2 \theta + 1\right)^{\frac{1}{c}} - \frac{1}{c^{2} \left(- 2 \theta c - 2 \theta + 1\right)^{- \frac{1}{c}} - \left(- 2 \theta c - 2 \theta + 1\right)^{- \frac{1}{c}}} + \frac{- 2 \theta c - 2 \theta + 1}{2 c - 2} + \frac{1}{2 \left(c + 1\right)}.
+\end{align*}$$
+Rearranging, we arrive at a one-dimensional root finding problem for $c$, and some simple substitution for $\Delta$
+$$\begin{align*}
+	\Delta &= \log{\left(\frac{1}{- 2 \theta \left(c + 1\right) + 1} \right)}\\
+	0 &= \gamma \left(\left(- 2 \theta \left(c + 1\right) + 1\right)^{\frac{1}{\epsilon c}} - 1\right) + \frac{- 2 \theta c + c^{2} \left(- 2 \theta - \left(- 2 \theta \left(c + 1\right) + 1\right)^{\frac{1}{c}} + 1\right)}{c^{2} - 1}.
+\end{align*}$$
+Converting to our parameter naming conventions $\epsilon \to 1/\alpha$ we have
+$$\begin{align*}
+	\Delta &= \log{\left(\frac{1}{- 2 \theta \left(c + 1\right) + 1} \right)}\\
+	0 &= \gamma \left(\left(- 2 \theta \left(c + 1\right) + 1\right)^{\frac{\alpha}{c}} - 1\right) + \frac{- 2 \theta c + c^{2} \left(- 2 \theta - \left(- 2 \theta \left(c + 1\right) + 1\right)^{\frac{1}{c}} + 1\right)}{c^{2} - 1}.
+\end{align*}$$
 </p>
 
-<h2 id="">Colliding Pulses</h2>
 <p>
-    These seems to be the least interesting idea, but should be easy enough to simulate. Since stable pulses are unique up to direction and translation invariance, the only way they can collide is if they are traveling in opposite directions. We expect that they will simply annihilate, but it should be easy enough to simulate.
+    (<a href="./reports/reports/report20210527/pulse-analysis.html" target=blank>code</a> [<a href="./reports/reports/report20210527/pulse-analysis.ipynb" download>notebook download</a>])
 </p>
 
 
+</div>
 
+<p>
+    In order for $c$ and $\Delta$ to be real-valued, we require $c < \frac{1}{2\theta} - 1$. For our choice of parameters in the simulations above ($\gamma = 1, \theta = 0.1$) this suggests a maximum speed of $c_\text{max} = 4$. Unfortunatley, rootfinding attempts have been unsuccessful. Figure 3 below, shows a plot of the RHS of our expression, for which we seek a root. It appears that the function is bounded above by $-0.2$ and thus no root can exisit. This seems at odds with our simulation.
+</p>
+
+<figure>
+    <img src="./reports/report20210527/rootfinding.png">
+    <figcaption><b>Fig 3.</b>The RHS of the second equation, as a function of $c$ with parameters given by $\gamma = 1, \theta=0.1, \alpha=5$. We can see that the expression is bounded above by $-0.2$ and thus our system is not consistent. (<a href="./reports/reports/report20210527/pulse-analysis.html" target=blank>code</a> [<a href="./reports/reports/report20210527/pulse-analysis.ipynb" download>notebook download</a>])</figcaption>
+</figure>
+
+<p>
+    
+</p>
+
+<p>
+    For reference, here is the generated code for the function depicted in Figure 3, above.
+</p>
+
+
+<pre><code class="language-python">def c_implicit(c, γ, α, θ=0.1):
+    return γ*(( lambda base, exponent: base**exponent )(-2*θ*(c + 1) + 1, α/c) - 1) + (-2*θ*c + ( lambda base, exponent: base**exponent )(c, 2)*(-2*θ - ( lambda base, exponent: base**exponent )(-2*θ*(c + 1) + 1, 1.0/c) + 1))/(( lambda base, exponent: base**exponent )(c, 2) - 1)
+</code></pre>
 
 <!--***************************************************************************
 *******************************************************************************
 ****************************************************************************-->
 </div>
+
+<!-- Accordion script -->
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+}
+</script>
+
 </body>
+    
 </html>
