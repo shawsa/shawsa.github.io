@@ -1,0 +1,155 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    
+    <!--Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+    
+<!--************************************************************************-->
+<title>Shaw Research Notes</title>
+</head>
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<body>
+
+<div class="top-bar">
+    <a href="../index.html"><img src="../frame/boulder-logo.png"></a>
+</div>
+
+<div id="side-bar" class="side-bar">
+    <p><a href="../reports/reports.html" target="_top">Reports</a></p>
+    <p><a href="../todo/todo.html" target="_top">To Do List</a></p>
+    <p><a href="../about/about.html" target="_top">About</a></p>
+    <hr>
+    <p><a href="../old-rbf/index.html" target="_top">Old Site</a></p>
+</div>
+
+<div class="page-content">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<h1 id="Title">June 3<sup>rd</sup>, 2021</h1>
+<p id="summary">
+    Lorem
+</p>
+
+<hr><!--********************************************************************-->
+<h1 id="">To-Do List Snapshot</h1>
+<p>
+<ul>
+    <li>Analytically find the traveling pulse/front solutions.</li>
+    <li>Investigate wave-response function.</li>
+    <ul>
+        <li>Spatially homogeneous pulse.</li>
+        <li>Spatially homogeneous, temporally finite.</li>
+        <li>Local pulses.</li>
+    </ul>
+    <li>Wave-train Analysis</li>
+    <ul>
+        <li>Search the literature.</li>
+        <li>Find periodic solutions.</li>
+        <li>Compare frequency to a pair of pulses.</li>
+    </ul>
+    <li>Reading</li>
+    <ul>
+        <li>Coombes 2004.</li>
+        <li>Folias &amp; Bressloff 2005.</li>
+        <li>Faye &amp; Kilpatrick 2018.</li>
+    </ul>
+</ul>
+</p>
+
+<hr><!--********************************************************************-->
+
+<h1 id="">Traveling Pulses</h1>
+<p>
+    The non-linear adaptation model is the model from <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a> (KB10) but with the synaptic depression ($q$) removed. This is equivalent to setting $\beta = 0$ and initializing $q = 1$ in their model. The result is then
+$$\begin{align*}
+    \mu u_t &= -u + \int_{-\infty}^\infty w(x,x^\prime) f( u(x^\prime,t) - a(x^\prime,t)) \ dx^\prime \\
+    \alpha a_t &= -a + \gamma f(u - a).
+\end{align*}$$
+Note that we have re-labeled the parameters $\epsilon \to \alpha$ and the old $\alpha$ is not present.
+</p>
+
+<!--************************************************************************-->
+<p>
+Assume a Heaviside firing rate function, the exponential weight function
+$$\begin{align*}
+    f(u-a) &= H(u-a - \theta) \\
+    w(x, x^\prime) &= \tfrac{1}{2} e^{-|x-x^\prime|}.
+\end{align*}$$
+Converting to the characteristic coordinate $U(\xi) = u(x - ct), A(\xi) = a(x - ct), \xi = x - ct$, for some unkown speed $c$, we then have
+$$\begin{align*}
+    -c\mu U' &= -U + \int_{-\infty}^\infty \tfrac{1}{2}e^{-|\xi - \xi'|}H(U - A - \theta) \ d\xi' \\
+    -\alpha cA'&= -A + \gamma H(U - A - \theta).
+\end{align*}$$
+</p>
+<p>
+    To find a traveling pulse solution, we make several assumptions:
+    <ul>
+        <li>$J(\xi) = U(\xi) - A(\xi)$ is super-threshold in the interval $(-\Delta,0)$ for some unkown pulse width $\Delta$, and sub-threshold elsewhere.</li>
+        <li>$\lim\limits_{\xi \to \pm \infty} U(\xi) = \lim\limits_{\xi \to \pm \infty} A(\xi)= 0$</li>
+    </ul>
+</p>
+<p>
+    Using the threshold-condition, we have that $H(U-A-\theta) = H(\xi + \Delta) - H(\xi)$ and our system becomes
+$$\begin{align*}
+    -c\mu U' &= -U + \int_{-\Delta}^0 \frac{1}{2}e^{-|\xi - \xi'|} \ d\xi' \\
+    -\alpha cA' &= -A + \gamma \big[ H(\xi + \Delta) - H(\xi) \big]
+\end{align*}$$
+
+
+</p>
+
+
+
+
+<button class="accordion">Derivation</button>
+<div class="panel">
+<p>
+
+</p>
+</div>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+</div>
+
+<!-- Accordion script -->
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+}
+</script>
+
+</body>
+    
+</html>

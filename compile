@@ -72,12 +72,15 @@ def update_index():
 #
 ##################################################################################
 if __name__=='__main__':
-    parser = argparse.ArgumentParser(description='Compile website')
+    help_message = '''
+    Compile the most recent report of the form "reportYYYYMMDD.html" and replace the homepage with it. 
+
+    All files should be referenced via ./ for the links to function properly on the homepage (except the sidebar which uses ../reports/ for proper linking).
+    '''
+    parser = argparse.ArgumentParser(description=help_message)
     parser.add_argument('--sidebar', '-s', action='store_const', default=False, const=True)
 
     args = parser.parse_args()
-    #parse_files(args.files, print_csv=args.print, 
-    #        separate=args.separate, print_errors=args.errors)
 
     if args.sidebar:
         print('Updating sidebars')
@@ -85,3 +88,4 @@ if __name__=='__main__':
         print('Finished updating sidebars\n')
 
     update_index()
+    print('complte')
