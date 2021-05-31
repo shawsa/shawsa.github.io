@@ -94,6 +94,25 @@ $$\begin{align*}
     f(u-a) &= H(u-a - \theta) \\
     w(x, x^\prime) &= \tfrac{1}{2} e^{-|x-x^\prime|}.
 \end{align*}$$
+</p>
+
+<p>
+    Ultimately this gives the traveling pulse solution
+$$\begin{align*}
+	u{\left(x,t \right)} &= \begin{cases} \frac{\left(- \frac{e^{\Delta}}{\mu c - 1} + \frac{1}{\mu c - 1}\right) e^{- c t + x}}{2} + \frac{\left(\mu^{2} c^{2} e^{\frac{\Delta}{\mu c}} - \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \frac{\left(\mu c - 1\right) e^{- \Delta}}{2} + \frac{1}{2}\right) e^{\frac{- c t + x}{\mu c}}}{\mu^{2} c^{2} - 1} & \text{for}\: \Delta < c t - x \\1 + \frac{\left(- \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \left(\frac{\mu c}{2} - \frac{1}{2}\right) e^{- \Delta} + \frac{1}{2}\right) e^{\frac{- c t + x}{\mu c}}}{\mu^{2} c^{2} - 1} - \frac{e^{- \Delta} e^{c t - x}}{2 \left(\mu c + 1\right)} + \frac{e^{- c t + x}}{2 \left(\mu c - 1\right)} & \text{for}\: c t - x > 0 \\\frac{\frac{\left(1 - e^{- \Delta}\right) e^{c t - x}}{2} + \left(\left(\theta \left(\mu c + 1\right) - \frac{1}{2}\right) e^{\Delta} + \frac{1}{2}\right) e^{- \Delta} e^{\frac{- c t + x}{\mu c}}}{\mu c + 1} & \text{otherwise} \end{cases}\\
+	a{\left(x,t \right)} &= \begin{cases} \gamma \left(e^{\frac{\Delta}{\alpha c}} - 1\right) e^{\frac{- c t + x}{\alpha c}} & \text{for}\: \Delta < c t - x \\\gamma \left(1 - e^{\frac{- c t + x}{\alpha c}}\right) & \text{for}\: c t - x > 0 \\0 & \text{otherwise} \end{cases}.
+\end{align*}$$
+
+Where $c$ and $\Delta$ are given implicitly as the solution to
+$$\begin{align*}
+	0 &= \left(2 \theta \left(\mu c + 1\right) - 1\right) e^{\Delta} + 1\\
+	0 &= - \gamma \left(1 - e^{- \frac{\Delta}{\alpha c}}\right) - \theta + 1 + \frac{\left(- \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \left(\frac{\mu c}{2} - \frac{1}{2}\right) e^{- \Delta} + \frac{1}{2}\right) e^{- \frac{\Delta}{\mu c}}}{\mu^{2} c^{2} - 1} - \frac{1}{2 \left(\mu c + 1\right)} + \frac{e^{- \Delta}}{2 \left(\mu c - 1\right)}.
+\end{align*}$$
+</p>
+
+<button class="accordion">Derivation</button>
+<div class="panel">
+<p>
 Converting to the characteristic coordinate $U(\xi) = u(x - ct), A(\xi) = a(x - ct), \xi = x - ct$, for some unkown speed $c$, we then have
 $$\begin{align*}
     -c\mu U' &= -U + \int_{-\infty}^\infty \tfrac{1}{2}e^{-|\xi - \xi'|}H(U - A - \theta) \ d\xi' \\
@@ -113,19 +132,97 @@ $$\begin{align*}
     -c\mu U' &= -U + \int_{-\Delta}^0 \frac{1}{2}e^{-|\xi - \xi'|} \ d\xi' \\
     -\alpha cA' &= -A + \gamma \big[ H(\xi + \Delta) - H(\xi) \big]
 \end{align*}$$
-
-
 </p>
 
-
-
-
-<button class="accordion">Derivation</button>
-<div class="panel">
 <p>
-
+<!-- sympy generated below -->
+Our problem reduces to solving
+$$\begin{align*}
+	0 &= \mu c \frac{d}{d \xi} U{\left(\xi \right)} + \frac{\left(1 - e^{- \Delta}\right) H{\left(\xi \right)} e^{- \xi}}{4} + \frac{\left(e^{\Delta} - 1\right) H{\left(- \Delta - \xi \right)} e^{\xi}}{4} + \frac{\left(- \frac{e^{\xi}}{2} + 1 - \frac{e^{- \Delta} e^{- \xi}}{2}\right) H{\left(- \xi \right)} H{\left(\Delta + \xi \right)}}{2} - U{\left(\xi \right)}\\
+	0 &= \alpha c \frac{d}{d \xi} A{\left(\xi \right)} + \gamma \left(- H{\left(\xi \right)} + H{\left(\Delta + \xi \right)}\right) - A{\left(\xi \right)}.
+\end{align*}$$
+We will first find $A$. The homogeneous solution is given by
+$$\begin{align*}
+	A{\left(\xi \right)} &= e^{\frac{C_{1}}{\alpha c}} e^{\frac{\xi}{\alpha c}}.
+\end{align*}$$
+From this, and our right-boundary condition, we see that $A(\xi) = 0$ for $\xi > 0$.
+Solving for $A$ in $-\Delta < \xi < 0$ with this boundary condition $A(0)=0$ we have
+$$\begin{align*}
+	A{\left(\xi \right)} &= \gamma \left(1 - e^{\frac{\xi}{\alpha c}}\right).
+\end{align*}$$
+Then we use this new boundary condition for $A(-\Delta)$ and the homogeneous solution to find $A(\xi)$ for $\xi < -\Delta$
+$$\begin{align*}
+	A{\left(\xi \right)} &= \gamma \left(e^{\frac{\Delta}{\alpha c}} - 1\right) e^{\frac{\xi}{\alpha c}}.
+\end{align*}$$
+Thus
+$$\begin{align*}
+	A{\left(\xi \right)} &= \begin{cases} \gamma \left(e^{\frac{\Delta}{\alpha c}} - 1\right) e^{\frac{\xi}{\alpha c}} & \text{for}\: \Delta < - \xi \\\gamma \left(1 - e^{\frac{\xi}{\alpha c}}\right) & \text{for}\: \xi < 0 \\0 & \text{otherwise} \end{cases}.
+\end{align*}$$
+We next solve for $U$ on the right domain.
+We seek a solution to
+$$\begin{align*}
+	0 &= \mu c \frac{d}{d \xi} U{\left(\xi \right)} + \frac{\left(1 - e^{- \Delta}\right) e^{- \xi}}{2} - U{\left(\xi \right)}\\
+	U{\left(0 \right)} &= \theta.
+\end{align*}$$
+Solving, we find
+$$\begin{align*}
+	U{\left(\xi \right)} &= \frac{e^{\Delta}}{2 \mu c e^{\Delta} e^{\xi} + 2 e^{\Delta} e^{\xi}} - \frac{1}{2 \mu c e^{\Delta} e^{\xi} + 2 e^{\Delta} e^{\xi}} + \frac{\left(\mu \theta c e^{\Delta} + \theta e^{\Delta} - \frac{e^{\Delta}}{2} + \frac{1}{2}\right) e^{- \Delta} e^{\frac{\xi}{\mu c}}}{\mu c + 1}.
+\end{align*}$$
+On the middle domain, we seek a solution to
+$$\begin{align*}
+	0 &= \mu c \frac{d}{d \xi} U{\left(\xi \right)} - U{\left(\xi \right)} - \frac{e^{\xi}}{2} + 1 - \frac{e^{- \Delta} e^{- \xi}}{2}\\
+	U{\left(0 \right)} &= \theta.
+\end{align*}$$
+Solving, we find
+$$\begin{align*}
+	U{\left(\xi \right)} &= 1 - \frac{1}{2 \mu c e^{\Delta} e^{\xi} + 2 e^{\Delta} e^{\xi}} + \frac{\left(2 \mu^{2} \theta c^{2} e^{\Delta} - 2 \mu^{2} c^{2} e^{\Delta} - \mu c e^{\Delta} + \mu c - 2 \theta e^{\Delta} + e^{\Delta} - 1\right) e^{- \Delta} e^{\frac{\xi}{\mu c}}}{2 \left(\mu^{2} c^{2} - 1\right)} + \frac{e^{\xi}}{2 \mu c - 2}.
+\end{align*}$$
+On the left domain, we seek a solution to
+$$\begin{align*}
+	0 &= \mu c \frac{d}{d \xi} U{\left(\xi \right)} + \frac{\left(e^{\Delta} - 1\right) e^{\xi}}{2} - U{\left(\xi \right)}\\
+	U{\left(- \Delta \right)} &= 1 + \frac{\left(2 \mu^{2} \theta c^{2} e^{\Delta} - 2 \mu^{2} c^{2} e^{\Delta} - \mu c e^{\Delta} + \mu c - 2 \theta e^{\Delta} + e^{\Delta} - 1\right) e^{- \Delta} e^{- \frac{\Delta}{\mu c}}}{2 \left(\mu^{2} c^{2} - 1\right)} - \frac{1}{2 \mu c + 2} + \frac{e^{- \Delta}}{2 \mu c - 2}.
+\end{align*}$$
+Solving, we find
+$$\begin{align*}
+	U{\left(\xi \right)} &= \frac{\left(\mu^{2} \theta c^{2} e^{\Delta} - \mu^{2} c^{2} e^{\Delta} + \mu^{2} c^{2} e^{\Delta + \frac{\Delta}{\mu c}} - \frac{\mu c e^{\Delta}}{2} + \frac{\mu c}{2} - \theta e^{\Delta} + \frac{e^{\Delta}}{2} - \frac{1}{2}\right) e^{- \Delta} e^{\frac{\xi}{\mu c}}}{\mu^{2} c^{2} - 1} - \frac{e^{\Delta} e^{\xi}}{2 \mu c - 2} + \frac{e^{\xi}}{2 \mu c - 2}.
+\end{align*}$$
+All together this becomes
+$$\begin{align*}
+	u{\left(x,t \right)} &= \begin{cases} \frac{\left(- \frac{e^{\Delta}}{\mu c - 1} + \frac{1}{\mu c - 1}\right) e^{- c t + x}}{2} + \frac{\left(\mu^{2} c^{2} e^{\frac{\Delta}{\mu c}} - \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \frac{\left(\mu c - 1\right) e^{- \Delta}}{2} + \frac{1}{2}\right) e^{\frac{- c t + x}{\mu c}}}{\mu^{2} c^{2} - 1} & \text{for}\: \Delta < c t - x \\1 + \frac{\left(- \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \left(\frac{\mu c}{2} - \frac{1}{2}\right) e^{- \Delta} + \frac{1}{2}\right) e^{\frac{- c t + x}{\mu c}}}{\mu^{2} c^{2} - 1} - \frac{e^{- \Delta} e^{c t - x}}{2 \left(\mu c + 1\right)} + \frac{e^{- c t + x}}{2 \left(\mu c - 1\right)} & \text{for}\: c t - x > 0 \\\frac{\frac{\left(1 - e^{- \Delta}\right) e^{c t - x}}{2} + \left(\left(\theta \left(\mu c + 1\right) - \frac{1}{2}\right) e^{\Delta} + \frac{1}{2}\right) e^{- \Delta} e^{\frac{- c t + x}{\mu c}}}{\mu c + 1} & \text{otherwise} \end{cases}\\
+	a{\left(x,t \right)} &= \begin{cases} \gamma \left(e^{\frac{\Delta}{\alpha c}} - 1\right) e^{\frac{- c t + x}{\alpha c}} & \text{for}\: \Delta < c t - x \\\gamma \left(1 - e^{\frac{- c t + x}{\alpha c}}\right) & \text{for}\: c t - x > 0 \\0 & \text{otherwise} \end{cases}.
+\end{align*}$$
+Imposing the conditions $\lim\limits_{\xi \to \infty} (U-A)(\xi) = 0$ and $(U-A)(-\Delta)=\tau$ we have
+$$\begin{align*}
+	0 &= \left(2 \theta \left(\mu c + 1\right) - 1\right) e^{\Delta} + 1\\
+	0 &= - \gamma \left(1 - e^{- \frac{\Delta}{\alpha c}}\right) - \theta + 1 + \frac{\left(- \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \left(\frac{\mu c}{2} - \frac{1}{2}\right) e^{- \Delta} + \frac{1}{2}\right) e^{- \frac{\Delta}{\mu c}}}{\mu^{2} c^{2} - 1} - \frac{1}{2 \left(\mu c + 1\right)} + \frac{e^{- \Delta}}{2 \left(\mu c - 1\right)}.
+\end{align*}$$
+<!-- end sympy generated -->
 </p>
 </div>
+
+<p>
+    Figure 1 shows these solutions compared to our simulated solution using our chosen/measured parameters $\mu = 1, \alpha = 5, \gamma = 1, \theta = 0.1, \Delta = 32.8328328328328, c = 3.92392392392387$.
+</p>
+
+<figure>
+    <img src="./report20210603/pulse.png" width="100%">
+    <figcaption><b>Fig 1.</b> Predicted (dashed) and simulated (solid) traveling pulse solutions for the parameters $\mu = 1, \alpha = 5, \gamma = 1, \theta = 0.1, \Delta = 32.8328328328328, c = 3.92392392392387$.</figcaption>
+</figure>
+
+
+
+<p>
+    Solving the first condition for $e^{-\Delta}$ and substituting into the second gives a single condition on $c$
+$$
+0 = f(c) = - \gamma \left(1 - \left(- \frac{1}{2 \mu \theta c + 2 \theta - 1}\right)^{- \frac{1}{\alpha c}}\right) - \theta + 1 - \frac{1}{2 \left(\mu c + 1\right)} + \frac{- 2 \mu \theta c - 2 \theta + 1}{2 \left(\mu c - 1\right)} + \frac{\left(- \frac{1}{2 \mu \theta c + 2 \theta - 1}\right)^{- \frac{1}{\mu c}} \left(- \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \left(\frac{\mu c}{2} - \frac{1}{2}\right) \left(- 2 \mu \theta c - 2 \theta + 1\right) + \frac{1}{2}\right)}{\mu^{2} c^{2} - 1}.
+$$
+In Figure 2 we plot $f(c)$ and observe that it has roots near $c\approx 2, 4$. The root near $c \approx 4$ appears to be the stable one from our simulations. Unfortunatly, $f$ is quite ill-conditioned near this root for these particular parameters.
+</p>
+
+<figure>
+    <img src="./report20210603/rootfinding.png" width="100%">
+    <figcaption><b>Fig 2.</b> The right-hand-side of the condition on $c$. We see two roots. The stable root appears to be near $c=4$.</figcaption>
+</figure>
 
 <!--***************************************************************************
 *******************************************************************************
