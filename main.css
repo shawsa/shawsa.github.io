@@ -187,10 +187,6 @@ ul li::before {
   margin-left: -1em;
 }
 
-ul ul {
-    list-style-type: dash;
-}
-
 ul ul li::before {
     color: #CFB87C;
 }

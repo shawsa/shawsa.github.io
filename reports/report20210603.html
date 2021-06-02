@@ -46,14 +46,14 @@
 
 <h1 id="Title">June 3<sup>rd</sup>, 2021</h1>
 <p id="summary">
-    Lorem
+    We finished deriving the traveling pulse solution. We encountered a bug in SymPy's integration routine involving the Heaviside function and variable assumptions, which cause delays. We submitted a <a href="https://github.com/sympy/sympy/issues/21559" target=blank>bug report</a> and proceeded integrating the forcing term by hand. The choice of parameters for our simulation makes determining the pulse width and wave speed an ill-conditioned process. We began simulations for spatially homogeneous temporally pulsatile stimuli.
 </p>
 
 <hr><!--********************************************************************-->
 <h1 id="">To-Do List Snapshot</h1>
 <p>
 <ul>
-    <li>Analytically find the traveling pulse/front solutions.</li>
+    <li><s>Analytically find the traveling pulse/front solutions.</s></li>
     <li>Investigate wave-response function.</li>
     <ul>
         <li>Spatially homogeneous pulse.</li>
@@ -99,14 +99,14 @@ $$\begin{align*}
 <p>
     Ultimately this gives the traveling pulse solution
 $$\begin{align*}
-	u{\left(x,t \right)} &= \begin{cases} \frac{\left(- \frac{e^{\Delta}}{\mu c - 1} + \frac{1}{\mu c - 1}\right) e^{- c t + x}}{2} + \frac{\left(\mu^{2} c^{2} e^{\frac{\Delta}{\mu c}} - \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \frac{\left(\mu c - 1\right) e^{- \Delta}}{2} + \frac{1}{2}\right) e^{\frac{- c t + x}{\mu c}}}{\mu^{2} c^{2} - 1} & \text{for}\: \Delta < c t - x \\1 + \frac{\left(- \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \left(\frac{\mu c}{2} - \frac{1}{2}\right) e^{- \Delta} + \frac{1}{2}\right) e^{\frac{- c t + x}{\mu c}}}{\mu^{2} c^{2} - 1} - \frac{e^{- \Delta} e^{c t - x}}{2 \left(\mu c + 1\right)} + \frac{e^{- c t + x}}{2 \left(\mu c - 1\right)} & \text{for}\: c t - x > 0 \\\frac{\frac{\left(1 - e^{- \Delta}\right) e^{c t - x}}{2} + \left(\left(\theta \left(\mu c + 1\right) - \frac{1}{2}\right) e^{\Delta} + \frac{1}{2}\right) e^{- \Delta} e^{\frac{- c t + x}{\mu c}}}{\mu c + 1} & \text{otherwise} \end{cases}\\
-	a{\left(x,t \right)} &= \begin{cases} \gamma \left(e^{\frac{\Delta}{\alpha c}} - 1\right) e^{\frac{- c t + x}{\alpha c}} & \text{for}\: \Delta < c t - x \\\gamma \left(1 - e^{\frac{- c t + x}{\alpha c}}\right) & \text{for}\: c t - x > 0 \\0 & \text{otherwise} \end{cases}.
+	u(x,t) = U{\left(\xi \right)} &= \begin{cases} \frac{\left(- \frac{e^{\Delta}}{\mu c - 1} + \frac{1}{\mu c - 1}\right) e^{\xi}}{2} + \frac{\left(\mu^{2} c^{2} e^{\frac{\Delta}{\mu c}} - \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \frac{\left(\mu c - 1\right) e^{- \Delta}}{2} + \frac{1}{2}\right) e^{\frac{\xi}{\mu c}}}{\mu^{2} c^{2} - 1} & \text{for}\: \Delta < - \xi \\\left(\theta + \frac{- \mu^{2} c^{2} - \frac{\mu c}{2} + \left(\frac{\mu c}{2} - \frac{1}{2}\right) e^{- \Delta} + \frac{1}{2}}{\mu^{2} c^{2} - 1}\right) e^{\frac{\xi}{\mu c}} + 1 - \frac{e^{- \Delta} e^{- \xi}}{2 \left(\mu c + 1\right)} + \frac{e^{\xi}}{2 \left(\mu c - 1\right)} & \text{for}\: \xi < 0 \\\frac{\left(1 - e^{- \Delta}\right) e^{- \xi}}{2 \left(\mu c + 1\right)} & \text{otherwise} \end{cases}\\
+	a(x,t) = A{\left(\xi \right)} &= \begin{cases} \gamma \left(e^{\frac{\Delta}{\alpha c}} - 1\right) e^{\frac{- c t + x}{\alpha c}} & \text{for}\: \Delta < c t - x \\\gamma \left(1 - e^{\frac{- c t + x}{\alpha c}}\right) & \text{for}\: c t - x > 0 \\0 & \text{otherwise} \end{cases}\\
+	\xi &= - c t + x\\
+	e^{\Delta} &= - \frac{1}{2 \theta \left(\mu c + 1\right) - 1},
 \end{align*}$$
-
-Where $c$ and $\Delta$ are given implicitly as the solution to
+where $c$ is given implicitly by
 $$\begin{align*}
-	0 &= \left(2 \theta \left(\mu c + 1\right) - 1\right) e^{\Delta} + 1\\
-	0 &= - \gamma \left(1 - e^{- \frac{\Delta}{\alpha c}}\right) - \theta + 1 + \frac{\left(- \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \left(\frac{\mu c}{2} - \frac{1}{2}\right) e^{- \Delta} + \frac{1}{2}\right) e^{- \frac{\Delta}{\mu c}}}{\mu^{2} c^{2} - 1} - \frac{1}{2 \left(\mu c + 1\right)} + \frac{e^{- \Delta}}{2 \left(\mu c - 1\right)}.
+	0 &= - \gamma \left(1 - \left(- \frac{1}{2 \theta \left(\mu c + 1\right) - 1}\right)^{- \frac{1}{\alpha c}}\right) - \theta + 1 - \frac{1}{2 \left(\mu c + 1\right)} + \frac{2 \theta \left(- \mu c - 1\right) + 1}{2 \left(\mu c - 1\right)} + \left(- \frac{1}{2 \theta \left(\mu c + 1\right) - 1}\right)^{- \frac{1}{\mu c}} \left(\theta - \frac{\mu^{2} c^{2} + \frac{\mu c}{2} - \left(\frac{\mu c}{2} - \frac{1}{2}\right) \left(2 \theta \left(- \mu c - 1\right) + 1\right) - \frac{1}{2}}{\mu^{2} c^{2} - 1}\right).
 \end{align*}$$
 </p>
 
@@ -138,8 +138,8 @@ $$\begin{align*}
 <!-- sympy generated below -->
 Our problem reduces to solving
 $$\begin{align*}
-	0 &= \mu c \frac{d}{d \xi} U{\left(\xi \right)} + \frac{\left(1 - e^{- \Delta}\right) H{\left(\xi \right)} e^{- \xi}}{4} + \frac{\left(e^{\Delta} - 1\right) H{\left(- \Delta - \xi \right)} e^{\xi}}{4} + \frac{\left(- \frac{e^{\xi}}{2} + 1 - \frac{e^{- \Delta} e^{- \xi}}{2}\right) H{\left(- \xi \right)} H{\left(\Delta + \xi \right)}}{2} - U{\left(\xi \right)}\\
-	0 &= \alpha c \frac{d}{d \xi} A{\left(\xi \right)} + \gamma \left(- H{\left(\xi \right)} + H{\left(\Delta + \xi \right)}\right) - A{\left(\xi \right)}.
+	0 &= \mu c \frac{d}{d \xi} U{\left(\xi \right)} + \frac{\left(1 - e^{- \Delta}\right) e^{- \xi} \theta\left(\xi\right)}{4} + \frac{\left(e^{\Delta} - 1\right) e^{\xi} \theta\left(- \Delta - \xi\right)}{4} + \frac{\left(- \frac{e^{\xi}}{2} + 1 - \frac{e^{- \Delta} e^{- \xi}}{2}\right) \theta\left(- \xi\right) \theta\left(\Delta + \xi\right)}{2} - U{\left(\xi \right)}\\
+	0 &= \alpha c \frac{d}{d \xi} A{\left(\xi \right)} + \gamma \left(- \theta\left(\xi\right) + \theta\left(\Delta + \xi\right)\right) - A{\left(\xi \right)}.
 \end{align*}$$
 We will first find $A$. The homogeneous solution is given by
 $$\begin{align*}
@@ -186,17 +186,21 @@ Solving, we find
 $$\begin{align*}
 	U{\left(\xi \right)} &= \frac{\left(\mu^{2} \theta c^{2} e^{\Delta} - \mu^{2} c^{2} e^{\Delta} + \mu^{2} c^{2} e^{\Delta + \frac{\Delta}{\mu c}} - \frac{\mu c e^{\Delta}}{2} + \frac{\mu c}{2} - \theta e^{\Delta} + \frac{e^{\Delta}}{2} - \frac{1}{2}\right) e^{- \Delta} e^{\frac{\xi}{\mu c}}}{\mu^{2} c^{2} - 1} - \frac{e^{\Delta} e^{\xi}}{2 \mu c - 2} + \frac{e^{\xi}}{2 \mu c - 2}.
 \end{align*}$$
-All together this becomes
-$$\begin{align*}
-	u{\left(x,t \right)} &= \begin{cases} \frac{\left(- \frac{e^{\Delta}}{\mu c - 1} + \frac{1}{\mu c - 1}\right) e^{- c t + x}}{2} + \frac{\left(\mu^{2} c^{2} e^{\frac{\Delta}{\mu c}} - \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \frac{\left(\mu c - 1\right) e^{- \Delta}}{2} + \frac{1}{2}\right) e^{\frac{- c t + x}{\mu c}}}{\mu^{2} c^{2} - 1} & \text{for}\: \Delta < c t - x \\1 + \frac{\left(- \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \left(\frac{\mu c}{2} - \frac{1}{2}\right) e^{- \Delta} + \frac{1}{2}\right) e^{\frac{- c t + x}{\mu c}}}{\mu^{2} c^{2} - 1} - \frac{e^{- \Delta} e^{c t - x}}{2 \left(\mu c + 1\right)} + \frac{e^{- c t + x}}{2 \left(\mu c - 1\right)} & \text{for}\: c t - x > 0 \\\frac{\frac{\left(1 - e^{- \Delta}\right) e^{c t - x}}{2} + \left(\left(\theta \left(\mu c + 1\right) - \frac{1}{2}\right) e^{\Delta} + \frac{1}{2}\right) e^{- \Delta} e^{\frac{- c t + x}{\mu c}}}{\mu c + 1} & \text{otherwise} \end{cases}\\
-	a{\left(x,t \right)} &= \begin{cases} \gamma \left(e^{\frac{\Delta}{\alpha c}} - 1\right) e^{\frac{- c t + x}{\alpha c}} & \text{for}\: \Delta < c t - x \\\gamma \left(1 - e^{\frac{- c t + x}{\alpha c}}\right) & \text{for}\: c t - x > 0 \\0 & \text{otherwise} \end{cases}.
-\end{align*}$$
 Imposing the conditions $\lim\limits_{\xi \to \infty} (U-A)(\xi) = 0$ and $(U-A)(-\Delta)=\tau$ we have
 $$\begin{align*}
 	0 &= \left(2 \theta \left(\mu c + 1\right) - 1\right) e^{\Delta} + 1\\
-	0 &= - \gamma \left(1 - e^{- \frac{\Delta}{\alpha c}}\right) - \theta + 1 + \frac{\left(- \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \left(\frac{\mu c}{2} - \frac{1}{2}\right) e^{- \Delta} + \frac{1}{2}\right) e^{- \frac{\Delta}{\mu c}}}{\mu^{2} c^{2} - 1} - \frac{1}{2 \left(\mu c + 1\right)} + \frac{e^{- \Delta}}{2 \left(\mu c - 1\right)}.
+	0 &= - \gamma \left(1 - e^{- \frac{\Delta}{\alpha c}}\right) - \theta + \left(\theta - \frac{\mu^{2} c^{2} + \frac{\mu c}{2} - \left(\frac{\mu c}{2} - \frac{1}{2}\right) e^{- \Delta} - \frac{1}{2}}{\mu^{2} c^{2} - 1}\right) e^{- \frac{\Delta}{\mu c}} + 1 - \frac{1}{2 \left(\mu c + 1\right)} + \frac{e^{- \Delta}}{2 \left(\mu c - 1\right)}.
+\end{align*}$$
+All together this becomes
+$$\begin{align*}
+	U{\left(\xi \right)} &= \begin{cases} \frac{\left(- \frac{e^{\Delta}}{\mu c - 1} + \frac{1}{\mu c - 1}\right) e^{\xi}}{2} + \frac{\left(\mu^{2} c^{2} e^{\frac{\Delta}{\mu c}} - \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \frac{\left(\mu c - 1\right) e^{- \Delta}}{2} + \frac{1}{2}\right) e^{\frac{\xi}{\mu c}}}{\mu^{2} c^{2} - 1} & \text{for}\: \Delta < - \xi \\\left(\theta + \frac{- \mu^{2} c^{2} - \frac{\mu c}{2} + \left(\frac{\mu c}{2} - \frac{1}{2}\right) e^{- \Delta} + \frac{1}{2}}{\mu^{2} c^{2} - 1}\right) e^{\frac{\xi}{\mu c}} + 1 - \frac{e^{- \Delta} e^{- \xi}}{2 \left(\mu c + 1\right)} + \frac{e^{\xi}}{2 \left(\mu c - 1\right)} & \text{for}\: \xi < 0 \\\frac{\left(1 - e^{- \Delta}\right) e^{- \xi}}{2 \left(\mu c + 1\right)} & \text{otherwise} \end{cases}\\
+	A{\left(\xi \right)} &= \begin{cases} \gamma \left(e^{\frac{\Delta}{\alpha c}} - 1\right) e^{\frac{\xi}{\alpha c}} & \text{for}\: \Delta < - \xi \\\gamma \left(1 - e^{\frac{\xi}{\alpha c}}\right) & \text{for}\: \xi < 0 \\0 & \text{otherwise} \end{cases}.
 \end{align*}$$
 <!-- end sympy generated -->
+
+<p>
+    <a href="./report20210603/pulse-derivation.html" target=blank>Code</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="./report20210603/pulse-derivation.ipynb" target=download>Notebook Download</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="./report20210603/profile.pickle" target=download>profile.pickle</a>
+</p>
 </p>
 </div>
 
@@ -209,20 +213,55 @@ $$\begin{align*}
     <figcaption><b>Fig 1.</b> Predicted (dashed) and simulated (solid) traveling pulse solutions for the parameters $\mu = 1, \alpha = 5, \gamma = 1, \theta = 0.1, \Delta = 32.8328328328328, c = 3.92392392392387$.</figcaption>
 </figure>
 
+<p>
+    The results are not perfect, but suggest we have the correct analytical solution and some numerical error. Presumably, our measurements for $c$ and $\Delta$ from the simulation are in error. Using our measurement for $c$ and instead computing $\Delta from our condition gives a dramatically different profile, as seen in Figure 2, below.
+</p>
 
+<figure>
+    <img src="./report20210603/pulse2.png" width="100%">
+    <figcaption><b>Fig 2.</b> Our profiel with the parameters from the simulation (see Figure 1) and the measured speed $c=3.9239239239238697$, but with the computed $\Delta=4.18545935079561$, rather than the measured value.</figcaption>
+</figure>
 
 <p>
-    Solving the first condition for $e^{-\Delta}$ and substituting into the second gives a single condition on $c$
-$$
-0 = f(c) = - \gamma \left(1 - \left(- \frac{1}{2 \mu \theta c + 2 \theta - 1}\right)^{- \frac{1}{\alpha c}}\right) - \theta + 1 - \frac{1}{2 \left(\mu c + 1\right)} + \frac{- 2 \mu \theta c - 2 \theta + 1}{2 \left(\mu c - 1\right)} + \frac{\left(- \frac{1}{2 \mu \theta c + 2 \theta - 1}\right)^{- \frac{1}{\mu c}} \left(- \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \left(\frac{\mu c}{2} - \frac{1}{2}\right) \left(- 2 \mu \theta c - 2 \theta + 1\right) + \frac{1}{2}\right)}{\mu^{2} c^{2} - 1}.
-$$
-In Figure 2 we plot $f(c)$ and observe that it has roots near $c\approx 2, 4$. The root near $c \approx 4$ appears to be the stable one from our simulations. Unfortunatly, $f$ is quite ill-conditioned near this root for these particular parameters.
+Using the measured value of $\Delta$ instead, proves unfruitful. In Figure 3 we plot the right-hand-side of the condition on $c$, as a function of $c$ and observe that it has roots near $c\approx 2, 4$. The root near $c \approx 4$ appears to be the stable one from our simulations. Unfortunatly, this function is quite ill-conditioned near this root for these particular parameters.
 </p>
 
 <figure>
     <img src="./report20210603/rootfinding.png" width="100%">
-    <figcaption><b>Fig 2.</b> The right-hand-side of the condition on $c$. We see two roots. The stable root appears to be near $c=4$.</figcaption>
+    <figcaption><b>Fig 3.</b> The right-hand-side of the condition on $c$. We see two roots. The stable root appears to be near $c=4$.</figcaption>
 </figure>
+
+<p>
+    It may behoove us to find some sensible choice of parameters that allows for  more precise numerics. In the meantime, here are numerical functions for generating traveling wave solutions.
+</p>
+
+<pre><code class="language-python">def Unum(ξ, μ, α, γ, θ, Δ, c):
+    return (1.0/2.0)*(1 - np.exp(-Δ))*np.exp(-ξ)*(lambda input: np.heaviside(input,0.5))(ξ)/(μ*c + 1) + ((1.0/2.0)*(-np.exp(Δ)/(μ*c - 1) + 1.0/(μ*c - 1))*np.exp(ξ) + (( lambda base, exponent: base**exponent )(μ, 2)*( lambda base, exponent: base**exponent )(c, 2)*np.exp(Δ/(μ*c)) - ( lambda base, exponent: base**exponent )(μ, 2)*( lambda base, exponent: base**exponent )(c, 2) - 1.0/2.0*μ*c + θ*(( lambda base, exponent: base**exponent )(μ, 2)*( lambda base, exponent: base**exponent )(c, 2) - 1) + (1.0/2.0)*(μ*c - 1)*np.exp(-Δ) + 1.0/2.0)*np.exp(ξ/(μ*c))/(( lambda base, exponent: base**exponent )(μ, 2)*( lambda base, exponent: base**exponent )(c, 2) - 1))*(lambda input: np.heaviside(input,0.5))(-Δ - ξ) + ((θ + (-( lambda base, exponent: base**exponent )(μ, 2)*( lambda base, exponent: base**exponent )(c, 2) - 1.0/2.0*μ*c + ((1.0/2.0)*μ*c - 1.0/2.0)*np.exp(-Δ) + 1.0/2.0)/(( lambda base, exponent: base**exponent )(μ, 2)*( lambda base, exponent: base**exponent )(c, 2) - 1))*np.exp(ξ/(μ*c)) + 1 - 1.0/2.0*np.exp(-Δ)*np.exp(-ξ)/(μ*c + 1) + (1.0/2.0)*np.exp(ξ)/(μ*c - 1))*(lambda input: np.heaviside(input,0.5))(-ξ)*(lambda input: np.heaviside(input,0.5))(Δ + ξ)
+
+def Anum(ξ, μ, α, γ, θ, Δ, c):
+    return γ*(1 - np.exp(ξ/(α*c)))*(lambda input: np.heaviside(input,0.5))(-ξ)*(lambda input: np.heaviside(input,0.5))(Δ + ξ) + γ*(np.exp(Δ/(α*c)) - 1)*np.exp(ξ/(α*c))*(lambda input: np.heaviside(input,0.5))(-Δ - ξ)
+</code></pre>
+
+<hr><!--********************************************************************-->
+<h1 id="">Wave Response Simulations</h1>
+<p>
+Figure 4 shows the traveling wave (with parameters given above) responding to a stimulus of $I(x,t) = \delta(t-t_0) 0.05$. As expected, the limiting effect is to advance the wave forward.
+</p>
+<figure>
+    <video controls autoplay muted loop>
+        <source src="./report20210603/pulse-stim.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+        
+    </video>
+    <figcaption><b>Fig 4.</b> Response of the traveling wave to a stimulus $I(x,t) = \delta(t-t0)0.05$. The limiting response is to advance the pulse forward.</figcaption>
+</figure>
+
+<hr><!--********************************************************************-->
+<h1 id="">SymPy Bug</h1>
+<p>
+I spent quite a bit of time debugging my code before I found what appears to be an error in SymPy's integration subroutine. When I ask Sympy to integrate, for example $\int\limits_{-\Delta}^0 H(x-y)e^{y-x} \ dy$ it gives an incorrect result when the symbol $\Delta$ is initialized with <code class="language-python">positive=True</code>. I have submitted a <a href="https://github.com/sympy/sympy/issues/21559" target=blank>bug report</a> and in the meantime, I integrated the forcing term by hand.
+
+<hr><!--********************************************************************-->
 
 <!--***************************************************************************
 *******************************************************************************

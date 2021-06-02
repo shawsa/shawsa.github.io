@@ -48,10 +48,9 @@
 <div class="page-content">
 
 <!--************************************************************************-->
-
 <p class="report_link"><a href="report20210603.html">June 3<sup>rd</sup>, 2021</a></p>
 <p>
-Lorem
+We finished deriving the traveling pulse solution. We encountered a bug in SymPy's integration routine involving the Heaviside function and variable assumptions, which cause delays. We submitted a <a href="https://github.com/sympy/sympy/issues/21559" target=blank>bug report</a> and proceeded integrating the forcing term by hand. The choice of parameters for our simulation makes determining the pulse width and wave speed an ill-conditioned process. We began simulations for spatially homogeneous temporally pulsatile stimuli.
 </p>
 
 <!--************************************************************************-->
@@ -67,7 +66,6 @@ We simulate the modified KB10 model (perhaps we will call it the $\beta$-null re
 <p>
 I examined two models incorporating negative feedback that alow for traveling pulses: the Pinto-Ermentrout model (reference: <a href="https://epubs.siam.org/doi/10.1137/070699214">Kilpatrick et al. 2008</a>) and the Kilpatrick-Bressloff model (reference: <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a>). I have simulated each numerically and found parameters and initial conditions that induce traveling pulses. My pulse-profiles do not seem to quite match the profiles in <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a> Figures 2 and 4. I susspect a small bug in my implementation.
 </p>
-    
 
 </div>
 

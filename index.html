@@ -44,17 +44,16 @@
 *******************************************************************************
 ****************************************************************************-->
 
-<h1 id="Title">May 27<sup>th</sup>, 2021</h1>
+<h1 id="Title">June 3<sup>rd</sup>, 2021</h1>
 <p id="summary">
-    We simulate the modified KB10 model (perhaps we will call it the $\beta$-null regime of the KB10 model) and find parameters that appear to admit traveling pulse solutions. We analyzed equations 3.30-3.31 from <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a> in this case, but they appear inconsistent with observations. Perhaps the assumption that $\beta \ne 0$ was essential in their derivation. We may have to re-derive the traveling-pulse solution from scratch.
+    We finished deriving the traveling pulse solution. We encountered a bug in SymPy's integration routine involving the Heaviside function and variable assumptions, which cause delays. We submitted a <a href="https://github.com/sympy/sympy/issues/21559" target=blank>bug report</a> and proceeded integrating the forcing term by hand. The choice of parameters for our simulation makes determining the pulse width and wave speed an ill-conditioned process. We began simulations for spatially homogeneous temporally pulsatile stimuli.
 </p>
 
 <hr><!--********************************************************************-->
 <h1 id="">To-Do List Snapshot</h1>
 <p>
 <ul>
-    <li><s>Simulate the KB10 model, but without $q$. Find parameters that admit traveling pulse solutions.</s></li>
-    <li>Analytically find the traveling pulse/front solutions.</li>
+    <li><s>Analytically find the traveling pulse/front solutions.</s></li>
     <li>Investigate wave-response function.</li>
     <ul>
         <li>Spatially homogeneous pulse.</li>
@@ -67,7 +66,6 @@
         <li>Find periodic solutions.</li>
         <li>Compare frequency to a pair of pulses.</li>
     </ul>
-    <li><s>Experiment with colliding pulses.</s></li>
     <li>Reading</li>
     <ul>
         <li>Coombes 2004.</li>
@@ -79,9 +77,9 @@
 
 <hr><!--********************************************************************-->
 
-<h1 id="">Modified KB10 Simulation</h1>
+<h1 id="">Traveling Pulses</h1>
 <p>
-    What we are calling the modifed KB10 model is the model from <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a> (KB10) but with the synaptic depression ($q$) removed. This is equivalent to setting $\beta = 0$ and initializing $q = 1$ in their model. The result is then
+    The non-linear adaptation model is the model from <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a> (KB10) but with the synaptic depression ($q$) removed. This is equivalent to setting $\beta = 0$ and initializing $q = 1$ in their model. The result is then
 $$\begin{align*}
     \mu u_t &= -u + \int_{-\infty}^\infty w(x,x^\prime) f( u(x^\prime,t) - a(x^\prime,t)) \ dx^\prime \\
     \alpha a_t &= -a + \gamma f(u - a).
@@ -89,123 +87,179 @@ $$\begin{align*}
 Note that we have re-labeled the parameters $\epsilon \to \alpha$ and the old $\alpha$ is not present.
 </p>
 
+<!--************************************************************************-->
 <p>
-    With the removal of the synaptic depression variable, we will need to find new parameter-sets that admit traveling wave solutions. In particular, in KB10 with their choice of parameters, the synaptic depression appeared to be the primary restorative force, with hyperpolarizing adaptation current ($a$) playing a minor role. With our removal of the synaptic depression we will need to tune the parameters so that the hyperpolarizing adaptation current can provide sufficient restoration. This suggests increasing $\gamma$. Below, Figure 1 does exactly this and we indeed have a traveling pulse.
-</p>
-<figure>
-    <video controls autoplay muted loop>
-        <source src="./reports/report20210527/modified_KB10_pulse.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-        
-    </video>
-    <figcaption><b>Fig 1.</b> The modified KB10 model with $w(x,y) = \frac{1}{2}e^{-|x-y|}$, $f(u) = H(u-\theta)$, and parameters: $\theta = 0.1, \alpha = 5, \gamma = 1, \mu = 1$. The initial condition is $a=0$ and $u$ is a cosine bell with height 1 and width 50. The pulse-width here is approximately $\Delta = 38.83$ (the measure of $\{x : J(x)>\theta\}$) and the pulse-speed is approximately $c=3.924$. (<a href="./reports/report20210527/simulation.html" target=blank>simulation code</a> [<a href="./reports/report20210527/simulation.ipynb" download>notebook download</a>])</figcaption>
-</figure>
-
-<p>
-    Figure 2 (below) shows the same parameter choices, but with the initial conditions set to create two pulses traveling in opposite directions. As predicted, they simply annihilate eachother. Since the traveling pulse solutions to the modified KB10 model are unique (as it is a special case of the KB10 model) there are essentially no other configurations to test. I don't think that there is anything interesting to study for colliding pulses in one dimension.
-</p>
-<figure>
-    <video controls autoplay muted loop>
-        <source src="./reports/report20210527/modified_KB10_cancelation.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-        
-    </video>
-    <figcaption><b>Fig 2.</b> The modified KB10 model with $w(x,y) = \frac{1}{2}e^{-|x-y|}$, $f(u) = H(u-\theta)$, and parameters: $\theta = 0.1, \alpha = 5, \gamma = 1, \mu = 1$. The initial condition is $a=0$ and $u$ is a sum of cosine bells with height 1 and width 50 and centers $x=0, 500$. The traveling pulses of opposite direction annihilate. (<a href="./reports/report20210527/simulation.html" target=blank>simulation code</a> [<a href="./reports/report20210527/simulation.ipynb" download>notebook download</a>])</figcaption>
-</figure>
-
-<hr><!--********************************************************************-->
-
-<h1 id="">Traveling Pulse Solutions</h1>
-
-<p>
-    Since we are working with a special case of the KB10 model, should be able to re-use the analysis from <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a>. In particular, their Equations 3.30-31 give that our wave speed $c$ and pulse width $\Delta$ are given as the solution to the following system (derivation below)
+Assume a Heaviside firing rate function, the exponential weight function
 $$\begin{align*}
-	\Delta &= \log{\left(\frac{1}{- 2 \theta \left(c + 1\right) + 1} \right)}\\
-	0 &= \gamma \left(\left(- 2 \theta \left(c + 1\right) + 1\right)^{\frac{\alpha}{c}} - 1\right) + \frac{- 2 \theta c + c^{2} \left(- 2 \theta - \left(- 2 \theta \left(c + 1\right) + 1\right)^{\frac{1}{c}} + 1\right)}{c^{2} - 1}.
+    f(u-a) &= H(u-a - \theta) \\
+    w(x, x^\prime) &= \tfrac{1}{2} e^{-|x-x^\prime|}.
 \end{align*}$$
 </p>
 
-
-
-
+<p>
+    Ultimately this gives the traveling pulse solution
+$$\begin{align*}
+	u(x,t) = U{\left(\xi \right)} &= \begin{cases} \frac{\left(- \frac{e^{\Delta}}{\mu c - 1} + \frac{1}{\mu c - 1}\right) e^{\xi}}{2} + \frac{\left(\mu^{2} c^{2} e^{\frac{\Delta}{\mu c}} - \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \frac{\left(\mu c - 1\right) e^{- \Delta}}{2} + \frac{1}{2}\right) e^{\frac{\xi}{\mu c}}}{\mu^{2} c^{2} - 1} & \text{for}\: \Delta < - \xi \\\left(\theta + \frac{- \mu^{2} c^{2} - \frac{\mu c}{2} + \left(\frac{\mu c}{2} - \frac{1}{2}\right) e^{- \Delta} + \frac{1}{2}}{\mu^{2} c^{2} - 1}\right) e^{\frac{\xi}{\mu c}} + 1 - \frac{e^{- \Delta} e^{- \xi}}{2 \left(\mu c + 1\right)} + \frac{e^{\xi}}{2 \left(\mu c - 1\right)} & \text{for}\: \xi < 0 \\\frac{\left(1 - e^{- \Delta}\right) e^{- \xi}}{2 \left(\mu c + 1\right)} & \text{otherwise} \end{cases}\\
+	a(x,t) = A{\left(\xi \right)} &= \begin{cases} \gamma \left(e^{\frac{\Delta}{\alpha c}} - 1\right) e^{\frac{- c t + x}{\alpha c}} & \text{for}\: \Delta < c t - x \\\gamma \left(1 - e^{\frac{- c t + x}{\alpha c}}\right) & \text{for}\: c t - x > 0 \\0 & \text{otherwise} \end{cases}\\
+	\xi &= - c t + x\\
+	e^{\Delta} &= - \frac{1}{2 \theta \left(\mu c + 1\right) - 1},
+\end{align*}$$
+where $c$ is given implicitly by
+$$\begin{align*}
+	0 &= - \gamma \left(1 - \left(- \frac{1}{2 \theta \left(\mu c + 1\right) - 1}\right)^{- \frac{1}{\alpha c}}\right) - \theta + 1 - \frac{1}{2 \left(\mu c + 1\right)} + \frac{2 \theta \left(- \mu c - 1\right) + 1}{2 \left(\mu c - 1\right)} + \left(- \frac{1}{2 \theta \left(\mu c + 1\right) - 1}\right)^{- \frac{1}{\mu c}} \left(\theta - \frac{\mu^{2} c^{2} + \frac{\mu c}{2} - \left(\frac{\mu c}{2} - \frac{1}{2}\right) \left(2 \theta \left(- \mu c - 1\right) + 1\right) - \frac{1}{2}}{\mu^{2} c^{2} - 1}\right).
+\end{align*}$$
+</p>
 
 <button class="accordion">Derivation</button>
 <div class="panel">
 <p>
-We begin with
+Converting to the characteristic coordinate $U(\xi) = u(x - ct), A(\xi) = a(x - ct), \xi = x - ct$, for some unkown speed $c$, we then have
 $$\begin{align*}
-	0 &= K_{0} - K_{1} e^{- \Delta} - K_{2} e^{- \Delta} e^{\frac{\Delta \left(- \alpha \beta - 1\right)}{\alpha c}} - \theta\\
-	0 &= L_{0} + L_{1} e^{- \Delta} + L_{2} e^{\frac{\Delta \left(- \alpha \beta - 1\right)}{\alpha c}} - L_{3} e^{- \frac{\Delta}{c}} + \gamma e^{- \frac{\Delta}{\epsilon c}} - \theta\\
-	K_{0} &= \frac{\alpha c + 1}{\left(2 c + 2\right) \left(\alpha \beta + \alpha c + 1\right)}\\
-	K_{1} &= \frac{1}{\left(2 c + 2\right) \left(\alpha \beta + 1\right)}\\
-	K_{2} &= \frac{\alpha^{2} \beta c}{\left(2 c + 2\right) \left(\alpha \beta + 1\right) \left(\alpha \beta + \alpha c + 1\right)}\\
-	L_{0} &= - \gamma + \frac{c + \frac{1}{2}}{\left(c + 1\right) \left(\alpha \beta + 1\right)}\\
-	L_{1} &= \frac{\alpha c - 1}{\left(2 c - 2\right) \left(- \alpha \beta + \alpha c - 1\right)}\\
-	L_{2} &= \frac{\alpha^{4} \beta c^{2}}{\left(\alpha \beta + 1\right) \left(\alpha^{2} c^{2} - \left(\alpha \beta + 1\right)^{2}\right) \left(- \alpha \beta + \alpha - 1\right)} - \frac{\alpha^{2} \beta c}{2 \left(c + 1\right) \left(\alpha \beta + 1\right) \left(\alpha \beta + \alpha c + 1\right)}\\
-	L_{3} &= \frac{\frac{\alpha^{4} \beta c^{2}}{\left(\alpha^{2} c^{2} - \left(\alpha \beta + 1\right)^{2}\right) \left(- \alpha \beta + \alpha - 1\right)} + 1}{\alpha \beta + 1} + \frac{\alpha^{2} c^{2} \left(\beta + 1\right) - \alpha \beta - 1}{\left(c^{2} - 1\right) \left(\alpha^{2} c^{2} - \left(\alpha \beta + 1\right)^{2}\right)}.
+    -c\mu U' &= -U + \int_{-\infty}^\infty \tfrac{1}{2}e^{-|\xi - \xi'|}H(U - A - \theta) \ d\xi' \\
+    -\alpha cA'&= -A + \gamma H(U - A - \theta).
 \end{align*}$$
-Then set $\beta=0$ to obtain
+</p>
+<p>
+    To find a traveling pulse solution, we make several assumptions:
+    <ul>
+        <li>$J(\xi) = U(\xi) - A(\xi)$ is super-threshold in the interval $(-\Delta,0)$ for some unkown pulse width $\Delta$, and sub-threshold elsewhere.</li>
+        <li>$\lim\limits_{\xi \to \pm \infty} U(\xi) = \lim\limits_{\xi \to \pm \infty} A(\xi)= 0$</li>
+    </ul>
+</p>
+<p>
+    Using the threshold-condition, we have that $H(U-A-\theta) = H(\xi + \Delta) - H(\xi)$ and our system becomes
 $$\begin{align*}
-	0 &= K_{0} - K_{1} e^{- \Delta} - K_{2} e^{- \Delta} e^{- \frac{\Delta}{\alpha c}} - \theta\\
-	0 &= L_{0} + L_{1} e^{- \Delta} + L_{2} e^{- \frac{\Delta}{\alpha c}} - L_{3} e^{- \frac{\Delta}{c}} + \gamma e^{- \frac{\Delta}{\epsilon c}} - \theta\\
-	K_{0} &= \frac{1}{2 \left(c + 1\right)}\\
-	K_{1} &= \frac{1}{2 c + 2}\\
-	K_{2} &= 0\\
-	L_{0} &= - \gamma + \frac{c + \frac{1}{2}}{c + 1}\\
-	L_{1} &= \frac{1}{2 c - 2}\\
-	L_{2} &= 0\\
-	L_{3} &= 1 + \frac{1}{c^{2} - 1}.
-\end{align*}$$
-Substituting, we find
-$$\begin{align*}
-	0 &= - \theta - \frac{e^{- \Delta}}{2 c + 2} + \frac{1}{2 \left(c + 1\right)}\\
-	0 &= \gamma \left(-1 + e^{- \frac{\Delta}{\epsilon c}}\right) - \theta + \frac{c}{c + 1} - e^{- \frac{\Delta}{c}} - \frac{1}{c^{2} e^{\frac{\Delta}{c}} - e^{\frac{\Delta}{c}}} + \frac{e^{- \Delta}}{2 c - 2} + \frac{1}{2 \left(c + 1\right)}.
-\end{align*}$$
-Solving the first equation for $e^{-\Delta}$ and substituting, we obtain
-$$\begin{align*}
-	e^{- \Delta} &= - 2 \theta c - 2 \theta + 1\\
-	0 &= \gamma \left(\left(- 2 \theta c - 2 \theta + 1\right)^{\frac{1}{\epsilon c}} - 1\right) - \theta + \frac{c}{c + 1} - \left(- 2 \theta c - 2 \theta + 1\right)^{\frac{1}{c}} - \frac{1}{c^{2} \left(- 2 \theta c - 2 \theta + 1\right)^{- \frac{1}{c}} - \left(- 2 \theta c - 2 \theta + 1\right)^{- \frac{1}{c}}} + \frac{- 2 \theta c - 2 \theta + 1}{2 c - 2} + \frac{1}{2 \left(c + 1\right)}.
-\end{align*}$$
-Rearranging, we arrive at a one-dimensional root finding problem for $c$, and some simple substitution for $\Delta$
-$$\begin{align*}
-	\Delta &= \log{\left(\frac{1}{- 2 \theta \left(c + 1\right) + 1} \right)}\\
-	0 &= \gamma \left(\left(- 2 \theta \left(c + 1\right) + 1\right)^{\frac{1}{\epsilon c}} - 1\right) + \frac{- 2 \theta c + c^{2} \left(- 2 \theta - \left(- 2 \theta \left(c + 1\right) + 1\right)^{\frac{1}{c}} + 1\right)}{c^{2} - 1}.
-\end{align*}$$
-Converting to our parameter naming conventions $\epsilon \to 1/\alpha$ we have
-$$\begin{align*}
-	\Delta &= \log{\left(\frac{1}{- 2 \theta \left(c + 1\right) + 1} \right)}\\
-	0 &= \gamma \left(\left(- 2 \theta \left(c + 1\right) + 1\right)^{\frac{\alpha}{c}} - 1\right) + \frac{- 2 \theta c + c^{2} \left(- 2 \theta - \left(- 2 \theta \left(c + 1\right) + 1\right)^{\frac{1}{c}} + 1\right)}{c^{2} - 1}.
+    -c\mu U' &= -U + \int_{-\Delta}^0 \frac{1}{2}e^{-|\xi - \xi'|} \ d\xi' \\
+    -\alpha cA' &= -A + \gamma \big[ H(\xi + \Delta) - H(\xi) \big]
 \end{align*}$$
 </p>
 
 <p>
-    (<a href="./reports/report20210527/pulse-analysis.html" target=blank>code</a> [<a href="./reports/report20210527/pulse-analysis.ipynb" download>notebook download</a>])
+<!-- sympy generated below -->
+Our problem reduces to solving
+$$\begin{align*}
+	0 &= \mu c \frac{d}{d \xi} U{\left(\xi \right)} + \frac{\left(1 - e^{- \Delta}\right) e^{- \xi} \theta\left(\xi\right)}{4} + \frac{\left(e^{\Delta} - 1\right) e^{\xi} \theta\left(- \Delta - \xi\right)}{4} + \frac{\left(- \frac{e^{\xi}}{2} + 1 - \frac{e^{- \Delta} e^{- \xi}}{2}\right) \theta\left(- \xi\right) \theta\left(\Delta + \xi\right)}{2} - U{\left(\xi \right)}\\
+	0 &= \alpha c \frac{d}{d \xi} A{\left(\xi \right)} + \gamma \left(- \theta\left(\xi\right) + \theta\left(\Delta + \xi\right)\right) - A{\left(\xi \right)}.
+\end{align*}$$
+We will first find $A$. The homogeneous solution is given by
+$$\begin{align*}
+	A{\left(\xi \right)} &= e^{\frac{C_{1}}{\alpha c}} e^{\frac{\xi}{\alpha c}}.
+\end{align*}$$
+From this, and our right-boundary condition, we see that $A(\xi) = 0$ for $\xi > 0$.
+Solving for $A$ in $-\Delta < \xi < 0$ with this boundary condition $A(0)=0$ we have
+$$\begin{align*}
+	A{\left(\xi \right)} &= \gamma \left(1 - e^{\frac{\xi}{\alpha c}}\right).
+\end{align*}$$
+Then we use this new boundary condition for $A(-\Delta)$ and the homogeneous solution to find $A(\xi)$ for $\xi < -\Delta$
+$$\begin{align*}
+	A{\left(\xi \right)} &= \gamma \left(e^{\frac{\Delta}{\alpha c}} - 1\right) e^{\frac{\xi}{\alpha c}}.
+\end{align*}$$
+Thus
+$$\begin{align*}
+	A{\left(\xi \right)} &= \begin{cases} \gamma \left(e^{\frac{\Delta}{\alpha c}} - 1\right) e^{\frac{\xi}{\alpha c}} & \text{for}\: \Delta < - \xi \\\gamma \left(1 - e^{\frac{\xi}{\alpha c}}\right) & \text{for}\: \xi < 0 \\0 & \text{otherwise} \end{cases}.
+\end{align*}$$
+We next solve for $U$ on the right domain.
+We seek a solution to
+$$\begin{align*}
+	0 &= \mu c \frac{d}{d \xi} U{\left(\xi \right)} + \frac{\left(1 - e^{- \Delta}\right) e^{- \xi}}{2} - U{\left(\xi \right)}\\
+	U{\left(0 \right)} &= \theta.
+\end{align*}$$
+Solving, we find
+$$\begin{align*}
+	U{\left(\xi \right)} &= \frac{e^{\Delta}}{2 \mu c e^{\Delta} e^{\xi} + 2 e^{\Delta} e^{\xi}} - \frac{1}{2 \mu c e^{\Delta} e^{\xi} + 2 e^{\Delta} e^{\xi}} + \frac{\left(\mu \theta c e^{\Delta} + \theta e^{\Delta} - \frac{e^{\Delta}}{2} + \frac{1}{2}\right) e^{- \Delta} e^{\frac{\xi}{\mu c}}}{\mu c + 1}.
+\end{align*}$$
+On the middle domain, we seek a solution to
+$$\begin{align*}
+	0 &= \mu c \frac{d}{d \xi} U{\left(\xi \right)} - U{\left(\xi \right)} - \frac{e^{\xi}}{2} + 1 - \frac{e^{- \Delta} e^{- \xi}}{2}\\
+	U{\left(0 \right)} &= \theta.
+\end{align*}$$
+Solving, we find
+$$\begin{align*}
+	U{\left(\xi \right)} &= 1 - \frac{1}{2 \mu c e^{\Delta} e^{\xi} + 2 e^{\Delta} e^{\xi}} + \frac{\left(2 \mu^{2} \theta c^{2} e^{\Delta} - 2 \mu^{2} c^{2} e^{\Delta} - \mu c e^{\Delta} + \mu c - 2 \theta e^{\Delta} + e^{\Delta} - 1\right) e^{- \Delta} e^{\frac{\xi}{\mu c}}}{2 \left(\mu^{2} c^{2} - 1\right)} + \frac{e^{\xi}}{2 \mu c - 2}.
+\end{align*}$$
+On the left domain, we seek a solution to
+$$\begin{align*}
+	0 &= \mu c \frac{d}{d \xi} U{\left(\xi \right)} + \frac{\left(e^{\Delta} - 1\right) e^{\xi}}{2} - U{\left(\xi \right)}\\
+	U{\left(- \Delta \right)} &= 1 + \frac{\left(2 \mu^{2} \theta c^{2} e^{\Delta} - 2 \mu^{2} c^{2} e^{\Delta} - \mu c e^{\Delta} + \mu c - 2 \theta e^{\Delta} + e^{\Delta} - 1\right) e^{- \Delta} e^{- \frac{\Delta}{\mu c}}}{2 \left(\mu^{2} c^{2} - 1\right)} - \frac{1}{2 \mu c + 2} + \frac{e^{- \Delta}}{2 \mu c - 2}.
+\end{align*}$$
+Solving, we find
+$$\begin{align*}
+	U{\left(\xi \right)} &= \frac{\left(\mu^{2} \theta c^{2} e^{\Delta} - \mu^{2} c^{2} e^{\Delta} + \mu^{2} c^{2} e^{\Delta + \frac{\Delta}{\mu c}} - \frac{\mu c e^{\Delta}}{2} + \frac{\mu c}{2} - \theta e^{\Delta} + \frac{e^{\Delta}}{2} - \frac{1}{2}\right) e^{- \Delta} e^{\frac{\xi}{\mu c}}}{\mu^{2} c^{2} - 1} - \frac{e^{\Delta} e^{\xi}}{2 \mu c - 2} + \frac{e^{\xi}}{2 \mu c - 2}.
+\end{align*}$$
+Imposing the conditions $\lim\limits_{\xi \to \infty} (U-A)(\xi) = 0$ and $(U-A)(-\Delta)=\tau$ we have
+$$\begin{align*}
+	0 &= \left(2 \theta \left(\mu c + 1\right) - 1\right) e^{\Delta} + 1\\
+	0 &= - \gamma \left(1 - e^{- \frac{\Delta}{\alpha c}}\right) - \theta + \left(\theta - \frac{\mu^{2} c^{2} + \frac{\mu c}{2} - \left(\frac{\mu c}{2} - \frac{1}{2}\right) e^{- \Delta} - \frac{1}{2}}{\mu^{2} c^{2} - 1}\right) e^{- \frac{\Delta}{\mu c}} + 1 - \frac{1}{2 \left(\mu c + 1\right)} + \frac{e^{- \Delta}}{2 \left(\mu c - 1\right)}.
+\end{align*}$$
+All together this becomes
+$$\begin{align*}
+	U{\left(\xi \right)} &= \begin{cases} \frac{\left(- \frac{e^{\Delta}}{\mu c - 1} + \frac{1}{\mu c - 1}\right) e^{\xi}}{2} + \frac{\left(\mu^{2} c^{2} e^{\frac{\Delta}{\mu c}} - \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \frac{\left(\mu c - 1\right) e^{- \Delta}}{2} + \frac{1}{2}\right) e^{\frac{\xi}{\mu c}}}{\mu^{2} c^{2} - 1} & \text{for}\: \Delta < - \xi \\\left(\theta + \frac{- \mu^{2} c^{2} - \frac{\mu c}{2} + \left(\frac{\mu c}{2} - \frac{1}{2}\right) e^{- \Delta} + \frac{1}{2}}{\mu^{2} c^{2} - 1}\right) e^{\frac{\xi}{\mu c}} + 1 - \frac{e^{- \Delta} e^{- \xi}}{2 \left(\mu c + 1\right)} + \frac{e^{\xi}}{2 \left(\mu c - 1\right)} & \text{for}\: \xi < 0 \\\frac{\left(1 - e^{- \Delta}\right) e^{- \xi}}{2 \left(\mu c + 1\right)} & \text{otherwise} \end{cases}\\
+	A{\left(\xi \right)} &= \begin{cases} \gamma \left(e^{\frac{\Delta}{\alpha c}} - 1\right) e^{\frac{\xi}{\alpha c}} & \text{for}\: \Delta < - \xi \\\gamma \left(1 - e^{\frac{\xi}{\alpha c}}\right) & \text{for}\: \xi < 0 \\0 & \text{otherwise} \end{cases}.
+\end{align*}$$
+<!-- end sympy generated -->
+
+<p>
+    <a href="./reports/report20210603/pulse-derivation.html" target=blank>Code</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="./reports/report20210603/pulse-derivation.ipynb" target=download>Notebook Download</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="./reports/report20210603/profile.pickle" target=download>profile.pickle</a>
 </p>
-
-
+</p>
 </div>
 
 <p>
-    In order for $c$ and $\Delta$ to be real-valued, we require $c < \frac{1}{2\theta} - 1$. For our choice of parameters in the simulations above ($\gamma = 1, \theta = 0.1$) this suggests a maximum speed of $c_\text{max} = 4$. Unfortunatley, rootfinding attempts have been unsuccessful. Figure 3 below, shows a plot of the RHS of our expression, for which we seek a root. It appears that the function is bounded above by $-0.2$ and thus no root can exisit. This seems at odds with our simulation.
+    Figure 1 shows these solutions compared to our simulated solution using our chosen/measured parameters $\mu = 1, \alpha = 5, \gamma = 1, \theta = 0.1, \Delta = 32.8328328328328, c = 3.92392392392387$.
 </p>
 
 <figure>
-    <img src="./reports/report20210527/rootfinding.png">
-    <figcaption><b>Fig 3.</b>The RHS of the second equation, as a function of $c$ with parameters given by $\gamma = 1, \theta=0.1, \alpha=5$. We can see that the expression is bounded above by $-0.2$ and thus our system is not consistent. (<a href="./reports/report20210527/pulse-analysis.html" target=blank>code</a> [<a href="./reports/report20210527/pulse-analysis.ipynb" download>notebook download</a>])</figcaption>
+    <img src="./reports/report20210603/pulse.png" width="100%">
+    <figcaption><b>Fig 1.</b> Predicted (dashed) and simulated (solid) traveling pulse solutions for the parameters $\mu = 1, \alpha = 5, \gamma = 1, \theta = 0.1, \Delta = 32.8328328328328, c = 3.92392392392387$.</figcaption>
 </figure>
 
 <p>
-    
+    The results are not perfect, but suggest we have the correct analytical solution and some numerical error. Presumably, our measurements for $c$ and $\Delta$ from the simulation are in error. Using our measurement for $c$ and instead computing $\Delta from our condition gives a dramatically different profile, as seen in Figure 2, below.
 </p>
+
+<figure>
+    <img src="./reports/report20210603/pulse2.png" width="100%">
+    <figcaption><b>Fig 2.</b> Our profiel with the parameters from the simulation (see Figure 1) and the measured speed $c=3.9239239239238697$, but with the computed $\Delta=4.18545935079561$, rather than the measured value.</figcaption>
+</figure>
 
 <p>
-    For reference, here is the generated code for the function depicted in Figure 3, above.
+Using the measured value of $\Delta$ instead, proves unfruitful. In Figure 3 we plot the right-hand-side of the condition on $c$, as a function of $c$ and observe that it has roots near $c\approx 2, 4$. The root near $c \approx 4$ appears to be the stable one from our simulations. Unfortunatly, this function is quite ill-conditioned near this root for these particular parameters.
 </p>
 
+<figure>
+    <img src="./reports/report20210603/rootfinding.png" width="100%">
+    <figcaption><b>Fig 3.</b> The right-hand-side of the condition on $c$. We see two roots. The stable root appears to be near $c=4$.</figcaption>
+</figure>
 
-<pre><code class="language-python">def c_implicit(c, γ, α, θ=0.1):
-    return γ*(( lambda base, exponent: base**exponent )(-2*θ*(c + 1) + 1, α/c) - 1) + (-2*θ*c + ( lambda base, exponent: base**exponent )(c, 2)*(-2*θ - ( lambda base, exponent: base**exponent )(-2*θ*(c + 1) + 1, 1.0/c) + 1))/(( lambda base, exponent: base**exponent )(c, 2) - 1)
+<p>
+    It may behoove us to find some sensible choice of parameters that allows for  more precise numerics. In the meantime, here are numerical functions for generating traveling wave solutions.
+</p>
+
+<pre><code class="language-python">def Unum(ξ, μ, α, γ, θ, Δ, c):
+    return (1.0/2.0)*(1 - np.exp(-Δ))*np.exp(-ξ)*(lambda input: np.heaviside(input,0.5))(ξ)/(μ*c + 1) + ((1.0/2.0)*(-np.exp(Δ)/(μ*c - 1) + 1.0/(μ*c - 1))*np.exp(ξ) + (( lambda base, exponent: base**exponent )(μ, 2)*( lambda base, exponent: base**exponent )(c, 2)*np.exp(Δ/(μ*c)) - ( lambda base, exponent: base**exponent )(μ, 2)*( lambda base, exponent: base**exponent )(c, 2) - 1.0/2.0*μ*c + θ*(( lambda base, exponent: base**exponent )(μ, 2)*( lambda base, exponent: base**exponent )(c, 2) - 1) + (1.0/2.0)*(μ*c - 1)*np.exp(-Δ) + 1.0/2.0)*np.exp(ξ/(μ*c))/(( lambda base, exponent: base**exponent )(μ, 2)*( lambda base, exponent: base**exponent )(c, 2) - 1))*(lambda input: np.heaviside(input,0.5))(-Δ - ξ) + ((θ + (-( lambda base, exponent: base**exponent )(μ, 2)*( lambda base, exponent: base**exponent )(c, 2) - 1.0/2.0*μ*c + ((1.0/2.0)*μ*c - 1.0/2.0)*np.exp(-Δ) + 1.0/2.0)/(( lambda base, exponent: base**exponent )(μ, 2)*( lambda base, exponent: base**exponent )(c, 2) - 1))*np.exp(ξ/(μ*c)) + 1 - 1.0/2.0*np.exp(-Δ)*np.exp(-ξ)/(μ*c + 1) + (1.0/2.0)*np.exp(ξ)/(μ*c - 1))*(lambda input: np.heaviside(input,0.5))(-ξ)*(lambda input: np.heaviside(input,0.5))(Δ + ξ)
+
+def Anum(ξ, μ, α, γ, θ, Δ, c):
+    return γ*(1 - np.exp(ξ/(α*c)))*(lambda input: np.heaviside(input,0.5))(-ξ)*(lambda input: np.heaviside(input,0.5))(Δ + ξ) + γ*(np.exp(Δ/(α*c)) - 1)*np.exp(ξ/(α*c))*(lambda input: np.heaviside(input,0.5))(-Δ - ξ)
 </code></pre>
+
+<hr><!--********************************************************************-->
+<h1 id="">Wave Response Simulations</h1>
+<p>
+Figure 4 shows the traveling wave (with parameters given above) responding to a stimulus of $I(x,t) = \delta(t-t_0) 0.05$. As expected, the limiting effect is to advance the wave forward.
+</p>
+<figure>
+    <video controls autoplay muted loop>
+        <source src="./reports/report20210603/pulse-stim.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+        
+    </video>
+    <figcaption><b>Fig 4.</b> Response of the traveling wave to a stimulus $I(x,t) = \delta(t-t0)0.05$. The limiting response is to advance the pulse forward.</figcaption>
+</figure>
+
+<hr><!--********************************************************************-->
+<h1 id="">SymPy Bug</h1>
+<p>
+I spent quite a bit of time debugging my code before I found what appears to be an error in SymPy's integration subroutine. When I ask Sympy to integrate, for example $\int\limits_{-\Delta}^0 H(x-y)e^{y-x} \ dy$ it gives an incorrect result when the symbol $\Delta$ is initialized with <code class="language-python">positive=True</code>. I have submitted a <a href="https://github.com/sympy/sympy/issues/21559" target=blank>bug report</a> and in the meantime, I integrated the forcing term by hand.
 
 <!--***************************************************************************
 *******************************************************************************
