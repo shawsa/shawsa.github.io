@@ -214,7 +214,7 @@ $$\begin{align*}
 </figure>
 
 <p>
-    The results are not perfect, but suggest we have the correct analytical solution and some numerical error. Presumably, our measurements for $c$ and $\Delta$ from the simulation are in error. Using our measurement for $c$ and instead computing $\Delta from our condition gives a dramatically different profile, as seen in Figure 2, below.
+    The results are not perfect, but suggest we have the correct analytical solution and some numerical error. Presumably, our measurements for $c$ and $\Delta$ from the simulation are in error. Using our measurement for $c$ and instead computing $\Delta$ from our condition gives a dramatically different profile, as seen in Figure 2, below.
 </p>
 
 <figure>
@@ -260,6 +260,8 @@ Figure 4 shows the traveling wave (with parameters given above) responding to a 
 <h1 id="">SymPy Bug</h1>
 <p>
 I spent quite a bit of time debugging my code before I found what appears to be an error in SymPy's integration subroutine. When I ask Sympy to integrate, for example $\int\limits_{-\Delta}^0 H(x-y)e^{y-x} \ dy$ it gives an incorrect result when the symbol $\Delta$ is initialized with <code class="language-python">positive=True</code>. I have submitted a <a href="https://github.com/sympy/sympy/issues/21559" target=blank>bug report</a> and in the meantime, I integrated the forcing term by hand.
+
+<hr><!--********************************************************************-->
 
 <!--***************************************************************************
 *******************************************************************************
