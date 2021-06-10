@@ -84,7 +84,7 @@
 
 <h1 id="Title">June 10<sup>th</sup>, 2021</h1>
 <p id="summary">
-    Lorem
+    We have found an asymptotic approximation of the wave reponse function
 </p>
 
 <hr><!--********************************************************************-->
@@ -176,7 +176,7 @@ $$\begin{align*}
 with $\vecu^T = [u_1, a_1]$.
 </p>
 <p>
-    A bounded solution will exist if the right-hand-side is orthogonal to the null-space of
+    Assume that a bounded solution will exist if the right-hand-side is orthogonal to the null-space of
 $$
     \LL^* \vecv = \vecv   + c \begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix} \vecv_\xi - f'\big(U(\xi) - A(\xi)\big) \begin{bmatrix}1&\gamma \\ -1 &-\gamma\end{bmatrix} \int_\RR w(y, \xi) \vecv(y) \ dy.
 $$
@@ -224,6 +224,10 @@ $$
     \left( \int_\RR \mu U_\xi  v_1(\xi) \ d\xi \right) \nu_t + \left( \int_\RR \alpha A_\xi  v_2(\xi,t) \ d\xi \right) \eta_t = \int_\RR v_1(\xi) I(\xi, t) \ d\xi
 $$
 for all vectors $\vecv = [v_1, v_2]^T \in \text{Null}(\LL^*)$.
+</p>
+
+<p>
+    We believe this adjoint has a one-dimensional null-space, due to the rank-deficiency of the coupling matrix. This leaves us with not enough information to solve for both $\nu$ and $\eta$. It would, perhaps, be reasonable to assume that $\nu = \eta$. Interestingly, the point is moot in the following example.
 </p>
 
 <h2 id="">Heaviside Firing-rate with Exponential Weight</h2>
@@ -303,8 +307,54 @@ $$\begin{align*}
 \end{align*}$$
 </p>
 
+<h1 id="">Numerical Difficulties</h1>
+<p>
+    Ideally, we would compare our asymptotic approximation of the wave repsonse function to numerical simulations. This has proven to be numerically difficult. To accurately measure the wave response function for a given simulation, we must be able to measure the pulse speed accurately. Figure 1 shows the measured speed, as determined by the approximate front locations over time. While the forward front of the pulse appears to have a relatively stable speed, the rear of the pulse seems to be oscillating.
+</p>
 
+<figure>
+<img src="./report20210610/front_speeds.png" width="100%">
+<figcaption><b>Fig 1.</b> The measured speed of the fore and aft fronts. (Slope of secant lines for points separated by 50 time steps. Parameters are given in Figure 1). </figcaption>
+</figure>
 
+<p>
+    Figure 2 shows the solution $u(x,t)-a(x,t)$ at consecutive time-steps. Far from the front we see that the solution is clearly advecting, however near the front we are observing oscillations in the speed that compress and expand the distance between consecutive time-steps. These oscillations are in the solutions themselves rather than artifacts of the root-finding process. 
+</p>
+
+<p>
+    Additionally, that the traveling solution is piece-wise suggests that this naive interpolation will be at most $\OO(h)$ accurate - no better than simply finding an argmin of $|u - a - \theta|$. 
+</p>
+
+<figure>
+<img src="./report20210610/root_snapshots.png" width="100%">
+<figcaption><b>Fig 2.</b> The solution $u(x,t) - a(x,t) - \theta$ for 50 consecutive time steps after the pulse has stabilized as well as an approximation of the front location (quartic interpolation). We see the solutions are not smooth causing difficulties in measuring the location of the front to a reasonable degree of accuracy. The parameters are the same as the simulations in the previous weeks: $\mu = 1, \alpha = 5, \gamma = 1, \theta = 0.1$. The simulation was initiallized with our previously calculated traveling-pulse solution (based on the poorly approximated pulse speed and width) and allowed to stabilze for 4300 time steps at a temporal resolution of $\Delta t = 10^{-3}$ and a spatial resolution of $\Delta x = 2\times 10^{-2}$.  </figcaption>
+</figure>
+
+<p>
+    Measuring the pulse widths is marred by this inaccuracy in the front locations as well. Figure 3 shows the measurments over the course of the simulation on two time-scales. The finer time-scale shows that the apparant difference between the front locations seems to oscilate rappidly. 
+</p>
+
+<figure>
+<img src="./report20210610/pulse_widthds.png" width="100%">
+<figcaption><b>Fig 3.</b> Measurements of the pulse width shown on two time scales for clarity. In the region near $t=4.25$ we see five distinct curves. </figcaption>
+</figure>
+
+<p>
+    It was curious that. in Figure 1, the oscillations in the aft speed seemed to vanish near $t\approx 4.25$. This is explained by the finer time-scale in Figure 3, as it appears the frequency of the ocilations is aliased - there are clearly 5 curves in this region, and our measurment of the pulse speed took samples spaced 50 indices appart.
+</p>
+
+<h1 id="">Going Forward</h1>
+<p>
+    Though it is not included here, we did attempt to find parameter regimes that were more well-conditioned, without success. We tried arbitrarily selecting the wave speed and using the first condition $0 = (2\theta(\mu c+1)-1)e^\Delta + 1$ (which relies on fewer of the parameters) to determine the pulse width, and then use the second condition to determine one of the unknown parameters, however, the solution would no longer sustain traveling pulses. the solutions would default  to traveling front solutions. We may need to investigate stability conditions to proceed in this way.
+</p>
+
+<p>
+    That these oscillations in front locations are an artifact of the simulations themselves suggest that we revisit the numerics of the simulations. The piece-wise profile suggests that they are not smooth in space, and that the computation of the convolution is only to first order. An analytic evaluation of the convolution should be possible if we can accurately calculate the front locations. Perhaps if we use this from the beginning, the oscillations will not be present, and the traveling pulse solution will maintain a higher degree of spatial smoothness over time. 
+</p>
+
+<p>
+    It could also be interesting to try a piece-wise interpolation. We can perhaps assume that the solution is smooth on either side of the front, and that the kink occurs at threshold-crossing. We can enforce continuity (and possibly some degree of smoothness) and solve for the location of the kink. We should have enough equations, though they will be non-linear in the location variable. Still, the problem appears well conditioned, so perhaps it will not be too difficult. The error analysis of such an interpolation technique would be interesting more generally.
+</p>
 
 <!--
 
