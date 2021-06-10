@@ -12,11 +12,49 @@
     <script type="text/javascript" async
         src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
     </script>
+    <!-- Mathjax commands -->
+    $
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\OO}{\mathcal{O}}
+    \newcommand{\mathcow}{\OO}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\KK}{\mathbb{K}}
+    \newcommand{\PP}{\mathcal{P}}
+    \newcommand{\TT}{\mathcal{T}}
+    \newcommand{\BB}{\mathcal{B}}
+    \newcommand{\LL}{\mathcal{L}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
 
+    \newcommand{\veca}{\vec{a}}
+    \newcommand{\vecb}{\vec{b}}
+    \newcommand{\vecd}{\vec{d}}
+    \newcommand{\vece}{\vec{e}}
+    \newcommand{\vecf}{\vec{f}}
+    \newcommand{\vecn}{\vec{n}}
+    \newcommand{\vecp}{\vec{p}}
+    \newcommand{\vecr}{\vec{r}}
+    \newcommand{\vecu}{\vec{u}}
+    \newcommand{\vecv}{\vec{v}}
+    \newcommand{\vecx}{\vec{x}}
+    \newcommand{\vecy}{\vec{y}}
+    \newcommand{\vecz}{\vec{z}}
+
+    \renewcommand{\vec}[1]{\mathbf{#1}}
+    $
+
+    <!-- Plotly code for interactive plots -->
+    <script src="./plotly-2.0.0-rc.2.min.js"></script>
     
     <!--Prisim for code highlighting -->
     <script src="./prism.js"></script>    
     <link rel="stylesheet" href="./prism.css">
+
+
+
     
 <!--************************************************************************-->
 <title>Shaw Research Notes</title>
@@ -44,16 +82,15 @@
 *******************************************************************************
 ****************************************************************************-->
 
-<h1 id="Title">June 3<sup>rd</sup>, 2021</h1>
+<h1 id="Title">June 10<sup>th</sup>, 2021</h1>
 <p id="summary">
-    We finished deriving the traveling pulse solution. We encountered a bug in SymPy's integration routine involving the Heaviside function and variable assumptions, which cause delays. We submitted a <a href="https://github.com/sympy/sympy/issues/21559" target=blank>bug report</a> and proceeded integrating the forcing term by hand. The choice of parameters for our simulation makes determining the pulse width and wave speed an ill-conditioned process. We began simulations for spatially homogeneous temporally pulsatile stimuli.
+    We have found an asymptotic approximation of the wave reponse function, though there is more work to be done determining the dimension of the null-space of the adjoint operator. The example that we have been simulating certainly has a one-dimensional null-space, though the particulars of that problem allow for a solution to be found. Comparison to simulations has proven difficult due to the inaccuracies in measuring the wave speed and front locations. We have outlined these difficulties here and proposed several possible solutions.
 </p>
 
 <hr><!--********************************************************************-->
 <h1 id="">To-Do List Snapshot</h1>
 <p>
 <ul>
-    <li><s>Analytically find the traveling pulse/front solutions.</s></li>
     <li>Investigate wave-response function.</li>
     <ul>
         <li>Spatially homogeneous pulse.</li>
@@ -75,193 +112,261 @@
 </ul>
 </p>
 
-<hr><!--********************************************************************-->
-
-<h1 id="">Traveling Pulses</h1>
-<p>
-    The non-linear adaptation model is the model from <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a> (KB10) but with the synaptic depression ($q$) removed. This is equivalent to setting $\beta = 0$ and initializing $q = 1$ in their model. The result is then
-$$\begin{align*}
-    \mu u_t &= -u + \int_{-\infty}^\infty w(x,x^\prime) f( u(x^\prime,t) - a(x^\prime,t)) \ dx^\prime \\
-    \alpha a_t &= -a + \gamma f(u - a).
-\end{align*}$$
-Note that we have re-labeled the parameters $\epsilon \to \alpha$ and the old $\alpha$ is not present.
-</p>
+<div id="slider-plot" style="width:auto;"></div>
 
 <!--************************************************************************-->
+
+<hr><!--********************************************************************-->
+
+<h1 id="">Wave Response: Adjoint Method</h1>
 <p>
-Assume a Heaviside firing rate function, the exponential weight function
+    Beginning with the model
 $$\begin{align*}
-    f(u-a) &= H(u-a - \theta) \\
-    w(x, x^\prime) &= \tfrac{1}{2} e^{-|x-x^\prime|}.
+    \mu u_t &= -u + \int_\RR w(x,y) f\big[ u(y,t) - a(y,t) \big] \ dy + \epsilon I(\xi, t) \\
+    \alpha   a_t &= -a + \gamma \int_\RR w(x,y) f\big[ u(y,t) - a(y,t) \big] \ dy
 \end{align*}$$
 </p>
 
 <p>
-    Ultimately this gives the traveling pulse solution
+We convert to $\xi$-$t$ coordinates via the mappings $x-ct \mapsto \xi$ and $t \mapsto t$
 $$\begin{align*}
-	u(x,t) = U{\left(\xi \right)} &= \begin{cases} \frac{\left(- \frac{e^{\Delta}}{\mu c - 1} + \frac{1}{\mu c - 1}\right) e^{\xi}}{2} + \frac{\left(\mu^{2} c^{2} e^{\frac{\Delta}{\mu c}} - \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \frac{\left(\mu c - 1\right) e^{- \Delta}}{2} + \frac{1}{2}\right) e^{\frac{\xi}{\mu c}}}{\mu^{2} c^{2} - 1} & \text{for}\: \Delta < - \xi \\\left(\theta + \frac{- \mu^{2} c^{2} - \frac{\mu c}{2} + \left(\frac{\mu c}{2} - \frac{1}{2}\right) e^{- \Delta} + \frac{1}{2}}{\mu^{2} c^{2} - 1}\right) e^{\frac{\xi}{\mu c}} + 1 - \frac{e^{- \Delta} e^{- \xi}}{2 \left(\mu c + 1\right)} + \frac{e^{\xi}}{2 \left(\mu c - 1\right)} & \text{for}\: \xi < 0 \\\frac{\left(1 - e^{- \Delta}\right) e^{- \xi}}{2 \left(\mu c + 1\right)} & \text{otherwise} \end{cases}\\
-	a(x,t) = A{\left(\xi \right)} &= \begin{cases} \gamma \left(e^{\frac{\Delta}{\alpha c}} - 1\right) e^{\frac{- c t + x}{\alpha c}} & \text{for}\: \Delta < c t - x \\\gamma \left(1 - e^{\frac{- c t + x}{\alpha c}}\right) & \text{for}\: c t - x > 0 \\0 & \text{otherwise} \end{cases}\\
-	\xi &= - c t + x\\
-	e^{\Delta} &= - \frac{1}{2 \theta \left(\mu c + 1\right) - 1},
+    -c\mu u_\xi + \mu u_t &= -u + \int_\RR w(\xi,y) f\big[ u(y,t) - a(y,t) \big] \ dy + \epsilon I(\xi, t) \\
+    -c\alpha a_\xi + \alpha a_t &= -a + \gamma \int_\RR w(\xi,y) f\big[ u(y,t) - a(y,t) \big] \ dy.
 \end{align*}$$
-where $c$ is given implicitly by
+</p>
+<p>
+    Then we make the asymptotic approximation
 $$\begin{align*}
-	0 &= - \gamma \left(1 - \left(- \frac{1}{2 \theta \left(\mu c + 1\right) - 1}\right)^{- \frac{1}{\alpha c}}\right) - \theta + 1 - \frac{1}{2 \left(\mu c + 1\right)} + \frac{2 \theta \left(- \mu c - 1\right) + 1}{2 \left(\mu c - 1\right)} + \left(- \frac{1}{2 \theta \left(\mu c + 1\right) - 1}\right)^{- \frac{1}{\mu c}} \left(\theta - \frac{\mu^{2} c^{2} + \frac{\mu c}{2} - \left(\frac{\mu c}{2} - \frac{1}{2}\right) \left(2 \theta \left(- \mu c - 1\right) + 1\right) - \frac{1}{2}}{\mu^{2} c^{2} - 1}\right).
+    u(\xi, t) &= U(\xi - \epsilon \nu(t)) + \epsilon u_1(\xi, t) + \OO(\epsilon^2) \\
+    a(\xi, t) &= A(\xi - \epsilon \eta(t)) + \epsilon a_1(\xi, t) + \OO(\epsilon^2).
+\end{align*}$$
+giving us
+$$\begin{align*}
+    -c\mu (U_\xi + \epsilon \partial_\xi u_{1}) + \mu (-\epsilon \nu_t U_\xi + \epsilon \partial_t u_{1}) &= -U -\epsilon u_1 + \int_\RR w(\xi,y) \bigg[ f\big(U(y) - A(y)\big) + \epsilon f'(U-A)(u_1 - a_1) \bigg] \ dy + \epsilon I(\xi, t) + \OO(\epsilon^2)\\
+    -c\alpha (A_\xi + \epsilon \partial_\xi a_{1}) + \alpha (-\epsilon \eta_t A_\xi + \epsilon \partial_t a_{1}) &= -A - \epsilon a_1+ \gamma \int_\RR w(\xi,y)  \bigg[ f\big(U(y) - A(y)\big) + \epsilon f'(U-A)(u_1 - a_1) \bigg] \ dy + \OO(\epsilon^2)\\
+\end{align*}$$
+</p>
+<p>
+    Collecting the $\OO(1)$ terms, we have
+$$\begin{align*}
+    -c\mu U_\xi &= -U + \int_\RR w(\xi, y) f\big[ U(y) - A(y) \big] \ dy \\
+    -c\alpha A_\xi &= -A + \gamma \int_\RR w(\xi, y) f\big[U(y) - A(y) \big] \ dy,
+\end{align*}$$
+and thus $U$ and $A$ are the profiles of stable traveling pulses.
+</p>
+<p>
+    Collecting the $\OO(\epsilon)$ terms, we have
+$$\begin{align*}
+    \mu \partial_t u_1 + u_1 - \mu c\partial_\xi u_1 - \int_\RR w(\xi, y) f'\big(U(y)-A(y)\big) \big(u_1(y,t) - a_1(y,t)\big) \ dy 
+        &= -\mu U_\xi \nu_t + I \\
+    \alpha \partial_t a_1 + a_1 - \alpha c \partial_\xi a_1 - \gamma \int_\RR w(\xi, y) f'\big(U(y)-A(y)\big) \big(u_1(y,t) - a_1(y,t)\big) \ dy 
+    &= -\alpha A_\xi \eta_t
+\end{align*}$$
+or in vector form
+$$\begin{align*}
+    \begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix} \vecu_t + \underbrace{\vecu - c\begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix} \vecu_\xi - \begin{bmatrix}1&-1\\ \gamma&-\gamma\end{bmatrix} \int_\RR w(\xi,y)f'\big(U(y) - A(y)\big)  \vecu(y) \ dy}_{\LL \vecu} &= \begin{bmatrix}-\mu U_\xi \nu_t + I \\ -\alpha A_\xi \eta_t \end{bmatrix}
+\end{align*}$$
+with $\vecu^T = [u_1, a_1]$.
+</p>
+<p>
+    Assume that a bounded solution will exist if the right-hand-side is orthogonal to the null-space of
+$$
+    \LL^* \vecv = \vecv   + c \begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix} \vecv_\xi - f'\big(U(\xi) - A(\xi)\big) \begin{bmatrix}1&\gamma \\ -1 &-\gamma\end{bmatrix} \int_\RR w(y, \xi) \vecv(y) \ dy.
+$$
+</p>
+
+    <button class="accordion">Adjoint Derivation</button> <!-- Begin Adjoint Derivation -->
+    <div class="panel">
+        We begin by defining the matrices
+$$
+M_1 = \begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix}, \qquad \text{ and } \qquad M_2 = \begin{bmatrix}1&-1\\ \gamma&-\gamma\end{bmatrix},
+$$
+for convenience. Then we have
+$$
+\begin{align*}
+    \langle \LL \vecu, \vecv \rangle &= \int_\RR \LL \vecu \cdot \vecv \ d\xi \\
+        &= \int_\RR \vecv^T \vecu - c\vecv^T M_1 \vecu_\xi - \vecv^T M_2 \int_\RR w(\xi, y) f'\big(U(y) - A(y)\big) \vecu(y) \ dy \ d\xi \\
+        &= \int_\RR \vecv^T \vecu \ d\xi - c \int_\RR \vecv^T M_1 \vecu_\xi \ d\xi - \int_\RR  \int_\RR w(\xi, y) f'\big(U(y) - A(y)\big) \ \vecv^T M_2 \vecu(y) \ dy \ d\xi \\
+        &= \int_\RR \vecv^T \vecu \ d\xi - c\vecv^TM_1\vecu \bigg|_{-\infty}^\infty  + c\int_\RR \vecv^T_\xi M_1 \vecu \ d\xi - \int_\RR  \int_\RR w(\xi, y) f'\big(U(y) - A(y)\big) \ \vecv^T(\xi) M_2 \vecu(y) \ dy \ d\xi \tag{IBP} \\
+        &= - c\vecv^TM_1\vecu \bigg|_{-\infty}^\infty + \int_\RR \vecv^T \vecu \ d\xi   + c\int_\RR \vecv^T_\xi M_1 \vecu \ d\xi - \int_\RR  \int_\RR w(y, \xi) f'\big(U(\xi) - A(\xi)\big) \ \vecv^T(y) M_2 \vecu(\xi) \ dy \ d\xi \tag{change of varialbes} \\
+        &= - c\vecu^TM_1^T\vecv \bigg|_{-\infty}^\infty + \int_\RR \vecu^T \vecv \ d\xi   + c\int_\RR \vecu^T M_1^T \vecv_\xi \ d\xi - \int_\RR  \int_\RR w(y, \xi) f'\big(U(\xi) - A(\xi)\big) \ \vecu^T(\xi) M_2^T \vecv(y) \ dy \ d\xi \tag{transpose of scalars} \\
+        &= - c\vecu^TM_1^T\vecv \bigg|_{-\infty}^\infty + \int_\RR \vecu^T\bigg( \vecv   + c M_1^T \vecv_\xi - f'\big(U(\xi) - A(\xi)\big)\int_\RR w(y, \xi)  \ M_2^T \vecv(y) \ dy \ \bigg)d\xi.
+\end{align*}$$
+Assuming that $c\vecu^TM_1^T\vecv \bigg|_{-\infty}^\infty = 0$ this gives us
+$$
+    \LL^* \vecv = \vecv   + c M_1^T \vecv_\xi - f'\big(U(\xi) - A(\xi)\big)\int_\RR w(y, \xi)  \ M_2^T \vecv(y) \ dy
+$$
+or
+$$
+    \LL^* \vecv = \vecv   + c \begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix} \vecv_\xi - f'\big(U(\xi) - A(\xi)\big)\int_\RR w(y, \xi)  \begin{bmatrix}1&\gamma \\ -1 &-\gamma\end{bmatrix} \vecv(y) \ dy.
+$$
+    </div> <!-- End Adjoint Derivation -->
+
+<p>
+    Let $\vecv = [v_1, v_2]^T \in \text{Null}(\LL^*)$. We require
+$$\begin{align*}
+    \vec{0} &= \left\langle \vecv, \begin{bmatrix}-\mu U_\xi \nu_t + I \\ -\alpha A_\xi \eta_t \end{bmatrix} \right\rangle \\
+        &= \int_\RR -\mu U_\xi \nu_t v_1(\xi) + v_1(\xi, t)I(\xi, t) -\alpha A_\xi \eta_t v_2(\xi,t) \ d\xi \\
+    \left( \int_\RR \mu U_\xi  v_1(\xi) \ d\xi \right) \nu_t + \left( \int_\RR \alpha A_\xi  v_2(\xi) \ d\xi \right) \eta_t&= \int_\RR v_1(\xi) I(\xi, t) \ d\xi
+\end{align*}$$
+</p> 
+
+<p>
+    We can find $\nu_t$ and $\eta_t$ as the solution to the set of equations
+$$
+    \left( \int_\RR \mu U_\xi  v_1(\xi) \ d\xi \right) \nu_t + \left( \int_\RR \alpha A_\xi  v_2(\xi,t) \ d\xi \right) \eta_t = \int_\RR v_1(\xi) I(\xi, t) \ d\xi
+$$
+for all vectors $\vecv = [v_1, v_2]^T \in \text{Null}(\LL^*)$.
+</p>
+
+<p>
+    We believe this adjoint has a one-dimensional null-space, due to the rank-deficiency of the coupling matrix. This leaves us with not enough information to solve for both $\nu$ and $\eta$. It would, perhaps, be reasonable to assume that $\nu = \eta$. Interestingly, the point is moot in the following example.
+</p>
+
+<h2 id="">Heaviside Firing-rate with Exponential Weight</h2>
+<p>
+    In the case of 
+$$\begin{align*}
+    f(\cdot) &= H(\cdot - \theta) & w(x,y) &= \tfrac{1}{2} e^{-|x-y|}
+\end{align*}$$
+we find
+$$\begin{align*}
+    v_1(\xi) &= \alpha H(\xi) e^{-\xi/c\mu} \\
+    v_2(\xi) &= -\mu H(\xi) e^{-\xi/c\alpha}.
 \end{align*}$$
 </p>
 
-<button class="accordion">Derivation</button>
+<button class="accordion">Null-Space Derivation</button> <!-- Begin Null-space Derivation -->
 <div class="panel">
-<p>
-Converting to the characteristic coordinate $U(\xi) = u(x - ct), A(\xi) = a(x - ct), \xi = x - ct$, for some unkown speed $c$, we then have
+We can compute the null-space as follows:
 $$\begin{align*}
-    -c\mu U' &= -U + \int_{-\infty}^\infty \tfrac{1}{2}e^{-|\xi - \xi'|}H(U - A - \theta) \ d\xi' \\
-    -\alpha cA'&= -A + \gamma H(U - A - \theta).
-\end{align*}$$
-</p>
-<p>
-    To find a traveling pulse solution, we make several assumptions:
-    <ul>
-        <li>$J(\xi) = U(\xi) - A(\xi)$ is super-threshold in the interval $(-\Delta,0)$ for some unkown pulse width $\Delta$, and sub-threshold elsewhere.</li>
-        <li>$\lim\limits_{\xi \to \pm \infty} U(\xi) = \lim\limits_{\xi \to \pm \infty} A(\xi)= 0$</li>
-    </ul>
-</p>
-<p>
-    Using the threshold-condition, we have that $H(U-A-\theta) = H(\xi + \Delta) - H(\xi)$ and our system becomes
-$$\begin{align*}
-    -c\mu U' &= -U + \int_{-\Delta}^0 \frac{1}{2}e^{-|\xi - \xi'|} \ d\xi' \\
-    -\alpha cA' &= -A + \gamma \big[ H(\xi + \Delta) - H(\xi) \big]
+    \vec{0} &= \LL^* \vecv \\
+        &= \vecv + c \begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix} \vecv_\xi - \frac{d}{d \xi}\bigg[ H\big( U(\xi) - A(\xi) \big) \bigg]  \begin{bmatrix}1&\gamma \\ -1 &-\gamma \end{bmatrix} \int_\RR e^{-|y-\xi |}\vecv(y) \ dy \\
+        &= \vecv + c \begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix} \vecv_\xi - \frac{\delta(\xi)}{U'(0) - A'(0)} \begin{bmatrix}1&\gamma \\ -1 &-\gamma \end{bmatrix} \int_\RR e^{-|y|}\vecv(y) \ dy \\
+    \vecv + c\begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix} \vecv_\xi &= \frac{\delta(\xi)}{U'(0) - A'(0)} \begin{bmatrix}1&\gamma \\ -1 &-\gamma \end{bmatrix} \int_\RR e^{-|y|}\vecv(y) \ dy \\
+    \vecv_\xi + \frac{1}{c} \begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix}^{-1} \vecv &=  \frac{\delta(\xi)}{U'(0) - A'(0)} \begin{bmatrix}\frac{1}{\mu} &\frac{\gamma}{\mu} \\ -\frac{1}{\alpha} &-\frac{\gamma}{\alpha} \end{bmatrix} \int_\RR e^{-|y|}\vecv(y) \ dy \\
+    \left[  \exp\left(\frac{\xi}{c} \begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix}^{-1} \right) \vecv \right]_\xi &= \exp\left(\frac{\xi}{c} \begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix}^{-1} \right) \frac{\delta(\xi)}{U'(0) - A'(0)} \begin{bmatrix}\frac{1}{\mu} &\frac{\gamma}{\mu} \\ -\frac{1}{\alpha} &-\frac{\gamma}{\alpha} \end{bmatrix} \int_\RR e^{-|y|}\vecv(y) \ dy \\
+    \exp\left(\frac{\xi}{c} \begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix}^{-1} \right) \vecv &= H(\xi) \left[ \exp\left(\frac{\xi}{c} \begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix}^{-1} \right) \frac{1}{U'(0) - A'(0)} \begin{bmatrix}\frac{1}{\mu} &\frac{\gamma}{\mu} \\ -\frac{1}{\alpha} &-\frac{\gamma}{\alpha} \end{bmatrix} \int_\RR e^{-|y|}\vecv(y) \ dy \right]_{\xi = 0} \\
+    \exp\left(\frac{\xi}{c} \begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix}^{-1} \right) \vecv &= H(\xi) \frac{1}{U'(0) - A'(0)} \begin{bmatrix}\frac{1}{\mu} &\frac{\gamma}{\mu} \\ -\frac{1}{\alpha} &-\frac{\gamma}{\alpha} \end{bmatrix} \int_\RR e^{-|y|}\vecv(y) \ dy.
 \end{align*}$$
 </p>
 
 <p>
-<!-- sympy generated below -->
-Our problem reduces to solving
-$$\begin{align*}
-	0 &= \mu c \frac{d}{d \xi} U{\left(\xi \right)} + \frac{\left(1 - e^{- \Delta}\right) e^{- \xi} \theta\left(\xi\right)}{4} + \frac{\left(e^{\Delta} - 1\right) e^{\xi} \theta\left(- \Delta - \xi\right)}{4} + \frac{\left(- \frac{e^{\xi}}{2} + 1 - \frac{e^{- \Delta} e^{- \xi}}{2}\right) \theta\left(- \xi\right) \theta\left(\Delta + \xi\right)}{2} - U{\left(\xi \right)}\\
-	0 &= \alpha c \frac{d}{d \xi} A{\left(\xi \right)} + \gamma \left(- \theta\left(\xi\right) + \theta\left(\Delta + \xi\right)\right) - A{\left(\xi \right)}.
-\end{align*}$$
-We will first find $A$. The homogeneous solution is given by
-$$\begin{align*}
-	A{\left(\xi \right)} &= e^{\frac{C_{1}}{\alpha c}} e^{\frac{\xi}{\alpha c}}.
-\end{align*}$$
-From this, and our right-boundary condition, we see that $A(\xi) = 0$ for $\xi > 0$.
-Solving for $A$ in $-\Delta < \xi < 0$ with this boundary condition $A(0)=0$ we have
-$$\begin{align*}
-	A{\left(\xi \right)} &= \gamma \left(1 - e^{\frac{\xi}{\alpha c}}\right).
-\end{align*}$$
-Then we use this new boundary condition for $A(-\Delta)$ and the homogeneous solution to find $A(\xi)$ for $\xi < -\Delta$
-$$\begin{align*}
-	A{\left(\xi \right)} &= \gamma \left(e^{\frac{\Delta}{\alpha c}} - 1\right) e^{\frac{\xi}{\alpha c}}.
-\end{align*}$$
-Thus
-$$\begin{align*}
-	A{\left(\xi \right)} &= \begin{cases} \gamma \left(e^{\frac{\Delta}{\alpha c}} - 1\right) e^{\frac{\xi}{\alpha c}} & \text{for}\: \Delta < - \xi \\\gamma \left(1 - e^{\frac{\xi}{\alpha c}}\right) & \text{for}\: \xi < 0 \\0 & \text{otherwise} \end{cases}.
-\end{align*}$$
-We next solve for $U$ on the right domain.
-We seek a solution to
-$$\begin{align*}
-	0 &= \mu c \frac{d}{d \xi} U{\left(\xi \right)} + \frac{\left(1 - e^{- \Delta}\right) e^{- \xi}}{2} - U{\left(\xi \right)}\\
-	U{\left(0 \right)} &= \theta.
-\end{align*}$$
-Solving, we find
-$$\begin{align*}
-	U{\left(\xi \right)} &= \frac{e^{\Delta}}{2 \mu c e^{\Delta} e^{\xi} + 2 e^{\Delta} e^{\xi}} - \frac{1}{2 \mu c e^{\Delta} e^{\xi} + 2 e^{\Delta} e^{\xi}} + \frac{\left(\mu \theta c e^{\Delta} + \theta e^{\Delta} - \frac{e^{\Delta}}{2} + \frac{1}{2}\right) e^{- \Delta} e^{\frac{\xi}{\mu c}}}{\mu c + 1}.
-\end{align*}$$
-On the middle domain, we seek a solution to
-$$\begin{align*}
-	0 &= \mu c \frac{d}{d \xi} U{\left(\xi \right)} - U{\left(\xi \right)} - \frac{e^{\xi}}{2} + 1 - \frac{e^{- \Delta} e^{- \xi}}{2}\\
-	U{\left(0 \right)} &= \theta.
-\end{align*}$$
-Solving, we find
-$$\begin{align*}
-	U{\left(\xi \right)} &= 1 - \frac{1}{2 \mu c e^{\Delta} e^{\xi} + 2 e^{\Delta} e^{\xi}} + \frac{\left(2 \mu^{2} \theta c^{2} e^{\Delta} - 2 \mu^{2} c^{2} e^{\Delta} - \mu c e^{\Delta} + \mu c - 2 \theta e^{\Delta} + e^{\Delta} - 1\right) e^{- \Delta} e^{\frac{\xi}{\mu c}}}{2 \left(\mu^{2} c^{2} - 1\right)} + \frac{e^{\xi}}{2 \mu c - 2}.
-\end{align*}$$
-On the left domain, we seek a solution to
-$$\begin{align*}
-	0 &= \mu c \frac{d}{d \xi} U{\left(\xi \right)} + \frac{\left(e^{\Delta} - 1\right) e^{\xi}}{2} - U{\left(\xi \right)}\\
-	U{\left(- \Delta \right)} &= 1 + \frac{\left(2 \mu^{2} \theta c^{2} e^{\Delta} - 2 \mu^{2} c^{2} e^{\Delta} - \mu c e^{\Delta} + \mu c - 2 \theta e^{\Delta} + e^{\Delta} - 1\right) e^{- \Delta} e^{- \frac{\Delta}{\mu c}}}{2 \left(\mu^{2} c^{2} - 1\right)} - \frac{1}{2 \mu c + 2} + \frac{e^{- \Delta}}{2 \mu c - 2}.
-\end{align*}$$
-Solving, we find
-$$\begin{align*}
-	U{\left(\xi \right)} &= \frac{\left(\mu^{2} \theta c^{2} e^{\Delta} - \mu^{2} c^{2} e^{\Delta} + \mu^{2} c^{2} e^{\Delta + \frac{\Delta}{\mu c}} - \frac{\mu c e^{\Delta}}{2} + \frac{\mu c}{2} - \theta e^{\Delta} + \frac{e^{\Delta}}{2} - \frac{1}{2}\right) e^{- \Delta} e^{\frac{\xi}{\mu c}}}{\mu^{2} c^{2} - 1} - \frac{e^{\Delta} e^{\xi}}{2 \mu c - 2} + \frac{e^{\xi}}{2 \mu c - 2}.
-\end{align*}$$
-Imposing the conditions $\lim\limits_{\xi \to \infty} (U-A)(\xi) = 0$ and $(U-A)(-\Delta)=\tau$ we have
-$$\begin{align*}
-	0 &= \left(2 \theta \left(\mu c + 1\right) - 1\right) e^{\Delta} + 1\\
-	0 &= - \gamma \left(1 - e^{- \frac{\Delta}{\alpha c}}\right) - \theta + \left(\theta - \frac{\mu^{2} c^{2} + \frac{\mu c}{2} - \left(\frac{\mu c}{2} - \frac{1}{2}\right) e^{- \Delta} - \frac{1}{2}}{\mu^{2} c^{2} - 1}\right) e^{- \frac{\Delta}{\mu c}} + 1 - \frac{1}{2 \left(\mu c + 1\right)} + \frac{e^{- \Delta}}{2 \left(\mu c - 1\right)}.
-\end{align*}$$
-All together this becomes
-$$\begin{align*}
-	U{\left(\xi \right)} &= \begin{cases} \frac{\left(- \frac{e^{\Delta}}{\mu c - 1} + \frac{1}{\mu c - 1}\right) e^{\xi}}{2} + \frac{\left(\mu^{2} c^{2} e^{\frac{\Delta}{\mu c}} - \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \frac{\left(\mu c - 1\right) e^{- \Delta}}{2} + \frac{1}{2}\right) e^{\frac{\xi}{\mu c}}}{\mu^{2} c^{2} - 1} & \text{for}\: \Delta < - \xi \\\left(\theta + \frac{- \mu^{2} c^{2} - \frac{\mu c}{2} + \left(\frac{\mu c}{2} - \frac{1}{2}\right) e^{- \Delta} + \frac{1}{2}}{\mu^{2} c^{2} - 1}\right) e^{\frac{\xi}{\mu c}} + 1 - \frac{e^{- \Delta} e^{- \xi}}{2 \left(\mu c + 1\right)} + \frac{e^{\xi}}{2 \left(\mu c - 1\right)} & \text{for}\: \xi < 0 \\\frac{\left(1 - e^{- \Delta}\right) e^{- \xi}}{2 \left(\mu c + 1\right)} & \text{otherwise} \end{cases}\\
-	A{\left(\xi \right)} &= \begin{cases} \gamma \left(e^{\frac{\Delta}{\alpha c}} - 1\right) e^{\frac{\xi}{\alpha c}} & \text{for}\: \Delta < - \xi \\\gamma \left(1 - e^{\frac{\xi}{\alpha c}}\right) & \text{for}\: \xi < 0 \\0 & \text{otherwise} \end{cases}.
-\end{align*}$$
-<!-- end sympy generated -->
+    The integral on the right-hand-side is some constant vector
+$$
+    \frac{1}{U'(0) - A'(0)} \int_\RR e^{-|y|}\vecv(y) \ dy = \begin{bmatrix} w_1 \\ w_2 \end{bmatrix}
+$$
+so we have
+\begin{align*}
+    \vecv(\xi) &= H(\xi) \exp\left(-\frac{\xi}{c} \begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix}^{-1} \right) \begin{bmatrix}\frac{1}{\mu} &\frac{\gamma}{\mu} \\ -\frac{1}{\alpha} &-\frac{\gamma}{\alpha} \end{bmatrix} \begin{bmatrix} w_1 \\ w_2 \end{bmatrix}.
+\end{align*}
+</p>
 
 <p>
-    <a href="./reports/report20210603/pulse-derivation.html" target=blank>Code</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="./reports/report20210603/pulse-derivation.ipynb" target=download>Notebook Download</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="./reports/report20210603/profile.pickle" target=download>profile.pickle</a>
+    This constant matrix is rank 1 and thus the null-space of $\LL^*$ is one-dimensional. Fixing the arbitrary scaling of the null-vector, we arrive at
+$$\begin{align*}
+    \vecv(\xi) &= H(\xi) \exp\left(-\frac{\xi}{c} \begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix}^{-1} \right) \begin{bmatrix} \alpha \\ -\mu \end{bmatrix}
+\end{align*}$$
+or equivalently
+$$\begin{align*}
+    v_1(\xi) &= \alpha H(\xi) e^{-\xi/c\mu} \\
+    v_2(\xi) &= -\mu H(\xi) e^{-\xi/c\alpha}.
+\end{align*}$$
 </p>
-</p>
-</div>
+</div><!-- End Null-space Derivation -->
 
 <p>
-    Figure 1 shows these solutions compared to our simulated solution using our chosen/measured parameters $\mu = 1, \alpha = 5, \gamma = 1, \theta = 0.1, \Delta = 32.8328328328328, c = 3.92392392392387$.
+    Conveniently, $A(\xi)$ and $v_2(\xi)$ are orthogonal, and thus we simplify to
+$$\begin{align*}
+\nu(t) &= \frac{ \int_0^t \int_\RR \alpha H(\xi) e^{-\xi/c\mu} I(\xi, \tau) \ d\xi \ d\tau}{\int_\RR \mu U_\xi \alpha H(\xi) e^{-\xi/c\mu} d\xi}  \\
+    &= \frac{1}{\mu} \frac{\int_0^t \int_0^\infty e^{-\xi/c\mu} I(\xi, t) \ d\xi \ d\tau }{\int_\RR U_\xi e^{-\xi/c\mu} d\xi } \\
+    &= \frac{2(\mu c+1)}{\mu(e^{-\Delta}-1)} \frac{ \int_0^t \int_0^\infty e^{-\xi/c\mu} I(\xi, t) \ d\xi \ d\tau }{\int_\RR e^{-\xi(1+1/c\mu)} d\xi} \\
+    &= \frac{2(\mu c+1)}{\mu(1 - e^{-\Delta})} (1 + \tfrac{1}{c\mu}) \int_0^t \int_0^\infty e^{-\xi/c\mu} I(\xi, t) \ d\xi \ d\tau \\
+    &= \frac{2(\mu c+1)^2}{\mu^2 c (1 - e^{-\Delta})} \int_0^t \int_0^\infty e^{-\xi/c\mu} I(\xi, t) \ d\xi \ d\tau.
+\end{align*}$$
+</p>
+<p>
+    From the previous report we have that $1 - e^{-\Delta} = 2\theta(\mu c + 1)$ and thus we have
+$$
+    \nu(t) = \frac{\mu c+1}{\mu^2 c \theta} \int_0^t \int_0^\infty e^{-\xi/c\mu} I(\xi, t) \ d\xi \ d\tau
+$$
+</p>    
+
+<h3 id="">Spatially Homogeneous Stimulus</h3>
+<p>
+    If we consider stimuli of the form $I(\xi, t) = I_0 \delta(t)$ then we have
+$$\begin{align*}
+    \nu(t) &= \frac{\mu c+1}{\mu^3 c^2 \theta} I_0.
+\end{align*}$$
+</p>
+
+<h1 id="">Numerical Difficulties</h1>
+<p>
+    Ideally, we would compare our asymptotic approximation of the wave repsonse function to numerical simulations. This has proven to be numerically difficult. To accurately measure the wave response function for a given simulation, we must be able to measure the pulse speed accurately. Figure 1 shows the measured speed, as determined by the approximate front locations over time. While the forward front of the pulse appears to have a relatively stable speed, the rear of the pulse seems to be oscillating.
 </p>
 
 <figure>
-    <img src="./reports/report20210603/pulse.png" width="100%">
-    <figcaption><b>Fig 1.</b> Predicted (dashed) and simulated (solid) traveling pulse solutions for the parameters $\mu = 1, \alpha = 5, \gamma = 1, \theta = 0.1, \Delta = 32.8328328328328, c = 3.92392392392387$.</figcaption>
+<img src="./reports/report20210610/front_speeds.png" width="100%">
+<figcaption><b>Fig 1.</b> The measured speed of the fore and aft fronts. (Slope of secant lines for points separated by 50 time steps. Parameters are given in Figure 1). </figcaption>
 </figure>
 
 <p>
-    The results are not perfect, but suggest we have the correct analytical solution and some numerical error. Presumably, our measurements for $c$ and $\Delta$ from the simulation are in error. Using our measurement for $c$ and instead computing $\Delta$ from our condition gives a dramatically different profile, as seen in Figure 2, below.
+    Figure 2 shows the solution $u(x,t)-a(x,t)$ at consecutive time-steps. Far from the front we see that the solution is clearly advecting, however near the front we are observing oscillations in the speed that compress and expand the distance between consecutive time-steps. These oscillations are in the solutions themselves rather than artifacts of the root-finding process. 
+</p>
+
+<p>
+    Additionally, that the traveling solution is piece-wise suggests that this naive interpolation will be at most $\OO(h)$ accurate - no better than simply finding an argmin of $|u - a - \theta|$. 
 </p>
 
 <figure>
-    <img src="./reports/report20210603/pulse2.png" width="100%">
-    <figcaption><b>Fig 2.</b> Our profiel with the parameters from the simulation (see Figure 1) and the measured speed $c=3.9239239239238697$, but with the computed $\Delta=4.18545935079561$, rather than the measured value.</figcaption>
+<img src="./reports/report20210610/root_snapshots.png" width="100%">
+<figcaption><b>Fig 2.</b> The solution $u(x,t) - a(x,t) - \theta$ for 50 consecutive time steps after the pulse has stabilized as well as an approximation of the front location (quartic interpolation). We see the solutions are not smooth causing difficulties in measuring the location of the front to a reasonable degree of accuracy. The parameters are the same as the simulations in the previous weeks: $\mu = 1, \alpha = 5, \gamma = 1, \theta = 0.1$. The simulation was initiallized with our previously calculated traveling-pulse solution (based on the poorly approximated pulse speed and width) and allowed to stabilze for 4300 time steps at a temporal resolution of $\Delta t = 10^{-3}$ and a spatial resolution of $\Delta x = 2\times 10^{-2}$.  </figcaption>
 </figure>
 
 <p>
-Using the measured value of $\Delta$ instead, proves unfruitful. In Figure 3 we plot the right-hand-side of the condition on $c$, as a function of $c$ and observe that it has roots near $c\approx 2, 4$. The root near $c \approx 4$ appears to be the stable one from our simulations. Unfortunatly, this function is quite ill-conditioned near this root for these particular parameters.
+    Measuring the pulse widths is marred by this inaccuracy in the front locations as well. Figure 3 shows the measurments over the course of the simulation on two time-scales. The finer time-scale shows that the apparant difference between the front locations seems to oscilate rappidly. 
 </p>
 
 <figure>
-    <img src="./reports/report20210603/rootfinding.png" width="100%">
-    <figcaption><b>Fig 3.</b> The right-hand-side of the condition on $c$. We see two roots. The stable root appears to be near $c=4$.</figcaption>
+<img src="./reports/report20210610/pulse_widthds.png" width="100%">
+<figcaption><b>Fig 3.</b> Measurements of the pulse width shown on two time scales for clarity. In the region near $t=4.25$ we see five distinct curves. </figcaption>
 </figure>
 
 <p>
-    It may behoove us to find some sensible choice of parameters that allows for  more precise numerics. In the meantime, here are numerical functions for generating traveling wave solutions.
+    It was curious that. in Figure 1, the oscillations in the aft speed seemed to vanish near $t\approx 4.25$. This is explained by the finer time-scale in Figure 3, as it appears the frequency of the ocilations is aliased - there are clearly 5 curves in this region, and our measurment of the pulse speed took samples spaced 50 indices appart.
 </p>
 
-<pre><code class="language-python">def Unum(ξ, μ, α, γ, θ, Δ, c):
-    return (1.0/2.0)*(1 - np.exp(-Δ))*np.exp(-ξ)*(lambda input: np.heaviside(input,0.5))(ξ)/(μ*c + 1) + ((1.0/2.0)*(-np.exp(Δ)/(μ*c - 1) + 1.0/(μ*c - 1))*np.exp(ξ) + (( lambda base, exponent: base**exponent )(μ, 2)*( lambda base, exponent: base**exponent )(c, 2)*np.exp(Δ/(μ*c)) - ( lambda base, exponent: base**exponent )(μ, 2)*( lambda base, exponent: base**exponent )(c, 2) - 1.0/2.0*μ*c + θ*(( lambda base, exponent: base**exponent )(μ, 2)*( lambda base, exponent: base**exponent )(c, 2) - 1) + (1.0/2.0)*(μ*c - 1)*np.exp(-Δ) + 1.0/2.0)*np.exp(ξ/(μ*c))/(( lambda base, exponent: base**exponent )(μ, 2)*( lambda base, exponent: base**exponent )(c, 2) - 1))*(lambda input: np.heaviside(input,0.5))(-Δ - ξ) + ((θ + (-( lambda base, exponent: base**exponent )(μ, 2)*( lambda base, exponent: base**exponent )(c, 2) - 1.0/2.0*μ*c + ((1.0/2.0)*μ*c - 1.0/2.0)*np.exp(-Δ) + 1.0/2.0)/(( lambda base, exponent: base**exponent )(μ, 2)*( lambda base, exponent: base**exponent )(c, 2) - 1))*np.exp(ξ/(μ*c)) + 1 - 1.0/2.0*np.exp(-Δ)*np.exp(-ξ)/(μ*c + 1) + (1.0/2.0)*np.exp(ξ)/(μ*c - 1))*(lambda input: np.heaviside(input,0.5))(-ξ)*(lambda input: np.heaviside(input,0.5))(Δ + ξ)
-
-def Anum(ξ, μ, α, γ, θ, Δ, c):
-    return γ*(1 - np.exp(ξ/(α*c)))*(lambda input: np.heaviside(input,0.5))(-ξ)*(lambda input: np.heaviside(input,0.5))(Δ + ξ) + γ*(np.exp(Δ/(α*c)) - 1)*np.exp(ξ/(α*c))*(lambda input: np.heaviside(input,0.5))(-Δ - ξ)
-</code></pre>
-
-<hr><!--********************************************************************-->
-<h1 id="">Wave Response Simulations</h1>
+<h1 id="">Going Forward</h1>
 <p>
-Figure 4 shows the traveling wave (with parameters given above) responding to a stimulus of $I(x,t) = \delta(t-t_0) 0.05$. As expected, the limiting effect is to advance the wave forward.
+    Though it is not included here, we did attempt to find parameter regimes that were more well-conditioned, without success. We tried arbitrarily selecting the wave speed and using the first condition $0 = (2\theta(\mu c+1)-1)e^\Delta + 1$ (which relies on fewer of the parameters) to determine the pulse width, and then use the second condition to determine one of the unknown parameters, however, the solution would no longer sustain traveling pulses. the solutions would default  to traveling front solutions. We may need to investigate stability conditions to proceed in this way.
 </p>
-<figure>
-    <video controls autoplay muted loop>
-        <source src="./reports/report20210603/pulse-stim.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-        
-    </video>
-    <figcaption><b>Fig 4.</b> Response of the traveling wave to a stimulus $I(x,t) = \delta(t-t0)0.05$. The limiting response is to advance the pulse forward.</figcaption>
-</figure>
 
-<hr><!--********************************************************************-->
-<h1 id="">SymPy Bug</h1>
 <p>
-I spent quite a bit of time debugging my code before I found what appears to be an error in SymPy's integration subroutine. When I ask Sympy to integrate, for example $\int\limits_{-\Delta}^0 H(x-y)e^{y-x} \ dy$ it gives an incorrect result when the symbol $\Delta$ is initialized with <code class="language-python">positive=True</code>. I have submitted a <a href="https://github.com/sympy/sympy/issues/21559" target=blank>bug report</a> and in the meantime, I integrated the forcing term by hand.
+    That these oscillations in front locations are an artifact of the simulations themselves suggest that we revisit the numerics of the simulations. The piece-wise profile suggests that they are not smooth in space, and that the computation of the convolution is only to first order. An analytic evaluation of the convolution should be possible if we can accurately calculate the front locations. Perhaps if we use this from the beginning, the oscillations will not be present, and the traveling pulse solution will maintain a higher degree of spatial smoothness over time. 
+</p>
 
-<hr><!--********************************************************************-->
+<p>
+    It could also be interesting to try a piece-wise interpolation. We can perhaps assume that the solution is smooth on either side of the front, and that the kink occurs at threshold-crossing. We can enforce continuity (and possibly some degree of smoothness) and solve for the location of the kink. We should have enough equations, though they will be non-linear in the location variable. Still, the problem appears well conditioned, so perhaps it will not be too difficult. The error analysis of such an interpolation technique would be interesting more generally.
+</p>
+
+<!--
+
+\begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix}
+
+
+
+\begin{bmatrix}1&-1\\ \gamma&-\gamma\end{bmatrix}
+
+\begin{bmatrix}1&\gamma \\ -1 &-\gamma \end{bmatrix}
+
+\begin{bmatrix}\frac{1}{\mu} &\frac{\gamma}{\mu} \\ -\frac{1}{\alpha} &-\frac{\gamma}{\alpha} \end{bmatrix}
+
+-->
+
+<!--div id="slider-plot" style="width:auto;"></div>
+<script src="./reports/report20210610/param_plot.js"></script-->
+
+<!--************************************************************************-->
 
 <!--***************************************************************************
 *******************************************************************************
@@ -283,6 +388,15 @@ for (i = 0; i < acc.length; i++) {
       panel.style.display = "block";
     }
   });
+
+var expand_all_accordions = false;
+
+if (expand_all_accordions){
+    for (i = 0; i < acc.length; i++) {
+      acc[i].nextElementSibling.style.display = "block";
+    }
+}
+
 }
 </script>
 
