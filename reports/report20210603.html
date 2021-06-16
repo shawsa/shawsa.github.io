@@ -226,7 +226,11 @@ $$\begin{align*}
 Using the measured value of $\Delta$ instead, proves unfruitful. In Figure 3 we plot the right-hand-side of the condition on $c$, as a function of $c$ and observe that it has roots near $c\approx 2, 4$. The root near $c \approx 4$ appears to be the stable one from our simulations. Unfortunatly, this function is quite ill-conditioned near this root for these particular parameters.
 </p>
 
-<figure>
+<p class="warning" id="correction1">
+    <span class="warning">Correction:</span> This funtion is not ill-conditioned near the root at $c \approx 4$. It is in fact very well conditioned as the derivative is quite large. The computation for $\Delta$, however, is very sensitive to the value of $c$ when $c \to 4$ leading to difficulties in computing the correct profile. See <a href="./report20210617">report 2021-06-17</a> for further discussion.
+</p>
+
+<figure id="Fig3">
     <img src="./report20210603/rootfinding.png" width="100%">
     <figcaption><b>Fig 3.</b> The right-hand-side of the condition on $c$. We see two roots. The stable root appears to be near $c=4$.</figcaption>
 </figure>

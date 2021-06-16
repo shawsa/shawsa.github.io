@@ -166,6 +166,20 @@ h2 {
     width: 100%;
 }
 
+p.warning{
+    margin: .5em;
+    padding: .5em;
+    border-style: dotted;
+    border-width: 1pt;
+    border-color: red;
+    background-color: #FABEC0;
+}
+
+span.warning{
+    font-weight: bold;
+    color: red;
+}
+
 video {
     max-width: 100%;
     height: auto;

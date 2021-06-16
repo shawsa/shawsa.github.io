@@ -1,0 +1,227 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <!-- Mathjax commands -->
+    $
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\OO}{\mathcal{O}}
+    \newcommand{\mathcow}{\OO}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\KK}{\mathbb{K}}
+    \newcommand{\PP}{\mathcal{P}}
+    \newcommand{\TT}{\mathcal{T}}
+    \newcommand{\BB}{\mathcal{B}}
+    \newcommand{\LL}{\mathcal{L}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+
+    \newcommand{\veca}{\vec{a}}
+    \newcommand{\vecb}{\vec{b}}
+    \newcommand{\vecd}{\vec{d}}
+    \newcommand{\vece}{\vec{e}}
+    \newcommand{\vecf}{\vec{f}}
+    \newcommand{\vecn}{\vec{n}}
+    \newcommand{\vecp}{\vec{p}}
+    \newcommand{\vecr}{\vec{r}}
+    \newcommand{\vecu}{\vec{u}}
+    \newcommand{\vecv}{\vec{v}}
+    \newcommand{\vecx}{\vec{x}}
+    \newcommand{\vecy}{\vec{y}}
+    \newcommand{\vecz}{\vec{z}}
+
+    \renewcommand{\vec}[1]{\mathbf{#1}}
+    $
+
+    <!-- Plotly code for interactive plots -->
+    <script src="../plotly-2.0.0-rc.2.min.js"></script>
+    
+    <!--Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+
+
+
+    
+<!--************************************************************************-->
+<title>Shaw Research Notes</title>
+</head>
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<body>
+
+<div class="top-bar">
+    <a href="../index.html"><img src="../frame/boulder-logo.png"></a>
+</div>
+
+<div id="side-bar" class="side-bar">
+    <p><a href="../reports/reports.html" target="_top">Reports</a></p>
+    <p><a href="../todo/todo.html" target="_top">To Do List</a></p>
+    <p><a href="../about/about.html" target="_top">About</a></p>
+    <hr>
+    <p><a href="../old-rbf/index.html" target="_top">Old Site</a></p>
+</div>
+
+<div class="page-content">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<h1 id="Title">June 17<sup>th</sup>, 2021</h1>
+<p id="summary">
+   Lorem
+</p>
+
+<hr><!--********************************************************************-->
+<h1 id="">To-Do List Snapshot</h1>
+<p>
+<ul>
+    <li>Investigate wave-response function.</li>
+    <ul>
+        <li>Spatially homogeneous pulse.</li>
+        <li>Spatially homogeneous, temporally finite.</li>
+        <li>Local pulses.</li>
+    </ul>
+    <li>Wave-train Analysis</li>
+    <ul>
+        <li>Search the literature.</li>
+        <li>Find periodic solutions.</li>
+        <li>Compare frequency to a pair of pulses.</li>
+    </ul>
+    <li>Reading</li>
+    <ul>
+        <li>Coombes 2004.</li>
+        <li>Folias &amp; Bressloff 2005.</li>
+        <li>Faye &amp; Kilpatrick 2018.</li>
+    </ul>
+</ul>
+</p>
+
+<div id="slider-plot" style="width:auto;"></div>
+
+<!--************************************************************************-->
+
+<hr><!--********************************************************************-->
+<h1 id="">Some Corrections</h1>
+<p>
+    <a href="./report20210603.html#correction1">Figure 3 in report 2021-06-03</a> was incorrectly interpreted as ill-conditioned in the computation of the pulse-speed. The calculation of the pulse-speed $c \approx 4$ is very well-conditioned as the derivative is large near the root. However, the formula for the pulse-width is very sensitive to the value of $c$ as $c \to 4$ making numerical approximation of the pulse-width, and by extension the traveling pulse soltuion, infeasible. More on this below.
+</p>
+
+<p>
+    There was a small <a href="./report20210610">error in the previous report</a> in the calculation of the asymptotic approximation of the wave repsonse function for the specific example chosen. The correct formula is used below.
+</p>
+
+<hr><!--********************************************************************-->
+<h1 id="">Spatially Homogeneous Pulse Stimulus</h1>
+
+<p>
+    Last week (<a href="./report20210610"> report 2021-06010</a>) we have derived the wave-response function
+$$
+    \epsilon \nu(t) = \frac{\mu c+1}{\mu^2 c \theta} \int_0^t \int_0^\infty e^{-\xi/c\mu} \epsilon I(\xi, t) \ d\xi \ d\tau
+$$
+for general stimului $\epsilon I(\xi, t)$. We further simplified this for the case $\epsilon I(\xi, t) = I_0 \delta(t - t_0)$ to obtain
+$$
+    \nu(t) = \frac{\mu c+1}{\mu \theta} I_0.
+$$
+</p>
+
+<p>
+    The rest of the report focused on certain numerical difficulties in measuring the pulse-speed and pulse-width when simulating an unperturbed traveling pulse solution, in anticipation of these difficulties confounding our attempts to numerically verify our asymptotic approximatino of the wave-response function. Such a discussion is more clearly motivated by first attempting said verification.
+</p>
+
+<p>
+    In Figure 1, we attempt to create a plot similar to Figure 3(b) in <a href="https://www.sciencedirect.com/science/article/abs/pii/S0167278909001833">Kilpatrick &amp; Bressloff 2010</a>, comparing the measured wave response from a stimulus $I(x, t) = I_0 \delta(t - t_0)$ to our asymptotic approximation. Initially, the results are promising, but this is slightly deceptive. Figure 1 does not use the value $c_\text{analytic} = 3.9999$ found by root-finding as specified in <a href="./report20210603.html#correction1">report 2021-06-03</a>. We will refer to this as the analytic value, as it is the numerical result from a well-conditioned analytic formula. Figure 1 does not use this analytic value, but rather it simulates the traveling wave solution, measures the pulse-speed before stimulation, and uses this measured value for $c_\text{measured} \approx 3.9802$ in the asymptotic formula. We will call this the measured value.
+</p>
+
+<figure>
+    <img src="./report20210617/wave_response_cheat.png", width="100%">
+    <caption><b>Fig 1.</b> The measured wave response compared to the semi-analytic asymptotically predicted wave response for stimuli of the form $I(x, t) = I_0 \delta(t - t_0)$. Note that the formula uses the <i>measured</i> value for the pulse-speed $c$ rather than the value found by solving the conditions for $c$ and $\Delta$. (Parameters $\mu= 1$, $\alpha= 5$, $\gamma= 1$, and $\theta = 0.1$.)</caption>
+</figure>
+
+In Figure 2, we do not use the measured speed. Since the measured speed does not closely match the analytic speed, the results are much less meaningful. 
+
+<figure>
+    <img src="./report20210617/wave_response_bad.png", width="100%">
+    <caption><b>Fig 2.</b> The measured wave response compared to the analytic asymptotically predicted wave response for stimuli of the form $I(x, t) = I_0 \delta(t - t_0)$. Note that the wave speed of the simulation differs from the analytically predicted wave speed. (Parameters $\mu= 1$, $\alpha= 5$, $\gamma= 1$, and $\theta = 0.1$.)</caption>
+</figure>
+
+<p>
+    Lastly, Figure 3 shows measured wave response function, adjusted for the measured speed, compared to the asymptotic approximation using the analytically computed speed. This is, perhaps, a more honest comparison. The difference in Figures 1 and 3 is only in asymptotic approximation.
+</p>
+
+<figure>
+    <img src="./report20210617/wave_response_compromise.png", width="100%">
+    <caption><b>Fig 3.</b> The measured wave response, using the measured speed,  compared to the analytic asymptotically predicted wave response using the analytic speed, for stimuli of the form $I(x, t) = I_0 \delta(t - t_0)$. (Parameters $\mu= 1$, $\alpha= 5$, $\gamma= 1$, and $\theta = 0.1$.)</caption>
+</figure>
+
+<p>
+    As the asymptotic approximation is affine in $c$, the constant difference is given by
+$$
+    \nu_\text{analytic}(t) - \nu_\text{measured}(t) = (c_\text{analytic} - c_\text{measured}) \frac{I_0}{\theta}.
+$$
+Visually the difference is still small, but but a more precise comparison in the form of a convergence study would put any uncertainty to rest. This has proven difficult, as the front locations, relative to the pulse-speed, not converge to a constant value, but rather ocillate rappidly between time-steps.
+</p>
+
+<figure>
+    <img src="./report20210617/convergence_issues0.png", width="100%">
+    <caption><b>Fig 4.</b> Lorem</caption>
+</figure>
+
+<figure>
+    <img src="./report20210617/convergence_issues0.png", width="100%">
+    <caption><b>Fig 5.</b> Lorem</caption>
+</figure>
+
+
+<!--************************************************************************-->
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+</div>
+
+<!-- Accordion script -->
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+
+var expand_all_accordions = false;
+
+if (expand_all_accordions){
+    for (i = 0; i < acc.length; i++) {
+      acc[i].nextElementSibling.style.display = "block";
+    }
+}
+
+}
+</script>
+
+</body>
+    
+</html>
