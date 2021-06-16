@@ -84,7 +84,7 @@
 
 <h1 id="Title">June 17<sup>th</sup>, 2021</h1>
 <p id="summary">
-   Lorem
+   We numerically verify the wave response calculated in the previous report and motivate the need for a higher order method.
 </p>
 
 <hr><!--********************************************************************-->
@@ -93,7 +93,7 @@
 <ul>
     <li>Investigate wave-response function.</li>
     <ul>
-        <li>Spatially homogeneous pulse.</li>
+        <li><s>Spatially homogeneous pulse.</s></li>
         <li>Spatially homogeneous, temporally finite.</li>
         <li>Local pulses.</li>
     </ul>
@@ -119,18 +119,18 @@
 <hr><!--********************************************************************-->
 <h1 id="">Some Corrections</h1>
 <p>
-    <a href="./report20210603.html#correction1">Figure 3 in report 2021-06-03</a> was incorrectly interpreted as ill-conditioned in the computation of the pulse-speed. The calculation of the pulse-speed $c \approx 4$ is very well-conditioned as the derivative is large near the root. However, the formula for the pulse-width is very sensitive to the value of $c$ as $c \to 4$ making numerical approximation of the pulse-width, and by extension the traveling pulse soltuion, infeasible. More on this below.
+    <a href="./report20210603.html#correction1">Figure 3 in report 2021-06-03</a> was incorrectly interpreted as ill-conditioned in the computation of the pulse-speed. The calculation of the pulse-speed $c \approx 4$ is very well-conditioned as the derivative is large near the root. However, the formula for the pulse-width is very sensitive to the value of $c$ as $c \to 4$ making numerical approximation of the pulse-width, and by extension the traveling pulse soltuion, infeasible.
 </p>
 
 <p>
-    There was a small <a href="./report20210610">error in the previous report</a> in the calculation of the asymptotic approximation of the wave repsonse function for the specific example chosen. The correct formula is used below.
+    There was a small error in the previous report in the calculation of the asymptotic approximation of the wave repsonse function for the specific example chosen. The correct formula is used below.
 </p>
 
 <hr><!--********************************************************************-->
 <h1 id="">Spatially Homogeneous Pulse Stimulus</h1>
 
 <p>
-    Last week (<a href="./report20210610"> report 2021-06010</a>) we have derived the wave-response function
+    Last week (<a href="./report20210610.html">report 2021-06-10</a>) we have derived the wave-response function
 $$
     \epsilon \nu(t) = \frac{\mu c+1}{\mu^2 c \theta} \int_0^t \int_0^\infty e^{-\xi/c\mu} \epsilon I(\xi, t) \ d\xi \ d\tau
 $$
@@ -141,7 +141,7 @@ $$
 </p>
 
 <p>
-    The rest of the report focused on certain numerical difficulties in measuring the pulse-speed and pulse-width when simulating an unperturbed traveling pulse solution, in anticipation of these difficulties confounding our attempts to numerically verify our asymptotic approximatino of the wave-response function. Such a discussion is more clearly motivated by first attempting said verification.
+    The rest of the report focused on certain numerical difficulties in measuring the pulse-speed and pulse-width when simulating an unperturbed traveling pulse solution, in anticipation of these difficulties confounding our attempts to numerically verify our asymptotic approximation of the wave-response function. Such a discussion is more clearly motivated by first attempting said verification.
 </p>
 
 <p>
@@ -174,19 +174,53 @@ In Figure 2, we do not use the measured speed. Since the measured speed does not
 $$
     \nu_\text{analytic}(t) - \nu_\text{measured}(t) = (c_\text{analytic} - c_\text{measured}) \frac{I_0}{\theta}.
 $$
-Visually the difference is still small, but but a more precise comparison in the form of a convergence study would put any uncertainty to rest. This has proven difficult, as the front locations, relative to the pulse-speed, not converge to a constant value, but rather ocillate rappidly between time-steps.
+Visually the difference is still small, but but a more precise comparison in the form of a convergence study would put any uncertainty to rest. This has proven difficult, as the front locations, relative to the pulse-speed, do not converge to a constant value, but rather ocillate rappidly between time-steps.
 </p>
 
-<figure>
-    <img src="./report20210617/convergence_issues0.png", width="100%">
-    <caption><b>Fig 4.</b> Lorem</caption>
-</figure>
+<hr><!--********************************************************************-->
+
+<h1 id="">Simulation Convergence</h1>
+<p>
+    The measurment errors and ocillations are presumably due to the large grid-spacing in the spatial dimension and the low-order accuracy of the convolution. The convergence study in Figures 4 and 5 would seem to confirm this. They show our measurements of the speed and width over the course of a simulation for a series of simulations with progressivly smaller grid-spacing. These simulations do not incorporate external sitmuli and are initialized with our analytic formula for the traveling wave soltuion.
+</p>
+
 
 <figure>
     <img src="./report20210617/convergence_issues0.png", width="100%">
-    <caption><b>Fig 5.</b> Lorem</caption>
+    <caption><b>Fig 4.</b> Measurments of the pulse width and pulse speed. These simulations are without external stimulation, and are initialized by the analytic formula for the traveling wave solution. (Model parameters: $\mu= 1$, $\alpha= 5$, $\gamma= 1$, and $\theta = 0.1$. Simulation parameter: $\Delta t = 10^{-2}$.)</caption>
 </figure>
 
+<figure>
+    <img src="./report20210617/convergence_issues1.png", width="100%">
+    <caption><b>Fig 5.</b> As in Figure 4, but focusing on the end behaviour.</caption>
+</figure>
+
+<p>
+    We see that the solutions seem to be converging (though not to our predicted speed and pulse-width) up to a point, but the oscilations remain. We expect that a higher order algorithm will give better results
+</p>
+
+<h2 id="">Improving Accuracy</h2>
+<p>
+    Presently, the accuracy and speed of our simulations is limited by the convolution step. We precompute a dense matrix for the weight function and then perform the convolution by applying this matrix to the output of the firing-rate function. The matrix multiplication limits our speed as it has $O(n^2)$ complexity, and the discretization of the non-smooth Heaviside firing-rate function limits our accuracy to $O(h)$ (despite using the trapezoidal rule). 
+</p>
+
+<p>
+    We can improve this by calculating the convolution semi-analytically, using the treshold-crossing locations as we have for previous models. However, in this case, locating these locations to higher than $O(h)$ is more difficult due to the non-smoothness of the solutions. Using polynomial interpolation to find the threshold-crossings more accurately fails since it requires smoothness of the underlying function.
+</p>
+
+<p>
+    We propose the following work-around that should identify the threshold-crossings to higher order:
+    <ol>
+        <li>Locate the threshold-crossings to first order, by identifying the two grid points on either side, which will will call the bounding grid points.</li>
+        <li>Apply a three-point second-derivative finite difference stencil to nearby grid ponits to identify cusps (jumps in the first derivative).</li>
+        <li>Use the cusp locations to select between the following interpolation shchemes:</li>
+        <ol>
+            <li>If a cusp does not occur near our threshold-crossing, improve the approximation by interpolating nearby grid points</li>
+            <li>If a cusp occurs near our threshold-crossing, but not between the bounding grid points, use a one-sided polynomial interpolation over points that do not include the cusp.</li>
+            <li>If a cusp occurs between the bounding grid points, find separate polynomial interpolants for each side, locate their intersection point, and use the intersection point to determine which polynomial will be used to approximate the threshold-crossing.</li>
+        </ol>
+    </ol>
+</p>
 
 <!--************************************************************************-->
 

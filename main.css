@@ -166,6 +166,10 @@ h2 {
     width: 100%;
 }
 
+ol ol {
+    list-style-type: lower-roman;
+}
+
 p.warning{
     margin: .5em;
     padding: .5em;
