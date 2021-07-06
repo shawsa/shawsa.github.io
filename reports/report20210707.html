@@ -1,0 +1,191 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <!-- Mathjax commands -->
+    $
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\OO}{\mathcal{O}}
+    \newcommand{\mathcow}{\OO}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\KK}{\mathbb{K}}
+    \newcommand{\PP}{\mathcal{P}}
+    \newcommand{\TT}{\mathcal{T}}
+    \newcommand{\BB}{\mathcal{B}}
+    \newcommand{\LL}{\mathcal{L}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+
+    \newcommand{\veca}{\vec{a}}
+    \newcommand{\vecb}{\vec{b}}
+    \newcommand{\vecd}{\vec{d}}
+    \newcommand{\vece}{\vec{e}}
+    \newcommand{\vecf}{\vec{f}}
+    \newcommand{\vecn}{\vec{n}}
+    \newcommand{\vecp}{\vec{p}}
+    \newcommand{\vecr}{\vec{r}}
+    \newcommand{\vecu}{\vec{u}}
+    \newcommand{\vecv}{\vec{v}}
+    \newcommand{\vecx}{\vec{x}}
+    \newcommand{\vecy}{\vec{y}}
+    \newcommand{\vecz}{\vec{z}}
+
+    \renewcommand{\vec}[1]{\mathbf{#1}}
+    $
+
+    <!-- Plotly code for interactive plots -->
+    <script src="../plotly-2.0.0-rc.2.min.js"></script>
+    
+    <!--Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+
+
+
+    
+<!--************************************************************************-->
+<title>Shaw Research Notes</title>
+</head>
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<body>
+
+<div class="top-bar">
+    <a href="../index.html"><img src="../frame/boulder-logo.png"></a>
+</div>
+
+<div id="side-bar" class="side-bar">
+    <p><a href="../reports/reports.html" target="_top">Reports</a></p>
+    <p><a href="../todo/todo.html" target="_top">To Do List</a></p>
+    <p><a href="../about/about.html" target="_top">About</a></p>
+    <hr>
+    <p><a href="../old-rbf/index.html" target="_top">Old Site</a></p>
+</div>
+
+<div class="page-content">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<h1 id="Title">July 7<sup>th</sup>, 2021</h1>
+<p id="summary">
+   Lorem
+</p>
+
+<hr><!--********************************************************************-->
+<h1 id="">To-Do List Snapshot</h1>
+<p>
+<ul>
+    <li><s>Investigate wave-response function.</s></li>
+    <ul>
+        <li><s>Convert to a semi-analytic implementation.</s></li>
+        <li><s>Spatially homogeneous pulse.</s></li>
+        <li><s>Spatially homogeneous, temporally finite.</s></li>
+        <li><s>Local pulses.</s></li>
+    </ul>
+    <li>Wave-train Analysis</li>
+    <ul>
+        <li>Search the literature.</li>
+        <li>Find periodic solutions.</li>
+        <li>Compare frequency to a pair of pulses.</li>
+    </ul>
+    <li>Reading</li>
+    <ul>
+        <li>Coombes 2004.</li>
+        <li>Folias &amp; Bressloff 2005.</li>
+        <li>Faye &amp; Kilpatrick 2018.</li>
+    </ul>
+</ul>
+</p>
+
+<div id="slider-plot" style="width:auto;"></div>
+
+<!--************************************************************************-->
+
+<hr><!--********************************************************************-->
+<h1 id="">Spatially Localized Pulse</h1>
+
+<p>
+    Here we explore the wave response to a spatially localized pulse stimulus
+$$
+I(x,t) = I_0 H(\tfrac{\Delta x}{2} - |x - x_p|) \delta(t-t_0)
+$$
+where $t_0$ denotes the time of the pulse, $x_p$ denotes the location of the center of the pulse (relative to the front of the pulse at $x=0$), and $\Delta x$ denotes the width of the pulse.
+</p>
+
+<p>
+    For $t_0 = 0$ the adjoint method gives the first order asymptotic approximation to the wave response function as
+$$
+\eta(t) \approx \frac{\mu c + 1}{\mu \theta} I_0 
+        \begin{cases}
+            0, & x_p \le - \tfrac{\Delta x}{2} \\
+            1 - \exp \left( \frac{-(x_p + \tfrac{\Delta x}{2})}{c\mu} \right), & - \tfrac{\Delta x}{2} \le x_p &lt; \tfrac{\Delta x}{2} \\
+            \exp \left( \frac{-(x_p - \tfrac{\Delta x}{2})}{c\mu} \right) - \exp \left( \frac{-(x_p + \tfrac{\Delta x}{2})}{c\mu} \right), & \tfrac{\Delta x}{2} \le x_p.
+        \end{cases}
+$$
+</p>    
+
+<p>
+    Figure 1 below shows our predicted wave response compared to simulation. 
+</p>
+
+<figure>
+    <img src="./report20210707/spatially_localized_wave_response.png", width="100%">
+    <caption><b>Fig 1.</b> Wave response to the spatially localized pulse stimulus $I(x,t) = I_0 H(\tfrac{\Delta x}{2} - |x - x_p|) \delta(t-t_0)$. Here, $x_p$ denotes the center of the stimulated region and $\Delta x = 5$ denotes the width of the stimulated region.</caption>
+</figure>
+
+
+
+
+<!--************************************************************************-->
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+</div>
+
+<!-- Accordion script -->
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+
+var expand_all_accordions = false;
+
+if (expand_all_accordions){
+    for (i = 0; i < acc.length; i++) {
+      acc[i].nextElementSibling.style.display = "block";
+    }
+}
+
+}
+</script>
+
+</body>
+    
+</html>

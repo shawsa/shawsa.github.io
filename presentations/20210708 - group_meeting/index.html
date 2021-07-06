@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Group Presentation - July 8th, 2021</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+<!--##################################################-->
+<section>
+<section>
+<h2 style="text-transform: capitalize;">The Wave Response Function in an Adaptive Neural Field Model</h2>
+<p>
+    Sage Shaw - CU Boulder
+</p>
+</section>
+
+<!--####################-->
+<section>
+<p>
+Outline
+</p>
+<ul>
+    <li>Kilpatrick &amp; Ermentrout 2010</li>
+    <li>Adaptive Model</li>
+    <li>Numerics</li>
+    <li>Wave Responses</li>
+    <li>XXXXXXXXXX - finish me!!!</li>    
+</ul>
+</section>
+</section>
+<!--##################################################-->
+<section>
+    <!--####################-->
+
+    <section>
+    <p>
+    Kilpatrick &amp; Ermentrout 2010
+    </p>
+    <aside>
+        <ul>
+            <li>Neurons, synapses, traveling fronts </li>
+            <li></li>
+        </ul>
+    </aside>
+    </section>
+    <!--####################-->
+    <section>
+    <img src="./images/in_vitro.png"/>
+    </section>
+</section>
+<!--##################################################-->
+<section>
+    <!--####################-->
+    <section>
+    <p>
+    Adaptive Model
+    </p>
+    </section>
+    <!--####################-->
+    <section data-auto-animate>
+    <p>
+        Previous model:
+    </p>
+    <p data-id="models">
+        $u_t = -u + w * f(u)$
+    </p>
+    </section>
+    <!--####################-->
+    <section data-auto-animate>
+    <p>
+        Adaptive model:
+    </p>
+    <p data-id="models">
+        \begin{align*}
+            \mu u_t &= -u + w * f(u\color{green}{-a}) \\
+            \color{green}{\alpha a_t} & \color{green}{= -a + \gamma f(u- a)}
+        \end{align*}
+    </p>
+    </section>
+</section>
+<!--##################################################-->
+<section>
+<p>
+Numerics
+</p>
+</section>
+<!--##################################################-->
+<section>
+<p>
+Wave Responses
+</p>
+</section>
+<!--##################################################-->
+<section>
+<p>
+Multiple pulses?
+</p>
+</section>
+<!--##################################################-->
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+        <script src="plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ]
+			});
+		</script>
+	</body>
+</html>
