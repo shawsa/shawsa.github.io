@@ -9,6 +9,7 @@
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
 		<link rel="stylesheet" href="dist/theme/black.css">
+        <link rel="stylesheet" href="custom.css">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
@@ -47,16 +48,50 @@ Outline
     <p>
     Kilpatrick &amp; Ermentrout 2010
     </p>
-    <aside>
-        <ul>
-            <li>Neurons, synapses, traveling fronts </li>
-            <li></li>
-        </ul>
-    </aside>
     </section>
     <!--####################-->
     <section>
-    <img src="./images/in_vitro.png"/>
+        <img class="r-stretch" src="./images/in_vitro.png">
+        <p>
+        Source: <a href="https://doi.org/10.1523/jneurosci.2278-05.2005" target="blank"> Pinto et al. 2005</a>
+        </p>
+    </section>
+    <!--####################-->
+    <section>
+        <p>
+            One dimensional model:
+        </p>
+        <p>
+            $\mu \color{green}{u}_t = - \color{green}{u} + \int_\mathbb{R} \color{yellow}{w}(x,y) \cdot \color{magenta}{f}[ \color{green}{u}(y) ] \ dy$
+        </p>
+        <p>
+            <ul>
+                <li>$\color{green}{u}(x,t)$ - Measure of electrical activity</li>
+                <li>$\color{yellow}{w}(x,y)$ - A weight function describing spatial connectivity</li>
+                <li>$\color{magenta}{f}$ - A non-linear firing-rate function </li>
+            </ul>
+            
+        </p>
+    </section>
+    <!--####################-->
+    <section>
+        <p>
+            $\mu u_t = -u + \int_{\mathbb{R}} \frac{1}{2}e^{-|x-y|}\cdot H[u(y) - \theta] \ dy$
+        </p>
+        <img src="./images/traveling_front.png">
+    </section>
+    <!--####################-->
+    <section>
+        <p>
+            $\mu u_t = -u + \int_{\mathbb{R}} \frac{1}{2}e^{-|x-y|}\cdot H[u(y) - \theta] \ dy + \color{green}{I(x,t)}$
+        </p>
+        <p>
+            $I(x,t) = 0.15 \delta(t - 1)$
+        </p>
+        <video class="r-stretch" controls loop autoplay muted>
+            <source src="./images/front_response.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
     </section>
 </section>
 <!--##################################################-->
@@ -88,6 +123,13 @@ Outline
         \end{align*}
     </p>
     </section>
+    <!--####################-->
+    <section data-auto-animate>
+    <video class="r-stretch" controls loop muted>
+        <source src="./images/adaptivity_example.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    </section>
 </section>
 <!--##################################################-->
 <section>
@@ -97,14 +139,163 @@ Numerics
 </section>
 <!--##################################################-->
 <section>
-<p>
-Wave Responses
-</p>
+    <!--####################-->
+    <section>
+    <p>
+    Wave Responses
+    </p>
+    </section>
+    <!--####################-->
+    <section>
+    <p>
+        Traveling Pulse Solution - No Stimulus
+    </p>
+    <p style="font-size:12pt">
+    $$\begin{align*}
+	u(x,t) = U{\left(\xi \right)} &= \begin{cases} \frac{\left(- \frac{e^{\Delta}}{\mu c - 1} + \frac{1}{\mu c - 1}\right) e^{\xi}}{2} + \frac{\left(\mu^{2} c^{2} e^{\frac{\Delta}{\mu c}} - \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \frac{\left(\mu c - 1\right) e^{- \Delta}}{2} + \frac{1}{2}\right) e^{\frac{\xi}{\mu c}}}{\mu^{2} c^{2} - 1} & \text{for}\: \Delta < - \xi \\\left(\theta + \frac{- \mu^{2} c^{2} - \frac{\mu c}{2} + \left(\frac{\mu c}{2} - \frac{1}{2}\right) e^{- \Delta} + \frac{1}{2}}{\mu^{2} c^{2} - 1}\right) e^{\frac{\xi}{\mu c}} + 1 - \frac{e^{- \Delta} e^{- \xi}}{2 \left(\mu c + 1\right)} + \frac{e^{\xi}}{2 \left(\mu c - 1\right)} & \text{for}\: \xi < 0 \\\frac{\left(1 - e^{- \Delta}\right) e^{- \xi}}{2 \left(\mu c + 1\right)} & \text{otherwise} \end{cases}\\
+	a(x,t) = A{\left(\xi \right)} &= \begin{cases} \gamma \left(e^{\frac{\Delta}{\alpha c}} - 1\right) e^{\frac{- c t + x}{\alpha c}} & \text{for}\: \Delta < c t - x \\\gamma \left(1 - e^{\frac{- c t + x}{\alpha c}}\right) & \text{for}\: c t - x > 0 \\0 & \text{otherwise} \end{cases}\\
+	\xi &= - c t + x\\
+	e^{\Delta} &= - \frac{1}{2 \theta \left(\mu c + 1\right) - 1},
+\end{align*}$$
+where $c$ is given implicitly by
+$$\begin{align*}
+	0 &= - \gamma \left(1 - \left(- \frac{1}{2 \theta \left(\mu c + 1\right) - 1}\right)^{- \frac{1}{\alpha c}}\right) - \theta + 1 - \frac{1}{2 \left(\mu c + 1\right)} + \frac{2 \theta \left(- \mu c - 1\right) + 1}{2 \left(\mu c - 1\right)} + \left(- \frac{1}{2 \theta \left(\mu c + 1\right) - 1}\right)^{- \frac{1}{\mu c}} \left(\theta - \frac{\mu^{2} c^{2} + \frac{\mu c}{2} - \left(\frac{\mu c}{2} - \frac{1}{2}\right) \left(2 \theta \left(- \mu c - 1\right) + 1\right) - \frac{1}{2}}{\mu^{2} c^{2} - 1}\right).
+\end{align*}$$
+    </p>
+    </section>
+    <!--####################-->
+    <section>
+    <p>
+    We apply a small <span style="color: green">stimulus</span>
+    $\begin{align*}
+        \mu u_t &= -u + w * f(u-a) \color{green}{+ \varepsilon I(x,t)} \\
+        \alpha a_t & = -a + \gamma f(u- a)
+    \end{align*}$
+    </p>
+
+    <p>
+        &nbsp;
+    </p>
+
+    <p>
+    and assume the solution has the form
+    $\begin{align*}
+        u(x,t) &= U\big(\xi - \varepsilon \eta(t) \big) + \varepsilon u_1(x,t) + \mathcal{O}(\varepsilon^2) \\
+        a(x,t) &= A\big(\xi - \varepsilon \eta(t) \big) + \varepsilon a_1(x,t) + \mathcal{O}(\varepsilon^2) \\
+    \end{align*}$
+    </p>
+    </section>
+    
+    <!--####################-->
+    <section>
+    <p>
+        Which gives the following solvibility condition on $\mathbf{u}^T = [u_1, a_1]$:
+    </p>
+    <p>
+        &nbsp;
+    </p>
+    <p style="font-size:20pt">
+    $$\begin{align*}
+    \begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix} \mathbf{u}_t + \underbrace{\mathbf{u} - c\begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix} \mathbf{u}_\xi - \begin{bmatrix}1&-1\\ \gamma&-\gamma\end{bmatrix} \int_\mathbb{R} w(\xi,y)f'\big(U(y) - A(y)\big)  \mathbf{u}(y) \ dy}_{\mathcal{L} \mathbf{u}} &= \begin{bmatrix}-\mu U_\xi \eta_t + I \\ -\alpha A_\xi \eta_t \end{bmatrix}
+\end{align*}$$
+    </p>
+    </section>
+
+    <!--####################-->
+    <section data-auto-animate>
+    <p>
+        A bounded soltuion will exist if the RHS is orthogonal to the null-space of $\mathcal{L}^*$:
+    </p>
+    <p>
+        &nbsp;
+    </p>
+    <p style="font-size:20pt">
+    $$
+    \mathcal{L}^* \mathbf{v} = \mathbf{v}   + c \begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix} \mathbf{v}_\xi - f'\big(U(\xi) - A(\xi)\big) \begin{bmatrix}1&\gamma \\ -1 &-\gamma\end{bmatrix} \int_\mathbb{R} w(y, \xi) \mathbf{v}(y) \ dy.
+$$
+    </p>
+    </section>
+
+    <!--####################-->
+    <section data-auto-animate>
+    <p>
+        A bounded soltuion will exist if the RHS is orthogonal to the null-space of $\mathcal{L}^*$:
+    </p>
+    <p>
+        &nbsp;
+    </p>
+    <p style="font-size:20pt">
+    $$
+    \mathcal{L}^* \mathbf{v} = \mathbf{v}   + c \begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix} \mathbf{v}_\xi - f'\big(U(\xi) - A(\xi)\big) \begin{bmatrix}1&\gamma \\ -1 &-\gamma\end{bmatrix} \int_\mathbb{R} w(y, \xi) \mathbf{v}(y) \ dy.
+$$
+    </p>
+    <p>
+        &nbsp;
+    </p>
+    <p>
+        This uniquely determines the wave response function.
+    </p>
+    </section>
+
+    <!--####################-->
+    <section>
+    <p>
+        Again, we take
+    </p>
+    <p style="font-size:20pt">
+    $\begin{align*}
+    f(\cdot) &= H(\cdot - \theta) \\
+    w(x,y) &= \frac{1}{2} e^{-|x-y|}
+    \end{align*}$
+    </p>
+    <p>
+        &nbsp;
+    </p>
+    <p>
+        and our asymptotic approximation is
+        $$\nu(t) = \frac{\mu c+1}{\mu^2 c \theta} \int_0^t \int_0^\infty e^{-\xi/c\mu} I(\xi, t) \ d\xi \ d\tau$$
+    </p>    
+    </section>
+
+    <!--####################-->
+    <section>
+    <p>
+        Spatially homogeneous $\delta$-pulse: $I(x,t) = I_0 \delta(t - t_0)$.
+    </p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr;">
+        <div >
+            <video controls loop autoplay muted>
+                <source src="./images/homogeneous_pulse.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div>
+            <img src="./images/delta_pulse.png">
+        </div>
+    </div>
+    </section>
+
+    <!--####################-->
+    <section>
+    <p>
+        Spatially homogeneous square-pulse: $I(x,t) = I_0 \cdot H(t-t_0) \cdot H(t_f - t)$.
+    </p>
+    <img class="r-strech" src="./images/square_pulse.png">
+    </section>
+
+    <!--####################-->
+    <section>
+    <p>
+        Spatially localized $\delta$-pulse: $I(x,t) = I_0 \delta(t - t_0) \cdot H( \Delta x - |x - x_p|) $.
+    </p>
+    <img class="r-strech" src="./images/spatially_localized_wave_response.png">
+    </section>
+
 </section>
 <!--##################################################-->
 <section>
 <p>
-Multiple pulses?
+Multiple pulses / what's next?
 </p>
 </section>
 <!--##################################################-->
