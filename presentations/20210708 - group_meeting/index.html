@@ -32,11 +32,11 @@
 Outline
 </p>
 <ul>
-    <li>Kilpatrick &amp; Ermentrout 2010</li>
+    <li>Kilpatrick &amp; Ermentrout 2012</li>
     <li>Adaptive Model</li>
-    <li>Numerics</li>
     <li>Wave Responses</li>
-    <li>XXXXXXXXXX - finish me!!!</li>    
+    <li>Numerics</li>
+    <li>What's next?</li>    
 </ul>
 </section>
 </section>
@@ -46,7 +46,7 @@ Outline
 
     <section>
     <p>
-    Kilpatrick &amp; Ermentrout 2010
+    Kilpatrick &amp; Ermentrout 2012
     </p>
     </section>
     <!--####################-->
@@ -62,11 +62,12 @@ Outline
             One dimensional model:
         </p>
         <p>
-            $\mu \color{green}{u}_t = - \color{green}{u} + \int_\mathbb{R} \color{yellow}{w}(x,y) \cdot \color{magenta}{f}[ \color{green}{u}(y) ] \ dy$
+            $\color{gray}{\mu} \color{green}{u}_t = - \color{green}{u} + \int_\mathbb{R} \color{yellow}{w}(x,y) \cdot \color{magenta}{f}[ \color{green}{u}(y) ] \ dy$
         </p>
         <p>
             <ul>
                 <li>$\color{green}{u}(x,t)$ - Measure of electrical activity</li>
+                <li>$\color{gray}{\mu}$ - time constant</li>
                 <li>$\color{yellow}{w}(x,y)$ - A weight function describing spatial connectivity</li>
                 <li>$\color{magenta}{f}$ - A non-linear firing-rate function </li>
             </ul>
@@ -108,7 +109,7 @@ Outline
         Previous model:
     </p>
     <p data-id="models">
-        $u_t = -u + w * f(u)$
+        $\mu u_t = -u + w * f(u)$
     </p>
     </section>
     <!--####################-->
@@ -118,9 +119,20 @@ Outline
     </p>
     <p data-id="models">
         \begin{align*}
-            \mu u_t &= -u + w * f(u\color{green}{-a}) \\
-            \color{green}{\alpha a_t} & \color{green}{= -a + \gamma f(u- a)}
+            \color{gray}{\mu} \color{green}{u}_t &= -\color{green}{u} + \color{yellow}{w} * \color{magenta}{f}(\color{green}{u}-a) \\
+            \color{gray}{\alpha} a_t & = -a + \color{gray}{\gamma} \color{magenta}{f}(\color{green}{u} - a)
         \end{align*}
+    </p>
+    <p>
+        <ul>
+            <li>$\color{green}{u}(x,t)$ - Measure of electrical activity</li>
+            <li>$\color{yellow}{w}(x,y)$ - Weight function</li>
+            <li>$\color{magenta}{f}$ - firing-rate function </li>
+            <li>$a(x,t)$ - hyper-polarizing adaptation</li>
+            <li>$\color{gray}{\mu}, \color{gray}{\alpha}$ - time constants</li>
+            <li>$\color{gray}{\gamma}$ - adaptation strength constant</li>
+        </ul>
+        
     </p>
     </section>
     <!--####################-->
@@ -130,12 +142,37 @@ Outline
         Your browser does not support the video tag.
     </video>
     </section>
-</section>
-<!--##################################################-->
-<section>
-<p>
-Numerics
-</p>
+    <!--####################-->
+    <section data-auto-animate>
+    <p>
+        Traveling pulse solution:
+    </p>
+    <ul>
+        <li>Constant along charactersitics: $u(x,t) = U(\xi)$ where $\xi = x - ct$</li>
+        <li>Crosses threshold twice: $U(0) = U(-\Delta) = \theta$</li>
+        <li>Vanishing boundary conditions $\lim\limits_{\xi \to \pm \infty} U(\xi) = \lim\limits_{\xi \to \pm \infty} A(\xi) = 0$.</li>
+    </ul>
+    <p>
+        This gives us a coupled system of first order ODEs, with piecewise smooth forcing terms.
+    </p>
+    </section>
+    <!--####################-->
+    <section data-auto-animate>
+    <p>
+        Traveling Pulse Solution
+    </p>
+    <p style="font-size:12pt">
+    $$\begin{align*}
+	u(x,t) = U{\left(\xi \right)} &= \begin{cases} \frac{\left(- \frac{e^{\Delta}}{\mu c - 1} + \frac{1}{\mu c - 1}\right) e^{\xi}}{2} + \frac{\left(\mu^{2} c^{2} e^{\frac{\Delta}{\mu c}} - \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \frac{\left(\mu c - 1\right) e^{- \Delta}}{2} + \frac{1}{2}\right) e^{\frac{\xi}{\mu c}}}{\mu^{2} c^{2} - 1} & \text{for}\: \xi < - \Delta \\\left(\theta + \frac{- \mu^{2} c^{2} - \frac{\mu c}{2} + \left(\frac{\mu c}{2} - \frac{1}{2}\right) e^{- \Delta} + \frac{1}{2}}{\mu^{2} c^{2} - 1}\right) e^{\frac{\xi}{\mu c}} + 1 - \frac{e^{- \Delta} e^{- \xi}}{2 \left(\mu c + 1\right)} + \frac{e^{\xi}}{2 \left(\mu c - 1\right)} & \text{for}\: -\Delta \le \xi < 0 \\\frac{\left(1 - e^{- \Delta}\right) e^{- \xi}}{2 \left(\mu c + 1\right)} & 0 \le \xi \end{cases}\\
+	a(x,t) = A{\left(\xi \right)} &= \begin{cases} \gamma \left(e^{\frac{\Delta}{\alpha c}} - 1\right) e^{\frac{-\xi}{\alpha c}} & \text{for}\: \xi < - \Delta \\\gamma \left(1 - e^{\frac{-\xi}{\alpha c}}\right) & \text{for}\: - \Delta \le \xi < 0 \\0 & 0 \le \xi \end{cases}\\
+	\xi &= x - c t\\
+	e^{\Delta} &= - \frac{1}{2 \theta \left(\mu c + 1\right) - 1},
+\end{align*}$$
+where $c$ is given implicitly by
+$$\begin{align*}
+	0 &= - \gamma \left(1 - \left(- \frac{1}{2 \theta \left(\mu c + 1\right) - 1}\right)^{- \frac{1}{\alpha c}}\right) - \theta + 1 - \frac{1}{2 \left(\mu c + 1\right)} + \frac{2 \theta \left(- \mu c - 1\right) + 1}{2 \left(\mu c - 1\right)} + \left(- \frac{1}{2 \theta \left(\mu c + 1\right) - 1}\right)^{- \frac{1}{\mu c}} \left(\theta - \frac{\mu^{2} c^{2} + \frac{\mu c}{2} - \left(\frac{\mu c}{2} - \frac{1}{2}\right) \left(2 \theta \left(- \mu c - 1\right) + 1\right) - \frac{1}{2}}{\mu^{2} c^{2} - 1}\right).
+\end{align*}$$
+    </section>
 </section>
 <!--##################################################-->
 <section>
@@ -143,24 +180,6 @@ Numerics
     <section>
     <p>
     Wave Responses
-    </p>
-    </section>
-    <!--####################-->
-    <section>
-    <p>
-        Traveling Pulse Solution - No Stimulus
-    </p>
-    <p style="font-size:12pt">
-    $$\begin{align*}
-	u(x,t) = U{\left(\xi \right)} &= \begin{cases} \frac{\left(- \frac{e^{\Delta}}{\mu c - 1} + \frac{1}{\mu c - 1}\right) e^{\xi}}{2} + \frac{\left(\mu^{2} c^{2} e^{\frac{\Delta}{\mu c}} - \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \frac{\left(\mu c - 1\right) e^{- \Delta}}{2} + \frac{1}{2}\right) e^{\frac{\xi}{\mu c}}}{\mu^{2} c^{2} - 1} & \text{for}\: \Delta < - \xi \\\left(\theta + \frac{- \mu^{2} c^{2} - \frac{\mu c}{2} + \left(\frac{\mu c}{2} - \frac{1}{2}\right) e^{- \Delta} + \frac{1}{2}}{\mu^{2} c^{2} - 1}\right) e^{\frac{\xi}{\mu c}} + 1 - \frac{e^{- \Delta} e^{- \xi}}{2 \left(\mu c + 1\right)} + \frac{e^{\xi}}{2 \left(\mu c - 1\right)} & \text{for}\: \xi < 0 \\\frac{\left(1 - e^{- \Delta}\right) e^{- \xi}}{2 \left(\mu c + 1\right)} & \text{otherwise} \end{cases}\\
-	a(x,t) = A{\left(\xi \right)} &= \begin{cases} \gamma \left(e^{\frac{\Delta}{\alpha c}} - 1\right) e^{\frac{- c t + x}{\alpha c}} & \text{for}\: \Delta < c t - x \\\gamma \left(1 - e^{\frac{- c t + x}{\alpha c}}\right) & \text{for}\: c t - x > 0 \\0 & \text{otherwise} \end{cases}\\
-	\xi &= - c t + x\\
-	e^{\Delta} &= - \frac{1}{2 \theta \left(\mu c + 1\right) - 1},
-\end{align*}$$
-where $c$ is given implicitly by
-$$\begin{align*}
-	0 &= - \gamma \left(1 - \left(- \frac{1}{2 \theta \left(\mu c + 1\right) - 1}\right)^{- \frac{1}{\alpha c}}\right) - \theta + 1 - \frac{1}{2 \left(\mu c + 1\right)} + \frac{2 \theta \left(- \mu c - 1\right) + 1}{2 \left(\mu c - 1\right)} + \left(- \frac{1}{2 \theta \left(\mu c + 1\right) - 1}\right)^{- \frac{1}{\mu c}} \left(\theta - \frac{\mu^{2} c^{2} + \frac{\mu c}{2} - \left(\frac{\mu c}{2} - \frac{1}{2}\right) \left(2 \theta \left(- \mu c - 1\right) + 1\right) - \frac{1}{2}}{\mu^{2} c^{2} - 1}\right).
-\end{align*}$$
     </p>
     </section>
     <!--####################-->
@@ -185,11 +204,25 @@ $$\begin{align*}
     \end{align*}$
     </p>
     </section>
-    
+
     <!--####################-->
     <section>
     <p>
-        Which gives the following solvibility condition on $\mathbf{u}^T = [u_1, a_1]$:
+    Collecting the $\mathcal{O}(1)$ terms gives
+    $\begin{align*}
+        -c\mu U_\xi &= -U + \int_\mathbb{R} w(\xi, y) f\big[ U(y) - A(y) \big] \ dy \\
+        -c\alpha A_\xi &= -A + \gamma \int_\mathbb{R} w(\xi, y) f\big[U(y) - A(y) \big] \ dy,
+    \end{align*}$
+    </p>
+
+    <p>
+        which implies that $U$ and $A$ are the traveling pulse solution to the un-perturbed system.
+    </p>
+    </section>
+    <!--####################-->
+    <section>
+    <p>
+        Collecting the $\mathcal{O}(\varepsilon)$ terms gives the following solvability condition on $\mathbf{u}^T = [u_1, a_1]$:
     </p>
     <p>
         &nbsp;
@@ -204,7 +237,7 @@ $$\begin{align*}
     <!--####################-->
     <section data-auto-animate>
     <p>
-        A bounded soltuion will exist if the RHS is orthogonal to the null-space of $\mathcal{L}^*$:
+        A bounded solution will exist if the RHS is orthogonal to the null-space of $\mathcal{L}^*$:
     </p>
     <p>
         &nbsp;
@@ -219,14 +252,14 @@ $$
     <!--####################-->
     <section data-auto-animate>
     <p>
-        A bounded soltuion will exist if the RHS is orthogonal to the null-space of $\mathcal{L}^*$:
+        A bounded solution will exist if the RHS is orthogonal to the null-space of $\mathcal{L}^*$:
     </p>
     <p>
         &nbsp;
     </p>
     <p style="font-size:20pt">
     $$
-    \mathcal{L}^* \mathbf{v} = \mathbf{v}   + c \begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix} \mathbf{v}_\xi - f'\big(U(\xi) - A(\xi)\big) \begin{bmatrix}1&\gamma \\ -1 &-\gamma\end{bmatrix} \int_\mathbb{R} w(y, \xi) \mathbf{v}(y) \ dy.
+    \mathcal{L}^* \mathbf{v} = \mathbf{v} + c \begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix} \mathbf{v}_\xi - f'\big(U(\xi) - A(\xi)\big) \begin{bmatrix}1&\gamma \\ -1 &-\gamma\end{bmatrix} \int_\mathbb{R} w(y, \xi) \mathbf{v}(y) \ dy.
 $$
     </p>
     <p>
@@ -253,7 +286,7 @@ $$
     </p>
     <p>
         and our asymptotic approximation is
-        $$\nu(t) = \frac{\mu c+1}{\mu^2 c \theta} \int_0^t \int_0^\infty e^{-\xi/c\mu} I(\xi, t) \ d\xi \ d\tau$$
+        $$\eta(t) = \frac{\mu c+1}{\mu^2 c \theta} \int_0^t \int_0^\infty e^{-\xi/c\mu} I(\xi, t) \ d\xi \ d\tau$$
     </p>    
     </section>
 
@@ -294,9 +327,74 @@ $$
 </section>
 <!--##################################################-->
 <section>
+    <!--####################-->
+    <section>
+    <p>
+    Numerics
+    </p>
+    </section>
+    <!--####################-->
+    <section data-auto-animate>
+    <img class="r-strech" src="./images/delta_pulse.png">
+    </section>
+
+    <!--####################-->
+    <section data-auto-animate>
+    <div style="display: grid; grid-template-columns: 1fr 1fr;">
+        <div >
+            <img class="r-strech" src="./images/delta_pulse.png">
+        </div>
+        <div>
+            <img class="r-strech" src="./images/wave_response_bad.png">
+        </div>
+    </div>
+    </section>
+    <!--####################-->
+    <section>
+   
+        <p>
+            Non-adaptive Model: continuous derivative
+            $\begin{align*}
+                \mu u_t &= -u + \int_{\mathbb{R}} \tfrac{1}{2} e^{-|x-y|} \cdot H\big[ u(y) - \theta \big] \ dy
+            \end{align*}$
+        </p>
+        <br>
+        <p>
+            Adaptive Model: discontinuous derivative
+            $\begin{align*}
+                \mu u_t &= -u + \int_{\mathbb{R}} \tfrac{1}{2} e^{-|x-y|} \cdot H\big[ u(y,t) - a(y,t) - \theta \big] \ dy \\
+                \alpha a_t &= -a + \gamma H\big[ u(x,t) - a(x,t) - \theta \big]
+            \end{align*}$
+        </p>
+    </section>
+</section>
+<!--##################################################-->
+<section>
 <p>
-Multiple pulses / what's next?
+What's next?
 </p>
+<ul>
+    <li>Numerics</li>
+    <li>Wave-train analysis</li>
+    <li>Stability analysis</li>
+    <li>Large stimuli</li>
+    <li>Wave genesis</li>
+    <li>2D</li>
+</ul>
+
+
+</section>
+<!--##################################################-->
+<section>
+<p>
+References
+</p>
+<ul>
+    <li><a href="https://doi.org/10.1523/jneurosci.2278-05.2005" target="blank"> Pinto et al. 2005</a></li>
+    <li><a href="https://doi.org/10.1103/PhysRevE.85.021910" target="blank">Kilpatrick and Ermentrout 2012</a></li>
+</ul>
+
+
 </section>
 <!--##################################################-->
 			</div>
