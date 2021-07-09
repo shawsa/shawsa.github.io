@@ -71,6 +71,7 @@
 
 <div id="side-bar" class="side-bar">
     <p><a href="./reports/reports.html" target="_top">Reports</a></p>
+    <p><a href="./presentations/presentations.html" target="_top">Presentations</a></p>
     <p><a href="./todo/todo.html" target="_top">To Do List</a></p>
     <p><a href="./about/about.html" target="_top">About</a></p>
     <hr>
@@ -82,21 +83,21 @@
 *******************************************************************************
 ****************************************************************************-->
 
-<h1 id="Title">June 24<sup>th</sup>, 2021</h1>
+<h1 id="Title">July 7<sup>th</sup>, 2021</h1>
 <p id="summary">
-   We have begun using a semi-analytic implementation for simulations. The reduced computational complexity allows for efficient higher resolution simulations.
+   Derived the wave-response approximation for a spatially localized delta pulse stimulus, and compared to simulations. Prepared for the <a href="./presentations/presentation20210708/index.html">July 8<sup>th</sup> presentation</a> to the research group.
 </p>
 
 <hr><!--********************************************************************-->
 <h1 id="">To-Do List Snapshot</h1>
 <p>
 <ul>
-    <li>Investigate wave-response function.</li>
+    <li><s>Investigate wave-response function.</s></li>
     <ul>
-        <li>Convert to a semi-analytic implementation.</li>
+        <li><s>Convert to a semi-analytic implementation.</s></li>
         <li><s>Spatially homogeneous pulse.</s></li>
-        <li>Spatially homogeneous, temporally finite.</li>
-        <li>Local pulses.</li>
+        <li><s>Spatially homogeneous, temporally finite.</s></li>
+        <li><s>Local pulses.</s></li>
     </ul>
     <li>Wave-train Analysis</li>
     <ul>
@@ -118,49 +119,38 @@
 <!--************************************************************************-->
 
 <hr><!--********************************************************************-->
-<h1 id="">Semi-analytic implementation</h1>
+<h1 id="">Spatially Localized Pulse</h1>
+
 <p>
-    Previously we proposed to switch to a semi-analytic implementation where the convolution is integrated analytically, based on numerically approximated threshold-crossings. In particular, we hoped that with some combination of cusp-detection and left/right interpolation we could achieve a higher order of accuracy.
+    Here we explore the wave response to a spatially localized pulse stimulus
+$$
+I(x,t) = I_0 H(\tfrac{\Delta x}{2} - |x - x_p|) \delta(t-t_0)
+$$
+where $t_0$ denotes the time of the pulse, $x_p$ denotes the location of the center of the pulse (relative to the front of the pulse at $x=0$), and $\Delta x$ denotes the width of the pulse.
 </p>
 
 <p>
-    This has proven more difficult than anticipated. In particular, identifying threshold crossings to first order is non-trivial. In theory, our solutions should be smooth except for a few (time-dependent) positions in space, and the threshold-crossings should be clear. However, oscillations relative to the pulse-speed in the approximations of the threshold crossings are immediately propagated to all points in the solution, due to the convolution. 
-</p>
+    For $t_0 = 0$ the adjoint method gives the first order asymptotic approximation to the wave response function as
+$$
+\eta(t) \approx \frac{\mu c + 1}{\mu \theta} I_0 
+        \begin{cases}
+            0, & x_p \le - \tfrac{\Delta x}{2} \\
+            1 - \exp \left( \frac{-(x_p + \tfrac{\Delta x}{2})}{c\mu} \right), & - \tfrac{\Delta x}{2} \le x_p &lt; \tfrac{\Delta x}{2} \\
+            \exp \left( \frac{-(x_p - \tfrac{\Delta x}{2})}{c\mu} \right) - \exp \left( \frac{-(x_p + \tfrac{\Delta x}{2})}{c\mu} \right), & \tfrac{\Delta x}{2} \le x_p.
+        \end{cases}
+$$
+</p>    
 
 <p>
-    The result is that if the time-discretization is large relative to the spatial discretization, then the solution vector will exhibit spurious threshold crossings. Our current implementation throws an assertion error when it detects more than two threshold-crossings. This limitation is somewhat reminiscent of the CFL condition for numerical solutions to hyperbolic PDEs, though we suspect the connection is superficial. For now we will restrict our focus to simulation resolutions in which the first-order threshold-crossing approximations are unambiguous.
-</p>
-
-<p>
-    We have hypothesized that using polynomial interpolation to approximate the threshold-crossings and a high-order time integration scheme would not achieve high-order accuracy due to non-smoothness of the firing-rate function. Ultimately, we are not concerned with the order of accuracy, but we require the simulations be accurate enough and fast enough. Figure 1 shows measurements of the speed of simulated traveling pulses. They all have spatial resolution $h = 2^{-7}$ and temporal resolution $k= 2^{-8}$. They differ in the time-integration scheme used, and the order of polynomial interpolation used in the threshold-crossing process.
-</p>
-
-<figure>
-    <img src="./reports/report20210624/order_comparisons.png", width="100%">
-    <caption><b>Fig 1.</b> Speed measurements of simulated traveling pulses. The columns group different time integration-schemes, while the rows group root-finding polynomial interpolation order. Note that the solutions may not be smooth enough to achieve maximum order accuracy.</caption>
-</figure>
-
-<p>
-    While this is not a convergence study (and thus does not verify the order of accuracy of these simulations) we can clearly see that choosing the higher order method results in higher accuracy for these simulations. Additionally, the semi-analytic method has complexity $O(n)$ per time-step regardless of the degree of polynomial interpolation, which is an improvement on the $O(n^2)$ quadrature used previously. We believe that it may be enough to simply use this implementation but increase the resolution.
-</p>
-
-<p>
-    As a proof of concept, in Figure 2, we successfully reproduced the wave-response function results from last week, but this time adjusting the front measurements using the analytic pulse speed. The results match Figures 1 and 3 of the previous report.
+    Figure 1 below shows our predicted wave response compared to simulation. 
 </p>
 
 <figure>
-    <img src="./reports/report20210624/delta_pulse.png", width="100%">
-    <caption><b>Fig 2.</b> The wave response function for $I(x,t) = I_0\delta(t-1)$ using the semi-analytic metho with 4<sup>th</sup> order polynomial interpolation, RK4 time integration , and high spatial and temporal resolutions ($h = 2^{-7}$ and $k=2^{-9}$).</caption>
+    <img src="./reports/report20210707/spatially_localized_wave_response.png", width="100%">
+    <caption><b>Fig 1.</b> Wave response to the spatially localized pulse stimulus $I(x,t) = I_0 H(\tfrac{\Delta x}{2} - |x - x_p|) \delta(t-t_0)$. Here, $x_p$ denotes the center of the stimulated region and $\Delta x = 5$ denotes the width of the stimulated region.</caption>
 </figure>
 
-<p>
-    Similarly, Figure 3 shows our simulated wave-response to the stimulus $I(x,t) = I_0 H(t-1) H(2-t)$ (the square-pulse).
-</p>
 
-<figure>
-    <img src="./reports/report20210624/sqare_pulse.png", width="100%">
-    <caption><b>Fig 3.</b> The wave response function for $I(x,t) = I_0 H(t-1)H(2-t)$ using the semi-analytic metho with 4<sup>th</sup> order polynomial interpolation, RK4 time integration , and high spatial and temporal resolutions ($h = 2^{-7}$ and $k=2^{-8}$).</caption>
-</figure>
 
 
 <!--************************************************************************-->

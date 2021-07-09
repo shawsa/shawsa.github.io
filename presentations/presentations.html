@@ -48,24 +48,13 @@
 
 <div class="page-content">
 
-    <h1 id="">Elevator Pitch</h1>
-    <p>
-        Neural tissue is composed of cells called neurons. These neurons connect to each other forming complex networks. Information can travel through these networks in form of electrical activity. The state and structure of these networks is responsible for all functionality we associate with brains and neural cortices: memory, object detection, higher reasoning, etc.
-    </p>
-    <p>
-        Studying these networks is mathematically intractible, so instead we examine simplified models that capture the relevant dynamics. For example, corticol slices have been shown to exhibit traveling waves of electrical activity. When electrically stimiulated in a region the electrical activity spreads at a measurable speed.
-    </p>
-    <p><a href="https://doi.org/10.1103/PhysRevE.85.021910" target="blank">Kilpatrick and Ermentrout 2012</a> modeled this by the integro-differential equation
-$$
-    u_t = -u + \int_{-\infty}^\infty \tfrac{1}{2}e^{-|x-y|} H(u - \theta) \ dy + I(x,t)
-$$
-    where $u(x,t)$ is a measure of electrical activity at location $x$ and time $t$, $H$ is the heaviside function, $\theta$ is the firing-rate threshold (how much activity does it take for a neuron to "fire"), and $I(x,t)$ is some external stimulus. This model captures the traveling front dynamics and can be used to show that temporary stimuli have the ultimate effect of shifting the traveling front forward (or backward) as seen in the simulation below, where the stimulus is a spatially homogeneous pulse at time $t = 1$ given by $I(x,t) = 0.15 \delta(t - 1)$.
-    </p>
+<!--************************************************************************-->
+<p class="report_link"><a href="presentation20210708/index.html">July 8<sup>th</sup>, 2021 - Research Group</a></p>
+<p>
+    Update the research group on my current work, including the $\mathcal{O}(\varepsilon)$ approximation to the wave response function for the adaptive model.
+</p>
 
-    <video controls autoplay muted loop>
-        <source src="response.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+<!--************************************************************************-->
 
 </div>
 

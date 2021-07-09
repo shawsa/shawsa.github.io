@@ -12,7 +12,7 @@ import sys
 ##################################################################################
 
 def update_sidebar():
-    filenames = ['index.html', 'about/about.html', 'todo/todo.html', 'reports/reports.html']
+    filenames = ['index.html', 'about/about.html', 'todo/todo.html', 'reports/reports.html', 'presentations/presentations.html']
     for filename in listdir('reports'):
         if filename[-5:] == '.html' and filename[:6] == 'report':
             if filename[6:6+8].isnumeric():
