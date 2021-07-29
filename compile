@@ -88,4 +88,4 @@ if __name__=='__main__':
         print('Finished updating sidebars\n')
 
     update_index()
-    print('complte')
+    print('complete')
