@@ -1,0 +1,25 @@
+
+* Thanks and achknowlegements
+    * Sam, Dan, and the department (only if they give pizza)
+    * References first?
+* Dijkstra's GOTO paper
+    * Start with a C example that's hard because of GOTO
+    * Talk about Dijkstra's paper
+    * Show a loop example that's hard because of mutation
+    * 'Structure and Function of Computer Programs' quote assignment apology?
+* Functional programming overview
+    * no mutation
+    * pure functions and side-effects
+    * compose functions ?
+    * state and closures?
+* Generators
+    * motivate with procedural example that must be changed many times
+    * define generator with examples
+    * create generators from generators (generator expressions / comprehensions)
+    * pipelines
+    * reuse parts
+* Impressive example (NN?)
+* Markov Example
+    * trivial parellelezation ?
+
+* 
