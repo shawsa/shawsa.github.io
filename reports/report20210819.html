@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="./main.css">
+    <link rel="stylesheet" href="../main.css">
     
     <!-- Mathjax scripts -->
     <script type="text/x-mathjax-config">
@@ -47,11 +47,11 @@
     $
 
     <!-- Plotly code for interactive plots -->
-    <script src="./plotly-2.0.0-rc.2.min.js"></script>
+    <script src="../plotly-2.0.0-rc.2.min.js"></script>
     
     <!--Prisim for code highlighting -->
-    <script src="./prism.js"></script>    
-    <link rel="stylesheet" href="./prism.css">
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
 
 
 
@@ -66,16 +66,16 @@
 <body>
 
 <div class="top-bar">
-    <a href="./index.html"><img src="./frame/boulder-logo.png"></a>
+    <a href="../index.html"><img src="../frame/boulder-logo.png"></a>
 </div>
 
 <div id="side-bar" class="side-bar">
-    <p><a href="./reports/reports.html" target="_top">Reports</a></p>
-    <p><a href="./presentations/presentations.html" target="_top">Presentations</a></p>
-    <p><a href="./todo/todo.html" target="_top">To Do List</a></p>
-    <p><a href="./about/about.html" target="_top">About</a></p>
+    <p><a href="../reports/reports.html" target="_top">Reports</a></p>
+    <p><a href="../presentations/presentations.html" target="_top">Presentations</a></p>
+    <p><a href="../todo/todo.html" target="_top">To Do List</a></p>
+    <p><a href="../about/about.html" target="_top">About</a></p>
     <hr>
-    <p><a href="./old-rbf/index.html" target="_top">Old Site</a></p>
+    <p><a href="../old-rbf/index.html" target="_top">Old Site</a></p>
 </div>
 
 <div class="page-content">
@@ -85,7 +85,7 @@
 
 <h1 id="Title">August 19<sup>th</sup>, 2021</h1>
 <p id="summary">
-   We examine the difference-of-exponentials weight function $w(x,y) = M_1e^{-|x-y|/\sigma_1} - M_2e^{-|x-y|/\sigma_2}$. We derive the traveling pulse solution and the asymptotic approximation to the wave response function for this weight function in the case of the Heaviside firing-rate. The results do not match simulation, but we believe the simulation is not accurate enough to properly compare, and needs to be improved by using a semi-analytic version. Another error was corrected from the <a href="./reports/report20210610.html">2021-06-10 report</a>.
+   We examine the difference-of-exponentials weight function $w(x,y) = M_1e^{-|x-y|/\sigma_1} - M_2e^{-|x-y|/\sigma_2}$. We derive the traveling pulse solution and the asymptotic approximation to the wave response function for this weight function in the case of the Heaviside firing-rate. The results do not match simulation, but we believe the simulation is not accurate enough to properly compare, and needs to be improved by using a semi-analytic version. Another error was corrected from the <a href="../reports/report20210610.html">2021-06-10 report</a>.
 </p>
 
 <hr><!--********************************************************************-->
@@ -151,12 +151,12 @@ $$\begin{align*}
 </p>
 
 <p>
-    Note that if we take $M_1 = \tfrac{1}{2}, \sigma_1 = 1, M_2 = 0$ then $w$ reduces to the exponential weight kernel and these results are consistent with <a href="./reports/report20210610.html"> report 2021-06-03</a>.
+    Note that if we take $M_1 = \tfrac{1}{2}, \sigma_1 = 1, M_2 = 0$ then $w$ reduces to the exponential weight kernel and these results are consistent with <a href="../reports/report20210610.html"> report 2021-06-03</a>.
 </p>
 
 <figure>
 <video controls autoplay muted loop>
-    <source src="./reports/report20210819/traveling_pulse_exp_diff.mp4" type="video/mp4">
+    <source src="./report20210819/traveling_pulse_exp_diff.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video>
 <caption><b>Fig 1.</b> The traveling pulse solution for the adaptive model, with Heaviside firing-rate, and a difference-of-exponetials weight kernel.</caption>
@@ -165,7 +165,7 @@ $$\begin{align*}
 <!--*********************************-->
 <h2 id="">Nullspace of the Adjoint</h2>
 <p>
-From <a href="./reports/report20210610.html">report 2021-06-10</a> we know that the first order asymptotic approximation of the wave response function can be calculated using the null-space of the following adjoint operator
+From <a href="../reports/report20210610.html">report 2021-06-10</a> we know that the first order asymptotic approximation of the wave response function can be calculated using the null-space of the following adjoint operator
 $$
     \LL^* \vecv = \vecv   + c \begin{bmatrix}\mu&0\\0&\alpha\end{bmatrix} \vecv_\xi - f'\big(U(\xi) - A(\xi)\big)\int_\RR w(y, \xi)  \begin{bmatrix}1&\gamma \\ -1 &-\gamma\end{bmatrix} \vecv(y) \ dy.
 $$
@@ -231,7 +231,7 @@ $$
 $$
 </p>
 <p>
-In <a href="./reports/report20210610.html">report 2021-06-10</a> this was simplified to not explicitly depend on $\Delta$ by use of one of the conditions implicitly determining $c$ and $\Delta$. The corresponding condition in this case is
+In <a href="../reports/report20210610.html">report 2021-06-10</a> this was simplified to not explicitly depend on $\Delta$ by use of one of the conditions implicitly determining $c$ and $\Delta$. The corresponding condition in this case is
 $$
 0 = \frac{M_{1} \sigma_{1}^{2} \left(1 - e^{- \frac{\Delta}{\sigma_{1}}}\right)}{\mu c + \sigma_{1}} + \frac{M_{2} \sigma_{2}^{2} \left(-1 + e^{- \frac{\Delta}{\sigma_{2}}}\right)}{\mu c + \sigma_{2}} - \theta
 $$
@@ -256,7 +256,7 @@ $$
 </p>
 
 <figure>
-    <img src="./reports/report20210819/wave_response.svg"/>
+    <img src="./report20210819/wave_response.svg"/>
     <caption><b>Fig 1.</b> The asymptotic approximation of the wave response is not agreeing with the numerical simulations.</caption>
 </figure>
 
