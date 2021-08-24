@@ -1,7 +1,15 @@
 
-* Thanks and achknowlegements
+* Thanks and acknowledgments
     * Sam, Dan, and the department (only if they give pizza)
     * References first?
+* MIT Open Courseware Series
+    * Covid and depressed
+    * Lisp
+        * The most elegant language I've ever seen
+        * Strange syntax - No order of operations, no loops, lots of ()
+        * Encourages the functional paradigm
+    * Looked into functional languages
+        * So much is just copied from older languages
 * Dijkstra's GOTO paper
     * Start with a C example that's hard because of GOTO
     * Talk about Dijkstra's paper
@@ -20,7 +28,7 @@
     * reuse parts
 * Impressive example (NN?)
 * Markov Example
-    * trivial parellelezation ?
+    * trivial parellelization?
 
 * 
 
@@ -29,3 +37,77 @@ https://web.archive.org/web/20090320002214/http://www.ecn.purdue.edu/ParaMount/p
 
 https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf
     The GOTO statement as it stands is just too primitive; it is too much an invitation to make a mess of one's program.
+
+Joel Gruss - https://www.youtube.com/watch?v=ThS4juptJjQ
+    Use functions
+    Avoid side effects
+    immutability
+
+Bianca Gibson - https://www.youtube.com/watch?v=LkpHQL863mw
+    immutability
+    referential transparency
+    
+Scott Wlaschin - https://www.youtube.com/watch?v=vDe-4o8Uwl8
+    Lego Philosopy
+        Each piece is self-contained
+        all pieces fit together (no special adapters)
+        Compose pieces to make new pieces
+        pieces are reusable
+    Unix Philosophy
+        Programs do one thing and do it well
+        To do something new, make a new program
+    Core principles
+        Functions are things
+        Composition everywhere
+        Types are not classes
+        
+Russ Olsen - https://www.youtube.com/watch?v=0if71HOyVjY
+    No Side Effects
+    Functions are citizens
+        
+
+How to Speak Notes
+    Start with an empowerment promise.
+        By the end of this talk...
+    Cycle around the big idea.
+    Build a fence around the idea (paradigms?)
+    Ask a question to get people back on the bus.
+    Props?
+        Maybe the books?
+    Passion - inspire people?
+    Situate - current context
+        Lisp is about as old as Fortran
+        Functional programming is on the rise
+    practice - 
+    Winston Start
+        Symbol - Python and Lambda
+        Slogan - 
+        Surprise - no mutation neural network
+        Salient Idea - the functional paradigm
+        Story - narrative of how this happened
+    Last slide
+        Joke?
+        Contributions?
+        Mission! 
+
+
+***
+
+APPM Graduate Student Seminar
+
+SPEAKER: Sage Shaw, Department of Applied Mathematics, University of Colorado Boulder
+TITLE: Functional Programming in Python
+
+TIME: 4:00 PM, Thursday August 26th 2021
+PLACE: Newton Lab
+
+ABSTRACT:
+
+Functional programming (FP) is a declarative programming paradigm, in which, functions are said to be "first-class citizens", and function composition is used to create complex procedures while maintaining modularity and extensibility. Proponents of FP say that it reduces errors, simplifies debugging, and makes programming more mathematical. Python supports programming in the functional paradigm. In this inaugural presentation of the APPM Graduate Student Seminar we explore the potential of the functional paradigm in scientific computing with specific examples implemented in Python.
+
+***
+
+
+
+
+    

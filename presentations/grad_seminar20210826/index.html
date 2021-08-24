@@ -4,11 +4,13 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>FP in Python</title>
 
+        <!-- -->
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
 		<link rel="stylesheet" href="dist/theme/black.css">
+        <!-- -->
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
@@ -18,32 +20,447 @@
 			<div class="slides">
 <!--##################################################-->
 <section>
-<img src="tex_stuff.png">
+<section 
+    data-background="images/python_logo.png" 
+    data-background-position="bottom 50px right 50px" 
+    data-background-size="500px 500px">
+<h2 style="text-transform: capitalize;">Functional Programming In Python</h2>
 <p>
-    Since it's html, it has MathJax. It's beautiful:
+    Sage Shaw - CU Boulder
 </p>
-<p>
-    $$
-        u_t = -u + \int_{-\infty}^{\infty} w(x,x^\prime)f(u(x^\prime)) \ d x^\prime
-    $$
-</p>
+<aside class="notes">
+<ul>
+    <li>Thank Sam and Dan. Explain purpose of the seminar.</li>
+    <li>Start SICP lecture story.</li>
+</ul>
+
+</aside>
 </section>
+<!--#######################-->
 <section>
 <p>
-    Some math: $y = mx+b$.
+Structure and Interpretation of Computer Programs (1986) (<a href="https://www.youtube.com/playlist?list=PLE18841CABEA24090" target=blank>Lectures</a>) (<a href="https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book.html" target=blank>Book</a>)
 </p>
-<iframe src="http://brython.info/console.html" width="610" height="350" scrolling="no">
-<script type="javascript">
-    function setBrythonSize(){
-        document.getElementById("code").width = "100%";
-    }
-</script>
-</iframe>
+
+<div style="display: grid; grid-template-columns: 30% 30% 30%; grid-gap: 5px;">
+<img src="images/SICP_01.png"/>
+<img src="images/SICP_02.png"/>
+<img src="images/SICP_03.png"/>
+<img src="images/SICP_04.png"/>
+<img src="images/SICP_05.png"/>
+<img src="images/SICP_06.png" style="display: block; margin-left: auto; margin-right: auto;"/>
+</div>
+
+<aside class="notes">
+    <ul>
+        <li>Lisp created in 1958 (one year younger than Fortran)</li>
+        <li>Lisp Syntax</li>
+            <ul>
+                <li>Lots of ()</li>
+                <li>No order of ops</li>
+                <li>Almost no syntax</li>
+                <li>This talk isn't about Lisp</li>
+            </ul>
+        <li>Functional Programming</li>
+            <ul>
+                <li>First time seeing the functional Paradigm</li>
+                <li>Python supports FP</li>
+            </ul>
+    </ul>
+</aside>
+</section>
+<!--#######################-->
+<section>
+<h2 id="">Goals</h2>
+<p>
+    By the end of this talk you will...
+    <ul>
+        <li>understand FP</li>
+        <li>understand Python generators</li>
+        <li>know when to use each</li>
+    </ul>
+</p>
+<aside class="notes">
+    <ul>
+        <li>FP is a tough pill to swallow, so I'll start with an easier pill.</li>
+        <li></li>
+        
+    </ul>
+    
+</aside>
+</section>
 </section>
 <!--##################################################-->
-			</div>
+<section> <!-- GOTO considered Harmful -->
+<section>
+<p>
+    This is C code. When line 9 executes, what value is printed?
+</p>
+<pre><code data-line-numbers="7-9|4-9">#include &lt;stdio.h>
+int main(){
+int a, b;
+a = 5;
+goto *(&&LABEL + 7);
+LABEL:
+a = 1; 
+b = a;
+printf("%d\n", b);
+int* testLabel;
+TEST: testLabel = &&TEST;
+//TEST:printf("%ld\n", &&TEST - &&LABEL);
+}
+</code></pre>
+
+<aside class="notes">
+    <ul>
+        <li>Start at line 9 and conclude that it prints 1.</li>
+        <li>Start at line 4 and conclude that it prints 5.</li>
+        <li>Why is this hard? Talk about spaghetti code.</li>
+        <li>Why did we ever use GOTO? Machine instructions, conditional blocks, loops.</li>
+    </ul>
+</aside>
+
+</section>
+<!--#######################-->
+<section data-auto-animate>
+<p>
+    <a href="https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf">GOTO Considered Harmful - Edgar Dijkstra 1969</a>
+</p>
+<p class="fragment fade-in">
+    "For a number of years I have been familiar with the observation that the quality of programmers is a decreasing function of the density of GOTO statements in the programs they produce."
+</p>
+
+<aside class="notes">
+    <ul>
+        <li>Structured Program Theorem saying goto is unnecessary</li>
+        <li>Structured paradigm (selection, selection, repetition, iteration)</li>
+        
+    </ul>
+    
+</aside>
+
+</section>
+<section data-auto-animate>
+<p>
+    <a href="https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf">GOTO Considered Harmful - Edgar Dijkstra 1969</a>
+</p>
+<p>
+    "The GOTO statement as it stands is just too primitive; it is too much an invitation to make a mess of one's program."
+</p>
+
+<aside class="notes">
+    <ul>
+        <li></li>
+        <li></li>
+        
+    </ul>
+    
+</aside>
+
+</section>
+
+<!--#######################-->
+<section data-auto-animate>
+<p>
+    <a href="https://web.archive.org/web/20090320002214/http://www.ecn.purdue.edu/ParaMount/papers/rubin87goto.pdf">"GOTO Considered Harmful" Considered Harmful - Frank Rubin 1987</a>
+</p>
+<p class="fragment fade-in">
+    "To many people, 'structured programming' and 'GOTO-less programming' have become synonymous. This has caused incalculable harm to the field of programming, which has lost an efficacious tool. It is like butchers banning knives because workers sometimes cut themselves."
+</p>
+
+<aside class="notes">
+    Rubin gives examples counting lines, operators, and tokens. 
+</aside>
+</section>
+
+<!--#######################-->
+<section data-auto-animate>
+<p>
+    <a href="https://web.archive.org/web/20090320002214/http://www.ecn.purdue.edu/ParaMount/papers/rubin87goto.pdf">Structured Programming with GOTO Statements - Donald Knuth 1974</a>
+</p>
+<p class="fragment fade-in">
+    "The discussion brings out opposing points of view about whether or not GOTO statements should be abolished; some merit is found on both sides of this question. Finally, an attempt is made to define the true nature of structured programming, and to recommend fruitful directions for further study."
+</p>
+</section>
+
+<!--#######################-->
+<section>
+<div>
+<p>
+    This is hard because of <code>GOTO</code>.
+</p>
+<pre><code data-line-numbers>#include &lt;stdio.h>
+int main(){
+int a, b;
+a = 5;
+goto *(&&LABEL + 7);
+LABEL:
+a = 1; 
+b = a;
+printf("%d\n", b);
+int* testLabel;
+TEST: testLabel = &&TEST;
+//TEST:printf("%ld\n", &&TEST - &&LABEL);
+}</code></pre>
+</section>
+
+<!--#######################-->
+<section>
+<div>
+<p>
+    Why is this hard?
+</p>
+<img src="images/GRE_question.png"/>
+<p>
+    <span style="color:grey;">This is from the Math Subject GRE practice book.</span>
+</p>
+<aside class="notes">
+    Because of "replace"! Note the difference between set and replace.
+</aside>
+</section>
+
+</section>
+<!--##################################################-->
+<section>
+<!--#######################-->
+<section>
+<h2>
+    FP Commandment
+</h2>
+<h1 id="">Thou shalt not mutate!</h1>
+<aside class="notes">
+    <ul>
+        <li>Write "no mutation" on the board</li>
+        <li>This is a paradigm</li>
+        <li>This is what not to do. So how do we accomplish things?</li>
+    </ul>
+</aside>
+</section>
+
+<!--#######################-->
+<section>
+<h2><a href="https://en.wikipedia.org/wiki/Unix_philosophy" target=blank>The Unix Philosophy</a></h2>
+
+<div style="dislplay: block; float: left; width: 50%;">
+    <img src="images/ken_and_dennis.jpg"/>
+</div>
+
+<div style="dislplay: block; float: right; width: 50%;">
+    <p>
+        A program (function) should do only one thing, and do it well.
+    </p>
+</div>
+<aside class="notes">
+    Write on board
+    <ul>
+        <li>Small and specific</li>
+    </ul>
+    
+</aside>
+</section>
+
+<!--#######################-->
+<section>
+<h2 id="">The Lego Philosophy</h2>
+
+<div style="dislplay: block; float: left; width: 50%;">
+<img src="images/lego.png"/>
+<p>
+<span style="font-color: grey;">Credit: <a href="https://www.youtube.com/watch?v=vDe-4o8Uwl8" target=blank>Scott Wlaschin - NDC Conferences Jan 2018</a></span>
+</p>
+</div>
+<div style="display: block; float: right; width: 50%;">
+    <p>
+        Functions should be composable.
+    </p>
+</div>
+
+
+<aside class="notes">
+    Write on board
+    <ul>
+        <li>composable and reusable</li>
+    </ul>
+    
+</aside>
+
+</section>
+
+<!--#######################-->
+<section>
+<h2 id="">The Math Philosophy</h2>
+
+<p>
+    Functions should be functions.
+</p>
+<p>
+    $f: A \to B$ such that $f(x) = \dots$
+</p>
+
+<aside class="notes">
+    <ul>
+        <li>Inputs and outputs</li>
+        <li>They don't "do" anything (side effects)</li>
+        <li>Note that altering state and printing are side effects. </li>
+        <li>Note that by "side-effects" we mean "effects".</li>
+        <li>Draw state on the board and separate it with a solid line.</li>
+        <li>Side effects (and state) exist on one side and can look in. Pure functions cannot look out.</li>
+    </ul>
+    
+</aside>
+</section>
+</section>
+<!--##################################################-->
+<section>
+<section>
+<h2 id="">Newton's Method</h2>
+<p>
+    $x \mapsto x - \frac{f(x)}{f'(x)}$
+</p>
+<div class="fragment">
+<pre><code class="python">def newton_method(x0, f, df):
+    x = x0
+    print(x)
+    for _ in range(10):
+        x = x - f(x)/df(x)
+        print(x)
+
+f = lambda x: (x-1)**2
+df = lambda x: 2*(x-1)
+newton_method(2, f, df)</code></pre>
+</div>
+</section>
+
+<!--#######################-->
+<section>
+<pre><code class="python">def newton_method(x0, f, df, max_iter=10):
+    x = x0
+    print(x)
+    for _ in range(max_iter):
+        x = x - f(x)/df(x)
+        print(x)
+
+f = lambda x: (x-1)**2
+df = lambda x: 2*(x-1)
+newton_method(2, f, df, max_iter=4)</code></pre>
+</section>
+
+<!--#######################-->
+<section>
+<pre><code class="stretch python">def newton_method(x0, f, df, 
+                  max_iter=10, tol=1e-5):
+    x = x0
+    print(x)
+    for _ in range(max_iter):
+        x = x - f(x)/df(x)
+        print(x)
+        if abs(f(x)) <= tol:
+            break
+f = lambda x: (x-1)**2
+df = lambda x: 2*(x-1)
+newton_method(2, f, df, tol=1e-3)</code></pre>
+</section>
+
+<!--#######################-->
+<section>
+<pre><code class="stretch python">def newton_method(x0, f, df, max_iter=10, 
+                  tol=1e-5, tol_type='abs'):
+    assert tol_type.lower() in ('abs', 'cauchy')
+    x = x0
+    x_old = x
+    print(x)
+    for _ in range(max_iter):
+        x, x_old = x - f(x)/df(x), x
+        print(x)
+        if tol_type is 'abs':
+            if abs(f(x)) <= tol:
+                break
+        elif tol_type is 'cauchy':
+            if abs(x - x_old) < tol:
+                break
+f = lambda x: (x-1)**2
+df = lambda x: 2*(x-1)
+newton_method(2, f, df, tol=1e-3, tol_type='cauchy')</code></pre>
+</section>
+
+<!--#######################-->
+<section>
+<pre><code class="stretch python">def newton_method(x0, f, df, 
+                  max_iter=10, tol=1e-5, 
+                  tol_type='abs'):
+    assert tol_type.lower() in ('abs', 'cauchy')
+    x = x0
+    x_old = x
+    xs = [x]
+    for _ in range(max_iter):
+        x, x_old = x - f(x)/df(x), x
+        xs.append(x)
+        if tol_type is 'abs':
+            if abs(f(x)) <= tol:
+                break
+        elif tol_type is 'cauchy':
+            if abs(x - x_old) < tol:
+                break
+    return xs
+
+f = lambda x: (x-1)**2
+df = lambda x: 2*(x-1)
+for x in newton_method(2, f, df, 
+                        tol=1e-3, tol_type='cauchy'):
+    print(x)</code></pre>
+</section>
+
+<!--#######################-->
+<section>
+<pre><code class="stretch python">def newton_method(x0, f, df, 
+                  max_iter=10, tol=1e-5, 
+                  tol_type='abs', return_all=False):
+    assert tol_type.lower() in ('abs', 'cauchy')
+    x = x0
+    x_old = x
+    if return_all:
+        xs = [x]
+    for _ in range(max_iter):
+        x, x_old = x - f(x)/df(x), x
+        if return_all:
+            xs.append(x)
+        if tol_type is 'abs':
+            if abs(f(x)) <= tol:
+                if return_all:
+                    xs.append(x)
+                break
+        elif tol_type is 'cauchy':
+            if abs(x - x_old) < tol:
+                if return_all:
+                    xs.append(x)
+                break
+    if return_all:
+        return xs
+    return x
+
+f = lambda x: (x-1)**2
+df = lambda x: 2*(x-1)
+for x in newton_method(2, f, df, tol=1e-3, 
+                       tol_type='cauchy', return_all=True):
+    print(x)
+    
+print()
+print(newton_method(2, f, df, tol=1e-3, tol_type='cauchy'))</code></pre>
+</section>
+
+</section>
+<!--##################################################-->
+<section>
+
+
+
+</section>
+<!--##################################################-->
+
+		</div>
 		</div>
 
+        <!-- -->
 		<script src="dist/reveal.js"></script>
 		<script src="plugin/notes/notes.js"></script>
 		<script src="plugin/markdown/markdown.js"></script>
@@ -60,5 +477,6 @@
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ]
 			});
 		</script>
+        <!-- -->
 	</body>
 </html>
