@@ -31,7 +31,8 @@
 <aside class="notes">
 <ul>
     <li>Thank Sam and Dan. Explain purpose of the seminar.</li>
-    <li>Start SICP lecture story.</li>
+    <li>Start "Structure and Interpretation of Computer Programs" lecture story.</li>
+    <li>Used to say, "once you know one language, you know them all," but I don't say that anymore.</li>
 </ul>
 
 </aside>
@@ -58,9 +59,12 @@ Structure and Interpretation of Computer Programs (1986) (<a href="https://www.y
             <ul>
                 <li>Lots of ()</li>
                 <li>No order of ops</li>
-                <li>Almost no syntax</li>
-                <li>This talk isn't about Lisp</li>
+                <li>Almost no syntax, just function calls.</li>
+                <li>Every pair of () is a function call, you can't just add more.</li>
+                <li>Only prefix notation, no in-fix</li>
             </ul>
+        <li>Powerful language!</li>
+        <li>This talk isn't about Lisp</li>
         <li>Functional Programming</li>
             <ul>
                 <li>First time seeing the functional Paradigm</li>
@@ -430,7 +434,8 @@ for x in newton_method(2, f, df,
 
 <!--#######################-->
 <section>
-<pre><code class="stretch python">def newton_method(x0, f, df, 
+<pre><code class="stretch python" data-trim>
+def newton_method(x0, f, df, 
                   max_iter=10, tol=1e-5, 
                   tol_type='abs', return_all=False):
     assert tol_type.lower() in ('abs', 'cauchy')
@@ -444,13 +449,9 @@ for x in newton_method(2, f, df,
             xs.append(x)
         if tol_type is 'abs':
             if abs(f(x)) <= tol:
-                if return_all:
-                    xs.append(x)
                 break
         elif tol_type is 'cauchy':
             if abs(x - x_old) < tol:
-                if return_all:
-                    xs.append(x)
                 break
     if return_all:
         return xs
@@ -463,7 +464,8 @@ for x in newton_method(2, f, df, tol=1e-3,
     print(x)
     
 print()
-print(newton_method(2, f, df, tol=1e-3, tol_type='cauchy'))</code></pre>
+print(newton_method(2, f, df, tol=1e-3, tol_type='cauchy'))
+</code></pre>
 <aside class="notes">
     <ul>
         <li>Maybe we want it to be multimensional Newton.</li>
@@ -639,7 +641,7 @@ pipeline_eval(newton_sequence(x0, f, df),
 <pre><code class="stretch python" data-trim>
 def filter_f_tol(f, tol=1e-10):
     def predicate(x):
-        return abs(f(x) > tol)
+        return abs(f(x)) > tol
     return partial(takewhile, predicate)
 
 x0 = 8
@@ -1124,14 +1126,23 @@ errors = pipeline_eval(
 <p>
     Questions for the audience?
 </p>
+<div style="display: block; float: left; width: 50%;">
 <p>
     <ul>
-        <li class="fragment">Did you have fun?</li>
-        <li class="fragment">Did I pique your interest?</li>
-        <li class="fragment">Does functional programming have a place in your research?</li>
+        <li>Did you have fun?</li>
+        <li>Did I pique your interest?</li>
+        <li>Does functional programming have a place in your research?</li>
+        <li class="fragment">Questions for me?</li>
     </ul>
-    
 </p>
+<p>
+    <a href="https://shawsa.github.io/presentations/grad_seminar20210826/index.html">tinyurl.com/xknpfpn2</a>
+</p>
+</div>
+<div style="display: block; float: right; width: 50%">
+<img src="images/qr-code.svg"/>
+
+</div>
 </section>
 
 </section>
