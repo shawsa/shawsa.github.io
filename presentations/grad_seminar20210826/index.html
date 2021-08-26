@@ -329,6 +329,12 @@ f = lambda x: (x-1)**2
 df = lambda x: 2*(x-1)
 newton_method(2, f, df)</code></pre>
 </div>
+<aside class="notes">
+    <ul>
+        <li>Explain Newton's Method</li>
+        <li>"10" is arbitrary, let's make it a parameter</li>
+    </ul>
+</aside>
 </section>
 
 <!--#######################-->
@@ -343,6 +349,9 @@ newton_method(2, f, df)</code></pre>
 f = lambda x: (x-1)**2
 df = lambda x: 2*(x-1)
 newton_method(2, f, df, max_iter=4)</code></pre>
+<aside class="notes">
+    Maybe we to stop when $f(x)$ is close enough to zero.
+</aside>
 </section>
 
 <!--#######################-->
@@ -359,6 +368,9 @@ newton_method(2, f, df, max_iter=4)</code></pre>
 f = lambda x: (x-1)**2
 df = lambda x: 2*(x-1)
 newton_method(2, f, df, tol=1e-3)</code></pre>
+<aside class="notes">
+    For shallow functions, a Cauchy tolerance would be better.
+</aside>
 </section>
 
 <!--#######################-->
@@ -381,6 +393,9 @@ newton_method(2, f, df, tol=1e-3)</code></pre>
 f = lambda x: (x-1)**2
 df = lambda x: 2*(x-1)
 newton_method(2, f, df, tol=1e-3, tol_type='cauchy')</code></pre>
+<aside class="notes">
+    We'd prefer a function that returns a list.
+</aside>
 </section>
 
 <!--#######################-->
@@ -408,6 +423,9 @@ df = lambda x: 2*(x-1)
 for x in newton_method(2, f, df, 
                         tol=1e-3, tol_type='cauchy'):
     print(x)</code></pre>
+<aside class="notes">
+    Well, maybe we want the option to return a list or the final value.
+</aside>
 </section>
 
 <!--#######################-->
@@ -446,13 +464,675 @@ for x in newton_method(2, f, df, tol=1e-3,
     
 print()
 print(newton_method(2, f, df, tol=1e-3, tol_type='cauchy'))</code></pre>
+<aside class="notes">
+    <ul>
+        <li>Maybe we want it to be multimensional Newton.</li>
+        <li>Maybe we want the error at each step instead, but don't want to waste memory storing the entire list.</li>
+        <li>Maybe we want to switch to gradient descent.</li>
+    </ul>
+</aside>
 </section>
 
 </section>
 <!--##################################################-->
 <section>
 
+<!--#######################-->
+<section>
+<p>
+    Let's try something more functional.
+</p>
+<div class="fragment">
+<pre><code class="stretch python" data-line-numbers="1-4|">def example_generator():
+    yield 1
+    yield 2
+    yield 3
+    
+print(list(example_generator()))
+my_gen = example_generator()
+a = next(my_gen)
+print(a)
+for _ in range(4):
+    print(next(my_gen))</code></pre>
+</div>
+<div class="fragment">
+<pre><code class="stretch python">[1, 2, 3]
+1
+2
+3
+---------------------------------------------------------------------------
+StopIteration                             Traceback (most recent call last)
+<ipython-input-16-f2e7e1d9875d> in <module>
+      9 print(a)
+     10 for _ in range(4):
+---> 11     print(next(my_gen))
 
+StopIteration: </code></pre>
+</div>
+<aside class="notes">
+    <ul>
+        <li>Newton's method is a sequence.</li>
+        <li>We're filtering that sequence.</li>
+        <li>This is perfect for Python generators.</li>
+        <li>Walk through this generator.</li>
+        <li>Baked into the language.</li>
+        <li>"next" and "iter"</li>
+    </ul>
+</aside>
+</section>
+
+<!--#######################-->
+<section>
+<pre><code class="stretch python">def newton_sequence(x0, f, df):
+    x = x0
+    while True:
+        yield x
+        x -= f(x)/df(x)</code></pre>
+<div class="fragment">
+<pre><code class="stretch python">from itertools import *
+from functools import *
+
+import more_itertools #not built-in</code></pre>
+</div> 
+<aside class="notes">
+    <ul>
+        <li>This is stateful, but returns a generator.</li>
+        <li>Some libraries to work with generators and functions.</li>
+        <li>Let's start filtering.</li>
+    </ul>
+    
+</aside>
+</section>
+
+<!--#######################-->
+<section>
+<p>
+    max_iter
+</p>
+<div class="fragment">
+<pre><code class="stretch python" data-trim>
+def take_10(iterable):
+    for _ in range(10):
+        yield next(iterable)
+</code></pre>
+</div>
+<div class="fragment">
+<pre><code class="stretch python" data-trim>
+def take_n(iterable, n=10):
+    for _ in range(n):
+        yield next(iterable)
+</code></pre>
+</div>
+<div class="fragment">
+<pre><code class="stretch python" data-trim>
+def filter_max_iter(max_iter=10**3):
+    def my_filter(seq):
+        return islice(seq, 0, max_iter)
+    return my_filter
+</code></pre>
+</div>
+<aside class="notes">
+    <ul>
+        <li>First is okay, but we will want to change "10"</li>
+        <li>This is better. Has some hidden mutation. Also, not very composable since it has two arguments.</li>
+        <li>Last is nice. Talk about closures.</li>
+    </ul>
+</aside>    
+</section>
+
+<!--#######################-->
+<section>
+<div>
+<pre><code class="stretch python" data-trim>
+x0 = 8
+f = lambda x: (x-1)*(x-5)
+df = lambda x: 2*x - 6
+my_filter = filter_max_iter(4)
+list(
+    my_filter(
+        newton_sequence(x0, f, df)))
+>>>[8, 5.9, 5.139655172413793, 5.004557642613021]
+</code></pre>
+</div>
+<aside class="notes">
+    <ul>
+        <li>Pretty printing, but not idea.</li>
+        <li>Already running into trouble. Function composition is kinda gross in python.</li>
+        <li>Let's make it better!</li>
+    </ul>
+</aside>
+</section>
+
+<!--#######################-->
+<section>
+<div>
+<pre><code class="stretch python" data-trim>
+def pipeline_eval(x, *func_list):
+    def apply(x, f):
+        return f(x)
+    return reduce(apply, func_list, x)
+
+f = lambda x: x+1
+g = lambda x: x**2
+print(pipeline_eval(2, f, g))
+print(pipeline_eval(2, g, f))
+>>>9
+>>>5
+</code></pre>
+</div>
+<div class="fragment">
+<pre><code class="stretch python" data-trim>
+x0 = 8
+f = lambda x: (x-1)*(x-5)
+df = lambda x: 2*x - 6
+pipeline_eval(newton_sequence(x0, f, df),
+              filter_max_iter(4),
+              list)
+>>>[8, 5.9, 5.139655172413793, 5.004557642613021]
+</code></pre>
+</div>
+</section>
+
+<!--#######################-->
+<section>
+<div>
+<pre><code class="stretch python" data-trim>
+def filter_f_tol(f, tol=1e-10):
+    def predicate(x):
+        return abs(f(x) > tol)
+    return partial(takewhile, predicate)
+
+x0 = 8
+f = lambda x: (x-1)*(x-5)
+df = lambda x: 2*x - 6
+pipeline_eval(newton_sequence(x0, f, df),
+              filter_max_iter(20),
+              filter_f_tol(f, tol=1e-4),
+              list)
+
+>>>[8, 5.9, 5.139655172413793, 5.004557642613021]
+</code></pre>
+</div>
+</section>
+
+<!--#######################-->
+<section>
+<div>
+<pre><code class="stretch python" data-trim>
+def distance(x1, x2):
+    return abs(x1 - x2)
+
+def filter_cauchy_tol(distance=distance, tol=1e-10):
+    predicate = lambda tup: distance(*tup) > tol
+    my_filter = pipeline(collect_pairs, 
+                         partial(takewhile, predicate),
+                         pairs_to_element)
+    return my_filter
+
+x0 = 8
+f = lambda x: (x-1)*(x-5)
+df = lambda x: 2*x - 6
+pipeline_eval(newton_sequence(x0, f, df),
+              filter_max_iter(20),
+              filter_cauchy_tol(tol=1e-2),
+              list)
+
+>>>[8, 5.9, 5.139655172413793, 5.004557642613021]
+</code></pre>
+</div>
+</section>
+
+<!--#######################-->
+<section>
+<div>
+<pre><code class="stretch python" data-trim>
+def newton_root_find(x0, f, df,
+                     max_iter=20, tol=1e-15):
+    return pipeline_eval(
+        newton_sequence(x0, f, df), 
+        filter_f_tol(f = lambda x: abs(f(x)), tol=tol), 
+        filter_max_iter(max_iter), 
+        more_itertools.last)
+
+newton_root_find(8, f, df)
+>>>5.000000000006711
+</code></pre>
+</div>
+</section>
+
+<!--#######################-->
+<section>
+<p>
+    Reusability
+</p>
+<div>
+<pre><code class="stretch python" data-trim>
+def multi_newton_sequence(x0, jac, hes):
+    def muli_newton_improve(x):
+        return x - la.solve(hes(*x), jac(*x))
+    return iterate_seq(x0, muli_newton_improve)
+
+def vec_dist(x, y):
+    return la.norm(x - y)
+
+def multi_newton_root_find(x0, jac, hes):
+    return pipeline_eval(
+        muli_newton_sequence(x0, jac, hes),
+        filter_max_iter(max_iter=10),
+        filter_cauchy_tol(distance = vec_dist),
+        last)
+</code></pre>
+</div>
+</section>
+
+<!--#######################-->
+<section>
+<p>
+    Reusability
+</p>
+<div>
+<pre><code class="stretch python" data-trim>
+def secant_sequence(x0, x1, f):
+    yield x0
+    yield x1
+    while True:
+        x0, x1 = x1, x1 - f(x1)*(x1 - x0)/(f(x1) - f(x0))
+        yield x1
+</code></pre>
+</div>
+</section>
+
+<!--#######################-->
+<section>
+<p>
+    What's really going on?
+</p>
+<pre><code class="stretch python" data-trim>
+filter_max_iter(max_iter=20)
+filter_f_tol(f = lambda x: abs(f(x)))
+filter_cauchy_tol(tol=1e-10)
+</code></pre>
+
+<div class="fragment">
+<pre><code class="stretch python" data-trim>
+identity = lambda x: x
+</code></pre>
+</div>
+<p class="fragment">
+    <a href="https://en.wikipedia.org/wiki/Monoid">Monoid</a>: A set with a binary operation and an identity element.
+</p>
+<aside class="notes">
+<ul>
+    <li>Our sequence selection logic exists as an element of this algebra.</li>
+    <li></li>
+</ul>
+</aside>
+</section>
+
+</section>
+<!--##################################################-->
+<section>
+<!--#######################-->
+<section>
+<p>
+    Markov Simulation
+</p>
+<img src="images/marvin_maze.png"/ stretch>
+
+<aside class="notes">
+    <ul>
+        <li>Martin wanders into a room at random.</li>
+        <li>Question: If we let him run around until he either gets shocked or finds the cheese, how many room-changes do we expect him to make?</li>
+    </ul>
+    
+</aside>
+</section>
+
+<!--#######################-->
+<section>
+<p>
+    Markov Class
+</p>
+<pre><code class="stretch python" data-trim>
+state_space = [1,2,3,4,5,6]
+P = sym.Matrix([
+        [0, 6, 0, 0, 0, 0],
+        [3, 0, 0, 3, 0, 0],
+        [0, 0, 0, 0, 6, 0],
+        [0, 3, 0, 0, 3, 0],
+        [0, 0, 2, 2, 0, 2],
+        [0, 0, 0, 0, 6, 0]])/6
+
+markov = Markov(state_space, P)
+
+pipeline_eval(markov.chain(4),
+              take(10),
+              list)
+>>>[4, 2, 4, 2, 1, 2, 4, 2, 4, 5]
+</code></pre>
+<aside class="notes">
+    <ul>
+        <li>Make a Markov object, then generate Markov chains from a state 0.</li>
+        <li>Doesn't have to be a SymPy matrix; it was just convenient. </li>
+        <li>Let's use the is to run some sims.</li>
+    </ul>
+</aside>    
+</section>
+
+<!--#######################-->
+<section>
+<pre><code class="stretch python" data-trim>
+def until(condition, seq):
+    for element in seq:
+        yield element
+        if condition(element):
+            break
+
+def seq_len(seq): return sum(1 for _ in seq)
+def sub1(x): return x - 1
+
+def trial():
+    return pipeline_eval(
+        markov.chain(4),
+        partial(until, lambda state: state in [1, 6]),
+        seq_len,
+        sub1) # count steps
+
+N = 10**5
+average = sum(trial() for _ in range(N))/N
+>>>5.0182
+</code></pre>
+<aside class="notes">
+    <ul>
+        <li>Walk through the code.</li>
+    </ul>
+</aside>    
+</section>
+
+<!--#######################-->
+<section>
+<p>
+    Markov Simulation
+</p>
+<img src="images/marvin_maze.png"/ stretch>
+
+<aside class="notes">
+    <ul>
+        <li>Martin wanders into a room at random.</li>
+        <li>Question: If Marvin keeps moving until he finds the food, find the expected number of times he will get shocked in the process.</li>
+    </ul>
+    
+</aside>
+</section>
+
+<!--#######################-->
+<section>
+<pre><code class="stretch python" data-trim>
+def count_if(state):
+    return state == 6
+
+def trial():
+    return pipeline_eval(
+        markov.chain(4),
+        partial(until, lambda state: state in [1]),
+        partial(map, count_if),
+        sum)
+
+N = 10**5
+average = sum(trial() for _ in range(N))/N
+print(average)
+>>>2.01536
+</code></pre>
+<aside class="notes">
+    <ul>
+        <li>Walk through the code.</li>
+        <li>Only ends at state 1 this time.</li>
+    </ul>
+</aside>    
+</section>
+
+<!--#######################-->
+<section>
+<p>
+    Markov Simulation
+</p>
+<img src="images/marvin_maze.png"/ stretch>
+
+<aside class="notes">
+    <ul>
+        <li>Martin wanders into a room at random.</li>
+        <li>Question: What is the probability he will find the food before ever getting shocked?</li>
+    </ul>
+    
+</aside>
+</section>
+
+<!--#######################-->
+<section>
+<pre><code class="stretch python" data-trim>
+def found_food(final_state):
+    return final_state == 1
+
+def trial():
+    return pipeline_eval(
+        markov.chain(4),
+        partial(until, lambda state: state in [1, 6]),
+        last,
+        found_food)
+
+N = 10**5
+prob = sum(trial() for _ in range(N))/N
+print(prob)
+>>>0.49996
+</code></pre>
+<aside class="notes">
+    <ul>
+        <li>Walk through the code.</li>
+    </ul>
+</aside>
+</section>
+
+
+</section>
+<!--##################################################-->
+<section>
+
+<section>
+<p>
+    Is state necessary?
+</p>
+<div class="fragment">
+<img src="images/NN.svg"/>
+<p>
+    <span  style="color: gray;">Image credit: <a href="https://victorzhou.com/series/neural-networks-from-scratch/">Victor Zhou</a></span>
+</p>
+</div>
+
+<aside class="notes">
+    <ul>
+        <li>No. Alonzo Church's <a href="https://en.wikipedia.org/wiki/Lambda_calculus" target=blank>Lambda Calculus</a> is Turing complete.</li>
+        <li>But it can be more practical.</li>
+        <li>It's less necessary than you might imagine. Introduce neural networks.</li>
+        <li>Feeding forward takes inputs and weights+biases to give an output.</li>
+        <li>"between" each layer is a matrix of weights and a vector of biases.</li>
+    </ul>
+    
+</aside>
+
+</section>
+<!--#######################-->
+<section>
+<pre><code class="stretch python" data-trim>
+def affine(wb_pair, x):
+    return wb_pair[0]@x + wb_pair[1]
+    
+def network_eval(weights_and_biases, x, f=np.tanh):
+    if len(weights_and_biases) == 0:
+        return x
+    else:
+        layer_output = f(affine(weights_and_biases[0],x))
+        return network_eval(weights_and_biases[1:], 
+                            layer_output, f=f)
+</code></pre>
+<aside class="notes">
+    <ul>
+        <li>Walk through code.</li>
+        <li>No mutable indices. We use recursion instead of loops. Recursion <==> mathematical induction.</li>
+        <li>How does the network learn?</li>
+    </ul>
+      
+</aside>
+<aside class="notes">
+    
+</aside>
+</section>
+<!--#######################-->
+<section>
+<img src="images/NN.svg"/>
+</secton>
+<p>
+$$
+\text{cost}(W) = \int ||N(\mathbf{x}, W) - \mathbf{y}(\mathbf{x})||^2 \ d \mathbf{x}
+$$
+</p>
+<aside class="notes">
+    <ul>
+        <li>Network is a function of weights and inputs.</li>
+        <li>Suppose we want to learn some function $y(x)$.</li>
+        <li>Want to find some W that makes N-y small.</li>
+        <li>Minimize this with gradient descent.</li>
+        <li>Explain stochastic gradient descent.</li>
+        <li>Discuss loop for FFBP gradient calculation.</li>
+    </ul>
+</aside>
+</section>
+
+<!--#######################-->
+<section>
+<pre><code class="stretch python" data-trim>
+def nn_gradient_sample(weights_and_biases, x, y, f, df, 
+        cost_derivative):
+    return nn_gradient_recursion(
+                 weights_and_biases, 
+                 x, y, f=f, df=df, 
+                 cost_derivative=cost_derivative)[1]
+
+def nn_gradient_recursion(weights_and_biases, a, y, f, df,
+        cost_derivative):
+    if len(weights_and_biases) == 0:
+        return cost_derivative(a,y), ()
+    z = affine(weights_and_biases[0], a)
+    grad_a, grad_list = nn_gradient_recursion(
+                               weights_and_biases[1:], 
+                               f(z), y, f=f, df=df)
+    delta = grad_a * df(z)
+    # W and b gradient for this layer
+    my_grad = (np.outer(delta, a), delta)
+    return (weights_and_biases[0][0].T@delta,
+            (my_grad,) + grad_list)
+</code></pre>
+<aside class="notes">
+    <ul>
+        <li>Want to sample the gradient at $(x,y)$.</li>
+        <li>Walk through the recursion from perspective of a single layer.</li>
+        <li>No mutable indices.</li>
+    </ul>
+      
+</aside>
+</section>
+
+<!--#######################-->
+<section>
+<pre><code class="stretch python" data-trim>
+def nn_gradient(weights_and_biases, 
+                input_data, 
+                cost_derivative):
+    return sum(np.array(
+               nn_gradient_sample(weights_and_biases, 
+                                  *data)) 
+               for data in input_data) / len(input_data)
+
+def nn_stochastic_gradient_descent_sequence(params0, 
+        batch_stream, learning_rate, cost_derivative):
+    def param_improve(params):
+        batch = next(batch_stream)
+        return params - learning_rate*nn_gradient(params, 
+                                batch, cost_derivative)
+    return iterate_seq(params0, param_improve)
+</code></pre>
+<aside class="notes">
+    <ul>
+        <li>Average gradient (Montecarlo)</li>
+        <li>Now we have a sequence of improved weights. All our previous functions can be used.</li>
+        <li>Let's see how we use this with streams.</li>
+    </ul>
+      
+</aside>
+</section>
+<!--#######################-->
+<section>
+<pre><code class="stretch python" data-trim>
+xor_error_eval = partial(map, partial(batch_error,
+                                      data_xor))
+
+errors = pipeline_eval(
+    nn_gradient_descent_sequence(
+        W0_B0, 
+        data_xor, 
+        learning_rate = learning_rate, 
+        cost_derivative=cross_entropy_cost_derivative),
+    filter_max_iter(2000),
+    xor_error_eval)),
+    list)
+</code></pre>
+<aside class="notes">
+    <ul>
+        <li>xor function</li>
+        <li>Only 4 inputs, so no need for SGD</li>
+    </ul>
+    
+</aside>
+</section>
+
+<!--#######################-->
+<section>
+<img src="images/xor_nn_convergence.svg"/>
+</section>
+
+</section>
+<!--##################################################-->
+<section>
+
+<!--#######################-->
+
+<section>
+<img src="images/JP_meme.jpg"/>
+<aside class="notes">
+    <ul>
+        <li>So we don't need state, but is this better?</li>
+        <li>Recursion in Python is slow. So are function calls.</li>
+        <li>It's more clear if you like recurssion...</li>
+        <li>Stateful generator vs stateful NN?</li>
+        <li>Sometimes practical to write clear functional code with unit test, then rewrite pieces to be fast.</li>
+    </ul>
+</aside>
+</section>
+
+<!--#######################-->
+
+<section>
+<p>
+    Questions for the audience?
+</p>
+<p>
+    <ul>
+        <li class="fragment">Did you have fun?</li>
+        <li class="fragment">Did I pique your interest?</li>
+        <li class="fragment">Does functional programming have a place in your research?</li>
+    </ul>
+    
+</p>
+</section>
 
 </section>
 <!--##################################################-->
