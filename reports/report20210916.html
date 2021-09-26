@@ -101,8 +101,8 @@
     </ul>
     <li>Adjoint method: explore different weight kernels.</li>
     <li>Derive interface equations.</li>
-    <li>Convergent Solver (low priorety)</li>
-    <li>Stability Analysis (low priorety)</li>
+    <li>Convergent Solver (low priority)</li>
+    <li>Stability Analysis (low priority)</li>
     <li>Wave-train Analysis</li>
     <ul>
         <li>Find periodic solutions.</li>
@@ -144,7 +144,7 @@ $$\begin{align*}
     U &= U\big(\xi - \epsilon \nu(t) \big)
     A &= A\big(\xi - \epsilon \nu(t) \big)
 \end{align*}$$
-satisfy the traveling wave soltuion. Substitute and linearize to find
+satisfy the traveling wave solution. Substitute and linearize to find
 $$\begin{align*}
     -c\mu U' - c\mu \epsilon \partial_\xi u_1 - \epsilon \mu U' \nu_t + \epsilon \mu \partial_t u_1
         &= -U - \epsilon u_1 + \int_\RR w(\xi, y)\bigg[ f(U-A) + \epsilon (u_1 - a_1) f'(U-A) + \OO(\epsilon^2) \bigg] \ dy + \epsilon I(\xi, t) \\
@@ -187,7 +187,7 @@ $$\begin{align*}
 
 <h1 id="">Adjoint Nullspace</h1>
 <p>
-Chooseing $f(J) = H(J - \theta)$ we have
+Choosing $f(J) = H(J - \theta)$ we have
 $$\begin{align*}
     f'(J(\xi)) &= \frac{\delta(\xi)}{J'(0)} + \frac{\delta(\xi + \Delta)}{J'(-\Delta)}.
 \end{align*}$$
@@ -195,13 +195,13 @@ $$\begin{align*}
 We seek vectors $\vecv$ such that
 $$\begin{align*}
     0 &= \vecv + c\begin{bmatrix}\mu & 0 \\ 0 & \alpha \end{bmatrix} \vecv_\xi - \left(\frac{\delta(\xi)}{J'(0)} + \frac{\delta(\xi + \Delta)}{J'(-\Delta)} \right) \begin{bmatrix} w\ast \cdot & \gamma \\ -w\ast \cdot & -\gamma \end{bmatrix} \vecv \\
-    &= \vecv + c\begin{bmatrix}\mu & 0 \\ 0 & \alpha \end{bmatrix} \vecv_\xi - \frac{\delta(\xi)}{J'(0)} \begin{bmatrix} \int_\RR(w(0,y) v_1(y) \ dy + \gamma v_2(0) \\ -\int_\RR w(0,y)v_2(y) \ dy - \gamma v_2(0) \end{bmatrix} + \frac{\delta(\xi + \Delta)}{J'(-\Delta)} \begin{bmatrix} \int_\RR(w(-\Delta,y) v_1(y) \ dy + \gamma v_2(-\Delta) \\ -\int_\RR w(-\Delta,y)v_1(y) \ dy - \gamma v_2(-\Delta) \end{bmatrix}
+    &= \vecv + c\begin{bmatrix}\mu & 0 \\ 0 & \alpha \end{bmatrix} \vecv_\xi - \frac{\delta(\xi)}{J'(0)} \begin{bmatrix} \int_\RR(w(0,y) v_1(y) \ dy + \gamma v_2(0) \\ -\int_\RR w(0,y)v_1(y) \ dy - \gamma v_2(0) \end{bmatrix} + \frac{\delta(\xi + \Delta)}{J'(-\Delta)} \begin{bmatrix} \int_\RR(w(-\Delta,y) v_1(y) \ dy + \gamma v_2(-\Delta) \\ -\int_\RR w(-\Delta,y)v_1(y) \ dy - \gamma v_2(-\Delta) \end{bmatrix}
 \end{align*}$$
 and 
 $$\begin{align*}
-    \vecv + c\begin{bmatrix}\mu & 0 \\ 0 & \alpha \end{bmatrix} \vecv_\xi &= \delta(\xi) w_1 \vec{1} + \delta(\xi + \Delta) w_2 \vec{1}
+    \vecv + c\begin{bmatrix}\mu & 0 \\ 0 & \alpha \end{bmatrix} \vecv_\xi &= \delta(\xi) w_1 \begin{bmatrix}1\\-1\end{bmatrix} + \delta(\xi + \Delta) w_2 \begin{bmatrix}1\\-1\end{bmatrix}
 \end{align*}$$
-for some constants $w_1, w_2$.
+for some constants $w_1, w_2$ which depend linearly on $\vecv$.
 </p>
 
 

@@ -1,0 +1,204 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <!-- Mathjax commands -->
+    $
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\OO}{\mathcal{O}}
+    \newcommand{\mathcow}{\OO}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\KK}{\mathbb{K}}
+    \newcommand{\PP}{\mathcal{P}}
+    \newcommand{\TT}{\mathcal{T}}
+    \newcommand{\BB}{\mathcal{B}}
+    \newcommand{\LL}{\mathcal{L}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+
+    \newcommand{\veca}{\vec{a}}
+    \newcommand{\vecb}{\vec{b}}
+    \newcommand{\vecd}{\vec{d}}
+    \newcommand{\vece}{\vec{e}}
+    \newcommand{\vecf}{\vec{f}}
+    \newcommand{\vecn}{\vec{n}}
+    \newcommand{\vecp}{\vec{p}}
+    \newcommand{\vecr}{\vec{r}}
+    \newcommand{\vecu}{\vec{u}}
+    \newcommand{\vecv}{\vec{v}}
+    \newcommand{\vecw}{\vec{w}}
+    \newcommand{\vecx}{\vec{x}}
+    \newcommand{\vecy}{\vec{y}}
+    \newcommand{\vecz}{\vec{z}}
+
+    \renewcommand{\vec}[1]{\mathbf{#1}}
+    $
+
+    <!-- Plotly code for interactive plots -->
+    <script src="../plotly-2.0.0-rc.2.min.js"></script>
+    
+    <!--Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+
+
+
+    
+<!--************************************************************************-->
+<title>Shaw Research Notes</title>
+</head>
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<body>
+
+<div class="top-bar">
+    <a href="../index.html"><img src="../frame/boulder-logo.png"></a>
+</div>
+
+<div id="side-bar" class="side-bar">
+    <p><a href="../reports/reports.html" target="_top">Reports</a></p>
+    <p><a href="../presentations/presentations.html" target="_top">Presentations</a></p>
+    <p><a href="../todo/todo.html" target="_top">To Do List</a></p>
+    <p><a href="../about/about.html" target="_top">About</a></p>
+    <hr>
+    <p><a href="../old-rbf/index.html" target="_top">Old Site</a></p>
+</div>
+
+<div class="page-content">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<h1 id="Title">September 28<sup>th</sup>, 2021</h1>
+<p id="summary">
+   Lorem
+</p>
+
+<hr><!--********************************************************************-->
+<h1 id="">To-Do List Snapshot</h1>
+<p>
+<ul>
+    <li>Manuscript</li>
+    <ul>
+        <li><s>Find template</s></li>
+        <li>Outline</li>
+        <li>Select figures</li>
+    </ul>
+    <li>Adjoint method: explore different weight kernels.</li>
+    <li>Derive interface equations.</li>
+    <li>Convergent Solver (low priority)</li>
+    <li>Stability Analysis (low priority)</li>
+    <li>Wave-train Analysis</li>
+    <ul>
+        <li>Find periodic solutions.</li>
+        <li>Compare frequency and pulse width to non-periodic solutions.</li>
+    </ul>
+    <li>Reading</li>
+    <ul>
+        <li>Coombes 2004.</li>
+        <li>Folias &amp; Bressloff 2005.</li>
+        <li>Faye &amp; Kilpatrick 2018.</li>
+    </ul>
+</ul>
+</p>
+
+<div id="slider-plot" style="width:auto;"></div>
+
+<!--************************************************************************-->
+
+<hr><!--********************************************************************-->
+<h1 id="">Adjoint Nullspace</h1>
+
+<p>
+We left off (<a href="./report20210916">report 2021-09-16</a>) by seeking a basis of the nullspace of the adjoint operator. If $\vecv$ is such a basis, then we have
+We seek vectors $\vecv$ such that
+$$\begin{align*}
+    0 &= \vecv + c\begin{bmatrix}\mu & 0 \\ 0 & \alpha \end{bmatrix} \vecv_\xi - \left(\frac{\delta(\xi)}{J'(0)} + \frac{\delta(\xi + \Delta)}{J'(-\Delta)} \right) \begin{bmatrix} w\ast \cdot & \gamma \\ -w\ast \cdot & -\gamma \end{bmatrix} \vecv \\
+    &= \vecv + c\begin{bmatrix}\mu & 0 \\ 0 & \alpha \end{bmatrix} \vecv_\xi - \frac{\delta(\xi)}{J'(0)} \begin{bmatrix} \int_\RR(w(0,y) v_1(y) \ dy + \gamma v_2(0) \\ -\int_\RR w(0,y)v_1(y) \ dy - \gamma v_2(0) \end{bmatrix} - \frac{\delta(\xi + \Delta)}{J'(-\Delta)} \begin{bmatrix} \int_\RR(w(-\Delta,y) v_1(y) \ dy + \gamma v_2(-\Delta) \\ -\int_\RR w(-\Delta,y)v_1(y) \ dy - \gamma v_2(-\Delta) \end{bmatrix}
+\end{align*}$$
+and 
+$$\begin{align*}
+    \vecv + c\begin{bmatrix}\mu & 0 \\ 0 & \alpha \end{bmatrix} \vecv_\xi &= \delta(\xi) w_1 \begin{bmatrix}1\\-1\end{bmatrix} + \delta(\xi + \Delta) w_2 \begin{bmatrix}1\\-1\end{bmatrix}
+\end{align*}$$
+for some constants $w_1, w_2$ which depend linearly on $\vecv$.
+</p>
+
+<p>
+    To proceed, we note that the system is now decoupled but for the choice of $w_1$ and $w_2$. Solving the equation for $v_1$ we find
+\begin{align*}
+    v_1 + c\mu \partial_\xi v_1 &= \delta(\xi)w_1 + \delta(\xi + \Delta) w_2 \\
+    \partial_\xi \bigg[v_1 e^{\xi/c\mu} \bigg] &= \frac{w_1}{c\mu}\delta(\xi)e^{\xi/c\mu} + \frac{w_2}{c\mu}\delta(\xi + \Delta)e^{\xi/c\mu} \\
+    v_1(\xi) &= w_1 \frac{1}{c\mu}H(\xi)e^{-\xi/c\mu} + w_2 \frac{1}{c\mu} H(\xi + \Delta) e^{-(\xi + \Delta)/c\mu} + Ae^{-\xi/c\mu}
+\end{align*}
+To ensure bounded solutions, we require $A = 0$. Thus
+\begin{align*}
+    v_1(\xi) &= w_1 \frac{1}{c\mu}H(\xi)e^{-\xi/c\mu} + w_2 \frac{1}{c\mu} H(\xi + \Delta) e^{-(\xi + \Delta)/c\mu}
+\end{align*}
+and similarly
+\begin{align*}
+    v_2(\xi) &= -w_1 \frac{1}{c\alpha}H(\xi)e^{-\xi/c\alpha} - w_2 \frac{1}{c\alpha} H(\xi + \Delta) e^{-(\xi + \Delta)/c\alpha}.
+\end{align*}
+</p>
+
+<p>
+    For consistency, we require
+\begin{align*}
+    w_1 &= \frac{1}{J'(0)} \left(\int_\RR w(0,y)v_1(y) \ dy + \gamma v_2(0) \right)\\
+    w_2 &= \frac{1}{J'(-\Delta)} \left(\int_\RR w(-\Delta, y) v_1(y) \ dy + \gamma v_2(-\Delta) \right).
+\end{align*}
+</p>
+
+
+
+<!--************************************************************************-->
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+</div>
+
+<!-- Accordion script -->
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+
+var expand_all_accordions = false;
+
+if (expand_all_accordions){
+    for (i = 0; i < acc.length; i++) {
+      acc[i].nextElementSibling.style.display = "block";
+    }
+}
+
+}
+</script>
+
+</body>
+    
+</html>
