@@ -84,9 +84,9 @@
 *******************************************************************************
 ****************************************************************************-->
 
-<h1 id="Title">September 16<sup>th</sup>, 2021</h1>
+<h1 id="Title">October 5<sup>th</sup>, 2021</h1>
 <p id="summary">
-   Zack found an error in the derivation for <a href="./reports/report20210610.html">report 2021-06-10</a>. We start over here, and derive the adjoint and begin computation of the nullspace. 
+   We have begun exploring stability of perturbations to the adaptive model. We are stuck showing inconsistency in the case where the eigenvalues have positive real component.
 </p>
 
 <hr><!--********************************************************************-->
@@ -101,8 +101,8 @@
     </ul>
     <li>Adjoint method: explore different weight kernels.</li>
     <li>Derive interface equations.</li>
-    <li>Convergent Solver (low priorety)</li>
-    <li>Stability Analysis (low priorety)</li>
+    <li>Convergent Solver (low priority)</li>
+    <li>Stability Analysis (low priority)</li>
     <li>Wave-train Analysis</li>
     <ul>
         <li>Find periodic solutions.</li>
@@ -122,87 +122,166 @@
 <!--************************************************************************-->
 
 <hr><!--********************************************************************-->
-<h1 id="">Expansion</h1>
-Begin with the model:
+
+<h1 id="">Stability Analysis</h1>
 <p>
-$$\begin{align*}
-    \mu u_t &= -u + \int_\RR w(x,y) f\big[u(y,t) - a(y,t) \big] \ dy + \epsilon I(x, t) \\
-    \alpha  a_t &= -a + \gamma f\big[u(x,t) - a(x,t)\big].
-\end{align*}$$
-Convert to $\xi = x - ct$ coordinates
-\begin{align*}  
-    -c\mu u_\xi + \mu u_t &= -u + \int_\RR w(\xi,y) f\big[u(y,t) - a(y,t) \big] \ dy + \epsilon I(\xi, t) \\
-    -c\alpha a_\xi + \alpha a_t &= -a + \gamma f\big[u(\xi,t) - a(\xi,t)\big].
+    We begin with the model
+\begin{align*}
+    \mu u_t &= -u + \int w(x,y) f(u(y,t) - a(y,t)) \ dy \\
+    \alpha a_t &= -a + \gamma f(u - a)
 \end{align*}
-Make the expansion
+and make the substitution to characteristic coordinates $\xi = x - c t$
 $$\begin{align*}
-    u(\xi, t) &= U\big(\xi - \epsilon \nu(t) \big) + \epsilon u_1(\xi, t) + \OO(\epsilon^2) \\
-    a(\xi, t) &= A\big(\xi - \epsilon \nu(t) \big) + \epsilon a_1(\xi, t) + \OO(\epsilon^2) \\
+    -c\mu u_\xi + \mu u_t &= -u + \int w(\xi,y) f(u(y,t) - a(y,t)) \ dy \\
+    -c\alpha a_\xi + \alpha a_t &= -a + \gamma f(u - a).
 \end{align*}$$
-where
+The traveling pulse solution $U(\xi), A(\xi)$ has been found previously (<a href="./report20210603.html">report 2021-06-03</a>). Assume a small perterbation
 $$\begin{align*}
-    U &= U\big(\xi - \epsilon \nu(t) \big)
-    A &= A\big(\xi - \epsilon \nu(t) \big)
+    u &= U(\xi) + \varepsilon \varphi(\xi, t) + \OO(\varepsilon^2) \\
+    a &= A(\xi) + \varepsilon \psi(\xi, t) + \OO(\varepsilon^2).
 \end{align*}$$
-satisfy the traveling wave soltuion. Substitute and linearize to find
+Substituting into our characteristic coordinate equations gives
 $$\begin{align*}
-    -c\mu U' - c\mu \epsilon \partial_\xi u_1 - \epsilon \mu U' \nu_t + \epsilon \mu \partial_t u_1
-        &= -U - \epsilon u_1 + \int_\RR w(\xi, y)\bigg[ f(U-A) + \epsilon (u_1 - a_1) f'(U-A) + \OO(\epsilon^2) \bigg] \ dy + \epsilon I(\xi, t) \\
-    -c\alpha A' - c\alpha \epsilon \partial_\xi a_1 - \epsilon \alpha A' \nu_t +\alpha \epsilon \partial_t a_1 
-        &= -A -\epsilon a_1 + \gamma f(U-A) + \epsilon \gamma (u_1 - a_1) f'(U-A) + \OO(\epsilon^2)
-\end{align*}$$
-Equating the $\OO(1)$ terms gives us that $U$ and $A$ are the traveling wave solution. Equating the $\OO(\epsilon)$ terms gives us
-$$\begin{align*}
-    -c\mu \partial_\xi u_1 - \mu U' \nu_t + \mu \partial_t u_1
-        &= -u_1 +  \int_\RR f'(U-A)w(\xi, y)\bigg[ (u_1 - a_1) \bigg] \ dy + I(\xi, t) \\
-    -c\alpha \partial_\xi a_1 - \alpha A' \nu_t +\alpha \partial_t a_1 
-        &= -a_1 + \gamma (u_1 - a_1) f'(U-A)
-\end{align*}$$
-or
-$$\begin{align*}
-    \begin{bmatrix}\mu & 0 \\ 0 & \alpha \end{bmatrix} \vecu_t + \underbrace{\vecu - c\begin{bmatrix}\mu & 0 \\ 0 & \alpha \end{bmatrix} \vecu_\xi - \begin{bmatrix} (f'(U-A)w) \ast \cdot & -(f'(U-A)w) \ast \cdot \\ \gamma f'(U-A) & - \gamma f'(U-A) \end{bmatrix} \vecu}_{\LL \vecu} &= \begin{bmatrix} \mu U' \nu_t + I \\ \alpha A' \nu_t \end{bmatrix}
-\end{align*}$$
-where $w \ast \cdot$ denotes applying the operator rather than the usual multiplication and $\vecu = [u_1 \ a_1]^T$.
-A bounded solution exists if the right-hand-side is orthogonal to the nullspace of $\LL^*$. We find this nullspace to be
-</p>
-
-<h1 id="">Adjoint Derivation</h1>
-<p>
-Let $\vecu = [u_1 \ u_2]^T$ and $\vecv = [v_1 \ v_2]^T$ be arbitrary vectors (functions of $\xi$ and $t$). Then consider
-$$\begin{align*}
-    \langle \vecv, \LL \vecu \rangle 
-        &= \int_\RR \vecv^T \left( \vecu - c \begin{bmatrix}\mu & 0 \\ 0 & \alpha \end{bmatrix} \vecu_\xi - \begin{bmatrix} (f'(U-A)w) \ast \cdot & -(f'(U-A)w) \ast \cdot \\ \gamma f'(U-A) & - \gamma f'(U-A) \end{bmatrix} \vecu \right) \ d\xi \\
-        &= \int_\RR \vecv^T\vecu \ d\xi - c\int_\RR v_1 \mu \partial_\xi u_1 + v_2 \alpha \partial u_2 \ d\xi - \int_\RR \left( v_1(\xi) \int_\RR f'\big(U(\xi) - A(\xi)\big)w(\xi, y) u_1(y) \ dy - v_2 \int_\RR f'\big(U(\xi) - A(\xi)\big)w(\xi, y) u_2(y) \ dy + v_2 \gamma u_1 - v_2 \gamma u_2 \right) \ d\xi \\
-    &= \int_\RR \vecu^T \vecv \ d\xi  -c \underbrace{\left(v_1\mu u_1 + v_2 \alpha u_2 \right)\bigg|_{\xi = -\infty}^\infty}_{=0} + c\int_\RR u_1 \mu \partial_\xi v_1 + u_2 \alpha \partial v_2 \ d\xi - \int_\RR \left( v_1(\xi) \int_\RR f'\big(U(\xi) - A(\xi)\big)w(\xi, y) u_1(y) \ dy - v_2(\xi) \int_\RR f'\big(U(\xi) - A(\xi)\big)w(\xi, y) u_2(y) \ dy + v_2 \gamma u_1- v_2 \gamma u_2 \right) \ d\xi \\
-    &= \int_\RR \vecu^T \vecv \ d\xi + c\int_\RR \vecu^T \begin{bmatrix}\mu & 0 \\ 0 & \alpha \end{bmatrix} \vecv_\xi \ d\xi - \int_\RR \int_\RR f'\big(U(\xi) - A(\xi)\big) v_1(\xi) w(\xi, y) u_1(y) -  f'\big(U(\xi) - A(\xi)\big) v_2(\xi) w(\xi, y) u_2(y) \ dy \ d\xi + \int_\RR v_2 \gamma u_1- v_2 \gamma u_2 \ d\xi \\
-    &= \int_\RR \vecu^T \vecv \ d\xi + c\int_\RR \vecu^T \begin{bmatrix}\mu & 0 \\ 0 & \alpha \end{bmatrix} \vecv_\xi \ d\xi - \int_\RR f'\big(U(\xi) - A(\xi)\big) \int_\RR  v_1(\xi) w(\xi, y) u_1(y) - v_2(\xi) w(\xi, y) u_2(y) \ d \xi \ dy + \int_\RR v_2 \gamma u_1- v_2 \gamma u_2 \ d\xi \\
-    &= \int_\RR \vecu^T \vecv \ d\xi + c\int_\RR \vecu^T \begin{bmatrix}\mu & 0 \\ 0 & \alpha \end{bmatrix} \vecv_\xi \ d\xi - \int_\RR \vecu^T f'(U-A) \begin{bmatrix} w\ast \cdot & \gamma \\ -w\ast \cdot & -\gamma \end{bmatrix} \vecv \ d\xi \\
-    &= \langle \LL^* \vecv, \vecu \rangle
-\end{align*}$$
-where
-$$\begin{align*}
-    \LL^* \vecv = \vecv + c\begin{bmatrix}\mu & 0 \\ 0 & \alpha \end{bmatrix} \vecv_\xi - f'(U-A) \begin{bmatrix} w\ast \cdot & \gamma \\ -w\ast \cdot & -\gamma \end{bmatrix} \vecv
+    -c \mu U' - c\mu \varepsilon \varphi_\xi + \mu \varepsilon \varphi_t &= -U - \varepsilon \varphi + \int w(\xi, y) f\big(U-A + \varepsilon(\varphi - \psi) + \OO(\varepsilon^2) \big) \ dy + \OO(\varepsilon^2) \\
+    -c\alpha A' - c\alpha\varepsilon\psi_\xi + \alpha \varepsilon \psi_t &= -A - \varepsilon \psi + \gamma f\big(U - A + \varepsilon(\varphi - \psi) + \OO(\varepsilon^2)\big) + \OO(\varepsilon^2).
 \end{align*}$$
 </p>
-
-<h1 id="">Adjoint Nullspace</h1>
 <p>
-Chooseing $f(J) = H(J - \theta)$ we have
-$$\begin{align*}
-    f'(J(\xi)) &= \frac{\delta(\xi)}{J'(0)} + \frac{\delta(\xi + \Delta)}{J'(-\Delta)}.
-\end{align*}$$
+    Next we linearize must linearize $f$. We intend to take $f(\cdot) = H(\cdot - \theta)$ so we will consider a two-sided linearization:
+$$
+f\big(U-A + \varepsilon(\varphi - \psi) + \OO(\varepsilon^2)\big) = f(U-A) + 
+    \OO(\varepsilon^2) + \varepsilon(\varphi - \psi) \underbrace{\begin{cases}
+        \partial_+f(U-A) ,& \varphi > \psi \\
+        \partial_-f(U-A) ,& \varphi < \psi 
+    \end{cases}}_{f'(U-A)}
+$$
+where $\partial_+$ and $\partial_-$ denote the right and left derivatives respectively. We will use the compact notation $f'(U-A)$ which is consistent if the left and right derivatives match.
+</p>
 
+<p>
+This gives
+$$\begin{align*}
+    -c \mu U' - c\mu \varepsilon \varphi_\xi + \mu \varepsilon \varphi_t &= -U - \epsilon \varphi + \int w(\xi, y) f(U-A) \ dy + \varepsilon f'(U-A)\int w(\xi, y)(\varphi - \psi) \ dy + \OO(\varepsilon^2) \\
+    -c\alpha A' - c\alpha\varepsilon\psi_\xi + \alpha \epsilon \psi_t &= -A - \varepsilon \psi + \gamma f(U - A) + \gamma f'(U-A)\varepsilon(\varphi - \psi) + \OO(\varepsilon^2).
+\end{align*}$$
+Collecting $\OO(1)$ terms
+$$\begin{align*}
+    -c \mu U' &= -U + \int w(\xi, y) f(U-A) \ dy \\
+    -c\alpha A' &= -A + \gamma f(U - A)
+\end{align*}$$
+we see that $U$ and $A$ must indeed be the traveling pulse solution. Collecting the $\OO(\varepsilon)$ terms we have
+$$\begin{align*}
+    - c\mu \varphi_\xi + \mu \varphi_t &= - \varphi + f'(U-A)\int w(\xi, y)(\varphi - \psi) \ dy \\
+    - c\alpha\psi_\xi + \alpha \psi_t &= - \psi + \gamma f'(U-A)(\varphi - \psi).
+\end{align*}$$
+</p>
+<p>
+    In the case of $f(\cdot) = H(\cdot - \theta)$ we have
+$$\begin{align*}
+    f'(U - A) &= \frac{\delta(\xi)}{U'(0) - A'(0)} + \frac{\delta(\xi+\Delta)}{U'(-\Delta) - A'(-\Delta)} \\
+        &= c_1\delta(\xi) + c_2\delta(\xi+\Delta).
+\end{align*}$$
+where $U'(\cdot) - A'(\cdot)$ is interpreted as a right/left derivative if $\varphi \gtrless \psi$. Thus the constants $c_1$ and $c_2$ depend on the sign of $\varphi - \psi$.
+</p>
+
+<p>
+Assume separability:
+$$
+    \begin{bmatrix} \varphi(\xi,t) \\ \psi(\xi, t) \end{bmatrix}
+    =
+    g(t)\begin{bmatrix} \varphi_0(\xi) \\ \psi_0(\xi) \end{bmatrix}.
+$$
+Substituting and solving we have
+\begin{align*}
+    \frac{g'}{g} &= \lambda = \frac{c\mu \varphi_0' - \varphi_0 + f'(U-A)\int w(\xi, y)(\varphi_0 - \psi_0) \ dy }{\mu \varphi_0} \\
+    \frac{g'}{g} &= \lambda = \frac{c\alpha \psi_0' - \psi_0 + \gamma f'(U-A)(\varphi_0 - \psi_0) }{\alpha \psi_0}.
+\end{align*}
+This gives $g(t) = e^{\lambda t}$ and the following system of ODEs
+$$\begin{align*}
+    \varphi_0' - \frac{1+\lambda \mu}{c\mu} \varphi_0 &= -\frac{1}{c\mu}f'(U-A) \int w(\xi, y) \big(\varphi_0(y) - \psi_0(y) \big) \ dy \\
+    \psi_0' - \frac{1+\lambda \alpha}{c\alpha} \psi_0 &= -\frac{1}{c\alpha}\gamma f'(U-A) (\varphi_0 - \psi_0 ) \\
+\end{align*}$$
+</p>
+
+<p>
+Using integrating factors we have
+$$\begin{align*}
+    \frac{d}{d\xi} \big[ \varphi_0 e^{-\frac{1+\lambda \mu}{c\mu}\xi} \big] 
+        &= -e^{-\frac{1+\lambda \mu}{c\mu}\xi}\frac{1}{c\mu}f'(U-A) \int w(\xi, y) \big(\varphi_0(y) - \psi_0(y) \big) \ dy \\
+    \varphi_0 e^{-\frac{1+\lambda \mu}{c\mu}\xi} 
+        &= A + \int -e^{-\frac{1+\lambda \mu}{c\mu}\xi}\frac{1}{c\mu}f'(U-A) \int w(\xi, y) \big(\varphi_0(y) - \psi_0(y) \big) \ dy \ d\xi\\
+        &= A + \int -e^{-\frac{1+\lambda \mu}{c\mu}\xi}\frac{1}{c\mu}\big(c_1 \delta(\xi) + c_2 \delta(\xi + \Delta)\big) \int w(\xi, y) \big(\varphi_0(y) - \psi_0(y) \big) \ dy \ d\xi\\
+        &= A - c_1 H(\xi)  \underbrace{\frac{1}{c\mu}\int w(0, y) \big(\varphi_0(y) - \psi_0(y) \big) \ dy }_{w_0}\\
+        &\phantom{===} - c_2 H(\xi+\Delta)  e^{-\frac{1+\lambda \mu}{c\mu}\Delta} \underbrace{\frac{1}{c\mu}\int w(\Delta, y) \big(\varphi_0(y) - \psi_0(y) \big) \ dy}_{w_\Delta} \\
+    \varphi_0(\xi) &= e^{\frac{1+\lambda \mu}{c\mu} \xi} \bigg(A - w_0 c_1 H(\xi) - w_\Delta c_2 e^{-\frac{1+\lambda \mu}{c\mu}\Delta} H(\xi + \Delta) \bigg)
+\end{align*}$$
+where these $w_0$ and $w_\Delta$ depend linearly on $\varphi_0 - \psi_0$.
+</p>
+
+<p>
+    Similarly, we have
+$$\begin{align*}
+    \frac{d}{d\xi} \big[ \psi_0 e^{-\frac{1 + \lambda\alpha}{c\alpha} \xi} \big] 
+        &= -\frac{1}{c\alpha}e^{-\frac{1 + \lambda\alpha}{c\alpha} \xi} \gamma \big( c_1 \delta(\xi) + c_2 \delta(\xi + \Delta) \big)(\varphi_0 - \psi_0) \\
+    \psi_0 e^{-\frac{1 + \lambda\alpha}{c\alpha} \xi} 
+        &= B - c_1 \underbrace{\frac{\gamma}{c\alpha} \big(\varphi_0(0) - \psi_0(0) \big)}_{v_0}H(\xi) \\
+        &\phantom{===} -c_2 e^{-\frac{1 + \lambda\alpha}{c\alpha} \Delta} \underbrace{\frac{\gamma}{c\alpha}  \big(\varphi_0(\Delta) - \psi_0(\Delta)\big)}_{v_\Delta} H(\xi + \Delta) \\
+    \psi_0(\xi) &= e^{\frac{1+ \lambda \alpha}{c \alpha} \xi} \big(B - c_1v_0 H(\xi) - c_2 v_\Delta e^{-\frac{1 + \lambda\alpha}{c\alpha} \Delta} H(\xi + \Delta) \big)
+\end{align*}$$
+where these $v_0$ and $v_\Delta$ depend linearly on $\varphi_0 - \psi_0$.
+</p>
+
+<p>
+We next consider the values of $\lambda$ for which the initial solution $[\varphi_0, \ \psi_0]^T$ remains bounded. We expect adaptation to be on a slower timescale than excitation and thus restrict ourselves to the more relevant case $\mu < \alpha$. For $\lambda >0 >  -\tfrac{1}{\alpha} > -\tfrac{1}{\mu}$ we require
+$$\begin{align*}
+    0 &= A - c_1 w_0 - c_2 e^{-\frac{1 + \lambda\mu}{c\mu} \Delta} w_\Delta \\
+    0 &= B - c_1 v_0 - c_2 e^{-\frac{1 + \lambda\alpha}{c\alpha} \Delta} v_\Delta.
+\end{align*}$$
+We want to show that this is a contradiction and that $\lambda \le 0$.
+</p>
+
+<!--************************************************************************-->
+
+<!--h1 id="">Adjoint Nullspace</h1>
+
+<p>
+We left off (<a href="./report20210916">report 2021-09-16</a>) by seeking a basis of the nullspace of the adjoint operator. If $\vecv$ is such a basis, then we have
 We seek vectors $\vecv$ such that
 $$\begin{align*}
     0 &= \vecv + c\begin{bmatrix}\mu & 0 \\ 0 & \alpha \end{bmatrix} \vecv_\xi - \left(\frac{\delta(\xi)}{J'(0)} + \frac{\delta(\xi + \Delta)}{J'(-\Delta)} \right) \begin{bmatrix} w\ast \cdot & \gamma \\ -w\ast \cdot & -\gamma \end{bmatrix} \vecv \\
-    &= \vecv + c\begin{bmatrix}\mu & 0 \\ 0 & \alpha \end{bmatrix} \vecv_\xi - \frac{\delta(\xi)}{J'(0)} \begin{bmatrix} \int_\RR(w(0,y) v_1(y) \ dy + \gamma v_2(0) \\ -\int_\RR w(0,y)v_2(y) \ dy - \gamma v_2(0) \end{bmatrix} + \frac{\delta(\xi + \Delta)}{J'(-\Delta)} \begin{bmatrix} \int_\RR(w(-\Delta,y) v_1(y) \ dy + \gamma v_2(-\Delta) \\ -\int_\RR w(-\Delta,y)v_1(y) \ dy - \gamma v_2(-\Delta) \end{bmatrix}
+    &= \vecv + c\begin{bmatrix}\mu & 0 \\ 0 & \alpha \end{bmatrix} \vecv_\xi - \frac{\delta(\xi)}{J'(0)} \begin{bmatrix} \int_\RR(w(0,y) v_1(y) \ dy + \gamma v_2(0) \\ -\int_\RR w(0,y)v_1(y) \ dy - \gamma v_2(0) \end{bmatrix} - \frac{\delta(\xi + \Delta)}{J'(-\Delta)} \begin{bmatrix} \int_\RR(w(-\Delta,y) v_1(y) \ dy + \gamma v_2(-\Delta) \\ -\int_\RR w(-\Delta,y)v_1(y) \ dy - \gamma v_2(-\Delta) \end{bmatrix}
 \end{align*}$$
 and 
 $$\begin{align*}
-    \vecv + c\begin{bmatrix}\mu & 0 \\ 0 & \alpha \end{bmatrix} \vecv_\xi &= \delta(\xi) w_1 \vec{1} + \delta(\xi + \Delta) w_2 \vec{1}
+    \vecv + c\begin{bmatrix}\mu & 0 \\ 0 & \alpha \end{bmatrix} \vecv_\xi &= \delta(\xi) w_1 \begin{bmatrix}1\\-1\end{bmatrix} + \delta(\xi + \Delta) w_2 \begin{bmatrix}1\\-1\end{bmatrix}
 \end{align*}$$
-for some constants $w_1, w_2$.
+for some constants $w_1, w_2$ which depend linearly on $\vecv$.
 </p>
+
+<p>
+    To proceed, we note that the system is now decoupled but for the choice of $w_1$ and $w_2$. Solving the equation for $v_1$ we find
+\begin{align*}
+    v_1 + c\mu \partial_\xi v_1 &= \delta(\xi)w_1 + \delta(\xi + \Delta) w_2 \\
+    \partial_\xi \bigg[v_1 e^{\xi/c\mu} \bigg] &= \frac{w_1}{c\mu}\delta(\xi)e^{\xi/c\mu} + \frac{w_2}{c\mu}\delta(\xi + \Delta)e^{\xi/c\mu} \\
+    v_1(\xi) &= w_1 \frac{1}{c\mu}H(\xi)e^{-\xi/c\mu} + w_2 \frac{1}{c\mu} H(\xi + \Delta) e^{-(\xi + \Delta)/c\mu} + Ae^{-\xi/c\mu}
+\end{align*}
+To ensure bounded solutions, we require $A = 0$. Thus
+\begin{align*}
+    v_1(\xi) &= w_1 \frac{1}{c\mu}H(\xi)e^{-\xi/c\mu} + w_2 \frac{1}{c\mu} H(\xi + \Delta) e^{-(\xi + \Delta)/c\mu}
+\end{align*}
+and similarly
+\begin{align*}
+    v_2(\xi) &= -w_1 \frac{1}{c\alpha}H(\xi)e^{-\xi/c\alpha} - w_2 \frac{1}{c\alpha} H(\xi + \Delta) e^{-(\xi + \Delta)/c\alpha}.
+\end{align*}
+</p>
+
+<p>
+    For consistency, we require
+\begin{align*}
+    w_1 &= \frac{1}{J'(0)} \left(\int_\RR w(0,y)v_1(y) \ dy + \gamma v_2(0) \right)\\
+    w_2 &= \frac{1}{J'(-\Delta)} \left(\int_\RR w(-\Delta, y) v_1(y) \ dy + \gamma v_2(-\Delta) \right).
+\end{align*}
+</p-->
 
 
 
