@@ -84,9 +84,9 @@
 *******************************************************************************
 ****************************************************************************-->
 
-<h1 id="Title">September 28<sup>th</sup>, 2021</h1>
+<h1 id="Title">October 5<sup>th</sup>, 2021</h1>
 <p id="summary">
-   Lorem
+   We have begun exploring stability of perturbations to the adaptive model. We are stuck showing inconsistency in the case where the eigenvalues have positive real component.
 </p>
 
 <hr><!--********************************************************************-->
@@ -122,7 +122,127 @@
 <!--************************************************************************-->
 
 <hr><!--********************************************************************-->
-<h1 id="">Adjoint Nullspace</h1>
+
+<h1 id="">Stability Analysis</h1>
+<p>
+    We begin with the model
+\begin{align*}
+    \mu u_t &= -u + \int w(x,y) f(u(y,t) - a(y,t)) \ dy \\
+    \alpha a_t &= -a + \gamma f(u - a)
+\end{align*}
+and make the substitution to characteristic coordinates $\xi = x - c t$
+$$\begin{align*}
+    -c\mu u_\xi + \mu u_t &= -u + \int w(\xi,y) f(u(y,t) - a(y,t)) \ dy \\
+    -c\alpha a_\xi + \alpha a_t &= -a + \gamma f(u - a).
+\end{align*}$$
+The traveling pulse solution $U(\xi), A(\xi)$ has been found previously (<a href="./report20210603.html">report 2021-06-03</a>). Assume a small perterbation
+$$\begin{align*}
+    u &= U(\xi) + \varepsilon \varphi(\xi, t) + \OO(\varepsilon^2) \\
+    a &= A(\xi) + \varepsilon \psi(\xi, t) + \OO(\varepsilon^2).
+\end{align*}$$
+Substituting into our characteristic coordinate equations gives
+$$\begin{align*}
+    -c \mu U' - c\mu \varepsilon \varphi_\xi + \mu \varepsilon \varphi_t &= -U - \varepsilon \varphi + \int w(\xi, y) f\big(U-A + \varepsilon(\varphi - \psi) + \OO(\varepsilon^2) \big) \ dy + \OO(\varepsilon^2) \\
+    -c\alpha A' - c\alpha\varepsilon\psi_\xi + \alpha \varepsilon \psi_t &= -A - \varepsilon \psi + \gamma f\big(U - A + \varepsilon(\varphi - \psi) + \OO(\varepsilon^2)\big) + \OO(\varepsilon^2).
+\end{align*}$$
+</p>
+<p>
+    Next we linearize must linearize $f$. We intend to take $f(\cdot) = H(\cdot - \theta)$ so we will consider a two-sided linearization:
+$$
+f\big(U-A + \varepsilon(\varphi - \psi) + \OO(\varepsilon^2)\big) = f(U-A) + 
+    \OO(\varepsilon^2) + \varepsilon(\varphi - \psi) \underbrace{\begin{cases}
+        \partial_+f(U-A) ,& \varphi > \psi \\
+        \partial_-f(U-A) ,& \varphi < \psi 
+    \end{cases}}_{f'(U-A)}
+$$
+where $\partial_+$ and $\partial_-$ denote the right and left derivatives respectively. We will use the compact notation $f'(U-A)$ which is consistent if the left and right derivatives match.
+</p>
+
+<p>
+This gives
+$$\begin{align*}
+    -c \mu U' - c\mu \varepsilon \varphi_\xi + \mu \varepsilon \varphi_t &= -U - \epsilon \varphi + \int w(\xi, y) f(U-A) \ dy + \varepsilon f'(U-A)\int w(\xi, y)(\varphi - \psi) \ dy + \OO(\varepsilon^2) \\
+    -c\alpha A' - c\alpha\varepsilon\psi_\xi + \alpha \epsilon \psi_t &= -A - \varepsilon \psi + \gamma f(U - A) + \gamma f'(U-A)\varepsilon(\varphi - \psi) + \OO(\varepsilon^2).
+\end{align*}$$
+Collecting $\OO(1)$ terms
+$$\begin{align*}
+    -c \mu U' &= -U + \int w(\xi, y) f(U-A) \ dy \\
+    -c\alpha A' &= -A + \gamma f(U - A)
+\end{align*}$$
+we see that $U$ and $A$ must indeed be the traveling pulse solution. Collecting the $\OO(\varepsilon)$ terms we have
+$$\begin{align*}
+    - c\mu \varphi_\xi + \mu \varphi_t &= - \varphi + f'(U-A)\int w(\xi, y)(\varphi - \psi) \ dy \\
+    - c\alpha\psi_\xi + \alpha \psi_t &= - \psi + \gamma f'(U-A)(\varphi - \psi).
+\end{align*}$$
+</p>
+<p>
+    In the case of $f(\cdot) = H(\cdot - \theta)$ we have
+$$\begin{align*}
+    f'(U - A) &= \frac{\delta(\xi)}{U'(0) - A'(0)} + \frac{\delta(\xi+\Delta)}{U'(-\Delta) - A'(-\Delta)} \\
+        &= c_1\delta(\xi) + c_2\delta(\xi+\Delta).
+\end{align*}$$
+where $U'(\cdot) - A'(\cdot)$ is interpreted as a right/left derivative if $\varphi \gtrless \psi$. Thus the constants $c_1$ and $c_2$ depend on the sign of $\varphi - \psi$.
+</p>
+
+<p>
+Assume separability:
+$$
+    \begin{bmatrix} \varphi(\xi,t) \\ \psi(\xi, t) \end{bmatrix}
+    =
+    g(t)\begin{bmatrix} \varphi_0(\xi) \\ \psi_0(\xi) \end{bmatrix}.
+$$
+Substituting and solving we have
+\begin{align*}
+    \frac{g'}{g} &= \lambda = \frac{c\mu \varphi_0' - \varphi_0 + f'(U-A)\int w(\xi, y)(\varphi_0 - \psi_0) \ dy }{\mu \varphi_0} \\
+    \frac{g'}{g} &= \lambda = \frac{c\alpha \psi_0' - \psi_0 + \gamma f'(U-A)(\varphi_0 - \psi_0) }{\alpha \psi_0}.
+\end{align*}
+This gives $g(t) = e^{\lambda t}$ and the following system of ODEs
+$$\begin{align*}
+    \varphi_0' - \frac{1+\lambda \mu}{c\mu} \varphi_0 &= -\frac{1}{c\mu}f'(U-A) \int w(\xi, y) \big(\varphi_0(y) - \psi_0(y) \big) \ dy \\
+    \psi_0' - \frac{1+\lambda \alpha}{c\alpha} \psi_0 &= -\frac{1}{c\alpha}\gamma f'(U-A) (\varphi_0 - \psi_0 ) \\
+\end{align*}$$
+</p>
+
+<p>
+Using integrating factors we have
+$$\begin{align*}
+    \frac{d}{d\xi} \big[ \varphi_0 e^{-\frac{1+\lambda \mu}{c\mu}\xi} \big] 
+        &= -e^{-\frac{1+\lambda \mu}{c\mu}\xi}\frac{1}{c\mu}f'(U-A) \int w(\xi, y) \big(\varphi_0(y) - \psi_0(y) \big) \ dy \\
+    \varphi_0 e^{-\frac{1+\lambda \mu}{c\mu}\xi} 
+        &= A + \int -e^{-\frac{1+\lambda \mu}{c\mu}\xi}\frac{1}{c\mu}f'(U-A) \int w(\xi, y) \big(\varphi_0(y) - \psi_0(y) \big) \ dy \ d\xi\\
+        &= A + \int -e^{-\frac{1+\lambda \mu}{c\mu}\xi}\frac{1}{c\mu}\big(c_1 \delta(\xi) + c_2 \delta(\xi + \Delta)\big) \int w(\xi, y) \big(\varphi_0(y) - \psi_0(y) \big) \ dy \ d\xi\\
+        &= A - c_1 H(\xi)  \underbrace{\frac{1}{c\mu}\int w(0, y) \big(\varphi_0(y) - \psi_0(y) \big) \ dy }_{w_0}\\
+        &\phantom{===} - c_2 H(\xi+\Delta)  e^{-\frac{1+\lambda \mu}{c\mu}\Delta} \underbrace{\frac{1}{c\mu}\int w(\Delta, y) \big(\varphi_0(y) - \psi_0(y) \big) \ dy}_{w_\Delta} \\
+    \varphi_0(\xi) &= e^{\frac{1+\lambda \mu}{c\mu} \xi} \bigg(A - w_0 c_1 H(\xi) - w_\Delta c_2 e^{-\frac{1+\lambda \mu}{c\mu}\Delta} H(\xi + \Delta) \bigg)
+\end{align*}$$
+where these $w_0$ and $w_\Delta$ depend linearly on $\varphi_0 - \psi_0$.
+</p>
+
+<p>
+    Similarly, we have
+$$\begin{align*}
+    \frac{d}{d\xi} \big[ \psi_0 e^{-\frac{1 + \lambda\alpha}{c\alpha} \xi} \big] 
+        &= -\frac{1}{c\alpha}e^{-\frac{1 + \lambda\alpha}{c\alpha} \xi} \gamma \big( c_1 \delta(\xi) + c_2 \delta(\xi + \Delta) \big)(\varphi_0 - \psi_0) \\
+    \psi_0 e^{-\frac{1 + \lambda\alpha}{c\alpha} \xi} 
+        &= B - c_1 \underbrace{\frac{\gamma}{c\alpha} \big(\varphi_0(0) - \psi_0(0) \big)}_{v_0}H(\xi) \\
+        &\phantom{===} -c_2 e^{-\frac{1 + \lambda\alpha}{c\alpha} \Delta} \underbrace{\frac{\gamma}{c\alpha}  \big(\varphi_0(\Delta) - \psi_0(\Delta)\big)}_{v_\Delta} H(\xi + \Delta) \\
+    \psi_0(\xi) &= e^{\frac{1+ \lambda \alpha}{c \alpha} \xi} \big(B - c_1v_0 H(\xi) - c_2 v_\Delta e^{-\frac{1 + \lambda\alpha}{c\alpha} \Delta} H(\xi + \Delta) \big)
+\end{align*}$$
+where these $v_0$ and $v_\Delta$ depend linearly on $\varphi_0 - \psi_0$.
+</p>
+
+<p>
+We next consider the values of $\lambda$ for which the initial solution $[\varphi_0, \ \psi_0]^T$ remains bounded. We expect adaptation to be on a slower timescale than excitation and thus restrict ourselves to the more relevant case $\mu < \alpha$. For $\lambda >0 >  -\tfrac{1}{\alpha} > -\tfrac{1}{\mu}$ we require
+$$\begin{align*}
+    0 &= A - c_1 w_0 - c_2 e^{-\frac{1 + \lambda\mu}{c\mu} \Delta} w_\Delta \\
+    0 &= B - c_1 v_0 - c_2 e^{-\frac{1 + \lambda\alpha}{c\alpha} \Delta} v_\Delta.
+\end{align*}$$
+We want to show that this is a contradiction and that $\lambda \le 0$.
+</p>
+
+<!--************************************************************************-->
+
+<!--h1 id="">Adjoint Nullspace</h1>
 
 <p>
 We left off (<a href="./report20210916">report 2021-09-16</a>) by seeking a basis of the nullspace of the adjoint operator. If $\vecv$ is such a basis, then we have
@@ -161,7 +281,7 @@ and similarly
     w_1 &= \frac{1}{J'(0)} \left(\int_\RR w(0,y)v_1(y) \ dy + \gamma v_2(0) \right)\\
     w_2 &= \frac{1}{J'(-\Delta)} \left(\int_\RR w(-\Delta, y) v_1(y) \ dy + \gamma v_2(-\Delta) \right).
 \end{align*}
-</p>
+</p-->
 
 
 
