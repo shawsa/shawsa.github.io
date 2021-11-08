@@ -96,6 +96,7 @@ Outline
                 <li>natural decay, plus stimuls due to convolution</li>
                 <li>w is a weight kernel representing connectivity</li>
                 <li>f is a firing rate function - converts presynaptic firing rate to post synaptic stimulus</li>
+                <li>enough activity will self sustain and propagate outwards</li>
                 
             </ul>
             
@@ -107,6 +108,14 @@ Outline
             $\mu u_t = -u + \int_{\mathbb{R}} \frac{1}{2}e^{-|x-y|}\cdot H[u(y) - \theta] \ dy$
         </p>
         <img src="./images/traveling_front.png">
+        <aside class="notes">
+            <ul>
+                <li>exponential weight function</li>
+                <li>Heaviside firing rate with threshold theta</li>
+                <li>In the 2012 paper, they studied the wave response.</li>
+            </ul>
+            
+        </aside>
     </section>
     <!--####################-->
     <section>
@@ -116,10 +125,18 @@ Outline
         <p>
             $I(x,t) = 0.15 \delta(t - 1)$
         </p>
-        <video class="r-stretch" controls loop autoplay muted>
+        <video class="r-stretch" controls loop muted>
             <source src="./images/front_response.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
+        <aside class="notes">
+            <ul>
+                <li>stimuls: constant in space, delta in time</li>
+                <li>after stimulus decays back to the traveling wave solution</li>
+                <li>but shifted. We call this shift the wave response due to the stimulus I.</li>
+            </ul>
+                
+        </aside>
     </section>
 </section>
 <!--##################################################-->
@@ -298,7 +315,7 @@ $$
     </section>
 
     <!--####################-->
-    <section>
+    <section data-auto-animate>
     <p>
         Again, we take
     </p>
@@ -309,12 +326,29 @@ $$
     \end{align*}$
     </p>
     <p>
-        &nbsp;
+        and our asymptotic approximation is
+        $$\eta(t) = \frac{\mu c+1}{\mu^2 c \theta} \int_0^t \int_0^\infty e^{-\xi/c\mu} I(\xi, t) \ d\xi \ d\tau$$
+    </p>
+    </section>
+
+    <!--####################-->
+    <section data-auto-animate>
+    <p>
+        Again, we take
+    </p>
+    <p style="font-size:20pt">
+    $\begin{align*}
+    f(\cdot) &= H(\cdot - \theta) \\
+    w(x,y) &= \frac{1}{2} e^{-|x-y|}
+    \end{align*}$
     </p>
     <p>
         and our asymptotic approximation is
         $$\eta(t) = \frac{\mu c+1}{\mu^2 c \theta} \int_0^t \int_0^\infty e^{-\xi/c\mu} I(\xi, t) \ d\xi \ d\tau$$
-    </p>    
+    </p>
+    <p>
+        Or at least, I thought it was.
+    </p>
     </section>
 
     <!--####################-->
@@ -357,43 +391,52 @@ $$
     <!--####################-->
     <section>
     <p>
-    Numerics
+    Where we're at now
     </p>
     </section>
     <!--####################-->
     <section data-auto-animate>
-    <img class="r-strech" src="./images/delta_pulse.png">
+    <p>
+    Define $J = U - A$ 
+    </p>
+    <p>
+        &nbsp;
+    </p>
+    <p>
+        then take $f(J) = H(J - \theta)$. 
+    </p>
+    <p>
+        &nbsp;
+    </p>
+    <p>
+        \begin{align*}f'(J(\xi)) &= \frac{\delta(\xi)}{J'(0)} + \frac{\delta(\xi + \Delta)}{J'(-\Delta)}\end{align*}
+    </p>
+    </section>
+    
+    <!--####################-->
+    <section data-auto-animate>
+    <p>
+    However, $J$ has cusps at $\xi = 0, -\Delta$
+    </p>
+    <img src="./images/pulse_nonsmoothness.png">
     </section>
 
     <!--####################-->
     <section data-auto-animate>
-    <div style="display: grid; grid-template-columns: 1fr 1fr;">
-        <div >
-            <img class="r-strech" src="./images/delta_pulse.png">
-        </div>
-        <div>
-            <img class="r-strech" src="./images/wave_response_bad.png">
-        </div>
-    </div>
+    <p>
+    To fix this, we will plan to take a two-sided linearization of the Heaviside function.
+    </p>
+    <img class="r-frame" src="./images/heaviside_linearization.png" >
+    <aside class="notes">
+        <ul>
+            <li>Got distracted investigating linear stability analysis.</li>
+            <li>More difficult in the stability anlysis - 4 cases</li>
+            <li></li>
+        </ul>
+        
+    </aside>
     </section>
-    <!--####################-->
-    <section>
-   
-        <p>
-            Non-adaptive Model: continuous derivative
-            $\begin{align*}
-                \mu u_t &= -u + \int_{\mathbb{R}} \tfrac{1}{2} e^{-|x-y|} \cdot H\big[ u(y) - \theta \big] \ dy
-            \end{align*}$
-        </p>
-        <br>
-        <p>
-            Adaptive Model: discontinuous derivative
-            $\begin{align*}
-                \mu u_t &= -u + \int_{\mathbb{R}} \tfrac{1}{2} e^{-|x-y|} \cdot H\big[ u(y,t) - a(y,t) - \theta \big] \ dy \\
-                \alpha a_t &= -a + \gamma H\big[ u(x,t) - a(x,t) - \theta \big]
-            \end{align*}$
-        </p>
-    </section>
+
 </section>
 <!--##################################################-->
 <section>
@@ -401,9 +444,9 @@ $$
 What's next?
 </p>
 <ul>
-    <li>Numerics</li>
-    <li>Wave-train analysis</li>
-    <li>Stability analysis</li>
+    <li>Try this two-sided linearization in the adjoint method.</li>
+    <li>Finish the stability analysis</li>
+    <li>Address the non-uniquness of solutions</li>
     <li>Large stimuli</li>
     <li>Wave genesis</li>
     <li>2D</li>
