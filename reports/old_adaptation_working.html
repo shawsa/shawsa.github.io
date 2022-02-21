@@ -1,0 +1,285 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <!-- Mathjax commands -->
+    $
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\OO}{\mathcal{O}}
+    \newcommand{\mathcow}{\OO}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\KK}{\mathbb{K}}
+    \newcommand{\PP}{\mathcal{P}}
+    \newcommand{\TT}{\mathcal{T}}
+    \newcommand{\BB}{\mathcal{B}}
+    \newcommand{\LL}{\mathcal{L}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+
+    \newcommand{\veca}{\vec{a}}
+    \newcommand{\vecb}{\vec{b}}
+    \newcommand{\vecd}{\vec{d}}
+    \newcommand{\vece}{\vec{e}}
+    \newcommand{\vecf}{\vec{f}}
+    \newcommand{\vecn}{\vec{n}}
+    \newcommand{\vecp}{\vec{p}}
+    \newcommand{\vecr}{\vec{r}}
+    \newcommand{\vecu}{\vec{u}}
+    \newcommand{\vecv}{\vec{v}}
+    \newcommand{\vecw}{\vec{w}}
+    \newcommand{\vecx}{\vec{x}}
+    \newcommand{\vecy}{\vec{y}}
+    \newcommand{\vecz}{\vec{z}}
+
+    \renewcommand{\vec}[1]{\mathbf{#1}}
+    $
+
+    <!-- Plotly code for interactive plots -->
+    <script src="../plotly-2.0.0-rc.2.min.js"></script>
+    
+    <!--Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+
+
+
+    
+<!--************************************************************************-->
+<title>Shaw Research Notes</title>
+</head>
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<body>
+
+<div class="top-bar">
+    <a href="../index.html"><img src="../frame/boulder-logo.png"></a>
+</div>
+
+<div id="side-bar" class="side-bar">
+    <p><a href="../reports/reports.html" target="_top">Reports</a></p>
+    <p><a href="../presentations/presentations.html" target="_top">Presentations</a></p>
+    <p><a href="../todo/todo.html" target="_top">To Do List</a></p>
+    <p><a href="../about/about.html" target="_top">About</a></p>
+    <hr>
+    <p><a href="../old-rbf/index.html" target="_top">Old Site</a></p>
+</div>
+
+<div class="page-content">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<h1 id="Title">Working Report</h1>
+<p id="summary">
+   Lorem
+</p>
+
+
+<div id="slider-plot" style="width:auto;"></div>
+
+<!--************************************************************************-->
+
+<hr><!--********************************************************************-->
+
+<h1 id="">Stability Analysis</h1>
+<p>
+Our adaptive neural field model is given by
+$$\begin{align*}
+    \mu u_t &= -u + \int_{-\infty}^\infty w(x, \xi')f\big(u(\xi', t) - a(\xi',t)\big) \ d\xi' \\
+    \alpha a_t &= -a + \gamma f(u - a)
+\end{align*}$$
+where $u(x, t)$ denotes the density of neural activity at location $x \in \RR$ at time $t$, $a(x, t)$ is an adaptation varialbe, $w \in \RR^2$ is a weight kernel representing synaptic connections over space, and $f$ is a firing rate function. 
+</p>
+
+<p>
+Converting to charactersitic coordinates $\xi = x - ct$ we have
+$$\begin{align*}
+    -c\mu u_\xi + \mu u_t &= -u  + \int_{-\infty}^\infty w(\xi, \xi')f\big(u(\xi', t) - a(\xi',t)\big) \ d\xi' \\
+    -c\alpha a_\xi + \alpha a_t &= -a + \gamma f(u - a).
+\end{align*}$$
+Assume that $U(\xi), A(\xi)$ is a traveling pulse solution. Consider the perturbation
+$$\begin{align*}
+    u(\xi, t) &= U(\xi) + \epsilon \phi(\xi, t) + \OO(\epsilon^2) \\ 
+    a(\xi, t) &= A(\xi) + \epsilon \psi(\xi, t) + \OO(\epsilon^2).
+\end{align*}$$
+Substituting into our equation above we find
+$$\begin{align*}
+    -c\mu U_\xi - c\mu\epsilon \phi_\xi + \mu \epsilon \phi_t &= -U - \epsilon \phi + \int_{-\infty}^\infty w(\xi, \xi') f\bigg(U(\xi') - A(\xi') - \epsilon\big(\phi(\xi', t) - \psi(\xi', t)\big) + \OO(\epsilon^2)\bigg) \ d\xi' + \OO(\epsilon^2) \\
+    -c\alpha A_\xi - c\alpha \epsilon \psi_\xi + \alpha \epsilon \psi_t &= -A - \epsilon \psi + \gamma f\big(U - A + \epsilon(\phi - \psi) + \OO(\epsilon^2) \big) + \OO(\epsilon^2).
+\end{align*}$$
+</p>
+
+<p>
+    We would like to linearize the firing rate via
+$$\begin{align*}
+    f\big(U - A + \epsilon(\phi - \psi) + \OO(\epsilon^2) \big) &= f(U - A) + \epsilon f'(U - A) (\phi - \psi) + \OO(\epsilon^2),
+\end{align*}$$
+however, when we choose $f(\cdot) = H(\cdot - \theta)$ this is less straightforward. 
+</p>
+
+<p>
+    For notational convenience, let $J(\xi) = U(\xi) - A(\xi) - \theta$, and let $\zeta(\xi, t) = \phi(\xi, t) - \psi(\xi,t)$.
+</p>
+
+<!--- Heaviside Linearization ------------------------------------>
+<button class="accordion">Heaviside Firing Rate Linearization</button>
+<div class="panel">
+<p>
+    We seek a linearization, in $\xi$, of $H\big(J - \epsilon \zeta + \OO(\epsilon^2)\big)$, about $J$. This function is discontinuous, so we will derive a distributional linearization
+$$\begin{align*}
+    \int_\RR \varphi H\big(J - \epsilon \zeta + \OO(\epsilon^2)\big) \ d\xi &= \int_\RR \varphi H(J) \ d\xi + \int_\RR \varphi \epsilon \zeta H'(J) \ d\xi + \OO(\epsilon^2) \\
+    \int_\RR \varphi \bigg[H\big(J  - \epsilon \zeta + \OO(\epsilon^2)\big)  - H(J)\bigg] \ d\xi &= \int_\RR \varphi \epsilon \zeta H'(J) \ d\xi + \OO(\epsilon)
+\end{align*}$$
+where the integral on the left is given by the distance between the roots of the arguments.
+</p>
+
+<p>
+    In Figure 1 below, we see that this distance can be approximated by one of two triangles, depending on the sign of $\zeta J'$.
+</p>
+
+<figure>
+    <img src="working_images/heaviside_linearization.png" width=100%>
+    <figcaption><b>Fig 1.</b> A two sized linearization of the argument of the Heaviside function.</figcaption>
+</figure>
+<p>
+For $f(\cdot) = H(\cdot - \theta)$ and $w(x,y) = \tfrac{1}{2}e^{-|x-y|}$ the value, of $J'$ at each of the two threshold crossings is ambiguous, but the sign is clear. Thus we have
+$$\begin{align*}
+    \int_\RR \varphi \bigg[H\big(J  - \epsilon \zeta + \OO(\epsilon^2)\big)  - H(J)\bigg] \ d\xi &\sim \sum_{\xi^*} \int_\RR \varphi \frac{\epsilon \zeta(\xi^*)}{J'(\xi^*)} \ d\xi + \OO(\epsilon^2) = \sum_{\xi^*} \frac{\epsilon \zeta(\xi^*)}{J'(\xi^*)} + \OO(\epsilon^2)
+\end{align*}$$
+where $\xi^*$ are roots of $J$, and $J'(\xi^*)$ is understood to be
+$$\begin{align*}
+    J'(\xi) &= \begin{cases}
+        \lim\limits_{\xi \to \xi^{*+}} J'(\xi), & \text{sign}(J'(\xi^*))\zeta(\xi^*) < 0 \\
+        \lim\limits_{\xi \to \xi^{*-}} J'(\xi), & \text{sign}(J'(\xi^*))\zeta(\xi^-) > 0 .
+    \end{cases}
+\end{align*}$$
+</p>
+
+<p>
+Thus, we have that
+$$\begin{align*}
+    H\big(J - \epsilon \zeta + \OO(\epsilon^2)\big) &= \sum_{\xi^*} \frac{\epsilon \zeta(\xi^*)}{J'(\xi^*)} + \OO(\epsilon^2)
+\end{align*}$$
+</p>
+
+<p>
+    <b>Something's not right here. I don't have too much trouble deriving this without the test function, but with the test function I feel like I'm hand-waving.</b>
+</p>
+
+</div>
+<!--- End Heaviside Linearization --------------------------------->
+
+<p>
+    In the case of $f(\cdot) = H(\cdot - \theta)$ and $w(x,y) = \tfrac{1}{2} e^{-|x - y|}$ our conditions on the sign of $J'$ at the roots is met and we have
+$$\begin{align*}
+    H\big(J(\xi, t) + \epsilon \zeta(\xi, t) + \OO(\epsilon^2) \big) = H(J) + \epsilon \zeta(\xi, t) \bigg( \frac{\delta(\xi + \Delta)}{J'(-\Delta)} + \frac{\delta(\xi)}{J'(0)} \bigg) + \OO(\epsilon^2).
+\end{align*}$$
+</p>
+
+<p>
+    Next, we substitute this linearization into the perturbation equation. Collecting the $\OO(1)$ terms, we have
+$$\begin{align*}
+    -c\mu U_\xi &= -U + \int_{-\infty}^\infty w(\xi, \xi')f\big(J(\xi') \big) \ d\xi \\
+    -c\alpha A_\xi &= -A + \gamma f(J)
+\end{align*}$$
+which is satisfied since $U$ and $A$ are chosen to be the traveling pulse solution. Collecting the $\OO(\epsilon^2)$ terms we have
+$$\begin{align*}
+    -c\mu \phi_\xi + \mu \phi_t &= -\phi + \int_{-\infty}^\infty\tfrac{1}{2}e^{-|\xi - \xi'|} \zeta(\xi', t) \bigg( \frac{\delta(\xi' + \Delta)}{J'(-\Delta)} + \frac{\delta(\xi')}{J'(0)} \bigg) \ d \xi' \\
+    -c\alpha \psi_\xi + \alpha \psi_t &= -\psi + \gamma \zeta(\xi, t) \bigg( \frac{\delta(\xi + \Delta)}{J'(-\Delta)} + \frac{\delta(\xi)}{J'(0)} \bigg)
+\end{align*}$$
+</p>
+
+<p>
+    Evaluating the integral, we have
+$$\begin{align*}
+    -c\mu \phi_\xi + \mu \phi_t &= -\phi + \tfrac{1}{2J'(-\Delta)}e^{-|\xi+\Delta|}\zeta(-\Delta, t) + \tfrac{1}{2J'(0)}e^{-|\xi|}\zeta(0, t) \\
+    -c\alpha \psi_\xi + \alpha \psi_t &= -\psi + \gamma \zeta(\xi, t) \bigg( \frac{\delta(\xi + \Delta)}{J'(-\Delta)} + \frac{\delta(\xi)}{J'(0)} \bigg).
+\end{align*}$$
+</p>
+
+<p>
+    Assuming separability: 
+$$
+    \begin{bmatrix} \phi(\xi, t) \\ \psi(\xi, t) \end{bmatrix} = g(t) \begin{bmatrix} \phi_0(\xi) \\ \psi_0(\xi) \end{bmatrix}
+$$
+(and similarly $\zeta_0 = \phi_0 - \psi_0$) we have
+$$\begin{align*}
+    -c \mu g \partial_\xi \phi_0 + \mu g' \phi_0 &= -g \phi_0 + \tfrac{1}{2J'(-\Delta)}e^{-|\xi+\Delta|} g \zeta_0(-\Delta) + \tfrac{1}{2J'(0)}e^{-|\xi|} g \zeta_0(0) \\
+    \frac{g'}{g} &= \lambda = \frac{c \mu \partial_\xi \phi_0 - \phi_0 + \tfrac{1}{2J'(-\Delta)}e^{-|\xi+\Delta|} \zeta_0(-\Delta) + \tfrac{1}{2J'(0)}e^{-|\xi|} \zeta_0(0)}{\mu \phi_0}
+\end{align*}$$
+and
+$$\begin{align*}
+     -c\alpha g \partial_\xi \psi_0 + \alpha g' \psi_0 &= -g\psi_0 + \gamma g \zeta_0 \bigg( \frac{\delta(\xi + \Delta)}{J'(-\Delta)} + \frac{\delta(\xi)}{J'(0)} \bigg) \\
+    \frac{g'}{g} &= \lambda = \frac{c\alpha \partial_\xi \psi_0 -\psi_0 + \gamma  \zeta_0 \bigg( \frac{\delta(\xi + \Delta)}{J'(-\Delta)} + \frac{\delta(\xi)}{J'(0)} \bigg)}{\alpha \psi_0}.
+\end{align*}$$
+We conclude that $g(t) = e^{\lambda t}$ and $\phi_0, \psi_0$ are determined by the coupled system
+$$\begin{align*}
+    \partial_\xi \phi_0 - \frac{1 + \lambda \mu}{c\mu} \phi_0 &= -\frac{1}{2c\mu J'(-\Delta)}e^{-|\xi + \Delta|}\zeta_0(-\Delta) - \frac{1}{2c\mu J'(0)}e^{-|\xi|}\zeta_0(0) \\
+    \partial_\xi \psi_0 - \frac{1 + \lambda \alpha}{c\alpha} &= -\frac{\gamma}{c\alpha}\zeta_0(\xi)\bigg( \frac{\delta(\xi + \Delta)}{J'(-\Delta)} + \frac{\delta(\xi)}{J'(0)} \bigg).
+\end{align*}$$
+</p>
+
+<p>
+    Treating $\zeta_0$ as independent of $\phi_0$ and $\psi_0$, we may decouple the system and enforce consistency after the fact. This gives consistency equations
+$$\begin{align*}
+    \phi_0(\xi) &= \exp\left(\frac{1 + \lambda \mu}{c\mu} \xi \right)\left[C + \int \exp\left(-\frac{1 + \lambda \mu}{c\mu} \xi \right)\left( -\frac{1}{2c\mu J'(-\Delta)}e^{-|\xi + \Delta|}\zeta_0(-\Delta) - \frac{1}{2c\mu J'(0)}e^{-|\xi|}\zeta_0(0) \right) \ d\xi \right] \\
+    \psi_0(\xi) &= \exp\left(\frac{1 + \lambda \alpha}{c\alpha} \xi \right)\left[D -\frac{\gamma}{c\alpha} \frac{\zeta_0(-\Delta)}{J'(-\Delta)} H(\xi+\Delta) \exp\left(\frac{1 + \lambda \alpha}{c\alpha} \Delta \right) -\frac{\gamma}{c\alpha}\frac{\zeta_0(0)}{J'(0)} H(\xi) \right].
+\end{align*}$$
+</p>
+
+<p>
+    Here we run into trouble. It would seem that $\psi_0$, and therefore $\zeta_0$ is undefined at the values $\xi = -\Delta, 0$. Do we assume That the Heaviside functions are to be interpreted as left/right continuous at the discontinuity, to be consistent with the left/right limit of $J'$?
+</p>
+
+<!--************************************************************************-->
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+</div>
+
+<!-- Accordion script -->
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+
+var expand_all_accordions = false;
+
+if (expand_all_accordions){
+    for (i = 0; i < acc.length; i++) {
+      acc[i].nextElementSibling.style.display = "block";
+    }
+}
+
+}
+</script>
+
+</body>
+    
+</html>
