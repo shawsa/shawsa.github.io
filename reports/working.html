@@ -101,12 +101,12 @@
 Our neural field model incorporating synaptic depression is given by
 $$\begin{align*}
     \mu u_t &= -u + \int_\RR w(x, y) q(y,t) f\big(u(y, t)\big) \ dy + \epsilon I(x, t) \\
-    \alpha   q_t &= 1 - q - \alpha\beta f(u).
+    \alpha   q_t &= 1 - q - \alpha\beta q f(u).
 \end{align*}$$
 In characteristic coordinates $\xi = x - ct$ (and with slight abuse of notation) this becomes
 $$\begin{align*}
     -c \mu u_\xi + \mu u_t &= -u + \int_\RR w(\xi, y) q(y,t) f\big(u(y, t)\big) \ dy + \epsilon I(\xi, t) \\
-    -c \alpha q_\xi + \alpha q_t &= 1 - q - \alpha \beta f(u).
+    -c \alpha q_\xi + \alpha q_t &= 1 - q - \alpha \beta q f(u).
 \end{align*}$$
 </p>
 
@@ -125,7 +125,7 @@ $$\begin{align*}
     -c\mu (U' + \epsilon \phi_\xi) + \mu (-\epsilon U' \nu' + \epsilon \phi_t)
         &= -U - \epsilon \phi + \int_\RR w(\xi, y)\big[ Q + \epsilon \psi \big] \big[f(U) + \epsilon f'(U) \phi \big] \ dy + \epsilon I + \OO(\epsilon^2) \\
     -c\alpha (Q' + \epsilon \psi_\xi) + \alpha (-\epsilon Q' \nu' + \epsilon \psi_t)
-        &= 1 - Q - \epsilon \psi -\alpha \beta f(U) - \epsilon \alpha \beta f'(U) \phi
+        &= 1 - Q - \epsilon \psi -\alpha \beta \big(Q + \epsilon \psi\big) \big(f(U) + \epsilon f'(U) \phi \big) + \OO(\epsilon^2)
 \end{align*}$$
 where $U, Q, U'$ and $Q'$ here are understood to be evaluated at $\xi - \epsilon \nu(t)$ (or $y - \epsilon \nu(t)$ when inside the integral).
 </p>
@@ -134,7 +134,7 @@ where $U, Q, U'$ and $Q'$ here are understood to be evaluated at $\xi - \epsilon
 Collecting the $\OO(1)$ terms, and changing variables $\xi - \epsilon \nu(t) \to \xi$ gives
 $$\begin{align*}
     -c\mu U' &= -U + \int_\RR w(\xi, y) Q(y) f(U(y)) \ dy \\
-    -c\alpha Q' &= 1 - Q - \alpha \beta f(U)
+    -c\alpha Q' &= 1 - Q - \alpha \beta Q  f(U)
 \end{align*}$$
 and is consistent with $U, Q$ being the traveling pulse solution.
 </p>
@@ -144,7 +144,7 @@ Collecting the $\OO(\epsilon)$ terms gives
 $$\begin{align*}
     \mu \phi_t + \phi - c\mu \phi_\xi -\int_\RR w(\xi, y) Q(y)f'\big(U(y)\big) \phi(y,t) \ dy - \int_\RR w(\xi, y) f\big(U(y)\big) \psi(y, t) \ dy
         &= I + \mu U' \nu' \\
-    \alpha \psi_t + \psi - c\alpha \psi_\xi + \alpha\beta f'(U) \phi
+    \alpha \psi_t + \psi - c\alpha \psi_\xi + \alpha\beta Q f'(U) \phi + \alpha \beta f(U) \psi
         &= \alpha Q' \nu'.
 \end{align*}$$
 In vector notation this becomes
@@ -152,7 +152,7 @@ $$\begin{align*}
     \underbrace{\begin{bmatrix}\mu & 0 \\ 0 & \alpha\end{bmatrix}}_{M} \begin{bmatrix}\phi \\ \psi \end{bmatrix}_t + \underbrace{ \begin{bmatrix}\phi \\ \psi \end{bmatrix} - c\begin{bmatrix}\mu & 0 \\ 0 & \alpha\end{bmatrix} \begin{bmatrix}\phi \\ \psi \end{bmatrix}_\xi +
         \begin{bmatrix}
             -w Q f'(U) * \cdot  & -w f(U) * \cdot \\
-            \alpha \beta f'(U) & 0
+            \alpha \beta Q f'(U) & \alpha \beta f(U)
         \end{bmatrix}
         \begin{bmatrix}\phi \\ \psi \end{bmatrix} }_{\LL \vecu}
         &= 
@@ -170,25 +170,25 @@ $$\begin{align*}
         &= \int \vecv^T \vecu \ d\xi - c\int \vecv^T M \vecu_\xi \ d\xi + \int \vecv^T(\xi) 
                 \begin{bmatrix} 
                     \int -w(\xi, y) Q(y) f'\big(U(y)\big) \cdot \ dy & \int -w(\xi, y) f\big(U(y)\big) \cdot \ dy \\
-                    \alpha \beta f'(U) & 0
+                    \alpha \beta Q f'(U) & \alpha \beta f(U)
                 \end{bmatrix}
             \vecu \ d\xi \\
         &= \int \vecu^T \vecv \ d\xi - c \bigg( \underbrace{\vecv^TM\vecu \bigg|_{\xi = -\infty}^\infty}_{=0} - \int \vecu^T M \vecv_\xi \ d\xi \bigg) + \int \vecu^T(y)
                 \begin{bmatrix} 
-                    - f'\big(U(y)\big) Q(y) \int w(\xi, y)  \cdot d \xi & \alpha \beta f'(U) \\
-                    - f(\big(U(y)\big) \int w(\xi, y) \cdot d \xi & 0 
+                    - f'\big(U(y)\big) Q(y) \int w(\xi, y)  \cdot d \xi & \alpha \beta Q f'(U) \\
+                    - f(\big(U(y)\big) \int w(\xi, y) \cdot d \xi & \alpha \beta f(U) 
                 \end{bmatrix}  
             \vecv \ dy \\
         &= \int \vecu^T \vecv \ d\xi + c \int \vecu^T M \vecv_\xi \ d\xi + \int \vecu^T
                 \begin{bmatrix} 
-                    - f'(U)Q \int w(y, \xi)\cdot d \ y & \alpha \beta f'(U) \\
-                    - f(U) \int w(y, \xi) \cdot d y & 0 
+                    - f'(U)Q \int w(y, \xi)\cdot d \ y & \alpha \beta Q f'(U) \\
+                    - f(U) \int w(y, \xi) \cdot d y & \alpha \beta f(U)
                 \end{bmatrix}  
             \vecv \ d\xi \\
     &= \int \vecu^T \bigg( \underbrace{ \vecv + cM\vecv_\xi + 
             \begin{bmatrix} 
-                -f'(U)Q \int w(y, \xi) \cdot \ dy & \alpha \beta f'(U) \\
-                -f(U) \int w(y, \xi) \cdot \ dy & 0
+                -f'(U)Q \int w(y, \xi) \cdot \ dy & \alpha \beta Q f'(U) \\
+                -f(U) \int w(y, \xi) \cdot \ dy & \alpha \beta f(U)
             \end{bmatrix} \vecv }_{\LL^* \vecv} \bigg) \ d\xi \\
     &= \langle \vecu, \LL^* \vecv \rangle
 \end{align*}$$
@@ -196,8 +196,8 @@ $$\begin{align*}
 <p>
 Let $[v_1, v_2]^T$ be in the kernel of $\LL^*$. Then they must satisfy
 $$\begin{align*}
-    -c \mu v_1' &= v_1 -f'(U)Q \int w(y,\xi) v_1(y) \ dy + \alpha \beta f'(U)v_2 \\
-    -c \alpha v_2' &= v_2 - f(U) \int w(y, \xi) v_1(y) \ dy.
+    -c \mu v_1' &= v_1 -f'(U)Q \int w(y,\xi) v_1(y) \ dy + \alpha \beta Q f'(U)v_2 \\
+    -c \alpha v_2' &= v_2 - f(U) \int w(y, \xi) v_1(y) \ dy + \alpha \beta f(U) v_2.
 \end{align*}$$
 Our orthogonality condition now becomes
 $$\begin{align*}
