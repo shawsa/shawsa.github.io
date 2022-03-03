@@ -103,6 +103,11 @@ $$\begin{align*}
     \mu u_t &= -u + \int_\RR w(x, y) q(y,t) f\big(u(y, t)\big) \ dy + \epsilon I(x, t) \\
     \alpha   q_t &= 1 - q - \alpha\beta q f(u).
 \end{align*}$$
+</p>
+
+<button class="accordion">Wave Response Derivation</button>
+<div class="panel">
+<p>
 In characteristic coordinates $\xi = x - ct$ (and with slight abuse of notation) this becomes
 $$\begin{align*}
     -c \mu u_\xi + \mu u_t &= -u + \int_\RR w(\xi, y) q(y,t) f\big(u(y, t)\big) \ dy + \epsilon I(\xi, t) \\
@@ -207,7 +212,54 @@ $$\begin{align*}
     \nu(t) &= - \frac{\int_\RR v_1 \int_0^t I(\xi, \tau) \ d\tau \ d\xi}{\int_\RR \mu U' v_1 + \alpha Q' v_2 \ d\xi}.
 \end{align*}$$
 </p>
+</div>
 
+<p>
+Our wave response function is given by
+$$\begin{align*}
+    \nu(t) &= - \frac{\int_\RR v_1 \int_0^t I(\xi, \tau) \ d\tau \ d\xi}{\int_\RR \mu U' v_1 + \alpha Q' v_2 \ d\xi}
+\end{align*}$$
+where $U, Q$ denote the traveling pulse solution, and $v_1, v_2$ satisfy
+$$\begin{align*}
+    -c \mu v_1' &= v_1 -f'(U)Q \int w(y,\xi) v_1(y) \ dy + \alpha \beta Q f'(U)v_2 \\
+    -c \alpha v_2' &= v_2 - f(U) \int w(y, \xi) v_1(y) \ dy + \alpha \beta f(U) v_2.
+\end{align*}$$
+</p>
+
+<!--************************************************************************-->
+<h2>Heaviside Firing Rate and bi-exponential weight kernel</h2>
+<p>
+Let $f(\cdot) = H(\cdot - \theta)$ and $w(x,y) = \tfrac{1}{2}e^{-|x-y|}$. We have previously computed $U, Q$ for these choices. Note that
+\[
+    f'(U) = \frac{\delta_{-\Delta}(\xi)}{U'(-\Delta)} + \frac{\delta_{0}(\xi)}{U'(0)}.
+\]
+</p>
+
+<p>
+    Rearranging our equation for $v_1'$ above, we have
+$$\begin{align*}
+    v_1' + \frac{1}{c\mu} v_1 &= \frac{1}{c\mu}f'(U)Q \bigg[ \int w(y,\xi) v_1(y) \ dy + \alpha \beta v_2 \bigg] \\
+    \big[ v_1 e^{(1/c\mu) \xi} \big]' &= e^{1/c\mu \xi}\frac{1}{c\mu}f'(U)Q \bigg[ \int w(y,\xi) v_1(y) \ dy + \alpha \beta v_2 \bigg] \\
+    v_1(\xi) &= e^{-(1/c\mu) \xi} \int e^{(1/c\mu) \xi}\frac{1}{c\mu}f'(U)Q \bigg[ \int w(y,\xi) v_1(y) \ dy + \alpha \beta v_2 \bigg] \ d\xi \\
+    &= e^{-(1/c\mu) \xi} \bigg[ A_{-\Delta} H(\xi + \Delta) + A_0 H(\xi) \bigg]
+\end{align*}$$
+where
+$$\begin{align*}
+    A_{-\Delta} &= e^{-\Delta/c\mu}\frac{1}{c\mu} \frac{1}{U'(-\Delta)} Q(-\Delta)\bigg[ \int w(y, -\Delta) v_1(y) \ dy + \alpha \beta v_2(-\Delta) \bigg] \\
+    A_0 &= \frac{1}{c\mu} \frac{1}{U'(0)}Q(0) \bigg[\int w(y, 0) v_1(y) \ dy + \alpha \beta v_2(0) \bigg]
+\end{align*}$$
+Evaluating the integrals, we have
+$$\begin{align*}
+    \int_\RR w(y, 0) v_1(y) \ dy &= \int_\RR \tfrac{1}{2}e^{-|y|}e^{-(1/c\mu) y} \big[ A_{-\Delta}H(y + \Delta) + A_0 H(y) \big] \ dy \\
+        &= \int_{-\Delta}^0 \tfrac{1}{2}e^{y}e^{-(1/c\mu) y} A_{-\Delta} \ dy + \int_0^\infty \tfrac{1}{2}e^{-y}e^{-(1/c\mu) y} (A_{-\Delta} + A_0) \ dy \\
+        &= \tfrac{1}{2}A_{-\Delta} \int_{-\Delta}^0 e^{(c\mu - 1)/c\mu y} \ dy + \tfrac{1}{2}(A_{-\Delta}+A_0) \int_0^\infty e^{-(1+c\mu)/(c\mu) y} \ dy \\
+        &= \tfrac{1}{2}A_{-\Delta} \frac{c\mu}{c\mu-1}(1 - e^{-(c\mu-1)/(c\mu)\Delta}) + \tfrac{1}{2}\frac{c\mu}{1+c\mu}(A_{-\Delta} + A_0) \\
+    \int_\RR w(y,-\Delta) v_1(y) \ dy &= \int_\RR e^{-1/(c\mu)y} \tfrac{1}{2}e^{-|y+\Delta|}\big[ A_{-\Delta} H(y + \Delta) + A_0 + H(y) \big] \ dy \\
+        &= \tfrac{1}{2}e^{-\Delta} \int_{-\Delta}^\infty e^{-(1+c\mu)/(c\mu)y} \big[A_{-\Delta} H(y+\Delta) + A_0 H(y) \big] \ dy \\
+        &= \tfrac{1}{2}e^{-\Delta} \bigg[A_{-\Delta} \int_{-\Delta}^0 e^{-(1+c\mu)/(c\mu)y} \ dy + (A_{-\Delta} + A_0)\int_0^\infty e^{-(1+c\mu)/(c\mu)y} \ dy \bigg] \\
+        &= \tfrac{1}{2}e^{-\Delta} \bigg[A_{-\Delta} \frac{c\mu}{1+c\mu} \big(1 - e^{(1+c\mu)/(c\mu)\Delta}\big) + (A_{-\Delta} + A_0)\frac{c\mu}{1+c\mu} \bigg]
+\end{align*}$$
+</p>
 
 <!--************************************************************************-->
 
