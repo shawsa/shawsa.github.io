@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Ge and Liu 2021</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+<!--#####################################################
+
+Intro                       - 30 sec
+    Me and why I'm here
+    big picture of this paper
+Grazing and behavior        - 2 min
+    Bottom up
+    top down
+    coupling
+Derive PDE                  - 1 min
+    Velocity function
+    hand wave
+Solutions of PDE            - 2 min
+    Show some movies
+    brief numerical discussion
+Varying parameters          - 3 min
+    Reproduce figure 
+Conclusion                  - 1 min
+
+https://shawsa.github.io/presentations/20220310_CSCI5314_Ge_and_Liu_paper/index.html
+
+######################################################-->
+<section>
+    <!--###############-->
+    <section>
+    <p>
+    Zhenpeng Ge and Quan-­Xing Liu - 2021
+    </p>
+    <p>
+        <a href="https://doi.org/10.1111/ele.13928" target="blank">Foraging behaviours lead to spatiotemporal self-similar dynamics in grazing ecosystems</a>
+    </p>
+    <div style="float: right">
+        <p>
+            A summary by Sage Shaw
+        </p>
+        <p>
+            CSCI 5314
+        </p>
+        <p>
+            <a href="https://tinyurl.com/2p8v4f58">https://tinyurl.com/2p8v4f58</a>
+        </p>
+    </div>
+    <div style="display: block; float: left; width: 30%;">
+        <img src="images/qr-code.svg"/>
+    </div>
+    </section>
+    <!--###############-->
+    <section>
+        <h1 id="">About Me</h1>
+        <p>
+            <ul>
+                <li>Program: Applied math PhD</li>
+                <li>Research: Computational Neuroscience</li>
+            </ul>
+        </p>
+        <p class="fragment fade-in">
+            Why CSCI 5314?
+        </p>
+        <aside class="notes">
+            <ul>
+                <li>Math is hard</li>
+                <li>math-bio is harder</li>
+                <li>Cows are not spheres in vaccums</li>
+                <li>Why does it work?</li>
+            </ul>
+            
+        </aside>    
+    </section>
+</section>
+<!--##################################################-->
+<section>
+    <section>
+    <h2 id="">Plant growth and grazing behaviour</h2>
+
+    </section>
+    <!--###############-->
+    <section>
+        <div style="display: block; height: 60%;">
+            <img src="images/fig1.png"/>
+        </div>
+        <aside class="notes">
+            <ul>
+                <li>Figure 1 from Ge and Liu 2021</li>
+                <li>Herbivores don't graze uniformly</li>
+                <li>They cluster and prefer short grass</li>
+                <li>Over time, they affect plant growth</li>
+                <li>Patterns emerge</li>
+            </ul>
+        </aside>
+    </section>
+    <!--###############-->
+    <section>
+        <div style="float: left; width: 50%">
+        <h2 id="">Bottom up model</h2>
+            <p class="fragment fade-in">
+                Sheep eat grass <br/> 
+                $\therefore$ <br/>
+                More sheep <br/>
+                $\Downarrow$<br/> 
+                shorter grass.
+            </p>
+        </div>
+        <div style="float: right; width: 50%">
+            <h2 class="fragment fade-in">Top down model</h2>
+            <p class="fragment fade-in">
+                Sheep prefer short grass<br/>
+                $\therefore$ <br/>
+                Shorter grass <br/>
+                $\Downarrow$<br/>
+                more sheep
+            </p>
+        </div>
+    </section>
+</section>
+<!--##################################################-->
+<section>
+    <section>
+    <h2 id="">The PDE model</h2>
+    <aside class="notes">
+        The paper derives a pde to model this coupling. I'll skip that and jump straight to the non-dimensionalized model.
+    </aside>
+    </section>
+    <!--###############-->
+    <section>
+        <h2 id="">Variables</h2>
+        <ul >
+            <li class="fragment fade-in">$p(\vec{x},t)$ - Plant density</li>
+            <li class="fragment fade-in">$h(\vec{x},t)$ - Herbivore density</li>
+            <li class="fragment fade-in">$v(p)$ - Herbivore velocity</li>
+        </ul>
+    </section>
+    <section>
+        <h2 id="">Velocity</h2>
+        
+        <img src="images/fig2.png"/>
+        <p>
+            $$v(p) = \alpha p^2 + \beta p + 1$$
+        </p>
+        <aside class="notes">
+            <ul>
+                <li>Velocity is parameterized by alpha and beta</li>
+                <li>Quadratic is the simplest non-linear model</li>
+            </ul>
+            
+        </aside>
+    </section>
+    <section>
+        <p>$$
+            p_t = \color{green}{\underbrace{\lambda p(1-p)}_{\text{logistic growth}}} - \color{magenta}{\underbrace{ph}_{\text{predation}}} + \color{lightblue}{\underbrace{\Delta p}_{\text{diffusive spreading}}}
+        $$</p>
+        <p class="fragment fade-in">$$ 
+            h_t = D_0\bigg( \nabla \cdot \color{yellow}{\underbrace{\nabla\big(\overbrace{v^2(p) h}^{\text{2D Brownian motion}} \big)}_{\text{herbivore flux}}}  - \color{pink}{\underbrace{\kappa \Delta^2 h}_{\text{correction?}}} \bigg)
+        $$</p>
+        <p class="fragment fade-in">
+            $\color{pink}{\text{correction}}$? - They cite <a href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.100.218103" target="blank">Tailleur &amp; Cates 2008</a>
+        </p>
+        <p class="fragment fade-in">
+            Sounds fishy... I think they just added hyper-viscocity to make the finite-differences work.
+        </p>
+        <aside class="notes">
+            <ul>
+                <li>Cite's Einstien 1905 for Brownian motion?</li>
+                <li>Tailleur &amp; Cates - Statistical Mechanics of Interacting Run-and-Tumble Bacteria. 4 pages. Doesn't mention high-order correction term.</li>
+                <li></li>
+                
+            </ul>
+            
+        </aside>
+    </section>
+</section>
+<!--##################################################-->
+<section>
+    <section>
+    <h2 id="">Simulation</h2>
+
+    </section>
+    <!--###############-->
+</section>
+<!--##################################################-->
+<section>
+    <section>
+    <h2 id="">Parameter Exploration</h2>
+
+    </section>
+    <!--###############-->
+</section>
+<!--##################################################-->
+<section>
+    <section>
+    <h2 id="">Conclusion</h2>
+
+    </section>
+    <!--###############-->
+</section>
+<!--##################################################-->
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+        <script src="plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ]
+			});
+		</script>
+	</body>
+</html>
