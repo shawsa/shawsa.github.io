@@ -18,25 +18,6 @@
 			<div class="slides">
 <!--#####################################################
 
-Intro                       - 30 sec
-    Me and why I'm here
-    big picture of this paper
-Grazing and behavior        - 2 min
-    Bottom up
-    top down
-    coupling
-Derive PDE                  - 1 min
-    Velocity function
-    hand wave
-Solutions of PDE            - 2 min
-    Show some movies
-    brief numerical discussion
-Varying parameters          - 3 min
-    Reproduce figure 
-Conclusion                  - 1 min
-
-https://shawsa.github.io/presentations/20220310_CSCI5314_Ge_and_Liu_paper/index.html
-
 ######################################################-->
 <section>
     <!--###############-->
@@ -67,21 +48,28 @@ https://shawsa.github.io/presentations/20220310_CSCI5314_Ge_and_Liu_paper/index.
         <h1 id="">About Me</h1>
         <p>
             <ul>
-                <li>Program: Applied math PhD</li>
-                <li>Research: Computational Neuroscience</li>
+                <li>Program: applied math PhD</li>
+                <li>Old research: numerical PDEs</li>
+                <li>New research: computational neuroscience</li>
             </ul>
         </p>
         <p class="fragment fade-in">
             Why CSCI 5314?
         </p>
         <aside class="notes">
+            Why math-bio?
             <ul>
                 <li>Math is hard</li>
-                <li>math-bio is harder</li>
-                <li>Cows are not spheres in vaccums</li>
-                <li>Why does it work?</li>
+                <li>Math-bio is harder</li>
+                <li>To apply math to problems you have to make assumptions.</li>
+                <li>Spherical velociraptors in vacuums come to mind.</li>
+                <li>Often these assumptions are demonstrably false.</li>
+                <li>What false assumptions can still give good/useful/correct results?</li>
+                <li>How can we tell? Is this something deep, or something dangerous?</li>
+                <li>I'm skeptical of things I don't understand, and I'm not an expert.</li>
+                <li>I'll try to ask questions, rather than giving criticisms.</li>
+                <li>Take my criticisms with a pinch of salt. I'm still new to this.</li>
             </ul>
-            
         </aside>    
     </section>
 </section>
@@ -89,11 +77,18 @@ https://shawsa.github.io/presentations/20220310_CSCI5314_Ge_and_Liu_paper/index.
 <section>
     <section>
     <h2 id="">Plant growth and grazing behaviour</h2>
-
+    <aside class="notes">
+        <ul>
+            <li>They're interested in the relationship between grazing herbivores and the plants they eat.</li>
+            <li></li>
+            
+        </ul>
+        
+    </aside>
     </section>
     <!--###############-->
     <section>
-        <img class="r-stretch" src="images/fig2.png"/>
+        <img class="r-stretch" src="images/fig1.png"/>
         <aside class="notes">
             <ul>
                 <li>Figure 1 from Ge and Liu 2021</li>
@@ -119,13 +114,16 @@ https://shawsa.github.io/presentations/20220310_CSCI5314_Ge_and_Liu_paper/index.
         <div style="float: right; width: 50%">
             <h2 class="fragment fade-in">Top down model</h2>
             <p class="fragment fade-in">
-                Sheep prefer short grass<br/>
+                Short grass attracts sheep<br/>
                 $\therefore$ <br/>
                 Shorter grass <br/>
                 $\Downarrow$<br/>
                 more sheep
             </p>
         </div>
+        <aside class="notes">
+            The reality is that these are coupled. How can we model this?
+        </aside>
     </section>
 </section>
 <!--##################################################-->
@@ -142,11 +140,11 @@ https://shawsa.github.io/presentations/20220310_CSCI5314_Ge_and_Liu_paper/index.
         <ul >
             <li class="fragment fade-in">$p(\vec{x},t)$ - Plant density</li>
             <li class="fragment fade-in">$h(\vec{x},t)$ - Herbivore density</li>
-            <li class="fragment fade-in">$v(p)$ - Herbivore velocity</li>
+            <li class="fragment fade-in">$v(p)$ - Herbivore speed</li>
         </ul>
     </section>
     <section>
-        <h2 id="">Velocity</h2>
+        <h2 id="">Speed</h2>
         
         <img class="r-stretch" src="images/fig2.png"/>
         <p>
@@ -154,7 +152,7 @@ https://shawsa.github.io/presentations/20220310_CSCI5314_Ge_and_Liu_paper/index.
         </p>
         <aside class="notes">
             <ul>
-                <li>Velocity is parameterized by alpha and beta</li>
+                <li>Speed is parameterized by alpha and beta</li>
                 <li>Quadratic is the simplest non-linear model</li>
             </ul>
             
@@ -177,10 +175,9 @@ https://shawsa.github.io/presentations/20220310_CSCI5314_Ge_and_Liu_paper/index.
             <ul>
                 <li>Cite's Einstien 1905 for Brownian motion?</li>
                 <li>Tailleur &amp; Cates - Statistical Mechanics of Interacting Run-and-Tumble Bacteria. 4 pages. Doesn't mention high-order correction term.</li>
-                <li></li>
-                
+                <li>Note, the total herbivore mass is concerved.</li>
+                <li>Also, periodic boundary conditions...</li>
             </ul>
-            
         </aside>
     </section>
 </section>
@@ -207,17 +204,21 @@ https://shawsa.github.io/presentations/20220310_CSCI5314_Ge_and_Liu_paper/index.
             <source src="videos/fig2.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <aside class="notes">
-            <ul>
-                <li></li>
-                <li></li>
-            </ul>
-        </aside>
     </section>
     <!--###############-->
     <section>
         <h2 id="">Parameter Exploration</h2>
         <img class="r-stretch" src="images/fig5.png"/>
+        <aside class="notes">
+            <ul>
+                <li>Top, alpha vs herbivore mass</li>
+                <li>Bottom, alpha and initial h vary with position</li>
+                <li>No advection and slow movement due to diffusion</li>
+                <li>We get a visual representation of the kinds of patterns that form</li>
+                <li>Super cool!!!</li>
+            </ul>
+            
+        </aside>    
     </section>
     <!--###############-->
     <section>
@@ -240,6 +241,15 @@ https://shawsa.github.io/presentations/20220310_CSCI5314_Ge_and_Liu_paper/index.
     </section>
     <!--###############-->
     <section>
+            <p style="display: block; text-align: left; color: lightgrey; font-style: italic">
+"Our work suggests that scale-­dependent feedback can be coupled with phase-­separation systems for spatial self-­organization. The traditional view considers scale-dependent feedback and phase separation as two distinct principles that function separately in ecology."
+    </p>
+    <p>
+        <a href="https://doi.org/10.1111/ele.13928" target="blank">Zhenpeng Ge and Quan-­Xing Liu - 2021</a>
+    </p>
+    </section>
+    <!--###############-->
+    <section>
        <div style="float: left; width: 50%">
             <p>
                 References
@@ -254,7 +264,7 @@ https://shawsa.github.io/presentations/20220310_CSCI5314_Ge_and_Liu_paper/index.
         </div>
         <div style="float: left; width: 50%">
             <p>
-               Code: <a href="https://github.com/shawsa/shawsa.github.io/tree/master/presentations/20220310_CSCI5314_Ge_and_Liu_paper/code" target="blank">https://tinyurl.com/2p8sz5tt</a>
+               My code: <a href="https://github.com/shawsa/shawsa.github.io/tree/master/presentations/20220310_CSCI5314_Ge_and_Liu_paper/code" target="blank">https://tinyurl.com/2p8sz5tt</a>
             </p>
             <img src="images/github_qr-code.svg" width=50%/>
        </div>
