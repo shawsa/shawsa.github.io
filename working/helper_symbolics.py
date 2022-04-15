@@ -153,7 +153,10 @@ def get_traveling_pulse(input_params, precision=15, validate=True):
     xi = find_symbol_by_string(expr_dict['U'].free_symbols, 'xi')
     Q = sym.lambdify(xi, recursive_reduce(expr_dict['Q']).evalf(precision, params), modules=sympy_modules)
     U = sym.lambdify(xi, recursive_reduce(expr_dict['U']).evalf(precision, params), modules=sympy_modules)
-    return U, Q
+    Qp = sym.lambdify(xi, recursive_reduce(expr_dict['Q'].diff(xi)).evalf(precision, params), modules=sympy_modules)
+    Up = sym.lambdify(xi, recursive_reduce(expr_dict['U'].diff(xi)).evalf(precision, params), modules=sympy_modules)
+
+    return U, Q, Up, Qp
 
 
 def get_adjoint_nullspace(input_params, precision=15, validate=True):
