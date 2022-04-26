@@ -1,0 +1,337 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Group Presentation - April 26th, 2022</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+        <link rel="stylesheet" href="custom.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+<!--##################################################-->
+<section>
+<section>
+<h2 style="text-transform: capitalize;">Incorporating Synaptic Depression in a Neural Field Model</h2>
+<p>
+    Sage Shaw - CU Boulder
+</p>
+</section>
+
+<!--####################-->
+<section>
+<p>
+Outline
+</p>
+<ul>
+    <li>Kilpatrick &amp; Ermentrout 2012</li>
+    <li>Adaptive Model</li>
+    <li>Wave Responses</li>
+    <li>Where I'm at now</li>
+    <li>What's next?</li>    
+</ul>
+</section>
+</section>
+<!--##################################################-->
+<section>
+    <!--####################-->
+
+    <section>
+    <p>
+    Kilpatrick &amp; Ermentrout 2012
+    </p>
+    <aside class="notes">
+            This is an extension of Zack's work with Bard Eermentrout, so we'll start with that work.
+    </aside>
+    </section>
+    <!--####################-->
+    <section>
+        <img class="r-stretch" src="./images/in_vitro.png">
+        <p>
+        Source: <a href="https://doi.org/10.1523/jneurosci.2278-05.2005" target="blank"> Pinto et al. 2005</a>
+        </p>
+
+        <aside class="notes">
+            <ul>
+                <li>Slices of rats' somatosensory cortex</li>
+                <li>provide electrical stimulus to one region causes neurons to fire repeatedly</li>
+                <li>normaly, feedback mechanisims supress this over time</li>
+                <li>chemical bath that reduces inhibition</li>
+                <li>the result is traveling front solutions</li>
+                <li>This can be modeled with an integro-differential equation</li>
+            </ul>
+        </aside>
+        
+    </section>
+    <!--####################-->
+    <section>
+        <p>
+            One dimensional model:
+        </p>
+        <p>
+            $\color{gray}{\mu} \color{green}{u}_t = - \color{green}{u} + \int_\mathbb{R} \color{yellow}{w}(x,y) \cdot \color{magenta}{f}[ \color{green}{u}(y) ] \ dy$
+        </p>
+        <p>
+            <ul>
+                <li>$\color{green}{u}(x,t)$ - Measure of neuronal activity</li>
+                <li>$\color{gray}{\mu}$ - time constant</li>
+                <li>$\color{yellow}{w}(x,y)$ - A weight function describing spatial connectivity</li>
+                <li>$\color{magenta}{f}$ - A non-linear firing-rate function </li>
+            </ul>
+            
+        </p>
+        <aside class="notes">
+            <ul>
+                <li>neural field model</li>
+                <li>u(x,t) measures "activity" - think firing rate</li>
+                <li>mu is a time constant</li>
+                <li>natural decay, plus stimuls due to convolution</li>
+                <li>w is a weight kernel representing connectivity</li>
+                <li>f is a firing rate function - converts presynaptic firing rate to post synaptic stimulus</li>
+                <li>enough activity will self sustain and propagate outwards</li>
+                
+            </ul>
+            
+        </aside>
+    </section>
+    <!--####################-->
+    <section>
+        <p>
+            $\mu u_t = -u + \int_{\mathbb{R}} \frac{1}{2}e^{-|x-y|}\cdot H[u(y) - \theta] \ dy$
+        </p>
+        <img src="./images/traveling_front.png">
+        <aside class="notes">
+            <ul>
+                <li>exponential weight function</li>
+                <li>Heaviside firing rate with threshold theta</li>
+                <li>In the 2012 paper, they studied the wave response.</li>
+            </ul>
+            
+        </aside>
+    </section>
+    <!--####################-->
+    <section>
+        <p>
+            $\mu u_t = -u + \int_{\mathbb{R}} \frac{1}{2}e^{-|x-y|}\cdot H[u(y) - \theta] \ dy + \color{green}{I(x,t)}$
+        </p>
+        <p>
+            $I(x,t) = 0.15 \delta(t - 1)$
+        </p>
+        <video class="r-stretch" controls loop muted>
+            <source src="./images/front_response.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <aside class="notes">
+            <ul>
+                <li>stimuls: constant in space, delta in time</li>
+                <li>after stimulus decays back to the traveling wave solution</li>
+                <li>but shifted. We call this shift the wave response due to the stimulus I.</li>
+            </ul>
+                
+        </aside>
+    </section>
+</section>
+<!--##################################################-->
+<section>
+    <!--####################-->
+    <section>
+    <p>
+    Previous attempt - Hyperpolarizing Adaptation Current
+    </p>
+    </section>
+    <!--####################-->
+    <section data-auto-animate>
+    <p>
+        Adaptive model:
+    </p>
+    <p data-id="models">
+        \begin{align*}
+            \color{gray}{\mu} \color{green}{u}_t &= -\color{green}{u} + \color{yellow}{w} * \color{magenta}{f}(\color{green}{u}-a) \\
+            \color{gray}{\alpha} a_t & = -a + \color{gray}{\gamma} \color{magenta}{f}(\color{green}{u} - a)
+        \end{align*}
+    </p>
+    <p>
+        <ul>
+            <li>$\color{green}{u}(x,t)$ - Measure of electrical activity</li>
+            <li>$\color{yellow}{w}(x,y)$ - Weight function</li>
+            <li>$\color{magenta}{f}$ - firing-rate function </li>
+            <li>$a(x,t)$ - hyper-polarizing adaptation</li>
+            <li>$\color{gray}{\mu}, \color{gray}{\alpha}$ - time constants</li>
+            <li>$\color{gray}{\gamma}$ - adaptation strength constant</li>
+        </ul>
+        
+    </p>
+    </section>
+    <!--####################-->
+    <section data-auto-animate>
+    <video class="r-stretch" controls loop muted>
+        <source src="./images/adaptivity_example.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    </section>
+    <!--####################-->
+    <section data-auto-animate>
+    <p>
+        Traveling pulse solution:
+    </p>
+    <ul>
+        <li>Constant along characteristics: $u(x,t) = U(\xi)$ where $\xi = x - ct$</li>
+        <li>Crosses threshold twice: $U(0)-A(0) = U(-\Delta)-A(-\Delta) = \theta$</li>
+        <li>Vanishing boundary conditions $\lim\limits_{\xi \to \pm \infty} U(\xi) = \lim\limits_{\xi \to \pm \infty} A(\xi) = 0$.</li>
+    </ul>
+    <p>
+        This gives us a coupled system of first order ODEs, with piecewise smooth forcing terms.
+    </p>
+    </section>
+    <!--####################-->
+    <section data-auto-animate>
+    <p>
+        Traveling Pulse Solution
+    </p>
+    <p style="font-size:12pt">
+    $$\begin{align*}
+	u(x,t) = U{\left(\xi \right)} &= \begin{cases} \frac{\left(- \frac{e^{\Delta}}{\mu c - 1} + \frac{1}{\mu c - 1}\right) e^{\xi}}{2} + \frac{\left(\mu^{2} c^{2} e^{\frac{\Delta}{\mu c}} - \mu^{2} c^{2} - \frac{\mu c}{2} + \theta \left(\mu^{2} c^{2} - 1\right) + \frac{\left(\mu c - 1\right) e^{- \Delta}}{2} + \frac{1}{2}\right) e^{\frac{\xi}{\mu c}}}{\mu^{2} c^{2} - 1} & \text{for}\: \xi < - \Delta \\\left(\theta + \frac{- \mu^{2} c^{2} - \frac{\mu c}{2} + \left(\frac{\mu c}{2} - \frac{1}{2}\right) e^{- \Delta} + \frac{1}{2}}{\mu^{2} c^{2} - 1}\right) e^{\frac{\xi}{\mu c}} + 1 - \frac{e^{- \Delta} e^{- \xi}}{2 \left(\mu c + 1\right)} + \frac{e^{\xi}}{2 \left(\mu c - 1\right)} & \text{for}\: -\Delta \le \xi < 0 \\\frac{\left(1 - e^{- \Delta}\right) e^{- \xi}}{2 \left(\mu c + 1\right)} & 0 \le \xi \end{cases}\\
+	a(x,t) = A{\left(\xi \right)} &= \begin{cases} \gamma \left(e^{\frac{\Delta}{\alpha c}} - 1\right) e^{\frac{-\xi}{\alpha c}} & \text{for}\: \xi < - \Delta \\\gamma \left(1 - e^{\frac{-\xi}{\alpha c}}\right) & \text{for}\: - \Delta \le \xi < 0 \\0 & 0 \le \xi \end{cases}\\
+	\xi &= x - c t\\
+	e^{\Delta} &= - \frac{1}{2 \theta \left(\mu c + 1\right) - 1},
+\end{align*}$$
+where $c$ is given implicitly by
+$$\begin{align*}
+	0 &= - \gamma \left(1 - \left(- \frac{1}{2 \theta \left(\mu c + 1\right) - 1}\right)^{- \frac{1}{\alpha c}}\right) - \theta + 1 - \frac{1}{2 \left(\mu c + 1\right)} + \frac{2 \theta \left(- \mu c - 1\right) + 1}{2 \left(\mu c - 1\right)} + \left(- \frac{1}{2 \theta \left(\mu c + 1\right) - 1}\right)^{- \frac{1}{\mu c}} \left(\theta - \frac{\mu^{2} c^{2} + \frac{\mu c}{2} - \left(\frac{\mu c}{2} - \frac{1}{2}\right) \left(2 \theta \left(- \mu c - 1\right) + 1\right) - \frac{1}{2}}{\mu^{2} c^{2} - 1}\right).
+\end{align*}$$
+    </section>
+
+    <!--####################-->
+    <section data-auto-animate>
+    <p>
+    The next steps involve linearzing the model about the traveling pulse solution. This resulted in a $\delta$ coefficient in the system of equations. We were stuck trying to solve it.
+    </p>
+
+    <p data-id="models">
+        \begin{align*}
+            \color{gray}{\mu} \color{green}{u}_t &= -\color{green}{u} + \color{yellow}{w} * \color{magenta}{f}(\color{green}{u}-a) \\
+            \color{gray}{\alpha} a_t & = -a + \color{gray}{\gamma} \color{magenta}{f}(\color{green}{u} - a)
+        \end{align*}
+    </p>
+    </section>
+
+</section>
+
+<!--##################################################-->
+<section>
+    <!--####################-->
+    <section>
+    <p>
+    New Attempt - Syanptic Depression
+    </p>
+    </section>
+    <!--####################-->
+    <section data-auto-animate>
+    <p data-id="models">
+        \begin{align*}
+            \color{gray}{\mu} \color{green}{u}_t &= -\color{green}{u} + \int_\mathbb{R} \color{yellow}{w}(x,y) * q(y,t) \color{magenta}{f}\big[\color{green}{u}(y,t)\big] \ dy + \epsilon I(x,t) \\
+            \color{gray}{\alpha} q_t & = 1 - q - \color{gray}{\alpha}\color{cyan}{\beta} q \color{magenta}{f}(\color{green}{u})
+        \end{align*}
+    </p>
+    <p>
+        <ul>
+            <li>$\color{green}{u}(x,t)$ - Measure of activity</li>
+            <li>$\color{yellow}{w}(x,y)$ - Weight kernel</li>
+            <li>$\color{magenta}{f}$ - firing-rate function </li>
+            <li>$q(x,t)$ - Synaptic resources</li>
+            <li>$\color{cyan}{\beta}$ - synaptic depletion rate</li>
+            <li>$\color{gray}{\mu}, \color{gray}{\alpha}$ - time constants</li>
+        </ul>
+        
+    </p>
+    </section>
+    <!--####################-->
+    <section data-auto-animate>
+    <video class="r-stretch" controls loop muted>
+        <source src="./images/sd_jump.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <!--video class="r-stretch" controls loop muted>
+        <source src="./images/sd_jump.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video-->
+    </section>
+
+    <!--####################-->
+    <section data-auto-animate>
+    <p>
+    Our wave response function is given by
+    $$\begin{align*}
+        \nu(t) &= - \frac{\int_\mathbb{R} v_1 \int_0^t I(\xi, \tau) \ d\tau \ d\xi}{\int_\mathbb{R} \mu U' v_1 + \alpha Q' v_2 \ d\xi}
+    \end{align*}$$
+    where $U, Q$ denote the traveling pulse solution, and $v_1, v_2$ satisfy
+    $$\begin{align*}
+        -c \mu v_1' &= v_1 -f'(U)Q \int w(y,\xi) v_1(y) \ dy + \alpha \beta Q f'(U)v_2 \\
+        -c \alpha v_2' &= v_2 - f(U) \int w(y, \xi) v_1(y) \ dy + \alpha \beta f(U) v_2.
+    \end{align*}$$
+    </p>
+    </section>
+    <!--####################-->
+    <section data-auto-animate>
+    <img class="r-stretch" src="images/sd_repsonse.png">
+    </section>
+    <!--####################-->
+</section>
+<!--##################################################-->
+<section>
+<p>
+What's next?
+</p>
+<ul>
+    <li>Try this two-sided linearization in the adjoint method.</li>
+    <li>Finish the stability analysis</li>
+    <li>Address the non-uniquness of solutions</li>
+    <li>Large stimuli</li>
+    <li>Wave genesis</li>
+    <li>2D</li>
+</ul>
+
+
+</section>
+<!--##################################################-->
+<section>
+<p>
+References
+</p>
+<ul>
+    <li><a href="https://doi.org/10.1523/jneurosci.2278-05.2005" target="blank"> Pinto et al. 2005</a></li>
+    <li><a href="https://doi.org/10.1103/PhysRevE.85.021910" target="blank">Kilpatrick and Ermentrout 2012</a></li>
+</ul>
+
+
+</section>
+<!--##################################################-->
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+        <script src="plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ]
+			});
+		</script>
+	</body>
+</html>
