@@ -228,6 +228,9 @@ $$\begin{align*}
 
 <!--************************************************************************-->
 <h2>Heaviside Firing Rate and bi-exponential weight kernel</h2>
+Choose $f(\cdot) = H(\cdot - \theta)$ and $w(x,y) = \tfrac{1}{2} e^{-|x - y|}$.
+<button class="accordion">Nullspace Derivation</button>
+<div class="panel">
 <p>
 We seek $v_1, v_2 \in L^2(\mathbb{R})$ such that
 $$
@@ -247,27 +250,27 @@ Choosing $f(\cdot) = H(\cdot - \theta)$ and $w(x,y) = \tfrac{1}{2} e^{-|x - y|}$
 $$
 \begin{align*}
     v_1' + \frac{1}{c\mu} v_1 &= 
-        \frac{1}{c\mu}\bigg( \frac{\delta(\xi)}{U'(0)} + \frac{\delta(\xi + \Delta)}{U'(-\Delta)} \bigg)Q \bigg[ \int_{\mathbb{R}} \tfrac{1}{2} e^{-|y - \xi|} v_1(y) \ dy - \alpha \beta v_2\bigg] \\
+        \frac{1}{c\mu}\bigg( \frac{\delta(\xi)}{|U'(0)|} + \frac{\delta(\xi + \Delta)}{|U'(-\Delta)|} \bigg)Q \bigg[ \int_{\mathbb{R}} \tfrac{1}{2} e^{-|y - \xi|} v_1(y) \ dy - \alpha \beta v_2\bigg] \\
     \big[ e^{\frac{1}{c\mu} \xi} v_1 \big]' &=  
-         \frac{1}{c\mu}\bigg( \frac{\delta(\xi)}{U'(0)} + \frac{\delta(\xi + \Delta)}{U'(-\Delta)} \bigg)Q e^{\frac{1}{c\mu} \xi} \bigg[ \int_{\mathbb{R}} \tfrac{1}{2} e^{-|y - \xi|} v_1(y) \ dy - \alpha \beta v_2\bigg] \\
+         \frac{1}{c\mu}\bigg( \frac{\delta(\xi)}{|U'(0)|} + \frac{\delta(\xi + \Delta)}{|U'(-\Delta)|} \bigg)Q e^{\frac{1}{c\mu} \xi} \bigg[ \int_{\mathbb{R}} \tfrac{1}{2} e^{-|y - \xi|} v_1(y) \ dy - \alpha \beta v_2\bigg] \\
     e^{\frac{1}{c\mu} \xi} v_1 &= 
-        A_{-\infty} + \frac{1}{c\mu}\frac{Q(0)}{U'(0)} \bigg[ \int_{\mathbb{R}} \tfrac{1}{2}e^{-|y|} v_1(y) \ dy + \alpha \beta v_2(0) \bigg] H(\xi) + \frac{1}{c\mu} e^{-\frac{\Delta}{c\mu}} \frac{Q(-\Delta)}{U'(-\Delta)} \bigg[ \int_{\mathbb{R}} \tfrac{1}{2}e^{-|y + \Delta|} v_1(y) \ dy + \alpha \beta v_2(-\Delta) \bigg] H(\xi + \Delta) \\
+        A_{-\infty} + \frac{1}{c\mu}\frac{Q(0)}{|U'(0)|} \bigg[ \int_{\mathbb{R}} \tfrac{1}{2}e^{-|y|} v_1(y) \ dy - \alpha \beta v_2(0) \bigg] H(\xi) + \frac{1}{c\mu} e^{-\frac{\Delta}{c\mu}} \frac{Q(-\Delta)}{|U'(-\Delta)|} \bigg[ \int_{\mathbb{R}} \tfrac{1}{2}e^{-|y + \Delta|} v_1(y) \ dy - \alpha \beta v_2(-\Delta) \bigg] H(\xi + \Delta) \\
     v_1 &= 
-        A_{-\infty}e^{-\frac{1}{c\mu} \xi}  + \underbrace{\frac{1}{c\mu}\frac{Q(0)}{U'(0)} \bigg[ \int_{\mathbb{R}} \tfrac{1}{2}e^{-|y|} v_1(y) \ dy + \alpha \beta v_2(0) \bigg]}_{A_{0}} e^{-\frac{1}{c\mu} \xi} H(\xi) + \underbrace{\frac{1}{c\mu} e^{-\frac{\Delta}{c\mu}} \frac{Q(-\Delta)}{U'(-\Delta)} \bigg[ \int_{\mathbb{R}} \tfrac{1}{2}e^{-|y + \Delta|} v_1(y) \ dy + \alpha \beta v_2(-\Delta) \bigg]}_{A_{-\Delta}} e^{-\frac{1}{c\mu} \xi} H(\xi + \Delta) \\
+        A_{-\infty}e^{-\frac{1}{c\mu} \xi}  + \underbrace{\frac{1}{c\mu}\frac{Q(0)}{|U'(0)|} \bigg[ \int_{\mathbb{R}} \tfrac{1}{2}e^{-|y|} v_1(y) \ dy - \alpha \beta v_2(0) \bigg]}_{A_{0}} e^{-\frac{1}{c\mu} \xi} H(\xi) + \underbrace{\frac{1}{c\mu} e^{-\frac{\Delta}{c\mu}} \frac{Q(-\Delta)}{|U'(-\Delta)|} \bigg[ \int_{\mathbb{R}} \tfrac{1}{2}e^{-|y + \Delta|} v_1(y) \ dy - \alpha \beta v_2(-\Delta) \bigg]}_{A_{-\Delta}} e^{-\frac{1}{c\mu} \xi} H(\xi + \Delta) \\
     v_1(\xi) &= A_{-\infty} e^{-\frac{1}{c\mu} \xi} + A_{-\Delta} e^{-\frac{1}{c\mu} \xi} H(\xi + \Delta) + A_{0} e^{-\frac{1}{c\mu} \xi}H(\xi)
 \end{align*}
 $$
 For $v_1$ to be bounded, we need $0 = \lim\limits_{\xi \to -\infty} v_1(\xi) \implies A_{-\infty} = 0$. This gives two consistency conditions
 $$
 \begin{align*}
-    A_{-\Delta} &= \underbrace{\frac{1}{c\mu} e^{-\frac{\Delta}{c\mu}} \frac{Q(-\Delta)}{U'(-\Delta)}}_{D_{-\Delta}} \bigg[ \int \tfrac{1}{2}e^{-|y + \Delta|} \bigg( A_{-\Delta} e^{-\frac{1}{c\mu} y} H(y + \Delta) + A_{0} e^{-\frac{1}{c\mu} y}H(y) \bigg) \ dy + \alpha \beta v_2(-\Delta) \bigg] \\
-    A_{0} &= \underbrace{\frac{1}{c\mu}\frac{Q(0)}{U'(0)}}_{D_0} \bigg[ \int \tfrac{1}{2}e^{-|y|} \bigg( A_{-\Delta} e^{-\frac{1}{c\mu} y} H(y + \Delta) + A_{0} e^{-\frac{1}{c\mu} y}H(y) \bigg) \ dy + \alpha \beta v_2(0) \bigg]
+    A_{-\Delta} &= \underbrace{\frac{1}{c\mu} e^{-\frac{\Delta}{c\mu}} \frac{Q(-\Delta)}{|U'(-\Delta)|}}_{D_{-\Delta}} \bigg[ \int \tfrac{1}{2}e^{-|y + \Delta|} \bigg( A_{-\Delta} e^{-\frac{1}{c\mu} y} H(y + \Delta) + A_{0} e^{-\frac{1}{c\mu} y}H(y) \bigg) \ dy - \alpha \beta v_2(-\Delta) \bigg] \\
+    A_{0} &= \underbrace{\frac{1}{c\mu}\frac{Q(0)}{|U'(0)|}}_{D_0} \bigg[ \int \tfrac{1}{2}e^{-|y|} \bigg( A_{-\Delta} e^{-\frac{1}{c\mu} y} H(y + \Delta) + A_{0} e^{-\frac{1}{c\mu} y}H(y) \bigg) \ dy - \alpha \beta v_2(0) \bigg]
 \end{align*}
 $$
 or simply
 \begin{align*}
-    0 &= \frac{A_{0} D_{-\Delta} \mu c e^{\frac{\Delta}{\mu c}}}{2 \mu c e^{\Delta} e^{\frac{\Delta}{\mu c}} + 2 e^{\Delta} e^{\frac{\Delta}{\mu c}}} + A_{-\Delta} \left(\frac{D_{-\Delta} \mu c e^{\frac{\Delta}{\mu c}}}{2 \mu c + 2} - 1\right) + D_{-\Delta} \alpha \beta \operatorname{v_{2}}{\left(- \Delta \right)} \\
-0 &= A_{0} \left(\frac{D_{0} \mu c}{2 \mu c + 2} - 1\right) + A_{-\Delta} \left(- \frac{D_{0} \mu c e^{\frac{\Delta}{\mu c}}}{2 \mu c e^{\Delta} - 2 e^{\Delta}} + \frac{D_{0} \mu c}{2 \mu c + 2} + \frac{D_{0} \mu c}{2 \mu c - 2}\right) + D_{0} \alpha \beta \operatorname{v_{2}}{\left(0 \right)}
+    0 &= \frac{A_{0} D_{-\Delta} \mu c e^{\frac{\Delta}{\mu c}}}{2 \mu c e^{\Delta} e^{\frac{\Delta}{\mu c}} + 2 e^{\Delta} e^{\frac{\Delta}{\mu c}}} + A_{-\Delta} \left(\frac{D_{-\Delta} \mu c e^{\frac{\Delta}{\mu c}}}{2 \mu c + 2} - 1\right) - D_{-\Delta} \alpha \beta \operatorname{v_{2}}{\left(- \Delta \right)} \\
+    0 &= A_{0} \left(\frac{D_{0} \mu c}{2 \mu c + 2} - 1\right) + A_{-\Delta} \left(- \frac{D_{0} \mu c e^{\frac{\Delta}{\mu c}}}{2 \mu c e^{\Delta} - 2 e^{\Delta}} + \frac{D_{0} \mu c}{2 \mu c + 2} + \frac{D_{0} \mu c}{2 \mu c - 2}\right) - D_{0} \alpha \beta \operatorname{v_{2}}{\left(0 \right)}
 \end{align*}
 </p>
 
@@ -285,8 +288,8 @@ This integral on the rhs is then
 $$A_{0} E_{0} e^{\xi} + A_{-\Delta} E_{1} e^{- \xi} + A_{-\Delta} E_{2} e^{- \frac{\xi}{\mu c}}$$
 for
 \begin{align*}
-E_{0} &= \frac{\mu c}{2 \left(\mu c + 1\right)}\\
-E_{1} &= - \frac{\mu c e^{- \Delta + \frac{\Delta}{\mu c}}}{2 \mu c - 2}\\
+E_{0} &= \frac{\mu c}{2 \left(\mu c + 1\right)} \\
+E_{1} &= - \frac{\mu c e^{- \Delta + \frac{\Delta}{\mu c}}}{2 \mu c - 2} \\
 E_{2} &= \frac{\mu^{2} c^{2}}{\mu^{2} c^{2} - 1}.
 \end{align*}
 </p>
@@ -302,17 +305,46 @@ Notice here that we have introduced another unknown variable $C_1$.
 <p>
     Enforcing continuity of $v_2$ gives the final consistency condition $v_2(-\Delta) = 0$. Together these become
 \begin{align*}
-    0 &= \frac{A_{0} D_{-\Delta} \mu c e^{\frac{\Delta}{\mu c}}}{2 \mu c e^{\Delta} e^{\frac{\Delta}{\mu c}} + 2 e^{\Delta} e^{\frac{\Delta}{\mu c}}} + A_{-\Delta} \left(\frac{D_{-\Delta} \mu c e^{\frac{\Delta}{\mu c}}}{2 \mu c + 2} - 1\right) \\
-    0 &= A_{0} \left(\frac{D_{0} E_{0} \alpha \beta}{\alpha \beta + \alpha c + 1} + \frac{D_{0} \mu c}{2 \mu c + 2} - 1\right) + A_{-\Delta} \left(- \frac{D_{0} E_{1} \alpha \beta}{- \alpha \beta + \alpha c - 1} + \frac{D_{0} E_{2} \alpha \beta \mu}{\alpha \beta \mu - \alpha + \mu} - \frac{D_{0} \mu c e^{\frac{\Delta}{\mu c}}}{2 \mu c e^{\Delta} - 2 e^{\Delta}} + \frac{D_{0} \mu c}{2 \mu c + 2} + \frac{D_{0} \mu c}{2 \mu c - 2}\right) + C_{1} D_{0} \alpha \beta \\
+    0 &= \frac{A_{0} D_{-\Delta} \mu c e^{\frac{\Delta}{\mu c}}}{2 \mu c e^{\Delta} e^{\frac{\Delta}{\mu c}} + 2 e^{\Delta} e^{\frac{\Delta}{\mu c}}} + A_{-\Delta} \left(\frac{D_{-\Delta} \mu c e^{\frac{\Delta}{\mu c}}}{2 \mu c + 2} - 1\right)\\
+    0 &= A_{0} \left(- \frac{D_{0} E_{0} \alpha \beta}{\alpha \beta + \alpha c + 1} + \frac{D_{0} \mu c}{2 \mu c + 2} - 1\right) + A_{-\Delta} \left(\frac{D_{0} E_{1} \alpha \beta}{- \alpha \beta + \alpha c - 1} - \frac{D_{0} E_{2} \alpha \beta \mu}{\alpha \beta \mu - \alpha + \mu} - \frac{D_{0} \mu c e^{\frac{\Delta}{\mu c}}}{2 \mu c e^{\Delta} - 2 e^{\Delta}} + \frac{D_{0} \mu c}{2 \mu c + 2} + \frac{D_{0} \mu c}{2 \mu c - 2}\right) - C_{1} D_{0} \alpha \beta\\
     0 &= \frac{A_{0} E_{0}}{\alpha \beta e^{\Delta} + \alpha c e^{\Delta} + e^{\Delta}} + A_{-\Delta} \left(- \frac{E_{1} e^{\Delta}}{- \alpha \beta + \alpha c - 1} + \frac{E_{2} \mu e^{\frac{\Delta}{\mu c}}}{\alpha \beta \mu - \alpha + \mu}\right) + C_{1} e^{\frac{\Delta}{\alpha c}} e^{\frac{\Delta \beta}{c}}
 \end{align*}
-which is linear in $A_{-\Delta}, A_0, C_1$.
+which is linear in $A_{-\Delta}, A_0, C_1$ and amounts to solving a $3 \times 3$ eigenvalue problem.
+</p>
+</div>
+
+<p>
+    Our nullspace is given by
+\begin{align*}
+    v_1(\xi) &= A_{-\Delta} e^{-\frac{1}{c\mu} \xi} H(\xi + \Delta) + A_{0} e^{-\frac{1}{c\mu} \xi}H(\xi) \\
+    v_2(\xi) &= \begin{cases} 0 & \text{for}\: \Delta < - \xi \\\frac{A_{0} E_{0} e^{\xi}}{\alpha \beta + \alpha c + 1} - \frac{A_{-\Delta} E_{1} e^{- \xi}}{- \alpha \beta + \alpha c - 1} + \frac{A_{-\Delta} E_{2} \mu e^{- \frac{\xi}{\mu c}}}{\alpha \beta \mu - \alpha + \mu} + C_{1} e^{\frac{\xi \left(- \beta - \frac{1}{\alpha}\right)}{c}} & \text{for}\: \xi < 0 \\\left(\frac{A_{0} E_{0}}{\alpha \beta + \alpha c + 1} - \frac{A_{-\Delta} E_{1}}{- \alpha \beta + \alpha c - 1} + \frac{A_{-\Delta} E_{2} \mu}{\alpha \beta \mu - \alpha + \mu} + C_{1}\right) e^{- \frac{\xi}{\mu c}} & \text{otherwise} \end{cases}
+\end{align*}
+where $A_{-\Delta}, A_0$ and $C_1$ are non-trivial solutions to the linear system
+\begin{align*}
+    0 &= \frac{A_{0} D_{-\Delta} \mu c e^{\frac{\Delta}{\mu c}}}{2 \mu c e^{\Delta} e^{\frac{\Delta}{\mu c}} + 2 e^{\Delta} e^{\frac{\Delta}{\mu c}}} + A_{-\Delta} \left(\frac{D_{-\Delta} \mu c e^{\frac{\Delta}{\mu c}}}{2 \mu c + 2} - 1\right)\\
+    0 &= A_{0} \left(- \frac{D_{0} E_{0} \alpha \beta}{\alpha \beta + \alpha c + 1} + \frac{D_{0} \mu c}{2 \mu c + 2} - 1\right) + A_{-\Delta} \left(\frac{D_{0} E_{1} \alpha \beta}{- \alpha \beta + \alpha c - 1} - \frac{D_{0} E_{2} \alpha \beta \mu}{\alpha \beta \mu - \alpha + \mu} - \frac{D_{0} \mu c e^{\frac{\Delta}{\mu c}}}{2 \mu c e^{\Delta} - 2 e^{\Delta}} + \frac{D_{0} \mu c}{2 \mu c + 2} + \frac{D_{0} \mu c}{2 \mu c - 2}\right) - C_{1} D_{0} \alpha \beta\\
+    0 &= \frac{A_{0} E_{0}}{\alpha \beta e^{\Delta} + \alpha c e^{\Delta} + e^{\Delta}} + A_{-\Delta} \left(- \frac{E_{1} e^{\Delta}}{- \alpha \beta + \alpha c - 1} + \frac{E_{2} \mu e^{\frac{\Delta}{\mu c}}}{\alpha \beta \mu - \alpha + \mu}\right) + C_{1} e^{\frac{\Delta}{\alpha c}} e^{\frac{\Delta \beta}{c}}
+\end{align*}
+with
+\begin{align*}
+E_{0} &= \frac{\mu c}{2 \left(\mu c + 1\right)} \\
+E_{1} &= - \frac{\mu c e^{- \Delta + \frac{\Delta}{\mu c}}}{2 \mu c - 2} \\
+E_{2} &= \frac{\mu^{2} c^{2}}{\mu^{2} c^{2} - 1} \\
+D_{-\Delta} &= \frac{1}{c\mu} e^{-\frac{\Delta}{c\mu}} \frac{Q(-\Delta)}{|U'(-\Delta)|} \\
+D_{0} &= \frac{1}{c\mu} \frac{Q(0)}{|U'(0)|}
+\end{align*}
 </p>
 
-<figure>
-    <img src="../working/nullspace.png" width="100%"/>
-    <caption><b>Fig 1.</b> The asymptotic approximation of the wave response is not agreeing with the numerical simulations.</caption>
-</figure>
+<p>
+    Below is a simulation showing a traveling pulse with parameters
+    \begin{align*}
+        \theta &= 0.2\\
+        \alpha &= 20\\
+        \beta &= 0.25\\
+        \mu &= 1
+    \end{align*}
+responding to the stimulus $\epsilon I(x,t) = \epsilon \delta(t - 1)$. The animation and Figure 1 show the response and our asymptotic approximation for $\epsilon = 0.1$. Figure 2 shows the response and our approximation for $\epsilon = 0.01$. We see that the asymptotic approximation converges to the simulated response as $\epsilon \to 0$.
+</p>
 
 <video controls autoplay muted loop>
     <source src="../working/synaptic_depression_perturbation.mp4" type="video/mp4">
@@ -321,7 +353,12 @@ which is linear in $A_{-\Delta}, A_0, C_1$.
 
 <figure>
     <img src="../working/wave_response.png" width="100%"/>
-    <caption><b>Fig 1.</b> The asymptotic approximation of the wave response is not agreeing with the numerical simulations.</caption>
+    <caption><b>Fig 1.</b> The asymptotic approximation of the wave response to $\epsilon I(x, t) = 0.1 \delta(t - 1)$.</caption>
+</figure>
+
+<figure>
+    <img src="../working/wave_response_small.png" width="100%"/>
+    <caption><b>Fig 2.</b> The asymptotic approximation of the wave response to $\epsilon I(x, t) = 0.01 \delta(t - 1)$.</caption>
 </figure>
 
 <!--************************************************************************-->
