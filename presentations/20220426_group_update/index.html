@@ -33,10 +33,8 @@ Outline
 </p>
 <ul>
     <li>Kilpatrick &amp; Ermentrout 2012</li>
-    <li>Adaptive Model</li>
-    <li>Wave Responses</li>
-    <li>Where I'm at now</li>
-    <li>What's next?</li>    
+    <li>Last time - Hyperpolarizing Adaptation</li>
+    <li>Current -Synaptic Depression</li>
 </ul>
 </section>
 </section>
@@ -81,7 +79,7 @@ Outline
         </p>
         <p>
             <ul>
-                <li>$\color{green}{u}(x,t)$ - Measure of neuronal activity</li>
+                <li>$\color{green}{u}(x,t)$ - Measure of neural activity</li>
                 <li>$\color{gray}{\mu}$ - time constant</li>
                 <li>$\color{yellow}{w}(x,y)$ - A weight function describing spatial connectivity</li>
                 <li>$\color{magenta}{f}$ - A non-linear firing-rate function </li>
@@ -154,8 +152,8 @@ Outline
     </p>
     <p data-id="models">
         \begin{align*}
-            \color{gray}{\mu} \color{green}{u}_t &= -\color{green}{u} + \color{yellow}{w} * \color{magenta}{f}(\color{green}{u}-a) \\
-            \color{gray}{\alpha} a_t & = -a + \color{gray}{\gamma} \color{magenta}{f}(\color{green}{u} - a)
+            \color{gray}{\mu} \color{green}{u}_t &= -\color{green}{u} + \int_\mathbb{R} \color{yellow}{w}(x,y) \color{magenta}{f}\big[\color{green}{u}(y)-\color{cyan}{a}(y)\big] \ dy\\
+            \color{gray}{\alpha} \color{cyan}{a}_t & = -\color{cyan}{a} + \color{gray}{\gamma} \color{magenta}{f}(\color{green}{u} - \color{cyan}{a})
         \end{align*}
     </p>
     <p>
@@ -163,7 +161,7 @@ Outline
             <li>$\color{green}{u}(x,t)$ - Measure of electrical activity</li>
             <li>$\color{yellow}{w}(x,y)$ - Weight function</li>
             <li>$\color{magenta}{f}$ - firing-rate function </li>
-            <li>$a(x,t)$ - hyper-polarizing adaptation</li>
+            <li>$\color{cyan}{a}(x,t)$ - hyper-polarizing adaptation</li>
             <li>$\color{gray}{\mu}, \color{gray}{\alpha}$ - time constants</li>
             <li>$\color{gray}{\gamma}$ - adaptation strength constant</li>
         </ul>
