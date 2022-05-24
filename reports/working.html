@@ -172,6 +172,7 @@ $$
 Since $Q' = 0$ when $\xi > 0$, this is sufficient to calculate the approximate wave response.
 </p>
 
+<p>
 In particular,
 \begin{align*}
     \int_\mathbb{R} U' v_1 \ d \xi &= \int_0^\infty -\theta e^{-\xi}e^{-\frac{1}{c\mu}\xi} \ d\xi \\
@@ -184,6 +185,25 @@ Thus
 \begin{align*}
     \nu(t) &= \frac{\int_0^\infty e^{-\frac{1}{c\mu}\xi} \int_0^t I(\xi, \tau) \ d\tau \ d\xi}{ \frac{\theta c \mu^2}{1+c\mu} - \frac{\mu \alpha \beta c}{2(1+c\mu)(1+\alpha\beta + c\alpha)}}.
 \end{align*}
+</p>
+
+<figure>
+    <video controls autoplay muted loop>
+        <source src="../working/wave_response_large.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <caption><b>Fig 1.</b> The simulated wave response to $\epsilon I(x, t) = 0.05 \delta(t - 1)$.</caption>
+</figure>
+
+<figure>
+    <img src="../working/wave_response_large.png" width="100%"/>
+    <caption><b>Fig 2.</b> The asymptotic approximation of the wave response to $\epsilon I(x, t) = 0.05 \delta(t - 1)$.</caption>
+</figure=>
+
+<figure>
+    <img src="../working/wave_response_small.png" width="100%"/>
+    <caption><b>Fig 3.</b> The asymptotic approximation of the wave response to $\epsilon I(x, t) = 0.01 \delta(t - 1)$.</caption>
+</figure=>
 
 <!--button class="accordion">BUTTON NAME</button>
 <div class="panel">
