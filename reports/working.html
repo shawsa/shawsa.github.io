@@ -119,7 +119,7 @@ which is identical to the condition from <a href="https://www.sciencedirect.com/
 </p>
 
 <p>
-    This is consistent with expectations. In both cases, the active region remains super-threshold. The threshold crossing is advancing into a region where the $\theta$ is constant since the adaptation variable, $a(x,t) = 0$. The only difference is the condition for a traveling pulse to exist: $\theta > \frac{1}{1+\alpha + \beta} = \lim\limits_{\xi \to -\infty}Q(\xi)$, which does not include an adaptation strength variable $\gamma$. It is consistent with their condition in the case of $\gamma = 0$.
+    This is consistent with expectations. In both cases, the active region remains super-threshold. The threshold crossing is advancing into a region where the $\theta$ is constant since the adaptation variable, $a(x,t) = 0$. The only difference is the condition for a traveling pulse to exist: $\theta > \frac{1}{1+\alpha \beta} = \lim\limits_{\xi \to -\infty}Q(\xi)$, which does not include an adaptation strength variable $\gamma$. It is consistent with their condition in the case of $\gamma = 0$.
 </p>
 
 <p>
@@ -162,12 +162,12 @@ so we have
     -c\alpha v_2' - (1+\alpha\beta)v_2 &= -\frac{c \mu}{2(1+c\mu)}e^{\xi} \\
     v_2' + \frac{1+\alpha \beta}{c\alpha} v_2 &= \frac{\mu}{2\alpha (1+c\mu)} e^{\xi} \\
     \big[ v_2 e^{\frac{1+\alpha\beta}{c\alpha}\xi} \big]' &= \frac{\mu}{2\alpha (1+c\mu)} e^{\frac{1+\alpha\beta + c\alpha}{c\alpha}\xi} \\
-    v_2 e^{\frac{1+\alpha\beta}{c\alpha}\xi} &= A_8 + \frac{c\mu}{2\alpha (1+c\mu)(1+\alpha\beta+c\alpha)} e^{\frac{1+\alpha\beta + c\alpha}{c\alpha}\xi} \\
-    v_2(\xi) &= A_8 e^{-\frac{1+\alpha\beta}{c\alpha} \xi} + \frac{c\mu}{2\alpha (1+c\mu)(1+\alpha\beta+c\alpha)} e^{\xi}.
+    v_2 e^{\frac{1+\alpha\beta}{c\alpha}\xi} &= A_8 + \frac{c\mu}{2 (1+c\mu)(1+\alpha\beta+c\alpha)} e^{\frac{1+\alpha\beta + c\alpha}{c\alpha}\xi} \\
+    v_2(\xi) &= A_8 e^{-\frac{1+\alpha\beta}{c\alpha} \xi} + \frac{c\mu}{2 (1+c\mu)(1+\alpha\beta+c\alpha)} e^{\xi}.
 \end{align*}
 To remain bounded, $A_8 = 0$ and we have
 $$
-v_2(\xi) = \frac{c\mu}{2\alpha (1+c\mu)(1+\alpha\beta+c\alpha)} e^{\xi} \qquad \text{ if } \xi < 0.
+v_2(\xi) = \frac{c\mu}{2 (1+c\mu)(1+\alpha\beta+c\alpha)} e^{\xi} \qquad \text{ if } \xi < 0.
 $$
 Since $Q' = 0$ when $\xi > 0$, this is sufficient to calculate the approximate wave response.
 </p>
@@ -177,13 +177,13 @@ In particular,
 \begin{align*}
     \int_\mathbb{R} U' v_1 \ d \xi &= \int_0^\infty -\theta e^{-\xi}e^{-\frac{1}{c\mu}\xi} \ d\xi \\
     &= -\theta\frac{c\mu}{1+c\mu} \\
-    \int_{\mathbb{R}} Q' v_2 \ d\xi &= \int_{-\infty}^0 \underbrace{A_2}_{\frac{\alpha\beta}{1+\alpha\beta}} \frac{1+\alpha\beta}{\alpha c}e^{\frac{1+\alpha\beta}{\alpha c} \xi} \frac{c\mu}{2\alpha (1+c\mu)(1+\alpha\beta+c\alpha)} e^{\xi} \ d\xi \\
-    &= \int_{-\infty}^0\frac{\mu \beta}{2 \alpha (1+c\mu)(1+\alpha\beta + c\alpha)} e^{\frac{1+\alpha\beta + c\alpha}{c\alpha} \xi} \ d\xi \\
-    &= \frac{\mu \beta c}{2(1+c\mu)(1+\alpha\beta + c\alpha)^2}.
+    \int_{\mathbb{R}} Q' v_2 \ d\xi &= \int_{-\infty}^0 \underbrace{A_2}_{\frac{\alpha\beta}{1+\alpha\beta}} \frac{1+\alpha\beta}{\alpha c}e^{\frac{1+\alpha\beta}{\alpha c} \xi} \frac{c\mu}{2 (1+c\mu)(1+\alpha\beta+c\alpha)} e^{\xi} \ d\xi \\
+    &= \int_{-\infty}^0\frac{\mu \beta}{2 (1+c\mu)(1+\alpha\beta + c\alpha)} e^{\frac{1+\alpha\beta + c\alpha}{c\alpha} \xi} \ d\xi \\
+    &= \frac{\mu \alpha \beta c}{2(1+c\mu)(1+\alpha\beta + c\alpha)^2}.
 \end{align*}
 Thus
 \begin{align*}
-    \nu(t) &= \frac{\int_0^\infty e^{-\frac{1}{c\mu}\xi} \int_0^t I(\xi, \tau) \ d\tau \ d\xi}{ \frac{\theta c \mu^2}{1+c\mu} - \frac{\mu \alpha \beta c}{2(1+c\mu)(1+\alpha\beta + c\alpha)}}.
+    \nu(t) &= \frac{\int_0^\infty e^{-\frac{1}{c\mu}\xi} \int_0^t I(\xi, \tau) \ d\tau \ d\xi}{ \frac{\theta c \mu^2}{1+c\mu} - \frac{\mu \alpha^2 \beta c}{2(1+c\mu)(1+\alpha\beta + c\alpha)^2}}.
 \end{align*}
 </p>
 
@@ -198,7 +198,7 @@ Thus
 <figure>
     <img src="../working/wave_response_large.png" width="100%"/>
     <caption><b>Fig 2.</b> The asymptotic approximation of the wave response to $\epsilon I(x, t) = 0.05 \delta(t - 1)$.</caption>
-</figure=>
+</figure>
 
 <figure>
     <img src="../working/wave_response_small.png" width="100%"/>
