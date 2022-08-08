@@ -101,9 +101,226 @@ From <a href="../reports/report20220808.html">Report 2022-08-08</a> we have the 
 $$
 \theta = \frac{\alpha c + 1}{2(\mu c + 1)(\alpha \beta + \alpha c + 1)}
 $$
-in the traveling front case.
+in the traveling front case. This gives a quadratic equation in $c$ and thus we expect up to two values for the wave speed for any given parameter regime. Fig 1 shows both branches of the wave speed as the parameter $\tau_q = \alpha$ varies, for several values of $\gamma = \frac{1}{1+\beta}$. 
 
+<figure>
+    <img src="../reports/working/speed_by_tau_q.png" width="100%"/>
+    <caption><b>Fig 1.</b> Both branches of the wave speed for several values of $\tau_q = \alpha$. Here, $\mu = 1$, $\gamma = \frac{1}{1+\beta}$ (so $\beta = .2$), and $\theta = 0.1$.</caption>
+</figure=>
 
+Numerical experimentation (for example <a href="../reports/report20220808.html">Report 2022-08-08</a>) suggests that the solid curves in Figure 1 represent stable traveling waves. Presumably, the dashed lines represent unstable traveling waves, with a bifurcation where the two meet. To verify this, we will attempt a linear stability analysis.
+
+In characteristic coordinates we have
+\begin{align*}
+	-c\tau_u u_\xi + \tau_u u_t &= -u + \int_\RR w(\xi, y) q(y, t) f[u(y,t)] \ dy \\
+	-c \tau_q q_\xi + \tau_q q_t &= 1 - q - \beta q f[u]
+\end{align*}
+Let our solution be a perturbation of the traveling front solution
+\begin{align*}
+	u(\xi, t) &= U(\xi) + \varepsilon \phi(\xi, t) \\
+	q(\xi, t) &= Q(\xi) + \varepsilon \psi(\xi, t)
+\end{align*}
+Substituting, we have
+\begin{align*}
+	-c\tau_u (U' +\varepsilon \phi_\xi) + \tau_u \varepsilon \phi_t &= -U - \varepsilon \phi + \int_\RR w(\xi, y)\big(Q(y) + \varepsilon \psi(y, t)\big) f\big[U(y) + \varepsilon \phi(y, t) \big] \ dy \\
+	-c \tau_q (Q' + \varepsilon \psi_\xi) + \tau_q \varepsilon \psi_t &= 1 - Q - \varepsilon \psi - \beta(Q + \varepsilon \psi)f\big[U + \varepsilon \phi \big]
+\end{align*}
+Linearizing and collecting $\OO(1)$ terms, we have
+\begin{align*}
+	-c\tau_u U' &= -U + \int_\RR w(\xi, y)Q(y)f[U(y)] \ dy \\
+	-c \tau_q Q' &= 1 - Q - \beta Qf[U]
+\end{align*}
+which are satisfied, since $U, Q$ are the traveling front solution. Collecting $\OO(\varepsilon)$ terms, we have
+\begin{align*}
+	\tau_u \phi_t &= c\tau_u \phi_\xi -\phi + \int_\RR w(\xi, y)\bigg( f[U(y)] \psi + Q(y)f'[U(y)] \phi \bigg) \ dy \\
+	\tau_q \psi_t &= c\tau_q \psi_\xi -\psi - \beta(f[U] \psi + Qf'[U]\phi).
+\end{align*}
+Assume that the solution is separable, i.e.
+\begin{align*}
+	\begin{bmatrix}
+		\phi(\xi, t) \\
+		\psi(\xi, t)
+	\end{bmatrix}
+	&= g(t) \begin{bmatrix}
+		\phi_0(\xi) \\
+		\psi_0(\xi)
+	\end{bmatrix}.
+\end{align*}
+Substituting and isolating the separated functions, we have
+\begin{align*}
+	\frac{g'(t)}{g(t)} &= \lambda = \frac{c\tau_u \phi_0' - \phi_0 + \int_\RR w(\xi, y)\bigg( f[U(y)] \psi_0 + Q(y)f'[U(y)] \phi_0 \bigg) \ dy}{\tau_u \phi_0} \\
+	\frac{g'(t)}{g(t)} &= \lambda = \frac{c\tau_q \psi_0' - \psi_0 - \beta(f[U] \psi_0 + Qf'[U]\phi_0)}{\tau_q \psi_0}.
+\end{align*}
+This gives $g(t) = e^{\lambda t}$ and the following spatial system
+\begin{align*}
+	-c\tau_u \phi_0' &= -(1 + \tau_u \lambda)\phi_0 + \int_\RR w(\xi, y)\bigg( f[U(y)] \psi_0 + Q(y)f'[U(y)] \phi_0 \bigg) \ dy \tag{Eig u} \label{eqn:eig_u}\\ 
+	-c\tau_q \psi_0' &= - (1 + \tau_q \lambda)\psi_0 - \beta(f[U] \psi_0 + Qf'[U]\phi_0). \tag{Eig q} \label{eqn:eig_q}
+\end{align*}
+
+Finally, we conclude that linear stability can be characterized by the spectrum of the operator
+\begin{align*}
+	\LL \begin{bmatrix}\phi_0 \\ \psi_0 \end{bmatrix} &= \begin{bmatrix}
+		c \phi_0' - \frac{1}{\tau_u} \phi_0 + w \ast (f'[U]Q \phi_0 + f[U]\psi_0) \\
+		c \psi_0' - \frac{1}{\tau_q} \psi_0 - \frac{\beta}{\tau_q} (f'[U]Q \phi_0 + f[U]\psi_0)
+	\end{bmatrix}
+\end{align*}
+
+<p>
+Here, we make two observations. First note, that this operator reduces to an integral operator when $c = 0$. In fact, $Q$ is no longer continuous, and the naive linearization results in the expression $Q(y)f'[U(y)] = \frac{Q(0)}{|U'(0)|}\delta(y)$ being ill-posed. We also suspect that the intersection of the two branches in the case $\gamma = 0.2$ to be a transcritical bifurcation. This motivates us to restrict ourselves to the $c > 0$ case, for the time being, to reduce the amount of book-keeping and notational complexity that we expect to arise (for example: when working with inequalities involving $c$ that come from restricting the real part of an exponential rate to have a certain sign).
+</p>
+
+<p>
+Secondly, to rigorously address the spectrum of this operator, we must choose a domain. This turns out to be non-trivial. Many choices of $\phi_0$ will introduce delta distributions in the second component from $f'[U] Q \phi_0$ and thus the co-domain of the second component ought to be the Schwartz space $S'(\RR)$. However, the term $f[U] \psi_0$ is not well posed when $\psi_0$ is a delta distribution, thus we cannot choose $S'(\RR)$ to be the domain of the second component. Whether we take each component of the domain to be $C^\infty(\RR)$, $L^2(\RR)$, or $S'(\RR)$, we reasonably exclude functions that have larger than polynomial growth in the $\pm \infty$ limit. This may be enough, to characterize the spectrum
+</p>
+
+<h1 id="">Point Spectrum</h1>
+<p>
+We seek eigenvalues $\lambda \in \CC$ and corresponding eigenfunctions $[\phi \quad \psi]^T$ that satisfy the system
+\begin{align*}
+	\lambda \begin{bmatrix}\phi_0 \\ \psi \end{bmatrix} &= \begin{bmatrix}
+		c \phi' - \frac{1}{\tau_u} \phi + w \ast (f'[U]Q \phi + f[U]\psi) \\
+		c \psi' - \frac{1}{\tau_q} \psi - \frac{\beta}{\tau_q} (f'[U]Q \phi + f[U]\psi).
+	\end{bmatrix}
+\end{align*}
+(Note that we have dropped the subscript. Here, $\phi, \psi: \RR \to \CC$ are functions of a single variable, previously denoted $\phi_0$ and $\psi_0$.)
+</p>
+
+<p>
+    We can simplify this somewhat by noting that $f'[U]Q\phi = \frac{1}{\theta}\phi_0 \delta(\xi)$ where $\phi_0 = \phi(0)$. We will also use the notation $\mu = \tau_u$ and $\alpha = \tau_q$ for the time being. We also define the following intermediate variables
+$$\begin{align*}
+    s &= -\frac{1+\mu\lambda}{c\mu} & r_+ &= -\frac{1 + \alpha \lambda}{c \alpha} & r &= \frac{1+\beta + \alpha \lambda}{c \alpha}.
+\end{align*}$$
+
+</p>
+
+<p>
+The second equation can be solved piecewise. For $\xi > 0$ we have
+$$\begin{align*}
+    \psi' + r_+ \psi &= 0 \\
+    \psi(\xi) &= \psi_+ e^{-r_+\xi}
+\end{align*}$$
+for some constant $\psi_+$. Here, we require $\psi_+ = 0$ or $\Re(r_+) \ge 0$ else the solution has larger than polynomial growth.
+</p>
+
+<p>
+For $\xi < 0$ we have
+$$\begin{align*}
+    \psi' + r \psi &= 0 \\
+    \psi(\xi) &= \psi_- e^{-r\xi}
+\end{align*}$$
+for some constant $\psi_-$. Here, we require $\psi_+ = 0$ or $\Re(r) \le 0$ else the solution has larger than polynomial growth.
+</p>
+<p>
+Finally, these constants obey the jump condition
+$$
+\psi_+ - \psi_- = - \phi_0\frac{\beta}{c\alpha\theta}.
+$$
+</p>
+
+<p>
+    These restrictions lead to the following four cases
+    <ol>
+        <li>$\psi_+ \ne 0 \ne \psi_-$ and both $\Re(r_+) \ge 0$ and $\Re(r) \le 0$</li>
+        <li>$\psi_- = \psi_+ = 0$</li>
+        <li>$\psi_- = 0$ and $\Re(r_+) \ge 0$</li>
+        <li>$\psi_+ = 0 \implies \psi_- = \phi_0 \frac{\beta}{c\alpha\theta}$ and $\Re(r) \le 0$</li> 
+        
+    </ol>
+</p>
+
+<p>
+Substituting $\psi$ into the first equation gives
+$$\begin{align*}
+    \phi' + s\phi &= -\frac{1}{2c\theta}\phi_0 e^{-|\xi|} - \frac{1}{2c}\psi_- \int_{-\infty}^0 e^{-|\xi - \xi'|} e^{-r\xi'} \ d\xi'.
+\end{align*}$$
+We again solve this piecewise.
+</p>
+
+<p>
+    For $\xi > 0$ we have
+$$\begin{align*}
+    \phi' + s\phi 
+        &= -\frac{1}{2c\theta}\phi_0 e^{-\xi} - \frac{1}{2c}\psi_- e^{-\xi}\int_{-\infty}^0  e^{(1-r)\xi'} \ d\xi' \\
+        &= -\frac{1}{2c\theta}\phi_0 e^{-\xi} - \frac{1}{2c(1-r)}\psi_- e^{-r\xi} \\
+    \phi(\xi) 
+        &= e^{-s\xi} \bigg[ -\frac{1}{2c\theta}\phi_0 \int_{-\infty}^\xi e^{(s-1)\xi'} \ d\xi' - \frac{1}{2c(1-r)}\psi_- \int_{-\infty}^\xi e^{(s-r)\xi} \ d\xi' \bigg] \\
+        &= -\frac{1}{2c\theta(s-1)}\phi_0 e^{-\xi} - \frac{1}{2c(1-r)(s-r)}\psi_- e^{-r\xi}.
+\end{align*}$$
+For these integrals to exist, and for $\phi$ to not exceed polynomial growth, we require the following
+$$\begin{align*}
+    \Re(r) &< 1 \qquad (\text{ or } \psi_- = 0) \\
+    \Re(s) &> 1 \qquad (\text{ or } \phi_0 = 0)\\
+    \Re(s-r) &> 0 \qquad (\text{ or } \psi_- = 0)\\
+    \Re(r) &\ge 0 \qquad (\text{ or } \psi_- = 0).
+\end{align*}$$
+</p>
+
+<p>
+    For $\xi < 0$ we have
+$$\begin{align*}
+    \phi' + s\phi 
+        &= -\frac{1}{2c\theta}\phi_0 e^{\xi} - \frac{1}{2c}\psi_- \bigg(e^{-\xi} \int_{-\infty}^\xi e^{(1-r)\xi'} \ d\xi' + e^{-\xi} \int_{\xi}^0 e^{-(1+r)\xi'} \ d\xi' \bigg) \\
+        &=-\frac{1}{2c\theta}\phi_0 e^{\xi} - \frac{1}{2c}\psi_- \bigg(\frac{1}{1-r}e^{-r\xi} + \frac{1}{-(1+r)}e^{\xi}\big(1 - e^{-(1+r)\xi}\big)  \bigg) \\
+        &=-\frac{1}{2c\theta}\phi_0 e^{\xi} - \frac{1}{2c}\psi_- \bigg(\frac{1}{1-r}e^{-r\xi} - \frac{1}{1+r}e^{\xi} + \frac{1}{1+r} e^{-r\xi}  \bigg) \\
+        &= \left(\frac{1}{2c(1+r)}\psi_ - \frac{1}{2c\theta}\phi_0\right) e^{\xi} - \frac{1}{c(1-r^2)}\psi_- e^{-r\xi} \\
+    \phi(\xi) 
+        &= e^{-s\xi} \bigg[ \left(\frac{1}{2c(1+r)}\psi_ - \frac{1}{2c\theta}\phi_0\right) \int_{-\infty}^\xi e^{(s+1)\xi'} \ d\xi' - \frac{1}{c(1-r^2)}\psi_- \int_{-\infty}^\xi e^{(s-r)\xi'} \ d\xi' \bigg] \\
+        &= \left(\frac{1}{2c(1+r)}\frac{1}{1+s}\psi_ - \frac{1}{2c\theta}\phi_0\right) e^{\xi} - \frac{1}{c(1-r^2)(s-r)}\psi_- e^{-r\xi}
+\end{align*}$$
+For these integrals to exist, and for $\phi$ to not exceed polynomial growth, we require the following
+$$\begin{align*}
+    \Re(r) &< 1 \qquad (\text{ or } \psi_- = 0) \\
+    \Re(s) &> -1 \qquad (\text{ or ???})\\
+    \Re(s-r) &> 0 \qquad (\text{ or } \psi_- = 0)\\
+    \Re(r) &\le 0 \qquad (\text{ or } \psi_- = 0).
+\end{align*}$$
+</p>
+
+<h1 id="question">A question about ODE solutions</h1>
+<p>
+    With regards to ODEs of the form
+$$
+y' + r y = f(x)
+$$
+for some constant $r$ and a given function $f$, I can use integrating factors (or variation of parameters) to write the solution as
+$$
+y(x) = e^{-rx} \bigg( y_0 + \int_0^x e^{rt} f(t) \ dt \bigg).
+$$
+This works in general, and only assumes integrability of $e^{rx}f(x)$ over a finite interval. 
+</p>    
+
+<p>
+    I've recently seen (I'm not sure where, and I'm having trouble tracking it down) the solution expressed as
+$$
+    y(x) = e^{-rx} \int_{-\infty}^x e^{rt}f(t) \ dt
+$$
+which is a simpler expression to work with.
+</p>
+
+<p>
+    <b>Question:</b> Is it valid for me to use this formula, or is it implying assumptions that I need to explicitly consider?
+</p>
+
+<p>
+    I can see that if 
+$$
+y(0) = \int_{-\infty}^0 e^{rt}{f(t)} \ dt
+$$
+(also implying this integral exists) then the two are equivalent.
+</p>
+
+<p>
+    For my eigenvalue problem, a more comparable example is
+$$\begin{align*}
+    y' + ry &= y(0) f(x) \\
+    y(x) &= y(0)e^{-rx}\int_{-\infty}^0 e^{rt}{f(t)} \ dt
+\end{align*}$$
+which would require this integral be $1$.
+</p>
+
+<p>
+    Is there something I'm missing here? Is there some technique/use case where this is common, or valid? Or have I just made this up?
+</p>
 
 <!--button class="accordion">BUTTON NAME</button>
 <div class="panel">
