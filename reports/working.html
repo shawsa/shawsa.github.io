@@ -99,9 +99,9 @@
 <h1 id="">Bifurcation</h1>
 From <a href="../reports/report20220808.html">Report 2022-08-08</a> we have the wave speed $c$ given implicitly by
 $$
-\theta = \frac{\alpha c + 1}{2(\mu c + 1)(\alpha \beta + \alpha c + 1)}
+\theta = \frac{\alpha c + 1}{2(\mu c + 1)( 1 + \beta + \alpha c)}
 $$
-in the traveling front case. This gives a quadratic equation in $c$ and thus we expect up to two values for the wave speed for any given parameter regime. Fig 1 shows both branches of the wave speed as the parameter $\tau_q = \alpha$ varies, for several values of $\gamma = \frac{1}{1+\beta}$. 
+in the traveling front case (note the change $\alpha\beta \mapsto \beta$). This gives a quadratic equation in $c$ and thus we expect up to two values for the wave speed for any given parameter regime. Fig 1 shows both branches of the wave speed as the parameter $\tau_q = \alpha$ varies, for several values of $\gamma = \frac{1}{1+\beta}$. 
 
 <figure>
     <img src="../reports/working/speed_by_tau_q.png" width="100%"/>
@@ -208,7 +208,7 @@ $$\begin{align*}
     \psi' + r \psi &= 0 \\
     \psi(\xi) &= \psi_- e^{-r\xi}
 \end{align*}$$
-for some constant $\psi_-$. Here, we require $\psi_+ = 0$ or $\Re(r) \le 0$ else the solution has larger than polynomial growth.
+for some constant $\psi_-$. Here, we require $\psi_- = 0$ or $\Re(r) \le 0$ else the solution has larger than polynomial growth.
 </p>
 <p>
 Finally, these constants obey the jump condition
@@ -219,14 +219,20 @@ $$
 
 <p>
     These restrictions lead to the following four cases
-    <ol>
+    <ul>
         <li>$\psi_+ \ne 0 \ne \psi_-$ and both $\Re(r_+) \ge 0$ and $\Re(r) \le 0$</li>
         <li>$\psi_- = \psi_+ = 0$</li>
         <li>$\psi_- = 0$ and $\Re(r_+) \ge 0$</li>
         <li>$\psi_+ = 0 \implies \psi_- = \phi_0 \frac{\beta}{c\alpha\theta}$ and $\Re(r) \le 0$</li> 
         
-    </ol>
+    </ul>
 </p>
+
+<p>
+In the process of solving for $\phi$, several more cases arise. We outline the calculation for the general case, note the exceptions, and handle them individually below.
+</p>
+
+<h3>The General Case</h3>
 
 <p>
 Substituting $\psi$ into the first equation gives
@@ -238,89 +244,132 @@ We again solve this piecewise.
 
 <p>
     For $\xi > 0$ we have
-$$\begin{align*}
+\begin{align*}
     \phi' + s\phi 
         &= -\frac{1}{2c\theta}\phi_0 e^{-\xi} - \frac{1}{2c}\psi_- e^{-\xi}\int_{-\infty}^0  e^{(1-r)\xi'} \ d\xi' \\
-        &= -\frac{1}{2c\theta}\phi_0 e^{-\xi} - \frac{1}{2c(1-r)}\psi_- e^{-r\xi} \\
-    \phi(\xi) 
-        &= e^{-s\xi} \bigg[ -\frac{1}{2c\theta}\phi_0 \int_{-\infty}^\xi e^{(s-1)\xi'} \ d\xi' - \frac{1}{2c(1-r)}\psi_- \int_{-\infty}^\xi e^{(s-r)\xi} \ d\xi' \bigg] \\
-        &= -\frac{1}{2c\theta(s-1)}\phi_0 e^{-\xi} - \frac{1}{2c(1-r)(s-r)}\psi_- e^{-r\xi}.
-\end{align*}$$
-For these integrals to exist, and for $\phi$ to not exceed polynomial growth, we require the following
-$$\begin{align*}
-    \Re(r) &< 1 \qquad (\text{ or } \psi_- = 0) \\
-    \Re(s) &> 1 \qquad (\text{ or } \phi_0 = 0)\\
-    \Re(s-r) &> 0 \qquad (\text{ or } \psi_- = 0)\\
-    \Re(r) &\ge 0 \qquad (\text{ or } \psi_- = 0).
-\end{align*}$$
+        &= -\frac{1}{2c\theta}\phi_0 e^{-\xi} - \frac{1}{2c(1-r)}\psi_- e^{-\xi} \\ 
+        &= \bigg(-\frac{1}{2c\theta}\phi_0 - \frac{1}{2c(1-r)}\psi_- \bigg)e^{-\xi} \\
+     \phi(\xi)
+        &= e^{-s\xi} \bigg[ \phi_0 + \bigg(-\frac{1}{2c\theta}\phi_0 - \frac{1}{2c(1-r)}\psi_- \bigg) \int_0^\xi e^{(s-1)\xi'} \ d\xi' \bigg] \\
+        &= e^{-s\xi} \bigg[ \phi_0 + \bigg(-\frac{1}{2c\theta}\phi_0 - \frac{1}{2c(1-r)}\psi_- \bigg)\frac{1}{s-1} (e^{(s-1)\xi} - 1) \bigg] \\
+        &= \bigg[ \phi_0 + \bigg(\frac{1}{2c\theta}\phi_0 + \frac{1}{2c(1-r)}\psi_- \bigg)\frac{1}{s-1}\bigg] e^{-s\xi} - \frac{1}{s-1}\bigg(\frac{1}{2c\theta}\phi_0 + \frac{1}{2c(1-r)}\psi_- \bigg)e^{-\xi}
+\end{align*}
+The initial convolution in the first step requires $\Re(r) < 1$ or $\psi_- = 0$. The later integral requires $s \ne 1$. 
 </p>
 
 <p>
     For $\xi < 0$ we have
 $$\begin{align*}
     \phi' + s\phi 
-        &= -\frac{1}{2c\theta}\phi_0 e^{\xi} - \frac{1}{2c}\psi_- \bigg(e^{-\xi} \int_{-\infty}^\xi e^{(1-r)\xi'} \ d\xi' + e^{-\xi} \int_{\xi}^0 e^{-(1+r)\xi'} \ d\xi' \bigg) \\
+        &= -\frac{1}{2c\theta}\phi_0 e^{\xi} - \frac{1}{2c}\psi_- \bigg(e^{-\xi} \int_{-\infty}^\xi e^{(1-r)\xi'} \ d\xi' + e^{\xi} \int_{\xi}^0 e^{-(1+r)\xi'} \ d\xi' \bigg] \\
         &=-\frac{1}{2c\theta}\phi_0 e^{\xi} - \frac{1}{2c}\psi_- \bigg(\frac{1}{1-r}e^{-r\xi} + \frac{1}{-(1+r)}e^{\xi}\big(1 - e^{-(1+r)\xi}\big)  \bigg) \\
         &=-\frac{1}{2c\theta}\phi_0 e^{\xi} - \frac{1}{2c}\psi_- \bigg(\frac{1}{1-r}e^{-r\xi} - \frac{1}{1+r}e^{\xi} + \frac{1}{1+r} e^{-r\xi}  \bigg) \\
-        &= \left(\frac{1}{2c(1+r)}\psi_ - \frac{1}{2c\theta}\phi_0\right) e^{\xi} - \frac{1}{c(1-r^2)}\psi_- e^{-r\xi} \\
+        &= \left(\frac{1}{2c(1+r)}\psi_- - \frac{1}{2c\theta}\phi_0\right) e^{\xi} - \frac{1}{c(1-r^2)}\psi_- e^{-r\xi} \\
     \phi(\xi) 
-        &= e^{-s\xi} \bigg[ \left(\frac{1}{2c(1+r)}\psi_ - \frac{1}{2c\theta}\phi_0\right) \int_{-\infty}^\xi e^{(s+1)\xi'} \ d\xi' - \frac{1}{c(1-r^2)}\psi_- \int_{-\infty}^\xi e^{(s-r)\xi'} \ d\xi' \bigg] \\
-        &= \left(\frac{1}{2c(1+r)}\frac{1}{1+s}\psi_ - \frac{1}{2c\theta}\phi_0\right) e^{\xi} - \frac{1}{c(1-r^2)(s-r)}\psi_- e^{-r\xi}
+        &= e^{-s\xi} \bigg[ \phi_0 + \int_0^\xi e^{s\xi'} \bigg(\left(\frac{1}{2c(1+r)}\psi_- - \frac{1}{2c\theta}\phi_0\right) e^{\xi'} - \frac{1}{c(1-r^2)}\psi_- e^{-r\xi'} \bigg) \ d\xi'  \\
+        &= e^{-s\xi} \bigg[ \phi_0  + \left(\frac{1}{2c(1+r)}\psi_- - \frac{1}{2c\theta}\phi_0\right) \int_0^\xi e^{(1+s)\xi'} \ d\xi' - \frac{1}{c(1-r^2)}\psi_- \int_0^\xi e^{(s-r)\xi'} \ d\xi' \bigg] \\
+        &= e^{-s\xi} \bigg[\phi_0   + \left(\frac{1}{2c(1+r)}\psi_- - \frac{1}{2c\theta}\phi_0\right)\frac{1}{1+s} \big(e^{(1+s)\xi} - 1\big) - \frac{1}{c(1-r^2)}\psi_-\frac{1}{s-r} \big(e^{(s-r)\xi} - 1\big) \bigg] \\
+        &= \phi_0e^{-s\xi}   + \left(\frac{1}{2c(1+r)}\psi_- - \frac{1}{2c\theta}\phi_0\right)\frac{1}{1+s} \big(e^{\xi} - e^{-s\xi}\big) - \frac{1}{c(1-r^2)}\psi_-\frac{1}{s-r} \big(e^{-r\xi} - e^{-s\xi}\big) \\
+        &= \bigg(\phi_0 - \left(\frac{1}{2c(1+r)}\psi_- - \frac{1}{2c\theta}\phi_0\right)\frac{1}{1+s} + \frac{1}{c(1-r^2)}\psi_-\frac{1}{s-r} \bigg)e^{-s\xi} + \bigg( \left(\frac{1}{2c(1+r)}\psi_ - \frac{1}{2c\theta}\phi_0\right)\frac{1}{1+s} \bigg)e^{\xi} + \bigg(- \frac{1}{c(1-r^2)}\psi_- \frac{1}{s-r} \bigg) e^{-r\xi}.
 \end{align*}$$
-For these integrals to exist, and for $\phi$ to not exceed polynomial growth, we require the following
+As in the previous calculation, the initial integral requires $\Re(r) > 1$ for the convolution to converge. This guarantees that $r \ne -1$ thus this calculation of the convolution is applicable in all cases. The form of the later integrals requires $s \ne - 1$ and $s \ne r$. 
+</p>
+
+
+<!--************************************************************************-->
+<!-- Cases -->
+<div class="tab">
+  <button class="tablinks" onclick="openTab(event, 'case1')">Case 1</button>
+  <button class="tablinks" onclick="openTab(event, 'case2')">Case 2</button>
+  <button class="tablinks" onclick="openTab(event, 'case3')">Case 3</button>
+  <button class="tablinks" onclick="openTab(event, 'case4')">Case 4</button>
+  <button class="tablinks" onclick="openTab(event, 'case5')">Case 5</button>
+</div>
+
+<!------------------ Case 1 ------------------------>
+<div id="case1" class="tabcontent">
+<h3>Case 1: The general case. No unnecessary assumptions on $\psi$.</h3>
+<p>
+    The exponential terms $e^{-s\xi}$ appear in both the $\xi > 0$ and $\xi < 0$ with different scalings. No value of $s \in \CC$ can ensure that both of these decay to zero (though $\Re(s) = 0$ ensures bounded solutions, should we accept these?) so at least one of the coefficients must be zero, else a condition on $\Re(s)$ must be imposed. This gives us the following three, mutially exclusive subcases. 
+<ul>
+    <li>$\Re(s) > 0$ and $0 = \phi_0 + \bigg(\frac{1}{2c\theta}\phi_0 + \frac{1}{2c(1-r)}\psi_- \bigg)\frac{1}{s-1}$.</li>
+    <li>$\Re(s) < 0$ and $0 = \phi_0 - \left(\frac{1}{2c(1+r)}\psi_- - \frac{1}{2c\theta}\phi_0\right)\frac{1}{1+s} + \frac{1}{c(1-r^2)}\psi_-\frac{1}{s-r}$.</li>
+    <li>Both
 $$\begin{align*}
-    \Re(r) &< 1 \qquad (\text{ or } \psi_- = 0) \\
-    \Re(s) &> -1 \qquad (\text{ or ???})\\
-    \Re(s-r) &> 0 \qquad (\text{ or } \psi_- = 0)\\
-    \Re(r) &\le 0 \qquad (\text{ or } \psi_- = 0).
-\end{align*}$$
-</p>
-
-<h1 id="question">A question about ODE solutions</h1>
-<p>
-    With regards to ODEs of the form
-$$
-y' + r y = f(x)
-$$
-for some constant $r$ and a given function $f$, I can use integrating factors (or variation of parameters) to write the solution as
-$$
-y(x) = e^{-rx} \bigg( y_0 + \int_0^x e^{rt} f(t) \ dt \bigg).
-$$
-This works in general, and only assumes integrability of $e^{rx}f(x)$ over a finite interval. 
-</p>    
-
-<p>
-    I've recently seen (I'm not sure where, and I'm having trouble tracking it down) the solution expressed as
-$$
-    y(x) = e^{-rx} \int_{-\infty}^x e^{rt}f(t) \ dt
-$$
-which is a simpler expression to work with.
+    0 &= \phi_0 + \bigg(\frac{1}{2c\theta}\phi_0 + \frac{1}{2c(1-r)}\psi_- \bigg)\frac{1}{s-1} \\
+    0 &= \phi_0 - \left(\frac{1}{2c(1+r)}\psi_- - \frac{1}{2c\theta}\phi_0\right)\frac{1}{1+s} + \frac{1}{c(1-r^2)}\psi_-\frac{1}{s-r}
+\end{align*}$$</li>
+</ul>
+We expect $\psi_-$ to scale with $\phi_0$ so each of these subcases has two unknowns $\lambda$ and the ratio $\psi_- / \phi_0$. 
 </p>
 
 <p>
-    <b>Question:</b> Is it valid for me to use this formula, or is it implying assumptions that I need to explicitly consider?
+    In the first two cases, solutions $\lambda, \psi_-/\phi_0$ are characterized by the zero-set of polynomials in $\lambda, \psi_-/\phi_0$ with coefficients determined by the parameters. Valid solutions are points on this zero-set restricted to a half plane given by the inequality. It is not obvious if any solutions exist. There are two possibilities for any given set of parameters (including the choice of $c$). Since the set satisfying the inequality is open, and the set that is the graph of the level-set is closed, either there are no solutions, all points on the level-set are solutions (the level set is entirely on the accepted side of the half-plane) or the point-spectrum is not closed (I'm not familiar with the properties of the point-spectrum for unbounded operators, so this may be useful).
 </p>
 
 <p>
-    I can see that if 
-$$
-y(0) = \int_{-\infty}^0 e^{rt}{f(t)} \ dt
-$$
-(also implying this integral exists) then the two are equivalent.
+    The final case is similar, but slightly different. There may be infinitely many solutions, in which case the graph of one equation is a subset of the graph of the other. There may be no solutions, in which case these graphs do not intersect. Or there are finitely many intersections, corresponding to their intersection.
 </p>
 
 <p>
-    For my eigenvalue problem, a more comparable example is
-$$\begin{align*}
-    y' + ry &= y(0) f(x) \\
-    y(x) &= y(0)e^{-rx}\int_{-\infty}^0 e^{rt}{f(t)} \ dt
-\end{align*}$$
-which would require this integral be $1$.
+    In each of these cases, the solution $\lambda, \psi_-/\phi_0$ correspond to a single eigenvalue/eigenfunction pair. 
+</p>
+<h3>Notes: </h3>
+
+<p>
+    This seems difficult. Finding the set of solutions is not straightforward for general problems of this kind. Perhaps we can evaluate a few points for a few sets of parameters to get a sense of this. We may also be able to leverage continuity/analyticity to repose the classification as a root-finding problem. For example, if we find that these equations are inconsistent for a particular point in parameter space, and we show that there are no roots to the hyperplan/contour system, then we can use continuity to say that there are no solutions, because moving along the parameterized curve never crosses the hyperplane. We would need to sample enough points to account for any not-connected sets, and proving there are no roots may not be easy either.
+</p>
+</div>
+
+<!------------------ Case 2 ------------------------>
+<div id="case2" class="tabcontent">
+<h3>$\psi_+ = 0$ and $\Re(r) < 0$.</h3>
+<p>This case includes $\psi = Q'$, which we expect to correspond to $\lambda = 0$, thus we expect one solution corresponding to translation invariance. Hopefully, only one solution (a consequence of algebraic multiplicity being 1).
 </p>
 
 <p>
-    Is there something I'm missing here? Is there some technique/use case where this is common, or valid? Or have I just made this up?
+    In this case, $\psi_- = \phi_- \frac{\beta}{c\alpha\theta}$ and the only unknown is $\lambda$. This makes it slightly different than case 1. 
 </p>
+
+<p>
+    The restriction that $\Re(r) < 0$ also imposes that $\Re(s) < \frac{1 + \beta}{c \alpha} - \frac{1}{c \mu}$. Assuming $r \ne s$ (a separate case) we can determine the sign of $\Re(s)$ and thus restrict ourselves to one of the subcases listed in case 1. For large $\alpha$, we can take this expression on the right-hand-side of the inequality to be positive, and thus $\Re(s) > 0$. 
+</p>
+</div>
+
+<!------------------ Case 3 ------------------------>
+<div id="case3" class="tabcontent">
+<h3>$\psi_- = 0$ and $\Re(r_+) > 0$.</h3>
+<p>
+This simplifies the equations quite a bit. They reduce to a system of ODEs only coupled through $\phi_0$ which is arbitrary, so they are effectively decoupled. 
+</p>
+
+<p>
+We also have the restriction $\Re(s) > \frac{1}{c\alpha} - \frac{1}{c\mu}$ which is positive for large values of $\alpha$. The sign of $\Re(s)$ will force the coefficient of $e^{-s\xi}$ to be 0 in one of the pieces of the solution, thus giving $s$ implicitly as the solution to an algebraic equation. Solutions must be checked for consistency with the inequalities. 
+</p>
+
+<h3>Notes:</h3>
+<p>
+    This case looks like it might be easier. There is no dependence on $r$, so equations can be solved for $s$ rather than $\lambda$ which will make it easier to check for consistency. 
+</p>
+</div>
+
+<!------------------ Case 4 ------------------------>
+<div id="case4" class="tabcontent">
+<h3>$s = 1$.</h3>
+<p>
+This case fixes $s$, and as a consequence, also fixes $r$ and $r_+$. The form of the forcing term is slightly different, and must be handled separately. This should be straightforward. I expect the solution to be unbounded, and hence for this to not lead to eigen solutions.
+</p>
+</div>
+
+<!------------------ Case 5 ------------------------>
+<div id="case5" class="tabcontent">
+<h3>$s = r$.</h3>
+<p>
+This only occurs under parameters that satisfy $(1+\beta)\mu = \alpha$. I believe it may be related to the bifurcation points, but I'm not sure. I'm not sure what to expect in this case. 
+</p>
+</div>
+
+
 
 <!--button class="accordion">BUTTON NAME</button>
 <div class="panel">
@@ -367,6 +416,30 @@ if (expand_all_accordions){
     }
 }
 
+}
+</script>
+
+<!-- Tabs script -->
+<script>
+function openTab(evt, tabId) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(tabId).style.display = "block";
+  evt.currentTarget.className += " active";
 }
 </script>
 
