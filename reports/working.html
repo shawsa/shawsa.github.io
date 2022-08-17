@@ -188,9 +188,16 @@ We seek eigenvalues $\lambda \in \CC$ and corresponding eigenfunctions $[\phi \q
 <p>
     We can simplify this somewhat by noting that $f'[U]Q\phi = \frac{1}{\theta}\phi_0 \delta(\xi)$ where $\phi_0 = \phi(0)$. We will also use the notation $\mu = \tau_u$ and $\alpha = \tau_q$ for the time being. We also define the following intermediate variables
 $$\begin{align*}
-    s &= -\frac{1+\mu\lambda}{c\mu} & r_+ &= -\frac{1 + \alpha \lambda}{c \alpha} & r &= \frac{1+\beta + \alpha \lambda}{c \alpha}.
+    s &= -\frac{1+\mu\lambda}{c\mu} & r_+ &= -\frac{1 + \alpha \lambda}{c \alpha} & r &= -\frac{1+\beta + \alpha \lambda}{c \alpha}.
 \end{align*}$$
+</p>
 
+<p>
+    We seek a solution to the following system
+$$\begin{align*}
+    0 &= \phi' - \frac{1 + \mu \lambda}{c \mu} \phi + \frac{1}{c} w \ast\big( f'[U]Q \phi + f[U] \psi \big) \\
+    0 &= \psi' - \frac{1 + \beta f[U] + \alpha \lambda}{c \alpha} \psi - \frac{\beta}{\alpha c}\big(f'[U] Q\phi + f[U] \psi \big)
+\end{align*}$$
 </p>
 
 <p>
