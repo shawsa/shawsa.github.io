@@ -177,10 +177,10 @@ Secondly, to rigorously address the spectrum of this operator, we must choose a 
 <p>
 We seek eigenvalues $\lambda \in \CC$ and corresponding eigenfunctions $[\phi \quad \psi]^T$ that satisfy the system
 \begin{align*}
-	\lambda \begin{bmatrix}\phi_0 \\ \psi \end{bmatrix} &= \begin{bmatrix}
+	\lambda \begin{bmatrix}\phi \\ \psi \end{bmatrix} &= \begin{bmatrix}
 		c \phi' - \frac{1}{\tau_u} \phi + w \ast (f'[U]Q \phi + f[U]\psi) \\
-		c \psi' - \frac{1}{\tau_q} \psi - \frac{\beta}{\tau_q} (f'[U]Q \phi + f[U]\psi).
-	\end{bmatrix}
+		c \psi' - \frac{1}{\tau_q} \psi - \frac{\beta}{\tau_q} (f'[U]Q \phi + f[U]\psi)
+	\end{bmatrix}.
 \end{align*}
 (Note that we have dropped the subscript. Here, $\phi, \psi: \RR \to \CC$ are functions of a single variable, previously denoted $\phi_0$ and $\psi_0$.)
 </p>
@@ -287,6 +287,7 @@ As in the previous calculation, the initial integral requires $\Re(r) > 1$ for t
 <!-- Cases -->
 <div class="tab">
   <button class="tablinks" onclick="openTab(event, 'case1')">Case 1</button>
+  <button class="tablinks" onclick="openTab(event, 'case1a')">Case 1a</button>
   <button class="tablinks" onclick="openTab(event, 'case2')">Case 2</button>
   <button class="tablinks" onclick="openTab(event, 'case3')">Case 3</button>
   <button class="tablinks" onclick="openTab(event, 'case4')">Case 4</button>
@@ -299,8 +300,8 @@ As in the previous calculation, the initial integral requires $\Re(r) > 1$ for t
 <p>
     The exponential terms $e^{-s\xi}$ appear in both the $\xi > 0$ and $\xi < 0$ with different scalings. No value of $s \in \CC$ can ensure that both of these decay to zero (though $\Re(s) = 0$ ensures bounded solutions, should we accept these?) so at least one of the coefficients must be zero, else a condition on $\Re(s)$ must be imposed. This gives us the following three, mutially exclusive subcases. 
 <ul>
-    <li>$\Re(s) > 0$ and $0 = \phi_0 + \bigg(\frac{1}{2c\theta}\phi_0 + \frac{1}{2c(1-r)}\psi_- \bigg)\frac{1}{s-1}$.</li>
-    <li>$\Re(s) < 0$ and $0 = \phi_0 - \left(\frac{1}{2c(1+r)}\psi_- - \frac{1}{2c\theta}\phi_0\right)\frac{1}{1+s} + \frac{1}{c(1-r^2)}\psi_-\frac{1}{s-r}$.</li>
+    <li>$\Re(s) < 0$ and $0 = \phi_0 + \bigg(\frac{1}{2c\theta}\phi_0 + \frac{1}{2c(1-r)}\psi_- \bigg)\frac{1}{s-1}$.</li>
+    <li>$\Re(s) > 0$ and $0 = \phi_0 - \left(\frac{1}{2c(1+r)}\psi_- - \frac{1}{2c\theta}\phi_0\right)\frac{1}{1+s} + \frac{1}{c(1-r^2)}\psi_-\frac{1}{s-r}$.</li>
     <li>Both
 $$\begin{align*}
     0 &= \phi_0 + \bigg(\frac{1}{2c\theta}\phi_0 + \frac{1}{2c(1-r)}\psi_- \bigg)\frac{1}{s-1} \\
@@ -326,6 +327,32 @@ We expect $\psi_-$ to scale with $\phi_0$ so each of these subcases has two unkn
 <p>
     This seems difficult. Finding the set of solutions is not straightforward for general problems of this kind. Perhaps we can evaluate a few points for a few sets of parameters to get a sense of this. We may also be able to leverage continuity/analyticity to repose the classification as a root-finding problem. For example, if we find that these equations are inconsistent for a particular point in parameter space, and we show that there are no roots to the hyperplan/contour system, then we can use continuity to say that there are no solutions, because moving along the parameterized curve never crosses the hyperplane. We would need to sample enough points to account for any not-connected sets, and proving there are no roots may not be easy either.
 </p>
+</div>
+
+<!------------------ Case 1a ------------------------>
+<div id="case1a" class="tabcontent">
+<h3>Case 1a</h3>
+<p>
+    We have $\Re(s) < 0$ and
+$$
+    0 = \phi_0 + \bigg(\frac{1}{2c\theta}\phi_0 + \frac{1}{2c(1-r)}\psi_- \bigg)\frac{1}{s-1}.
+$$
+We are also bound by $\Re(r_+) > 0$ and $\Re(r) < 1$. This equation turns out not to be very restrictive. It can be written as the polynomial
+$$
+0 = \frac{\psi_-}{\phi_0} \theta + (1-r) + (s-1)(1-r)2c\theta.
+$$
+Recall that $s$ and $r$ are afine functions of $\lambda$, so this is a quadratic in lambda, parameterized by the model parmeters, the choice of wave speed $c$, and the free variable $\frac{\psi_-}{\phi_0}$. Unfortunately, for any value of $\lambda$ there is a choice of $\frac{\psi_-}{\phi_0}$ that makes $\lambda$ a solution to this equation. 
+</p>
+
+<p>
+    This gives any $\lambda \in \CC$ is an eigenvalue provided it satisfies the inequalities
+$$\begin{align*}
+    \Re(s) < 0 & \iff \lambda > -\frac{1}{\mu} \\
+    \Re(r) < 1 & \iff \lambda > -c -\frac{1 + \beta}{\alpha} \\
+    \Re(r_+) > 0 & \iff \lambda < \frac{1}{\alpha}.
+\end{align*}$$
+This is unfortunate because it implies there are eigenvalues with positive real part.
+</p>    
 </div>
 
 <!------------------ Case 2 ------------------------>
@@ -375,6 +402,51 @@ This case fixes $s$, and as a consequence, also fixes $r$ and $r_+$. The form of
 This only occurs under parameters that satisfy $(1+\beta)\mu = \alpha$. I believe it may be related to the bifurcation points, but I'm not sure. I'm not sure what to expect in this case. 
 </p>
 </div>
+
+<h1>A Toy Problem</h1>
+<p>
+    The above case 1a was strange to me. Having a strip of eignevalues is something I've never seen before and I suspected it to be unusual. Our particular operator is rather complicated, so to understand this phenomenon a little better, I searched for a simpler problem that captured the behavior. I believe this is allowed to happen since we have discontinuous coefficients in the differential equation.
+</p>
+
+<p>
+    Consider the operator
+$$
+\LL \begin{bmatrix} u \\ v \end{bmatrix} = \begin{bmatrix}
+    u' - v \\
+    v' + s(x)v
+\end{bmatrix}
+$$
+where 
+$$ s(x) = \begin{cases} 1 & \text{ if } x > 0, \\ -1 & \text{ if } x < 0\end{cases}$$ is the sign function, subject to vanishing boundary conditions at $\pm \infty$. This is a linear first order system with a discontinuous coefficient function.
+</p>
+
+<p>
+    The eigenvalue equation gives the following system
+$$\begin{align*}
+    u' - \lambda u &= v \\
+    v' - (\lambda - s(x))v &= 0.
+\end{align*}$$
+The second equation can be solved piecewise, independent of the first, and has solutions
+$$
+v(x) = v_0 e^{(\lambda  - s(x))x}.
+$$
+This is bounded if $-1 < \Re(\lambda) < 1$. This equation, by itself captures the behaviour I was searching for. We have a strip of eigenvalues in the complex plane.
+</p>
+
+<p>
+    This coupled system looks more familar with case 1a however. We substitute $v$ into the first equation and get
+$$\begin{align*}
+    u' - \lambda u &= v_0 e^{(\lambda  - s(x))x} \\
+        \vdots& \\
+    u(x) &= \left(u_0  - v_0 \frac{1}{\lambda - s(x)}\right)e^{\lambda x} + v_0 \frac{1}{\lambda - s(x)} e^{-|x|}.
+\end{align*}$$
+To enforce the boundary conditions, we require that
+$$\begin{align*}
+    \Re(\lambda) > 0 & \implies u_0 - v_0 \frac{1}{\lambda - 1} = 0 \\
+    \Re(\lambda) < 0 & \implies u_0 - v_0 \frac{1}{\lambda + 1} = 0.
+\end{align*}$$
+This is similar to case 1a above, because $\lambda$ determines the ratio $\frac{v_0}{u_0}$.
+</p>
 
 
 
