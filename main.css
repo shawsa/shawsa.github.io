@@ -305,7 +305,8 @@ Tab div
     background-color: white;
     display: none;
     /*overflow: hidden;*/
-    border-style: solid;
+    border-style: none solid solid solid;
+    /* top border redundant with border for tab button div */
     border-color: 
     overflow-x: auto;
 }

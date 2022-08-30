@@ -94,8 +94,239 @@
 
 <!--************************************************************************-->
 
-<hr><!--********************************************************************-->
+<hr>
+<!--********************************************************************-->
 
+<h1 id="">Traveling Wave Solution</h1>
+<p>
+    The traveling wave solution listed in <a href="../reports/report20220808.html">report 2022-08-08</a> is not comprehensive. We have identified (through simulation) a separate traveling front with a negative wave speed in the large $\tau_q$ regime. Here, we derive the traveling front solution again, and emphasize the mistake in the earlier derivation. 
+</p>
+
+<button class="accordion">Traveling Front Derivation</button>
+<div class="panel">
+<p>
+For reference, the model is
+\begin{align*}
+    \mu u_t &= -u + w \ast (q f[u]) \\
+    \alpha  q_t &= 1 - q - \beta q f[u].
+\end{align*}
+In characteristic coordinates $\xi = x - c t$ this becomes
+\begin{align*}
+    \mu u_t - c \mu u_\xi &= -u + w \ast (q f[u]) \\
+    \alpha q_t - c \alpha q_\xi &= 1 - q - \beta q f[u].
+\end{align*}
+</p>
+
+<p>
+    We seek a traveling front. To this end, we assume that the activity variable $u$ crosses the threshold exactly once. Any translate of the traveling front solution will also be a solution, so without loss of generality, we will assume that the threshold crossing occurs at $\xi = 0$. Thus we assume the active region is given by $H(-\xi)$. 
+</p>
+
+<p>
+    Assuming the solution is fixed in characteristic coordinates $u(\xi, t) = U(\xi)$, $q(\xi, t) = Q(\xi)$, we arrive at
+\begin{align*}
+    -c\mu U' &= -U + \int_{-\infty}^0 \frac{1}{2} e^{-|\xi - \xi'|} Q(\xi') \ d\xi' \\
+    -c \alpha Q' &= 1 - Q - \beta Q H(-\xi).
+\end{align*}
+</p>
+
+<p>
+    The form of the form of this equation motivates division by $c$, and so we first consider the case $c = 0$ separately.
+</p>
+
+<!--**********************-->
+<button class="accordion">Case: $c=0$</button>
+<div class="panel">
+<p>
+Our system simplifies to an integral system
+\begin{align*}
+    0 &= -U + \int_{-\infty}^0 \frac{1}{2} e^{-|\xi - \xi'|} Q(\xi') \ d\xi' \\
+    0 &= 1 - Q - \beta Q H(-\xi).
+\end{align*}
+Solving the second equation algebraically gives the piecewise constant equation
+\begin{align*}
+    Q &= \frac{1}{1 + \beta H(-\xi)} = 
+        \begin{cases}
+            1, & \xi > 0 \\
+            \gamma, & \xi < 0 .
+        \end{cases}
+\end{align*}
+Recall that $\gamma = \frac{1}{1+\beta}$.
+Substituting, we find
+\begin{align*}
+    U &= \int_{-\infty}^0 \frac{1}{2} e^{-|\xi - \xi'|} \gamma \ d\xi' \\
+        &= \frac{\gamma}{2} \int_{-\infty}^0 e^{-|\xi - \xi'|} \ d\xi' \\
+        &= \frac{\gamma}{2}
+            \begin{cases}   
+                \int_{-\infty}^0 e^{-\xi} e^{\xi'} \ d\xi', & \xi > 0 \\
+                \int_{-\infty}^\xi e^{-\xi} e^{\xi'} \ d\xi' + \int_{\xi}^0 e^{\xi} e^{-\xi'} d \xi', & \xi < 0
+            \end{cases} \\
+        &= \frac{\gamma}{2}
+            \begin{cases}   
+                e^{-\xi}, & \xi > 0 \\
+                e^{-\xi}(e^\xi - 0) + e^{\xi}(-1 + e^{-\xi}), & \xi < 0
+            \end{cases} \\
+        &= \frac{\gamma}{2}
+            \begin{cases}   
+                e^{-\xi}, & \xi > 0 \\
+                2 - e^{\xi}, & \xi < 0
+            \end{cases} \\
+        &= 
+            \begin{cases}
+                \frac{\gamma}{2} e^{-\xi}, & \xi > 0 \\
+                \gamma - \frac{\gamma}{2} e^{\xi}, & \xi < 0.
+            \end{cases}
+\end{align*}
+Enforcing consistency gives $\theta = U(0) = \frac{\gamma}{2}$ and we see that $c = 0$ is only possible for the very specific parameter choice
+$$
+    2 \theta = \gamma.
+$$
+</p>
+</div>
+<!--**********************-->
+<p>
+    Assuming $c \ne 0$ we have
+\begin{align*}
+    U' - \frac{1}{c\mu} U &= -\frac{1}{2c\mu} \int_{-\infty}^0 e^{-|-\xi - \xi'|} Q(\xi') \ d\xi' \\
+    Q' - \frac{1 + \beta H(-\xi)}{c\alpha}Q &= - \frac{1}{c\alpha}.
+\end{align*}
+Note that the second equation is independent of $U$, and has piecewise constant coefficients. Letting $r_\xi = -\frac{1 + \beta H(-\xi)}{c \alpha}$ we solve
+\begin{align*}
+    Q' + r_\xi Q &= -\frac{1}{c\alpha} \\
+    \big[ Q e^{r_\xi \xi} \big]' &= -\frac{1}{c\alpha} e^{r_\xi \xi} \\
+    Q e^{r_\xi \xi} &= Q_0 + -\frac{1}{c\alpha}\int_{0}^\xi e^{r_\xi \xi'} \ d\xi' \\
+        &= Q_0 - \frac{1}{c\alpha r_\xi} \big( e^{r_\xi \xi} - 1 \big) \\
+    Qe^{r_\xi \xi} &= \left( Q_0 + \frac{1}{c \alpha r_\xi} \right) - \frac{1}{c\alpha r_\xi} e^{r_\xi \xi} \\ 
+    Q &= \left( Q_0 + \frac{1}{c \alpha r_\xi} \right)e^{-r_\xi \xi} - \frac{1}{c\alpha r_\xi} \\ 
+    Q &= \begin{cases}
+            (Q_0 - 1)e^{\xi/c \alpha} + 1, & \xi > 0 \\
+            (Q_0 - \gamma)e^{\xi/c\alpha\gamma} + \gamma , & \xi < 0.
+        \end{cases}
+\end{align*}
+</p>
+
+<p>
+    Here we see the crucial error. Previously, we argued that $e^{\xi/c\alpha}$ grows without bound on $\xi > 0$ and thus $Q_0 = 1$. This is only true if $c > 0$. If the converse is true, we must enforce boundedness on the other piece and conclude that $Q_0 = \gamma$. We will first consider this new case. 
+</p>
+
+<!--**********************-->
+<button class="accordion">Case: $c<0$</button>
+<div class="panel">
+
+
+<p>
+    We have
+\begin{align*}
+    Q(\xi) &= \begin{cases}
+            1 + (\gamma - 1) e^{\xi / c\alpha}, & \xi > 0 \\
+            \gamma, & \xi < 0
+        \end{cases} \\
+    U' - \frac{1}{c\mu} U &= -\frac{\gamma}{2c \mu} \int_{-\infty}^0 e^{-|\xi - \xi'|} \ d\xi' \\
+        &= -\frac{\gamma}{2c \mu} \begin{cases}
+                e^{-\xi} \int_{-\infty}^0 e^{\xi'} d \xi', & \xi > 0 \\
+                e^{-\xi} \int_{-\infty}^\xi e^{\xi'} \ d\xi' + e^{\xi} \int_{\xi}^0 e^{-\xi'} \ d\xi' , & \xi < 0
+            \end{cases} \\
+        &= -\frac{\gamma}{2c \mu} \begin{cases}
+                e^{-\xi} , & \xi > 0 \\
+                2 - e^{\xi}, & \xi< 0               
+            \end{cases} \\
+    \big[ U e^{-\xi/c\mu} \big]'
+        &= -\frac{\gamma}{2c \mu} \begin{cases}
+                e^{-\frac{1 + c\mu}{c\mu} \xi} , & \xi > 0 \\
+                2e^{-\xi/c\mu} - e^{-\frac{1 - c\mu}{c\mu}\xi}, & \xi< 0               
+            \end{cases} \\
+    U e^{-\xi/c\mu}
+        &= U_0 -\frac{\gamma}{2c \mu} \begin{cases}
+                \int_{0}^\xi e^{-\frac{1 + c\mu}{c\mu} \xi'} \ d\xi', & \xi > 0 \\
+                \int_0^\xi 2e^{-\xi'/c\mu} - e^{-\frac{1 - c\mu}{c\mu}\xi'} \ d\xi', & \xi< 0               
+            \end{cases} \\
+        &= U_0 -\frac{\gamma}{2c \mu} \begin{cases}
+                -\frac{c\mu}{1+c\mu}\left(e^{-\frac{1 + c\mu}{c\mu} \xi} - 1\right), & \xi > 0 \\
+                -2c\mu \left(e^{-\xi/c\mu} - 1\right) + \frac{c\mu}{1 - c\mu}\left( e^{-\frac{1 - c\mu}{c\mu}\xi} - 1 \right), & \xi< 0               
+            \end{cases} \\
+        &= U_0 -\frac{\gamma}{2} \begin{cases}
+                -\frac{1}{1+c\mu}\left(e^{-\frac{1 + c\mu}{c\mu} \xi} - 1\right), & \xi > 0 \\
+                2 - \frac{1}{1-c\mu} -2 e^{-\xi/c\mu} + \frac{1}{1 - c\mu} e^{-\frac{1 - c\mu}{c\mu}\xi}, & \xi< 0               
+            \end{cases} \\
+    U(\xi) &= \begin{cases}
+                \left(U_0 - \frac{\gamma}{2(1+c\mu)} \right)e^{\xi/c\mu} + \frac{\gamma}{2(1+c\mu)}e^{-\xi}, & \xi > 0 \\
+                \left(U_0 - \gamma + \frac{\gamma}{2(1-c\mu)} \right)e^{\xi/c\mu} + \gamma - \frac{\gamma}{2(1-c\mu)}e^{\xi}, & \xi < 0.
+            \end{cases}
+\end{align*}
+</p>
+
+<p>
+    Since $c < 0$ this is bounded for the $\xi > 0$ piece, but for it to remain bounded in $\xi < 0$ we require
+\begin{align*}
+    0 &= U_0 - \gamma + \frac{\gamma}{2(1-c\mu)} \\
+    \gamma - \theta &= \frac{\gamma}{2(1-c\mu)} \\
+    1 - c\mu &= \frac{\gamma}{2(\gamma - \theta)} \\
+    1 - \frac{\gamma}{2(\gamma - \theta)} &= c \mu \\
+    \frac{\gamma - 2\theta}{2(\gamma - \theta)} &= c \mu \\
+    c &= \frac{1}{2\mu} \left(1 - \frac{\theta}{\gamma - \theta} \right).
+\end{align*}
+</p>
+<p>
+    We require $\gamma < 2 \theta$ for the sign of $c$ to be consistent. Since we also require $\gamma > \theta$ for the front to exist, we conclude that regressive fronts only occur when
+$$ \theta < \gamma < 2\theta. $$
+</p>
+
+</div>
+<!--**********************-->
+
+<p>
+    Thus, regressive fronts only occur when $\theta < \gamma < 2\theta$ and have the form
+\begin{align*}
+    U(\xi) &= \begin{cases}
+                \left(\theta - \frac{\gamma}{2(1+c\mu)} \right)e^{\xi/c\mu} + \frac{\gamma}{2(1+c\mu)}e^{-\xi}, & \xi > 0 \\
+                \gamma - \frac{\gamma}{2(1-c\mu)}e^{\xi}, & \xi < 0.
+            \end{cases} \\
+    Q(\xi) &= \begin{cases}
+            1 + (\gamma - 1) e^{\xi / c\alpha}, & \xi > 0 \\
+            \gamma, & \xi < 0
+        \end{cases}
+\end{align*}
+with speed given by
+$$
+c = \frac{1}{2\mu} \left( 1 - \frac{\theta}{\gamma - \theta}\right).
+$$
+</p>    
+
+<!--**********************-->
+<button class="accordion">Case: $c>0$</button>
+<div class="panel">
+
+<p>
+    We have
+\begin{align*}
+    Q(\xi) &= \begin{cases}
+                1, & \xi > 0 \\
+                \gamma + (1- \gamma)e^{\xi/c\alpha\gamma}, & \xi < 0
+            \end{cases} \\
+    -c\mu U' + U &= \frac{1}{2} \int_{-\infty}^0 e^{-|\xi - \xi'|} \bigg[ \gamma + (1-\gamma) e^{\xi'/c\alpha\gamma} \bigg] \ d \xi' \\
+        &= \frac{\gamma}{2} \int_{-\infty}^0 e^{-|\xi - \xi'|} d \xi' + \frac{1-\gamma}{2} \int_{-\infty}^0 e^{-|\xi - \xi'|}e^{\xi'/c\alpha\gamma} \ d\xi' \\
+        &= \begin{cases}
+                \frac{\gamma}{2} e^{-\xi} \int_{-\infty}^0 e^{\xi'} d\xi' + \frac{1-\gamma}{2} e^{-\xi} \int_{-\infty}^0 e^{\frac{1+c\alpha\gamma}{c\alpha\gamma} \xi'} \ d\xi' , & \xi> 0 \\
+                \frac{\gamma}{2} \left(\int_{-\infty}^\xi e^{-\xi} e^{\xi'} \ d\xi' + \int_{\xi}^0 e^{\xi} e^{-\xi'} \ d\xi' \right) + \frac{1-\gamma}{2}\left( \int_{-\infty}^0 e^{-\xi} e^{\frac{1+c\alpha\gamma}{c\alpha\gamma}\xi'} \ d\xi' + \int_{\xi}^0 e^{-\xi} e^{\frac{1 - c\alpha\gamma}{c\alpha\gamma} \xi'} \ d\xi' \right), & \xi<0
+            \end{cases} 
+\end{align*}
+... to be continued ...
+</p>
+
+</div>
+<!--**********************-->
+
+<p>
+    The animation below shows three solutions for the same initial condition, but with different values of $\gamma$. One simulation is in the $\theta < \gamma < 2\theta$ regime, and shows a regressing front. A second is in the $\gamma = 2\theta$ regime and has wave speed $c = 0$. A third is in the $\gamma > 2\theta$ regime, for which there is no regressive front, and this solution stabilizes to a traveling wave with $c > 0$. 
+</p>
+<video controls autoplay muted loop>
+    <source src="./working/regressive.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+</div>
+
+<hr>
+<!--********************************************************************-->
 <h1 id="">Bifurcation</h1>
 From <a href="../reports/report20220808.html">Report 2022-08-08</a> we have the wave speed $c$ given implicitly by
 $$
@@ -296,6 +527,22 @@ As in the previous calculation, the initial integral requires $\Re(r) > 1$ for t
 
 <!------------------ Case 1 ------------------------>
 <div id="case1" class="tabcontent">
+<h3>Case 1: $\psi_-, \psi_+ \ne 0$</h3>
+<p>
+Here, these two conditions impose restrictions on the exponential rates $r, r_+$. Specifically
+$$\begin{align*}
+    0 &< \Re(-r) & \Re(-r_+) &< 0\\
+    0 &< \frac{1+\beta}{\alpha c} + \frac{1}{c} \Re(\lambda) & \frac{1}{\alpha c} + \frac{1}{c}\Re(\lambda) &<0\\
+    -\frac{1}{\alpha} - \frac{\beta}{\alpha} & < \Re(\lambda) & \Re(\lambda)&< -\frac{1}{\alpha}.
+\end{align*}$$  
+</p>
+
+<p>
+    Thus, 
+$$-\frac{1}{\alpha} - \frac{\beta}{\alpha} < \Re(\lambda) < -\frac{1}{\alpha}.$$
+</div>
+
+<!--div id="case1" class="tabcontent">
 <h3>Case 1: The general case. No unnecessary assumptions on $\psi$.</h3>
 <p>
     The exponential terms $e^{-s\xi}$ appear in both the $\xi > 0$ and $\xi < 0$ with different scalings. No value of $s \in \CC$ can ensure that both of these decay to zero (though $\Re(s) = 0$ ensures bounded solutions, should we accept these?) so at least one of the coefficients must be zero, else a condition on $\Re(s)$ must be imposed. This gives us the following three, mutially exclusive subcases. 
