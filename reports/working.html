@@ -130,7 +130,7 @@ In characteristic coordinates $\xi = x - c t$ this becomes
 </p>
 
 <p>
-    The form of the form of this equation motivates division by $c$, and so we first consider the case $c = 0$ separately.
+    The form of this equation motivates division by $c$, and so we first consider the case $c = 0$ separately.
 </p>
 
 <!--**********************-->
@@ -303,13 +303,45 @@ $$
                 \gamma + (1- \gamma)e^{\xi/c\alpha\gamma}, & \xi < 0
             \end{cases} \\
     -c\mu U' + U &= \frac{1}{2} \int_{-\infty}^0 e^{-|\xi - \xi'|} \bigg[ \gamma + (1-\gamma) e^{\xi'/c\alpha\gamma} \bigg] \ d \xi' \\
-        &= \frac{\gamma}{2} \int_{-\infty}^0 e^{-|\xi - \xi'|} d \xi' + \frac{1-\gamma}{2} \int_{-\infty}^0 e^{-|\xi - \xi'|}e^{\xi'/c\alpha\gamma} \ d\xi' \\
-        &= \begin{cases}
-                \frac{\gamma}{2} e^{-\xi} \int_{-\infty}^0 e^{\xi'} d\xi' + \frac{1-\gamma}{2} e^{-\xi} \int_{-\infty}^0 e^{\frac{1+c\alpha\gamma}{c\alpha\gamma} \xi'} \ d\xi' , & \xi> 0 \\
-                \frac{\gamma}{2} \left(\int_{-\infty}^\xi e^{-\xi} e^{\xi'} \ d\xi' + \int_{\xi}^0 e^{\xi} e^{-\xi'} \ d\xi' \right) + \frac{1-\gamma}{2}\left( \int_{-\infty}^0 e^{-\xi} e^{\frac{1+c\alpha\gamma}{c\alpha\gamma}\xi'} \ d\xi' + \int_{\xi}^0 e^{-\xi} e^{\frac{1 - c\alpha\gamma}{c\alpha\gamma} \xi'} \ d\xi' \right), & \xi<0
-            \end{cases} 
+    U' - \frac{1}{c\mu} U 
+            &= -\frac{1}{2c\mu} \int_{-\infty}^0 e^{-|\xi - \xi'|} \bigg[ \gamma + (1-\gamma) e^{\xi'/c\alpha\gamma} \bigg] \ d \xi'.
 \end{align*}
-... to be continued ...
+</p>
+<p>
+    Suppose $\xi > 0$. Then
+\begin{align*}
+    U' - \frac{1}{c\mu} U 
+        &= -\frac{1}{2 c \mu} e^{-\xi} \int_{-\infty}^0 \gamma e^{\xi'} + (1-\gamma) e^{\frac{1+c\alpha \gamma}{c\alpha \gamma} \xi'} \ d \xi' \\
+        &= -\frac{1}{2c\mu}e^{-\xi} \bigg[ \gamma + \frac{c\alpha\gamma(1-\gamma)}{1 + c\alpha\gamma} \bigg] \\
+    \big[U e^{-\xi/c\mu} \big]' 
+        &= - \frac{\gamma + c\alpha\gamma}{2c\mu(1+c\alpha\gamma)} e^{-\frac{1+c\mu}{c\mu} \xi} \\
+    U e^{-\xi/c\mu} 
+        &= U_0 - \frac{\gamma + c\alpha\gamma}{2c\mu(1+c\alpha\gamma)} \int_0^\xi e^{-\frac{1+c\mu}{c\mu} \xi'} \ d\xi' \\
+        &=U_0 + \frac{\gamma + c\alpha\gamma}{2(1+c\alpha\gamma)(1+c\mu)} \big( e^{-\frac{1+c\mu}{c\mu} \xi} - 1\big) \\
+    U(\xi) 
+        &= \left( U_0 - \frac{\gamma + c\alpha\gamma}{2(1+c\alpha\gamma)(1+c\mu)} \right) e^{\xi/c\mu} + \frac{\gamma + c\alpha\gamma}{2(1+c\alpha\gamma)(1+c\mu)} e^{-\xi}
+\end{align*}
+</p>
+<p>
+    Suppose that $\xi < 0$. Then
+\begin{align*}
+    U' - \frac{1}{c\mu}U 
+        &= 
+        -\frac{1}{2c\mu} \int_{-\infty}^0 e^{-|\xi - \xi'|} \bigg( \gamma + (1-\gamma)e^{\xi' / c\alpha \gamma} \bigg) \ d\xi' \\
+        &= -\frac{1}{2c\mu} \bigg[ e^{-\xi} \int_{-\infty}^\xi \gamma e^{\xi'} + (1-\gamma) e^{\frac{1+c\alpha\gamma}{c\alpha\gamma} \xi'} \ d\xi' + e^{\xi} \int_{\xi}^0 \gamma e^{-\xi'} + (1-\gamma) e^{\frac{1-c\alpha\gamma}{c\alpha\gamma} \xi'} \ d\xi' \bigg] \\
+        &= -\frac{1}{2c\mu} \bigg[ e^{-\xi} \bigg(\gamma e^{\xi} + \frac{(1-\gamma)c\alpha\gamma}{1+c\alpha\gamma} e^{\frac{1+c\alpha\gamma}{c\alpha\gamma} \xi} \bigg) + e^{\xi}\bigg( -\gamma + \gamma (e^{-\xi}) + \frac{(1-\gamma)c\alpha\gamma}{1-c\alpha\gamma} \left( 1 - e^{\frac{1-c\alpha\gamma}{c\alpha\gamma} \xi}\right) \bigg)\bigg] \\
+        &= -\frac{\gamma}{c\mu} - \frac{1}{2c\mu} \left( \frac{(1-\gamma)c\alpha\gamma}{1+c\alpha\gamma} - \frac{(1-\gamma)c\alpha\gamma}{1-c\alpha\gamma} \right) e^{\xi/c\alpha\gamma} -\frac{1}{2c\mu} \bigg(\frac{(1-\gamma)c\alpha\gamma}{1-c\alpha\gamma} - \gamma \bigg) e^{\xi} \\
+        &= -\frac{\gamma}{c\mu} \underbrace{-\frac{(1-\gamma)c\alpha^2\gamma^2}{\mu(1 - c^2\alpha^2\gamma^2)}}_{K_1} e^{\xi/c\alpha\gamma} \underbrace{-\frac{1}{2c\mu} \bigg(\frac{(1-\gamma)c\alpha\gamma}{1-c\alpha\gamma} - \gamma \bigg)}_{K_2} e^{\xi} \\
+    [Ue^{-\xi/c\mu}]' 
+        &= -\frac{\gamma}{c\mu}e^{-\xi/c\mu} + K_1 e^{r\xi} + K_2 e^{\frac{c\mu - 1}{c\mu}\xi} \tag{$r = \frac{1}{c\alpha \gamma} - \frac{1}{c\mu}$} \\
+    Ue^{-\xi/c\mu} 
+        &= U_0 + \gamma(e^{-\xi/c\mu} - 1) + \frac{K_1}{r}(e^{r\xi} - 1) + \frac{K_2 c\mu}{c\mu - 1} (e^{\frac{c\mu-1}{c\mu}} - 1) \\
+    U(\xi) &= \bigg(U_0 - \gamma - \frac{K_1}{r} - \frac{K_2c\mu}{c\mu - 1} \bigg) e^{\xi/c\mu} + \gamma + \frac{K_1}{r}e^{\xi/c\alpha\gamma} + \frac{K_2c\mu}{c\mu-1}e^{\xi}.
+\end{align*}
+We see that the $\xi<0$ piece is bounded for $c > 0$ regardless of the other parameters. However, enforcing boundedness on the $\xi > 0$ piece, gives
+\[
+    \theta = \frac{\gamma + c\alpha\gamma}{2(1+c\alpha\gamma)(1+c\mu)}.  
+\]
 </p>
 
 </div>
@@ -328,17 +360,24 @@ $$
 <hr>
 <!--********************************************************************-->
 <h1 id="">Bifurcation</h1>
+<p>
 From <a href="../reports/report20220808.html">Report 2022-08-08</a> we have the wave speed $c$ given implicitly by
 $$
 \theta = \frac{\alpha c + 1}{2(\mu c + 1)( 1 + \beta + \alpha c)}
 $$
 in the traveling front case (note the change $\alpha\beta \mapsto \beta$). This gives a quadratic equation in $c$ and thus we expect up to two values for the wave speed for any given parameter regime. Fig 1 shows both branches of the wave speed as the parameter $\tau_q = \alpha$ varies, for several values of $\gamma = \frac{1}{1+\beta}$. 
+</p>
 
 <figure>
     <img src="../reports/working/speed_by_tau_q.png" width="100%"/>
     <caption><b>Fig 1.</b> Both branches of the wave speed for several values of $\tau_q = \alpha$. Here, $\mu = 1$, $\gamma = \frac{1}{1+\beta}$ (so $\beta = .2$), and $\theta = 0.1$.</caption>
-</figure=>
+</figure>
+<figure>
+    <img src="../reports/working/front_profiles.png" width="100%"/>
+    <caption><b>Fig 2.</b> Each plot shows profiles of three distinct traveling wave solutions for $\mu = 1, \gamma = 0.15, \theta = 0.1$ and two different values of $\alpha$. These parameters correspond to the green curve in Figure 1 above. Note that the profile of the regressive front is not dependent on $\alpha$. The profiles of the two progressive fronts have the same formula, differing only in the value of $c$.</caption>
+</figure>
 
+<p>
 Numerical experimentation (for example <a href="../reports/report20220808.html">Report 2022-08-08</a>) suggests that the solid curves in Figure 1 represent stable traveling waves. Presumably, the dashed lines represent unstable traveling waves, with a bifurcation where the two meet. To verify this, we will attempt a linear stability analysis.
 
 In characteristic coordinates we have
@@ -395,6 +434,7 @@ Finally, we conclude that linear stability can be characterized by the spectrum 
 		c \psi_0' - \frac{1}{\tau_q} \psi_0 - \frac{\beta}{\tau_q} (f'[U]Q \phi_0 + f[U]\psi_0)
 	\end{bmatrix}
 \end{align*}
+</p>
 
 <p>
 Here, we make two observations. First note, that this operator reduces to an integral operator when $c = 0$. In fact, $Q$ is no longer continuous, and the naive linearization results in the expression $Q(y)f'[U(y)] = \frac{Q(0)}{|U'(0)|}\delta(y)$ being ill-posed. We also suspect that the intersection of the two branches in the case $\gamma = 0.2$ to be a transcritical bifurcation. This motivates us to restrict ourselves to the $c > 0$ case, for the time being, to reduce the amount of book-keeping and notational complexity that we expect to arise (for example: when working with inequalities involving $c$ that come from restricting the real part of an exponential rate to have a certain sign).
@@ -510,11 +550,11 @@ $$\begin{align*}
         &= \phi_0e^{-s\xi}   + \left(\frac{1}{2c(1+r)}\psi_- - \frac{1}{2c\theta}\phi_0\right)\frac{1}{1+s} \big(e^{\xi} - e^{-s\xi}\big) - \frac{1}{c(1-r^2)}\psi_-\frac{1}{s-r} \big(e^{-r\xi} - e^{-s\xi}\big) \\
         &= \bigg(\phi_0 - \left(\frac{1}{2c(1+r)}\psi_- - \frac{1}{2c\theta}\phi_0\right)\frac{1}{1+s} + \frac{1}{c(1-r^2)}\psi_-\frac{1}{s-r} \bigg)e^{-s\xi} + \bigg( \left(\frac{1}{2c(1+r)}\psi_ - \frac{1}{2c\theta}\phi_0\right)\frac{1}{1+s} \bigg)e^{\xi} + \bigg(- \frac{1}{c(1-r^2)}\psi_- \frac{1}{s-r} \bigg) e^{-r\xi}.
 \end{align*}$$
-As in the previous calculation, the initial integral requires $\Re(r) > 1$ for the convolution to converge. This guarantees that $r \ne -1$ thus this calculation of the convolution is applicable in all cases. The form of the later integrals requires $s \ne - 1$ and $s \ne r$. 
+As in the previous calculation, the initial integral requires $\Re(r) > 1$ for the convolution to converge. This guarantees that $r \ne -1$ thus this calculation of the convolution is applicable in all cases. The form of the later integrals requires $s \ne - 1$ and $s \ne r$. Note that $s \ne r$ is equivalent to $\alpha \gamma = \mu$ and does not depend on $\lambda$.
 </p>
 
 
-<!--************************************************************************-->
+<!--*********************************************************************-->
 <!-- Cases -->
 <div class="tab">
   <button class="tablinks" onclick="openTab(event, 'case1')">Case 1</button>
@@ -650,50 +690,6 @@ This only occurs under parameters that satisfy $(1+\beta)\mu = \alpha$. I believ
 </p>
 </div>
 
-<h1>A Toy Problem</h1>
-<p>
-    The above case 1a was strange to me. Having a strip of eignevalues is something I've never seen before and I suspected it to be unusual. Our particular operator is rather complicated, so to understand this phenomenon a little better, I searched for a simpler problem that captured the behavior. I believe this is allowed to happen since we have discontinuous coefficients in the differential equation.
-</p>
-
-<p>
-    Consider the operator
-$$
-\LL \begin{bmatrix} u \\ v \end{bmatrix} = \begin{bmatrix}
-    u' - v \\
-    v' + s(x)v
-\end{bmatrix}
-$$
-where 
-$$ s(x) = \begin{cases} 1 & \text{ if } x > 0, \\ -1 & \text{ if } x < 0\end{cases}$$ is the sign function, subject to vanishing boundary conditions at $\pm \infty$. This is a linear first order system with a discontinuous coefficient function.
-</p>
-
-<p>
-    The eigenvalue equation gives the following system
-$$\begin{align*}
-    u' - \lambda u &= v \\
-    v' - (\lambda - s(x))v &= 0.
-\end{align*}$$
-The second equation can be solved piecewise, independent of the first, and has solutions
-$$
-v(x) = v_0 e^{(\lambda  - s(x))x}.
-$$
-This is bounded if $-1 < \Re(\lambda) < 1$. This equation, by itself captures the behaviour I was searching for. We have a strip of eigenvalues in the complex plane.
-</p>
-
-<p>
-    This coupled system looks more familar with case 1a however. We substitute $v$ into the first equation and get
-$$\begin{align*}
-    u' - \lambda u &= v_0 e^{(\lambda  - s(x))x} \\
-        \vdots& \\
-    u(x) &= \left(u_0  - v_0 \frac{1}{\lambda - s(x)}\right)e^{\lambda x} + v_0 \frac{1}{\lambda - s(x)} e^{-|x|}.
-\end{align*}$$
-To enforce the boundary conditions, we require that
-$$\begin{align*}
-    \Re(\lambda) > 0 & \implies u_0 - v_0 \frac{1}{\lambda - 1} = 0 \\
-    \Re(\lambda) < 0 & \implies u_0 - v_0 \frac{1}{\lambda + 1} = 0.
-\end{align*}$$
-This is similar to case 1a above, because $\lambda$ determines the ratio $\frac{v_0}{u_0}$.
-</p>
 
 
 
@@ -734,7 +730,7 @@ for (i = 0; i < acc.length; i++) {
     }
   });
 
-var expand_all_accordions = false;
+var expand_all_accordions = true;
 
 if (expand_all_accordions){
     for (i = 0; i < acc.length; i++) {
