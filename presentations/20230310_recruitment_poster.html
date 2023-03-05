@@ -1,0 +1,430 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <!-- Mathjax commands -->
+    $
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\OO}{\mathcal{O}}
+    \newcommand{\mathcow}{\OO}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\KK}{\mathbb{K}}
+    \newcommand{\PP}{\mathcal{P}}
+    \newcommand{\TT}{\mathcal{T}}
+    \newcommand{\BB}{\mathcal{B}}
+    \newcommand{\LL}{\mathcal{L}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+
+    \newcommand{\veca}{\vec{a}}
+    \newcommand{\vecb}{\vec{b}}
+    \newcommand{\vecd}{\vec{d}}
+    \newcommand{\vece}{\vec{e}}
+    \newcommand{\vecf}{\vec{f}}
+    \newcommand{\vecn}{\vec{n}}
+    \newcommand{\vecp}{\vec{p}}
+    \newcommand{\vecr}{\vec{r}}
+    \newcommand{\vecu}{\vec{u}}
+    \newcommand{\vecv}{\vec{v}}
+    \newcommand{\vecw}{\vec{w}}
+    \newcommand{\vecx}{\vec{x}}
+    \newcommand{\vecy}{\vec{y}}
+    \newcommand{\vecz}{\vec{z}}
+
+    \renewcommand{\vec}[1]{\mathbf{#1}}
+    $
+
+    <!-- Plotly code for interactive plots -->
+    <script src="../plotly-2.0.0-rc.2.min.js"></script>
+    
+    <!--Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+
+
+
+    
+<!--************************************************************************-->
+<title>Shaw Research Notes</title>
+</head>
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<body>
+
+<div class="top-bar">
+    <a href="../index.html"><img src="../frame/boulder-logo.png"></a>
+</div>
+
+<div id="side-bar" class="side-bar">
+    <p><a href="../reports/reports.html" target="_top">Reports</a></p>
+    <p><a href="../presentations/presentations.html" target="_top">Presentations</a></p>
+    <p><a href="../todo/todo.html" target="_top">To Do List</a></p>
+    <p><a href="../about/about.html" target="_top">About</a></p>
+    <hr>
+    <p><a href="../old-rbf/index.html" target="_top">Old Site</a></p>
+</div>
+
+<div class="page-content">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<h1 id="Title">May 10<sup>th</sup>, APPM Recruitment Poster</h1>
+<p id="summary">
+   This is the online suplement for <a href="20230310_recruitment_poster/texaux/shaw_poster.pdf" target=blank>my poster</a> in the APPM recuitment poster presentation. 
+</p>
+
+
+<div id="slider-plot" style="width:auto;"></div>
+
+<!--************************************************************************-->
+
+<hr>
+<!--********************************************************************-->
+
+<h1 id="">Traveling Wave Solution</h1>
+<p>
+    
+</p>
+
+<button class="accordion">Traveling Front Derivation</button>
+<div class="panel">
+<p>
+For reference, the model is
+\begin{align*}
+    \mu u_t &= -u + w \ast (q f[u]) \\
+    \alpha  q_t &= 1 - q - \beta q f[u].
+\end{align*}
+In characteristic coordinates $\xi = x - c t$ this becomes
+\begin{align*}
+    \mu u_t - c \mu u_\xi &= -u + w \ast (q f[u]) \\
+    \alpha q_t - c \alpha q_\xi &= 1 - q - \beta q f[u].
+\end{align*}
+</p>
+
+<p>
+    We seek a traveling front. To this end, we assume that the activity variable $u$ crosses the threshold exactly once. Any translate of the traveling front solution will also be a solution, so without loss of generality, we will assume that the threshold crossing occurs at $\xi = 0$. Thus we assume the active region is given by $H(-\xi)$. 
+</p>
+
+<p>
+    Assuming the solution is fixed in characteristic coordinates $u(\xi, t) = U(\xi)$, $q(\xi, t) = Q(\xi)$, we arrive at
+\begin{align*}
+    -c\mu U' &= -U + \int_{-\infty}^0 \frac{1}{2} e^{-|\xi - \xi'|} Q(\xi') \ d\xi' \\
+    -c \alpha Q' &= 1 - Q - \beta Q H(-\xi).
+\end{align*}
+</p>
+
+<p>
+    The form of this equation motivates division by $c$, and so we first consider the case $c = 0$ separately.
+</p>
+
+<!--**********************-->
+<button class="accordion">Case: $c=0$</button>
+<div class="panel">
+<p>
+Our system simplifies to an integral system
+\begin{align*}
+    0 &= -U + \int_{-\infty}^0 \frac{1}{2} e^{-|\xi - \xi'|} Q(\xi') \ d\xi' \\
+    0 &= 1 - Q - \beta Q H(-\xi).
+\end{align*}
+Solving the second equation algebraically gives the piecewise constant equation
+\begin{align*}
+    Q &= \frac{1}{1 + \beta H(-\xi)} = 
+        \begin{cases}
+            1, & \xi > 0 \\
+            \gamma, & \xi < 0 .
+        \end{cases}
+\end{align*}
+Recall that $\gamma = \frac{1}{1+\beta}$.
+Substituting, we find
+\begin{align*}
+    U &= \int_{-\infty}^0 \frac{1}{2} e^{-|\xi - \xi'|} \gamma \ d\xi' \\
+        &= \frac{\gamma}{2} \int_{-\infty}^0 e^{-|\xi - \xi'|} \ d\xi' \\
+        &= \frac{\gamma}{2}
+            \begin{cases}   
+                \int_{-\infty}^0 e^{-\xi} e^{\xi'} \ d\xi', & \xi > 0 \\
+                \int_{-\infty}^\xi e^{-\xi} e^{\xi'} \ d\xi' + \int_{\xi}^0 e^{\xi} e^{-\xi'} d \xi', & \xi < 0
+            \end{cases} \\
+        &= \frac{\gamma}{2}
+            \begin{cases}   
+                e^{-\xi}, & \xi > 0 \\
+                e^{-\xi}(e^\xi - 0) + e^{\xi}(-1 + e^{-\xi}), & \xi < 0
+            \end{cases} \\
+        &= \frac{\gamma}{2}
+            \begin{cases}   
+                e^{-\xi}, & \xi > 0 \\
+                2 - e^{\xi}, & \xi < 0
+            \end{cases} \\
+        &= 
+            \begin{cases}
+                \frac{\gamma}{2} e^{-\xi}, & \xi > 0 \\
+                \gamma - \frac{\gamma}{2} e^{\xi}, & \xi < 0.
+            \end{cases}
+\end{align*}
+Enforcing consistency gives $\theta = U(0) = \frac{\gamma}{2}$ and we see that $c = 0$ is only possible for the very specific parameter choice
+$$
+    2 \theta = \gamma.
+$$
+</p>
+</div>
+<!--**********************-->
+<p>
+    Assuming $c \ne 0$ we have
+\begin{align*}
+    U' - \frac{1}{c\mu} U &= -\frac{1}{2c\mu} \int_{-\infty}^0 e^{-|-\xi - \xi'|} Q(\xi') \ d\xi' \\
+    Q' - \frac{1 + \beta H(-\xi)}{c\alpha}Q &= - \frac{1}{c\alpha}.
+\end{align*}
+Note that the second equation is independent of $U$, and has piecewise constant coefficients. Letting $r_\xi = -\frac{1 + \beta H(-\xi)}{c \alpha}$ we solve
+\begin{align*}
+    Q' + r_\xi Q &= -\frac{1}{c\alpha} \\
+    \big[ Q e^{r_\xi \xi} \big]' &= -\frac{1}{c\alpha} e^{r_\xi \xi} \\
+    Q e^{r_\xi \xi} &= Q_0 + -\frac{1}{c\alpha}\int_{0}^\xi e^{r_\xi \xi'} \ d\xi' \\
+        &= Q_0 - \frac{1}{c\alpha r_\xi} \big( e^{r_\xi \xi} - 1 \big) \\
+    Qe^{r_\xi \xi} &= \left( Q_0 + \frac{1}{c \alpha r_\xi} \right) - \frac{1}{c\alpha r_\xi} e^{r_\xi \xi} \\ 
+    Q &= \left( Q_0 + \frac{1}{c \alpha r_\xi} \right)e^{-r_\xi \xi} - \frac{1}{c\alpha r_\xi} \\ 
+    Q &= \begin{cases}
+            (Q_0 - 1)e^{\xi/c \alpha} + 1, & \xi > 0 \\
+            (Q_0 - \gamma)e^{\xi/c\alpha\gamma} + \gamma , & \xi < 0.
+        \end{cases}
+\end{align*}
+</p>
+
+<p>
+    Here we see the crucial error. Previously, we argued that $e^{\xi/c\alpha}$ grows without bound on $\xi > 0$ and thus $Q_0 = 1$. This is only true if $c > 0$. If the converse is true, we must enforce boundedness on the other piece and conclude that $Q_0 = \gamma$. We will first consider this new case. 
+</p>
+
+<!--**********************-->
+<button class="accordion">Case: $c<0$</button>
+<div class="panel">
+
+
+<p>
+    We have
+\begin{align*}
+    Q(\xi) &= \begin{cases}
+            1 + (\gamma - 1) e^{\xi / c\alpha}, & \xi > 0 \\
+            \gamma, & \xi < 0
+        \end{cases} \\
+    U' - \frac{1}{c\mu} U &= -\frac{\gamma}{2c \mu} \int_{-\infty}^0 e^{-|\xi - \xi'|} \ d\xi' \\
+        &= -\frac{\gamma}{2c \mu} \begin{cases}
+                e^{-\xi} \int_{-\infty}^0 e^{\xi'} d \xi', & \xi > 0 \\
+                e^{-\xi} \int_{-\infty}^\xi e^{\xi'} \ d\xi' + e^{\xi} \int_{\xi}^0 e^{-\xi'} \ d\xi' , & \xi < 0
+            \end{cases} \\
+        &= -\frac{\gamma}{2c \mu} \begin{cases}
+                e^{-\xi} , & \xi > 0 \\
+                2 - e^{\xi}, & \xi< 0               
+            \end{cases} \\
+    \big[ U e^{-\xi/c\mu} \big]'
+        &= -\frac{\gamma}{2c \mu} \begin{cases}
+                e^{-\frac{1 + c\mu}{c\mu} \xi} , & \xi > 0 \\
+                2e^{-\xi/c\mu} - e^{-\frac{1 - c\mu}{c\mu}\xi}, & \xi< 0               
+            \end{cases} \\
+    U e^{-\xi/c\mu}
+        &= U_0 -\frac{\gamma}{2c \mu} \begin{cases}
+                \int_{0}^\xi e^{-\frac{1 + c\mu}{c\mu} \xi'} \ d\xi', & \xi > 0 \\
+                \int_0^\xi 2e^{-\xi'/c\mu} - e^{-\frac{1 - c\mu}{c\mu}\xi'} \ d\xi', & \xi< 0               
+            \end{cases} \\
+        &= U_0 -\frac{\gamma}{2c \mu} \begin{cases}
+                -\frac{c\mu}{1+c\mu}\left(e^{-\frac{1 + c\mu}{c\mu} \xi} - 1\right), & \xi > 0 \\
+                -2c\mu \left(e^{-\xi/c\mu} - 1\right) + \frac{c\mu}{1 - c\mu}\left( e^{-\frac{1 - c\mu}{c\mu}\xi} - 1 \right), & \xi< 0               
+            \end{cases} \\
+        &= U_0 -\frac{\gamma}{2} \begin{cases}
+                -\frac{1}{1+c\mu}\left(e^{-\frac{1 + c\mu}{c\mu} \xi} - 1\right), & \xi > 0 \\
+                2 - \frac{1}{1-c\mu} -2 e^{-\xi/c\mu} + \frac{1}{1 - c\mu} e^{-\frac{1 - c\mu}{c\mu}\xi}, & \xi< 0               
+            \end{cases} \\
+    U(\xi) &= \begin{cases}
+                \left(U_0 - \frac{\gamma}{2(1+c\mu)} \right)e^{\xi/c\mu} + \frac{\gamma}{2(1+c\mu)}e^{-\xi}, & \xi > 0 \\
+                \left(U_0 - \gamma + \frac{\gamma}{2(1-c\mu)} \right)e^{\xi/c\mu} + \gamma - \frac{\gamma}{2(1-c\mu)}e^{\xi}, & \xi < 0.
+            \end{cases}
+\end{align*}
+</p>
+
+<p>
+    Since $c < 0$ this is bounded for the $\xi > 0$ piece, but for it to remain bounded in $\xi < 0$ we require
+\begin{align*}
+    0 &= U_0 - \gamma + \frac{\gamma}{2(1-c\mu)} \\
+    \gamma - \theta &= \frac{\gamma}{2(1-c\mu)} \\
+    1 - c\mu &= \frac{\gamma}{2(\gamma - \theta)} \\
+    1 - \frac{\gamma}{2(\gamma - \theta)} &= c \mu \\
+    \frac{\gamma - 2\theta}{2(\gamma - \theta)} &= c \mu \\
+    c &= \frac{1}{2\mu} \left(1 - \frac{\theta}{\gamma - \theta} \right).
+\end{align*}
+</p>
+<p>
+    We require $\gamma < 2 \theta$ for the sign of $c$ to be consistent. Since we also require $\gamma > \theta$ for the front to exist, we conclude that regressive fronts only occur when
+$$ \theta < \gamma < 2\theta. $$
+</p>
+
+</div>
+<!--**********************-->
+
+<p>
+    Thus, regressive fronts only occur when $\theta < \gamma < 2\theta$ and have the form
+\begin{align*}
+    U(\xi) &= \begin{cases}
+                \left(\theta - \frac{\gamma}{2(1+c\mu)} \right)e^{\xi/c\mu} + \frac{\gamma}{2(1+c\mu)}e^{-\xi}, & \xi > 0 \\
+                \gamma - \frac{\gamma}{2(1-c\mu)}e^{\xi}, & \xi < 0.
+            \end{cases} \\
+    Q(\xi) &= \begin{cases}
+            1 + (\gamma - 1) e^{\xi / c\alpha}, & \xi > 0 \\
+            \gamma, & \xi < 0
+        \end{cases}
+\end{align*}
+with speed given by
+$$
+c = \frac{1}{2\mu} \left( 1 - \frac{\theta}{\gamma - \theta}\right).
+$$
+</p>    
+
+<!--**********************-->
+<button class="accordion">Case: $c>0$</button>
+<div class="panel">
+
+<p>
+    We have
+\begin{align*}
+    Q(\xi) &= \begin{cases}
+                1, & \xi > 0 \\
+                \gamma + (1- \gamma)e^{\xi/c\alpha\gamma}, & \xi < 0
+            \end{cases} \\
+    -c\mu U' + U &= \frac{1}{2} \int_{-\infty}^0 e^{-|\xi - \xi'|} \bigg[ \gamma + (1-\gamma) e^{\xi'/c\alpha\gamma} \bigg] \ d \xi' \\
+    U' - \frac{1}{c\mu} U 
+            &= -\frac{1}{2c\mu} \int_{-\infty}^0 e^{-|\xi - \xi'|} \bigg[ \gamma + (1-\gamma) e^{\xi'/c\alpha\gamma} \bigg] \ d \xi'.
+\end{align*}
+</p>
+<p>
+    Suppose $\xi > 0$. Then
+\begin{align*}
+    U' - \frac{1}{c\mu} U 
+        &= -\frac{1}{2 c \mu} e^{-\xi} \int_{-\infty}^0 \gamma e^{\xi'} + (1-\gamma) e^{\frac{1+c\alpha \gamma}{c\alpha \gamma} \xi'} \ d \xi' \\
+        &= -\frac{1}{2c\mu}e^{-\xi} \bigg[ \gamma + \frac{c\alpha\gamma(1-\gamma)}{1 + c\alpha\gamma} \bigg] \\
+    \big[U e^{-\xi/c\mu} \big]' 
+        &= - \frac{\gamma + c\alpha\gamma}{2c\mu(1+c\alpha\gamma)} e^{-\frac{1+c\mu}{c\mu} \xi} \\
+    U e^{-\xi/c\mu} 
+        &= U_0 - \frac{\gamma + c\alpha\gamma}{2c\mu(1+c\alpha\gamma)} \int_0^\xi e^{-\frac{1+c\mu}{c\mu} \xi'} \ d\xi' \\
+        &=U_0 + \frac{\gamma + c\alpha\gamma}{2(1+c\alpha\gamma)(1+c\mu)} \big( e^{-\frac{1+c\mu}{c\mu} \xi} - 1\big) \\
+    U(\xi) 
+        &= \left( U_0 - \frac{\gamma + c\alpha\gamma}{2(1+c\alpha\gamma)(1+c\mu)} \right) e^{\xi/c\mu} + \frac{\gamma + c\alpha\gamma}{2(1+c\alpha\gamma)(1+c\mu)} e^{-\xi}
+\end{align*}
+</p>
+<p>
+    Suppose that $\xi < 0$. Then
+\begin{align*}
+    U' - \frac{1}{c\mu}U 
+        &= 
+        -\frac{1}{2c\mu} \int_{-\infty}^0 e^{-|\xi - \xi'|} \bigg( \gamma + (1-\gamma)e^{\xi' / c\alpha \gamma} \bigg) \ d\xi' \\
+        &= -\frac{1}{2c\mu} \bigg[ e^{-\xi} \int_{-\infty}^\xi \gamma e^{\xi'} + (1-\gamma) e^{\frac{1+c\alpha\gamma}{c\alpha\gamma} \xi'} \ d\xi' + e^{\xi} \int_{\xi}^0 \gamma e^{-\xi'} + (1-\gamma) e^{\frac{1-c\alpha\gamma}{c\alpha\gamma} \xi'} \ d\xi' \bigg] \\
+        &= -\frac{1}{2c\mu} \bigg[ e^{-\xi} \bigg(\gamma e^{\xi} + \frac{(1-\gamma)c\alpha\gamma}{1+c\alpha\gamma} e^{\frac{1+c\alpha\gamma}{c\alpha\gamma} \xi} \bigg) + e^{\xi}\bigg( -\gamma + \gamma (e^{-\xi}) + \frac{(1-\gamma)c\alpha\gamma}{1-c\alpha\gamma} \left( 1 - e^{\frac{1-c\alpha\gamma}{c\alpha\gamma} \xi}\right) \bigg)\bigg] \\
+        &= -\frac{\gamma}{c\mu} - \frac{1}{2c\mu} \left( \frac{(1-\gamma)c\alpha\gamma}{1+c\alpha\gamma} - \frac{(1-\gamma)c\alpha\gamma}{1-c\alpha\gamma} \right) e^{\xi/c\alpha\gamma} -\frac{1}{2c\mu} \bigg(\frac{(1-\gamma)c\alpha\gamma}{1-c\alpha\gamma} - \gamma \bigg) e^{\xi} \\
+        &= -\frac{\gamma}{c\mu} \underbrace{-\frac{(1-\gamma)c\alpha^2\gamma^2}{\mu(1 - c^2\alpha^2\gamma^2)}}_{K_1} e^{\xi/c\alpha\gamma} \underbrace{-\frac{1}{2c\mu} \bigg(\frac{(1-\gamma)c\alpha\gamma}{1-c\alpha\gamma} - \gamma \bigg)}_{K_2} e^{\xi} \\
+    [Ue^{-\xi/c\mu}]' 
+        &= -\frac{\gamma}{c\mu}e^{-\xi/c\mu} + K_1 e^{r\xi} + K_2 e^{\frac{c\mu - 1}{c\mu}\xi} \tag{$r = \frac{1}{c\alpha \gamma} - \frac{1}{c\mu}$} \\
+    Ue^{-\xi/c\mu} 
+        &= U_0 + \gamma(e^{-\xi/c\mu} - 1) + \frac{K_1}{r}(e^{r\xi} - 1) + \frac{K_2 c\mu}{c\mu - 1} (e^{\frac{c\mu-1}{c\mu}} - 1) \\
+    U(\xi) &= \bigg(U_0 - \gamma - \frac{K_1}{r} - \frac{K_2c\mu}{c\mu - 1} \bigg) e^{\xi/c\mu} + \gamma + \frac{K_1}{r}e^{\xi/c\alpha\gamma} + \frac{K_2c\mu}{c\mu-1}e^{\xi}.
+\end{align*}
+We see that the $\xi<0$ piece is bounded for $c > 0$ regardless of the other parameters. However, enforcing boundedness on the $\xi > 0$ piece, gives
+\[
+    \theta = \frac{\gamma + c\alpha\gamma}{2(1+c\alpha\gamma)(1+c\mu)}.  
+\]
+</p>
+
+</div>
+<!--**********************-->
+
+<p>
+    The animation below shows three solutions for the same initial condition, but with different values of $\gamma$. One simulation is in the $\theta < \gamma < 2\theta$ regime, and shows a regressing front. A second is in the $\gamma = 2\theta$ regime and has wave speed $c = 0$. A third is in the $\gamma > 2\theta$ regime, for which there is no regressive front, and this solution stabilizes to a traveling wave with $c > 0$. 
+</p>
+
+</div>
+
+<!--button class="accordion">BUTTON NAME</button>
+<div class="panel">
+</div-->
+
+<!--video controls autoplay muted loop>
+    <source src="../working/synaptic_depression_perturbation.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video-->
+
+<!--figure>
+    <img src="../working/wave_response_small.png" width="100%"/>
+    <caption><b>Fig 2.</b> The asymptotic approximation of the wave response to $\epsilon I(x, t) = 0.01 \delta(t - 1)$.</caption>
+</figure=-->
+
+<!--************************************************************************-->
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+</div>
+
+<!-- Accordion script -->
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+
+var expand_all_accordions = false;
+
+if (expand_all_accordions){
+    for (i = 0; i < acc.length; i++) {
+      acc[i].nextElementSibling.style.display = "block";
+    }
+}
+
+}
+</script>
+
+<!-- Tabs script -->
+<script>
+function openTab(evt, tabId) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(tabId).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
+
+</body>
+    
+</html>

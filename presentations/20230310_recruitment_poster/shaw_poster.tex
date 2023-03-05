@@ -1,5 +1,7 @@
 \documentclass[landscape,final]{baposter}
 
+\usepackage[-1]{pagesel} % limit to one page
+
 \usepackage{times}
 \usepackage{calc}
 \usepackage{graphicx}
@@ -200,19 +202,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \headerbox{Summary}{name=summary,column=0,row=0}{
 	 \textbf{Scientific Question:} How do brains encode and predict motion? \\
-	 \textbf{Bottom Up Approach:} One dimensional neural-field models can admit traveling fronts/pulses.
+	 \textbf{Bottom Up Approach:} One dimensional neural-field models can admit traveling fronts/pulses. How do these solutions react to external stimulation, and can they be used to encode the velocity of moving objects?
 	 \vspace{.2cm}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\headerbox{Neural-Field Model}{name=model,column=0,below=summary, above=bottom}
+\headerbox{Neural-Field Model}{name=model,column=0, below=summary, above=bottom}
 {
-	Neural tissues are composed of cells called neurons, which are connected to eachother through synapses forming a network. These networks can be quite large, so instead, we approximate them with a system of integro-differential equations called a \textit{neural-field model}. Our model incorporates \textit{synaptic plasticity} - a phenomenon where the strength of synaptic connections changes due to availability of synaptic resources.
-	\textbf{Independent Variables:}
-	\begin{itemize}
-		\item $x$ -- space (1-dimensional)
-		\item $t$ -- time
-	\end{itemize}
+	Neural tissues are composed of cells called neurons, which are connected to eachother through synapses forming a network. These networks can be quite large we approximate them with a system of integro-differential equations called a \textit{neural-field model}. Our model incorporates \textit{synaptic plasticity} - a phenomenon where the strength of synaptic connections changes due to availability of synaptic resources. We model neural activity and synaptic efficacy over one spatial dimension ($x \in \RR$) and time ($t \in [0, \infty)$).
+	\bigbreak
+	
 	\textbf{Dependent Variables:}
 		\begin{itemize}
 		\item $u$ -- neural activity (normalized firing-rate)
@@ -227,12 +226,12 @@
 		\item $\theta$ -- the firing-rate threshold. Activity levels below this value do not stimulate neighboring neurons.
 	\end{itemize}
 	
-	\textbf{Function Parameters:}
+	\textbf{Firing-Rate Function:}
+	The the non-linear firing-rate function $f[u] = H(u - \theta)$ defines the active region. Only neurons above a certain level of activity ($\theta$) will stimulate other neurons.
 	
-	The the non-linear \textit{firing-rate function} $f[u] = H(u - \theta)$ defines the active region. Only neurons above a certain level of activity ($\theta$) will stimulate other neurons.
 	\bigbreak
-	
-	The \textit{weight kernel} $w(|x - y|) = \tfrac{1}{2}e^{-|x - y|}$ encodes the connectivity of our network. Positive weight kernels that integrate to 1 can be interpreted as the probability density of synaptic connextions between neurons separated by a distance $|x - y|$.
+	\textbf{Weight Kernel:}	
+	The weight kernel $w(|x - y|) = \tfrac{1}{2}e^{-|x - y|}$ encodes the connectivity of our network and can be interpreted as the probability density of synaptic connextions between neurons separated by a distance $|x - y|$.
 	
 	\textbf{Model:}
 	\begin{align*}
@@ -245,20 +244,17 @@
 	\bigbreak
 	
 	We can find analytic solutions for traveling waves by converting to characteristic coordinates
-	\[
-		\xi = x - ct
-	\]
+	$\xi = x - ct$
 	and searching for stationary solutions $u(\xi, t) = U(\xi), q(\xi, t) = Q(\xi)$. These solutions satisfy
 	\begin{align*}
 		-c\tau_u U' &= -U + w * (Q f[U]) \ d\xi' \\
 		-c \tau_q Q' &= 1 - Q - \beta Q f[U].
 	\end{align*}
-	\vspace{.2cm}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \headerbox{Traveling Front Solutions}{name=solutions,column=1,row=0}
 {
-	Fixing the threshold crossing at $\xi = 0$ and assuming propagation in the positvie $x$ direction, the active region is described by the half-plane $f[U] = H(-\xi)$. This substitution gives a decoupled linear system which we can solve analytically. Below we see the profile of a typical traveling front solution. The tail of the front approaches $\gamma$: $\lim\limits_{\xi \to -\infty} U(\xi) = \gamma$. Thus, traveling fronts only occur when $\gamma > \theta$.
+	Fixing the threshold crossing at $\xi = 0$ and assuming propagation in the positvie $x$ direction, the active region is described by the half-plane $f[U] = H(-\xi)$. This substitution gives a decoupled linear system which we can solve analytically. Below we see the profile of a typical traveling front solution. The tail of the front approaches $\lim\limits_{\xi \to -\infty} U(\xi) = \gamma$. Thus, traveling fronts only occur when $\gamma > \theta$.
 	\begin{center}
 		\includegraphics[width=.45\linewidth]{front_profile}
 	\end{center}
@@ -266,8 +262,6 @@
 	\begin{center}
 		\includegraphics[width=.45\linewidth]{speed_by_tau_q}
 	\end{center}
-	
-	\vspace{.2cm}
 }
 
 \headerbox{Traveling Pulse Solutions}{name=solutions2,column=1,below=solutions,above=bottom}
@@ -276,14 +270,14 @@
 	\begin{center}
 		\includegraphics[width=.45\linewidth]{pulse_profile}
 	\end{center}
-	We also obtain two consistency equations for $c$ and $\Delta$, however, these equations cannot be found analytically so we resort to numerical root-finding techniques. The following diagram was generated using numerical continuation from a known solution that was found by trail and error.
+	We also obtain two consistency equations for $c$ and $\Delta$, however, these equations cannot be found analytically so we resort to numerical root-finding techniques. The following diagram was generated using numerical continuation from a known solution that was found by trial and error.
 	\begin{center}
 		\includegraphics[width=.45\linewidth]{pulse_bifurcation}
 	\end{center}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\headerbox{Wave Response}{name=response,column=2,row=0}
+\headerbox{Wave Response}{name=response,column=2,row=0,above=solutions2}
 {
 	These solutions have fixed speeds, however, our visual system is capable of tracking and predicting the location of objects with a variety of speeds. Can we augment the model in a biologically realisitc way to account for this variation in speed?
 	\bigbreak
@@ -297,19 +291,19 @@
 	\begin{center}
 		\includegraphics[width=.7\linewidth]{response_example}
 	\end{center}
-	This is called \textit{marginal stability}, and the amount of translation is called the \textit{wave response}, denoted $\nu(t)$, and is a function of time, and the particular stimulus functions. An animation of this phenomeneon can be found in the online supplemental material (QR code).
+	This is called \textit{marginal stability}. The amount of translation is called the \textit{wave response}, denoted $\nu(t)$, and is a function of time, and the particular stimulus functions. An animation of this phenomeneon can be found in the online supplemental material (QR code).
 	\vspace{.2cm}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\headerbox{Asymptotics}{name=asymptotics,column=2,below=response,above=bottom}
+\headerbox{Asymptotics}{name=asymptotics,column=2,below=solutions,above=bottom}
 {
-	We can explore the effects of small perturbations by taking $0 < \varepsilon \ll 1$ and linearlizing about the traveling wave solution:
+	We can explore the effects of small perturbations by taking $\varepsilon$ to be small and linearlizing about the traveling wave solution:
 	\begin{align*}
 		u(\xi, t) &= U(\xi - \varepsilon \nu(t)) + \epsilon \phi(\xi, t) + \OO(\varepsilon^2) \\
 		q(\xi, t) &= Q(\xi - \varepsilon \nu(t)) + \epsilon \psi(\xi, t) + \OO(\varepsilon^2)
 	\end{align*}
-	The $\OO(1)$ terms are consistent with $U, Q$ being a traveling wave solution. The $\OO(\varepsilon)$ terms can collected and expressed in vector form as
+	When substituted into the model, the $\OO(1)$ terms are consistent with $U, Q$ being a traveling wave solution, and the $\OO(\varepsilon)$ terms can collected and expressed in vector form as
 	\begin{align*}
 	    \begin{bmatrix}\tau_u & 0 \\ 0 & \tau_q\end{bmatrix} \begin{bmatrix}\phi \\ \psi \end{bmatrix}_t + \LL \left(\begin{bmatrix} \phi \\ \psi \end{bmatrix} \right)
 	        = 
@@ -338,22 +332,36 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \headerbox{Results}{name=results,column=3,row=0}
 {
-	Spatially homogeneous, delta-pulse: 
+	In the case of a traveling front, we find the null-space to be
 	\begin{align*}
-		I_u(x, t) &= \frac{1}{\tau_u} \varepsilon_u \delta(t) \\
-		I_q(x, t) &= \frac{1}{\tau_q} \varepsilon_q \delta(t)
+		v_1(\xi) &= H(\xi) e^{-\xi/c\tau_u} \\
+		v_2(\xi) &= \frac{c\tau_u}{2(1+c\tau_u)(1+\beta+c\tau_q)} \big( H(-\xi)e^{\xi} + H(\xi) e^{-\xi/c\tau_q} \big)
 	\end{align*}
+	which is depicted below for a large (biologically realistic) value of $\tau_q$.
 	\begin{center}
-		\includegraphics[width=.9\linewidth]{delta_time_amp_grid}
+		\includegraphics[width=.9\linewidth]{nullspace}
 	\end{center}
+	The profile of the nullspace is a useful heuristic. For example, we see that far in front of the wave, $\xi \approx 50$ for example, $v_1 \approx 0$ while $v_2 > 0$. This suggests that if we were to add some localized stimulus $I_u$ it would have no effect, while a stimulus $I_q$ would persist long enough to cause a wave response.
+	\bigbreak
+	
+	Do demonstrate how the asymptotic prediction of the time limit $\lim\limits_{t \to \infty} \nu(t) = \nu_\infty$ compares to simulation, we consider the stimulus $\varepsilon I_u = \varepsilon \delta_t$ with $I_q = 0$.
+	\begin{center}
+		\includegraphics[width=.9\linewidth]{fig_spatially_homogeneous_limit}
+	\end{center}
+	We see that the predicted response function is tangent to the observed response from simulations, and accurately predicts the response for small stimulii, as one expects of an asymptotic approximation.
+	\vspace{.2cm}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\headerbox{References and Funding}{name=references,column=3,below=results,above=bottom}
+\headerbox{References, Funding, and Links}{name=references,column=3,below=results,above=bottom}
 {
-	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent non dolor id tellus commodo viverra. Suspendisse ullamcorper efficitur sapien sed rutrum. Suspendisse dictum auctor varius. Cras tristique velit nulla, ac tempus ex commodo sed. 
+	\begin{itemize}
+		\item Z. Kilpatrick \& P. Bressloff. ``Effects of synaptic depression and adaptation on
+		spatiotemporal dynamics of an excitatory neuronal network''. Physica D (2010)
+		\item Z. Kilpatrick \& B. Ermentrout. ``Response of traveling waves to transient inputs in
+		neural fields''. Phys. Rev. E( 2012)
+	\end{itemize}
 }
-
 
 \end{poster}
 \end{document}
