@@ -2,8 +2,9 @@
 *-checkpoint.ipynb
 __pycache__
 
-texaux/*
 *.pdf
+**/texaux/*
+!**/texaux/*.pdf
 
 papers
 manuscript

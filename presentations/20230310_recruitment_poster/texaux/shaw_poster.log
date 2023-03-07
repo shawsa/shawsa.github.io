@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.9.5)  5 MAR 2023 12:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.9.5)  7 MAR 2023 14:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -723,14 +723,22 @@ Package: helvet 2005/04/12 PSNFSS-v9.2a (WaS)
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/palatino.sty
 Package: palatino 2005/04/12 PSNFSS-v9.2a (SPQR) 
 )
+(/usr/share/texlive/texmf-dist/tex/latex/wrapfig/wrapfig.sty
+\wrapoverhang=\dimen196
+\WF@size=\dimen197
+\c@WF@wrappedlines=\count148
+\WF@box=\box80
+\WF@everypar=\toks34
+Package: wrapfig 2003/01/31  v 3.6
+)
 (/usr/share/texlive/texmf-dist/tex/latex/enumitem/enumitem.sty
 Package: enumitem 2011/09/28 v3.5.2 Customized lists
-\enitkv@toks@=\toks34
+\enitkv@toks@=\toks35
 \labelindent=\skip90
-\enit@outerparindent=\dimen196
-\enit@toks=\toks35
-\enit@inbox=\box80
-\enitdp@description=\count148
+\enit@outerparindent=\dimen198
+\enit@toks=\toks36
+\enit@inbox=\box81
+\enitdp@description=\count149
 )
 \symextraup=\mathgroup9
 
@@ -739,36 +747,36 @@ LaTeX Warning: Unused global option(s):
     [landscape,final].
 
 (texaux/shaw_poster.aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Try loading font information for T1+ppl on input line 101.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 103.
+LaTeX Font Info:    ... okay on input line 103.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 103.
+LaTeX Font Info:    ... okay on input line 103.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 103.
+LaTeX Font Info:    ... okay on input line 103.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 103.
+LaTeX Font Info:    ... okay on input line 103.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 103.
+LaTeX Font Info:    ... okay on input line 103.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 103.
+LaTeX Font Info:    ... okay on input line 103.
+LaTeX Font Info:    Try loading font information for T1+ppl on input line 103.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ppl.fd
 File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
 )
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count149
-\scratchdimen=\dimen197
-\scratchbox=\box81
-\nofMPsegments=\count150
-\nofMParguments=\count151
-\everyMPshowfont=\toks36
-\MPscratchCnt=\count152
-\MPscratchDim=\dimen198
-\MPnumerator=\count153
-\makeMPintoPDFobject=\count154
-\everyMPtoPDFconversion=\toks37
+\scratchcounter=\count150
+\scratchdimen=\dimen199
+\scratchbox=\box82
+\nofMPsegments=\count151
+\nofMParguments=\count152
+\everyMPshowfont=\toks37
+\MPscratchCnt=\count153
+\MPscratchDim=\dimen256
+\MPnumerator=\count154
+\makeMPintoPDFobject=\count155
+\everyMPtoPDFconversion=\toks38
 ) ABD: EveryShipout initializing macros
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -805,7 +813,7 @@ File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 ABD: EverySelectfont initializing macros
-LaTeX Info: Redefining \selectfont on input line 101.
+LaTeX Info: Redefining \selectfont on input line 103.
 
 Poster Starts
 Poster Starts
@@ -824,7 +832,7 @@ Package epstopdf Info: Source file: <images/cu_logo.eps>
 (epstopdf)                    size: 14751 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/cu_logo-eps-convert
 ed-to.pdf images/cu_logo.eps>
-(epstopdf)             \includegraphics on input line 179.
+(epstopdf)             \includegraphics on input line 182.
 Package epstopdf Info: Output file is already uptodate.
 
 
@@ -834,54 +842,81 @@ pdfTeX warning: /usr/bin/pdflatex (file ./images/cu_logo-eps-converted-to.pdf):
 File: images/cu_logo-eps-converted-to.pdf Graphic file (type pdf)
 <use images/cu_logo-eps-converted-to.pdf>
 Package pdftex.def Info: images/cu_logo-eps-converted-to.pdf  used on input lin
-e 179.
+e 182.
 (pdftex.def)             Requested size: 414.60814pt x 100.0pt.
 
-Overfull \hbox (53.25815pt too wide) in paragraph at lines 179--179
+Overfull \hbox (89.39314pt too wide) in paragraph at lines 182--182
 [][] 
  []
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 179.
+LaTeX Font Info:    Try loading font information for U+msa on input line 182.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 179.
+LaTeX Font Info:    Try loading font information for U+msb on input line 182.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+zavm on input line 179.
+LaTeX Font Info:    Try loading font information for U+zavm on input line 182.
 
 (/usr/share/texlive/texmf-dist/tex/latex/arev/uzavm.fd
 File: uzavm.fd 2006/05/30 Fontinst v1.929 font definitions for U/zavm.
 )
-<images/headshot_zack.png, id=5, 440.64626pt x 447.6725pt>
+<images/headshot_zack.png, id=5, 376.40625pt x 341.275pt>
 File: images/headshot_zack.png Graphic file (type png)
 <use images/headshot_zack.png>
-Package pdftex.def Info: images/headshot_zack.png  used on input line 179.
-(pdftex.def)             Requested size: 88.92108pt x 90.3375pt.
-<images/headshot_sage.png, id=6, 936.49875pt x 741.77126pt>
+Package pdftex.def Info: images/headshot_zack.png  used on input line 182.
+(pdftex.def)             Requested size: 92.36852pt x 90.3375pt.
+<images/headshot_sage.png, id=7, 936.49875pt x 741.77126pt>
 File: images/headshot_sage.png Graphic file (type png)
 <use images/headshot_sage.png>
-Package pdftex.def Info: images/headshot_sage.png  used on input line 179.
-(pdftex.def)             Requested size: 114.0469pt x 90.3375pt.
-<images/QR.png, id=7, 125.46875pt x 125.46875pt>
-File: images/QR.png Graphic file (type png)
-<use images/QR.png>
-Package pdftex.def Info: images/QR.png  used on input line 179.
-(pdftex.def)             Requested size: 90.34125pt x 90.3375pt.
+Package pdftex.def Info: images/headshot_sage.png  used on input line 182.
+(pdftex.def)             Requested size: 93.25703pt x 90.3375pt.
+Package epstopdf Info: Source file: <images/NSF_logo.eps>
+(epstopdf)                    date: 2022-09-07 17:14:50
+(epstopdf)                    size: 6087306 bytes
+(epstopdf)             Output file: <images/NSF_logo-eps-converted-to.pdf>
+(epstopdf)                    date: 2023-03-07 11:34:29
+(epstopdf)                    size: 1013450 bytes
+(epstopdf)             Command: <repstopdf --outfile=images/NSF_logo-eps-conver
+ted-to.pdf images/NSF_logo.eps>
+(epstopdf)             \includegraphics on input line 182.
+Package epstopdf Info: Output file is already uptodate.
 
- \bf \relax \fontsize {20.74}{25}\selectfont \nullfont \color {cuGold} Input-Re
-sponse Relations for Traveling Waves\\in Neural Fields with Synaptic Depression
- \vspace {1mm} 
+
+pdfTeX warning: /usr/bin/pdflatex (file ./images/NSF_logo-eps-converted-to.pdf)
+: PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
+<images/NSF_logo-eps-converted-to.pdf, id=9, 525.965pt x 526.96875pt>
+File: images/NSF_logo-eps-converted-to.pdf Graphic file (type pdf)
+<use images/NSF_logo-eps-converted-to.pdf>
+Package pdftex.def Info: images/NSF_logo-eps-converted-to.pdf  used on input li
+ne 182.
+(pdftex.def)             Requested size: 90.15924pt x 90.3375pt.
+ \bf \relax \fontsize {20.74}{25}\selectfont \nullfont \color {cuGold} Stimuli 
+shift the position of traveling waves \\in neural fields with synaptic depressi
+on \vspace {1mm} 
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <10> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 179.
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 182.
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <24.88> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 179.
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 182.
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <20.74> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 179.
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 182.
 \leftimgwidth=\skip91
 name=summary,column=0,row=0
+LaTeX Font Info:    Try loading font information for OMS+ppl on input line 215.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsppl.fd
+File: omsppl.fd 
+)
+LaTeX Font Info:    Font shape `OMS/ppl/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 215.
+
+Underfull \hbox (badness 6332) in paragraph at lines 215--215
+[]\T1/ppl/m/n/10 We can ap-prox-i-mate large dis-crete net-works us-ing integro
+-
+ []
+
 Setting Coordinates
 Upper Right
 summary
@@ -896,21 +931,35 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Header
 Header-Shape: rounded
-LaTeX Font Info:    Try loading font information for T1+phv on input line 207.
+LaTeX Font Info:    Try loading font information for T1+phv on input line 215.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
 Sidebars
 Drawing Text
-name=model,column=0, below=summary, above=bottom
-LaTeX Font Info:    Try loading font information for OMS+ppl on input line 253.
-
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsppl.fd
-File: omsppl.fd 
-)
-LaTeX Font Info:    Font shape `OMS/ppl/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 253.
-
+name=background, column=0, below=summary
+<images/synapse.png, id=10, 1291.82625pt x 897.3525pt>
+File: images/synapse.png Graphic file (type png)
+<use images/synapse.png>
+Package pdftex.def Info: images/synapse.png  used on input line 229.
+(pdftex.def)             Requested size: 280.8294pt x 110.7427pt.
+Setting Coordinates
+Upper Right
+background
+Below
+Lower Left
+Above=not set
+height=auto or fixed
+Fixing Coordinates
+Header-Shade: Plain
+Box-Shade: plain
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Header
+Header-Shape: rounded
+Sidebars
+Drawing Text
+name=model,column=0, below=background, above=bottom
 Setting Coordinates
 Upper Right
 model
@@ -926,51 +975,93 @@ Header
 Header-Shape: rounded
 Sidebars
 Drawing Text
-name=solutions,column=1,row=0
+name=solutions,column=1,row=0,height=1.0
 Package epstopdf Info: Source file: <images/front_profile.eps>
-(epstopdf)                    date: 2023-02-13 14:12:39
-(epstopdf)                    size: 23871 bytes
+(epstopdf)                    date: 2023-03-06 13:24:37
+(epstopdf)                    size: 26772 bytes
 (epstopdf)             Output file: <images/front_profile-eps-converted-to.pdf>
 
-(epstopdf)                    date: 2023-03-02 19:19:10
-(epstopdf)                    size: 14180 bytes
+(epstopdf)                    date: 2023-03-06 13:25:17
+(epstopdf)                    size: 16098 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/front_profile-eps-c
 onverted-to.pdf images/front_profile.eps>
-(epstopdf)             \includegraphics on input line 265.
+(epstopdf)             \includegraphics on input line 276.
 Package epstopdf Info: Output file is already uptodate.
 
 
 pdfTeX warning: /usr/bin/pdflatex (file ./images/front_profile-eps-converted-to
 .pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowe
 d
-<images/front_profile-eps-converted-to.pdf, id=8, 462.52798pt x 346.89601pt>
+<images/front_profile-eps-converted-to.pdf, id=12, 361.35pt x 216.81pt>
 File: images/front_profile-eps-converted-to.pdf Graphic file (type pdf)
 <use images/front_profile-eps-converted-to.pdf>
 Package pdftex.def Info: images/front_profile-eps-converted-to.pdf  used on inp
-ut line 265.
-(pdftex.def)             Requested size: 140.4147pt x 105.3135pt.
-Package epstopdf Info: Source file: <images/speed_by_tau_q.eps>
-(epstopdf)                    date: 2023-02-13 16:59:54
-(epstopdf)                    size: 105175 bytes
-(epstopdf)             Output file: <images/speed_by_tau_q-eps-converted-to.pdf
->
-(epstopdf)                    date: 2023-03-02 19:24:40
-(epstopdf)                    size: 54384 bytes
-(epstopdf)             Command: <repstopdf --outfile=images/speed_by_tau_q-eps-
-converted-to.pdf images/speed_by_tau_q.eps>
-(epstopdf)             \includegraphics on input line 265.
+ut line 276.
+(pdftex.def)             Requested size: 280.8294pt x 164.07661pt.
+Package epstopdf Info: Source file: <images/front_bifurcation.eps>
+(epstopdf)                    date: 2023-03-06 12:21:01
+(epstopdf)                    size: 106759 bytes
+(epstopdf)             Output file: <images/front_bifurcation-eps-converted-to.
+pdf>
+(epstopdf)                    date: 2023-03-06 12:21:26
+(epstopdf)                    size: 58493 bytes
+(epstopdf)             Command: <repstopdf --outfile=images/front_bifurcation-e
+ps-converted-to.pdf images/front_bifurcation.eps>
+(epstopdf)             \includegraphics on input line 276.
 Package epstopdf Info: Output file is already uptodate.
 
 
-pdfTeX warning: /usr/bin/pdflatex (file ./images/speed_by_tau_q-eps-converted-t
-o.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allow
-ed
-<images/speed_by_tau_q-eps-converted-to.pdf, id=9, 361.35pt x 216.81pt>
-File: images/speed_by_tau_q-eps-converted-to.pdf Graphic file (type pdf)
-<use images/speed_by_tau_q-eps-converted-to.pdf>
-Package pdftex.def Info: images/speed_by_tau_q-eps-converted-to.pdf  used on in
-put line 265.
-(pdftex.def)             Requested size: 140.4147pt x 84.24788pt.
+pdfTeX warning: /usr/bin/pdflatex (file ./images/front_bifurcation-eps-converte
+d-to.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> al
+lowed
+<images/front_bifurcation-eps-converted-to.pdf, id=14, 361.35pt x 216.81pt>
+File: images/front_bifurcation-eps-converted-to.pdf Graphic file (type pdf)
+<use images/front_bifurcation-eps-converted-to.pdf>
+Package pdftex.def Info: images/front_bifurcation-eps-converted-to.pdf  used on
+ input line 276.
+(pdftex.def)             Requested size: 280.8294pt x 164.07661pt.
+Package epstopdf Info: Source file: <images/pulse_profile.eps>
+(epstopdf)                    date: 2023-03-06 11:52:48
+(epstopdf)                    size: 26786 bytes
+(epstopdf)             Output file: <images/pulse_profile-eps-converted-to.pdf>
+
+(epstopdf)                    date: 2023-03-06 11:53:12
+(epstopdf)                    size: 16348 bytes
+(epstopdf)             Command: <repstopdf --outfile=images/pulse_profile-eps-c
+onverted-to.pdf images/pulse_profile.eps>
+(epstopdf)             \includegraphics on input line 276.
+Package epstopdf Info: Output file is already uptodate.
+
+
+pdfTeX warning: /usr/bin/pdflatex (file ./images/pulse_profile-eps-converted-to
+.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowe
+d
+<images/pulse_profile-eps-converted-to.pdf, id=16, 361.35pt x 216.81pt>
+File: images/pulse_profile-eps-converted-to.pdf Graphic file (type pdf)
+<use images/pulse_profile-eps-converted-to.pdf>
+Package pdftex.def Info: images/pulse_profile-eps-converted-to.pdf  used on inp
+ut line 276.
+(pdftex.def)             Requested size: 280.8294pt x 164.07661pt.
+Package epstopdf Info: Source file: <images/pulse_speed.eps>
+(epstopdf)                    date: 2023-03-06 13:32:41
+(epstopdf)                    size: 31430 bytes
+(epstopdf)             Output file: <images/pulse_speed-eps-converted-to.pdf>
+(epstopdf)                    date: 2023-03-06 13:33:14
+(epstopdf)                    size: 21343 bytes
+(epstopdf)             Command: <repstopdf --outfile=images/pulse_speed-eps-con
+verted-to.pdf images/pulse_speed.eps>
+(epstopdf)             \includegraphics on input line 276.
+Package epstopdf Info: Output file is already uptodate.
+
+
+pdfTeX warning: /usr/bin/pdflatex (file ./images/pulse_speed-eps-converted-to.p
+df): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
+<images/pulse_speed-eps-converted-to.pdf, id=18, 361.35pt x 216.81pt>
+File: images/pulse_speed-eps-converted-to.pdf Graphic file (type pdf)
+<use images/pulse_speed-eps-converted-to.pdf>
+Package pdftex.def Info: images/pulse_speed-eps-converted-to.pdf  used on input
+ line 276.
+(pdftex.def)             Requested size: 280.8294pt x 141.96388pt.
 Setting Coordinates
 Upper Right
 solutions
@@ -987,95 +1078,36 @@ Header
 Header-Shape: rounded
 Sidebars
 Drawing Text
-name=solutions2,column=1,below=solutions,above=bottom
-Package epstopdf Info: Source file: <images/pulse_profile.eps>
-(epstopdf)                    date: 2023-03-03 12:44:40
-(epstopdf)                    size: 25962 bytes
-(epstopdf)             Output file: <images/pulse_profile-eps-converted-to.pdf>
-
-(epstopdf)                    date: 2023-03-03 12:45:47
-(epstopdf)                    size: 15788 bytes
-(epstopdf)             Command: <repstopdf --outfile=images/pulse_profile-eps-c
-onverted-to.pdf images/pulse_profile.eps>
-(epstopdf)             \includegraphics on input line 277.
-Package epstopdf Info: Output file is already uptodate.
-
-
-pdfTeX warning: /usr/bin/pdflatex (file ./images/pulse_profile-eps-converted-to
-.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowe
-d
-<images/pulse_profile-eps-converted-to.pdf, id=10, 462.52798pt x 346.89601pt>
-File: images/pulse_profile-eps-converted-to.pdf Graphic file (type pdf)
-<use images/pulse_profile-eps-converted-to.pdf>
-Package pdftex.def Info: images/pulse_profile-eps-converted-to.pdf  used on inp
-ut line 277.
-(pdftex.def)             Requested size: 140.4147pt x 105.3135pt.
-Package epstopdf Info: Source file: <images/pulse_bifurcation.eps>
-(epstopdf)                    date: 2023-03-03 12:50:36
-(epstopdf)                    size: 28300 bytes
-(epstopdf)             Output file: <images/pulse_bifurcation-eps-converted-to.
-pdf>
-(epstopdf)                    date: 2023-03-03 12:51:59
-(epstopdf)                    size: 18836 bytes
-(epstopdf)             Command: <repstopdf --outfile=images/pulse_bifurcation-e
-ps-converted-to.pdf images/pulse_bifurcation.eps>
-(epstopdf)             \includegraphics on input line 277.
-Package epstopdf Info: Output file is already uptodate.
-
-
-pdfTeX warning: /usr/bin/pdflatex (file ./images/pulse_bifurcation-eps-converte
-d-to.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> al
-lowed
-<images/pulse_bifurcation-eps-converted-to.pdf, id=11, 462.52798pt x 346.89601p
-t>
-File: images/pulse_bifurcation-eps-converted-to.pdf Graphic file (type pdf)
-<use images/pulse_bifurcation-eps-converted-to.pdf>
-Package pdftex.def Info: images/pulse_bifurcation-eps-converted-to.pdf  used on
- input line 277.
-(pdftex.def)             Requested size: 140.4147pt x 105.3135pt.
-Setting Coordinates
-Upper Right
-solutions2
-Below
-Lower Left
-Above bottom
-Fixing Coordinates
-Header-Shade: Plain
-Box-Shade: plain
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Header
-Header-Shape: rounded
-Sidebars
-Drawing Text
-name=response,column=2,row=0,above=solutions2
+name=response,column=2
 Package epstopdf Info: Source file: <images/response_example.eps>
-(epstopdf)                    date: 2023-03-03 10:58:36
-(epstopdf)                    size: 33550 bytes
+(epstopdf)                    date: 2023-03-06 14:24:21
+(epstopdf)                    size: 32309 bytes
 (epstopdf)             Output file: <images/response_example-eps-converted-to.p
 df>
-(epstopdf)                    date: 2023-03-03 10:59:53
-(epstopdf)                    size: 15114 bytes
+(epstopdf)                    date: 2023-03-06 14:24:31
+(epstopdf)                    size: 17617 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/response_example-ep
 s-converted-to.pdf images/response_example.eps>
-(epstopdf)             \includegraphics on input line 296.
+(epstopdf)             \includegraphics on input line 300.
 Package epstopdf Info: Output file is already uptodate.
 
 
 pdfTeX warning: /usr/bin/pdflatex (file ./images/response_example-eps-converted
 -to.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> all
 owed
-<images/response_example-eps-converted-to.pdf, id=12, 505.89pt x 216.81pt>
+<images/response_example-eps-converted-to.pdf, id=20, 361.35pt x 216.81pt>
 File: images/response_example-eps-converted-to.pdf Graphic file (type pdf)
 <use images/response_example-eps-converted-to.pdf>
 Package pdftex.def Info: images/response_example-eps-converted-to.pdf  used on 
-input line 296.
-(pdftex.def)             Requested size: 218.4234pt x 93.61023pt.
+input line 300.
+(pdftex.def)             Requested size: 271.739pt x 163.04378pt.
 Setting Coordinates
 Upper Right
 response
 Fixed
 Lower Left
+Above=not set
+height=auto or fixed
 Fixing Coordinates
 Header-Shade: Plain
 Box-Shade: plain
@@ -1085,7 +1117,7 @@ Header
 Header-Shape: rounded
 Sidebars
 Drawing Text
-name=asymptotics,column=2,below=solutions,above=bottom
+name=asymptotics,column=2,below=response,above=bottom
 Setting Coordinates
 Upper Right
 asymptotics
@@ -1103,56 +1135,72 @@ Sidebars
 Drawing Text
 name=results,column=3,row=0
 Package epstopdf Info: Source file: <images/nullspace.eps>
-(epstopdf)                    date: 2023-03-04 14:37:15
-(epstopdf)                    size: 22079 bytes
+(epstopdf)                    date: 2023-03-06 13:24:38
+(epstopdf)                    size: 22095 bytes
 (epstopdf)             Output file: <images/nullspace-eps-converted-to.pdf>
-(epstopdf)                    date: 2023-03-04 14:43:31
-(epstopdf)                    size: 13197 bytes
+(epstopdf)                    date: 2023-03-06 13:25:17
+(epstopdf)                    size: 13205 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/nullspace-eps-conve
 rted-to.pdf images/nullspace.eps>
-(epstopdf)             \includegraphics on input line 353.
+(epstopdf)             \includegraphics on input line 367.
 Package epstopdf Info: Output file is already uptodate.
 
 
 pdfTeX warning: /usr/bin/pdflatex (file ./images/nullspace-eps-converted-to.pdf
 ): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<images/nullspace-eps-converted-to.pdf, id=13, 361.35pt x 216.81pt>
+<images/nullspace-eps-converted-to.pdf, id=21, 361.35pt x 216.81pt>
 File: images/nullspace-eps-converted-to.pdf Graphic file (type pdf)
 <use images/nullspace-eps-converted-to.pdf>
 Package pdftex.def Info: images/nullspace-eps-converted-to.pdf  used on input l
-ine 353.
-(pdftex.def)             Requested size: 280.8294pt x 168.49908pt.
-
-Underfull \hbox (badness 1052) in paragraph at lines 353--353
-[]\T1/ppl/m/n/10 Do demon-strate how the asymp-totic pre-dic-tion of the time l
-imit
- []
-
+ine 367.
+(pdftex.def)             Requested size: 271.739pt x 154.4852pt.
 Package epstopdf Info: Source file: <images/fig_spatially_homogeneous_limit.eps
 >
-(epstopdf)                    date: 2023-02-13 17:38:32
-(epstopdf)                    size: 23748 bytes
+(epstopdf)                    date: 2023-03-07 14:04:59
+(epstopdf)                    size: 29198 bytes
 (epstopdf)             Output file: <images/fig_spatially_homogeneous_limit-eps
 -converted-to.pdf>
-(epstopdf)                    date: 2023-03-04 13:25:07
-(epstopdf)                    size: 16725 bytes
+(epstopdf)                    date: 2023-03-07 14:06:02
+(epstopdf)                    size: 20070 bytes
 (epstopdf)             Command: <repstopdf --outfile=images/fig_spatially_homog
 eneous_limit-eps-converted-to.pdf images/fig_spatially_homogeneous_limit.eps>
-(epstopdf)             \includegraphics on input line 353.
+(epstopdf)             \includegraphics on input line 367.
 Package epstopdf Info: Output file is already uptodate.
 
 
 pdfTeX warning: /usr/bin/pdflatex (file ./images/fig_spatially_homogeneous_limi
 t-eps-converted-to.pdf): PDF inclusion: found PDF version <1.7>, but at most ve
 rsion <1.5> allowed
-<images/fig_spatially_homogeneous_limit-eps-converted-to.pdf, id=14, 505.89pt x
- 289.08pt>
+<images/fig_spatially_homogeneous_limit-eps-converted-to.pdf, id=23, 361.35pt x
+ 216.81pt>
 File: images/fig_spatially_homogeneous_limit-eps-converted-to.pdf Graphic file 
 (type pdf)
 <use images/fig_spatially_homogeneous_limit-eps-converted-to.pdf>
 Package pdftex.def Info: images/fig_spatially_homogeneous_limit-eps-converted-t
-o.pdf  used on input line 353.
-(pdftex.def)             Requested size: 280.8294pt x 160.47658pt.
+o.pdf  used on input line 367.
+(pdftex.def)             Requested size: 271.739pt x 154.4852pt.
+Package epstopdf Info: Source file: <images/spatially_localized.eps>
+(epstopdf)                    date: 2023-03-06 20:05:57
+(epstopdf)                    size: 37206 bytes
+(epstopdf)             Output file: <images/spatially_localized-eps-converted-t
+o.pdf>
+(epstopdf)                    date: 2023-03-06 20:17:34
+(epstopdf)                    size: 31786 bytes
+(epstopdf)             Command: <repstopdf --outfile=images/spatially_localized
+-eps-converted-to.pdf images/spatially_localized.eps>
+(epstopdf)             \includegraphics on input line 367.
+Package epstopdf Info: Output file is already uptodate.
+
+
+pdfTeX warning: /usr/bin/pdflatex (file ./images/spatially_localized-eps-conver
+ted-to.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> 
+allowed
+<images/spatially_localized-eps-converted-to.pdf, id=25, 361.35pt x 216.81pt>
+File: images/spatially_localized-eps-converted-to.pdf Graphic file (type pdf)
+<use images/spatially_localized-eps-converted-to.pdf>
+Package pdftex.def Info: images/spatially_localized-eps-converted-to.pdf  used 
+on input line 367.
+(pdftex.def)             Requested size: 271.739pt x 158.76448pt.
 Setting Coordinates
 Upper Right
 results
@@ -1170,6 +1218,34 @@ Header-Shape: rounded
 Sidebars
 Drawing Text
 name=references,column=3,below=results,above=bottom
+Package epstopdf Info: Source file: <images/QR.eps>
+(epstopdf)                    date: 2023-03-05 12:50:39
+(epstopdf)                    size: 11065 bytes
+(epstopdf)             Output file: <images/QR-eps-converted-to.pdf>
+(epstopdf)                    date: 2023-03-05 12:50:59
+(epstopdf)                    size: 3945 bytes
+(epstopdf)             Command: <repstopdf --outfile=images/QR-eps-converted-to
+.pdf images/QR.eps>
+(epstopdf)             \includegraphics on input line 388.
+Package epstopdf Info: Output file is already uptodate.
+
+
+pdfTeX warning: /usr/bin/pdflatex (file ./images/QR-eps-converted-to.pdf): PDF 
+inclusion: found PDF version <1.7>, but at most version <1.5> allowed
+<images/QR-eps-converted-to.pdf, id=27, 246.9225pt x 246.9225pt>
+File: images/QR-eps-converted-to.pdf Graphic file (type pdf)
+<use images/QR-eps-converted-to.pdf>
+Package pdftex.def Info: images/QR-eps-converted-to.pdf  used on input line 388
+.
+(pdftex.def)             Requested size: 78.0087pt x 78.00887pt.
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 388.
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+)
+Underfull \hbox (badness 10000) in paragraph at lines 388--388
+[]\T1/pcr/m/n/10 https://shawsa.github.io/presentations/20230310
+ []
+
 Setting Coordinates
 Upper Right
 references
@@ -1186,48 +1262,52 @@ Header-Shape: rounded
 Sidebars
 Drawing Text
 
-Underfull \hbox (badness 10000) in paragraph at lines 179--367
+Underfull \hbox (badness 10000) in paragraph at lines 182--391
 
  []
 
 [2
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./images/cu_logo-eps-conve
-rted-to.pdf> <./images/headshot_zack.png> <./images/headshot_sage.png> <./image
-s/QR.png> <./images/front_profile-eps-converted-to.pdf> <./images/speed_by_tau_
-q-eps-converted-to.pdf> <./images/pulse_profile-eps-converted-to.pdf> <./images
-/pulse_bifurcation-eps-converted-to.pdf> <./images/response_example-eps-convert
-ed-to.pdf> <./images/nullspace-eps-converted-to.pdf> <./images/fig_spatially_ho
-mogeneous_limit-eps-converted-to.pdf>]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./images/headshot_zack.png
+ (PNG copy)> <./images/headshot_sage.png> <./images/synapse.png> <./images/fron
+t_profile-eps-converted-to.pdf> <./images/front_bifurcation-eps-converted-to.pd
+f> <./images/pulse_profile-eps-converted-to.pdf> <./images/pulse_speed-eps-conv
+erted-to.pdf> <./images/nullspace-eps-converted-to.pdf> <./images/fig_spatially
+_homogeneous_limit-eps-converted-to.pdf> <./images/spatially_localized-eps-conv
+erted-to.pdf> <./images/QR-eps-converted-to.pdf> <./images/cu_logo-eps-converte
+d-to.pdf> <./images/NSF_logo-eps-converted-to.pdf> <./images/response_example-e
+ps-converted-to.pdf>]
 Package pagesel Notice: Aborting LaTeX job after last selected page (1).
  ) 
 Here is how much of TeX's memory you used:
- 16204 strings out of 492982
- 319803 string characters out of 6134897
- 438752 words of memory out of 5000000
- 19373 multiletter control sequences out of 15000+600000
- 27708 words of font info for 59 fonts, out of 8000000 for 9000
+ 16321 strings out of 492982
+ 321746 string characters out of 6134897
+ 439754 words of memory out of 5000000
+ 19477 multiletter control sequences out of 15000+600000
+ 30866 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,21n,58p,634b,928s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,26n,58p,409b,927s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/share/texlive/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
-msy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pf
-b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf
--dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/urw/palatino/uplri8a.pfb>
-Output written on texaux/shaw_poster.pdf (1 page, 1788958 bytes).
+1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cms
+y10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw
+/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/up
+lri8a.pfb>
+Output written on texaux/shaw_poster.pdf (1 page, 2834917 bytes).
 PDF statistics:
- 324 PDF objects out of 1000 (max. 8388607)
- 97 compressed objects within 1 object stream
+ 883 PDF objects out of 1000 (max. 8388607)
+ 432 compressed objects within 5 object streams
  0 named destinations out of 1000 (max. 500000)
- 56 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 137 words of extra memory for PDF output out of 10000 (max. 10000000)
 
