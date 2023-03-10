@@ -86,7 +86,7 @@
 
 <h1 id="Title">May 10<sup>th</sup>, APPM Recruitment Poster</h1>
 <p id="summary">
-   This is the online suplement for <a href="20230310_recruitment_poster/texaux/shaw_poster.pdf" target=blank>my poster</a> in the APPM recuitment poster presentation. 
+   This is the online suplement for <a href="20230310_recruitment_poster/texaux/shaw_poster.pdf" target=blank>my poster</a> in the APPM recuitment poster presentation. Please note that most of content on this site are my personal research notes and are not necessarily indended to be public facing. This page is of course an exception. I will however link to other pages for anyone interested in the details. Consider those pages to be scratchwork that I don't mind sharing.
 </p>
 
 
@@ -96,278 +96,87 @@
 
 <hr>
 <!--********************************************************************-->
-
 <h1 id="">Traveling Wave Solution</h1>
-<p>
-    
-</p>
-
-<button class="accordion">Traveling Front Derivation</button>
-<div class="panel">
-<p>
-For reference, the model is
-\begin{align*}
-    \mu u_t &= -u + w \ast (q f[u]) \\
-    \alpha  q_t &= 1 - q - \beta q f[u].
-\end{align*}
-In characteristic coordinates $\xi = x - c t$ this becomes
-\begin{align*}
-    \mu u_t - c \mu u_\xi &= -u + w \ast (q f[u]) \\
-    \alpha q_t - c \alpha q_\xi &= 1 - q - \beta q f[u].
-\end{align*}
-</p>
 
 <p>
-    We seek a traveling front. To this end, we assume that the activity variable $u$ crosses the threshold exactly once. Any translate of the traveling front solution will also be a solution, so without loss of generality, we will assume that the threshold crossing occurs at $\xi = 0$. Thus we assume the active region is given by $H(-\xi)$. 
+    Figure 1 shows some (but not all!) of the variety of traveling wave solutions we see in this model. These solutions are using different parameter values but the same initial conditions, demonstrating that <em>both</em> the parameters and initial conditions determine which traveling wave solution emerges. 
+</p>
+
+<figure>
+    <video controls autoplay muted loop>
+        <source src="20230310_recruitment_poster/animations/regressive.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+    </video>
+    <caption><b>Fig 1.</b> Three overlayed simulations with different parameter values for $\gamma$ but with identical initial conditions. The Solid lines represent the activity variable ($u$) while the dashed lines represent the synaptic efficacy variable ($q$). We see three traveling wave solutions emerge: a regressive front (magenta), a stationary front (green) and a progressive front (blue).</caption>
+</figure>
+
+<p>
+    For a single set of parameters, we will have either one, or three traveling wave solutions: either a single progressive front (possibly stationary); or a regressive front, a slow unstable progressive front, and a fast stable progressive front. 
 </p>
 
 <p>
-    Assuming the solution is fixed in characteristic coordinates $u(\xi, t) = U(\xi)$, $q(\xi, t) = Q(\xi)$, we arrive at
-\begin{align*}
-    -c\mu U' &= -U + \int_{-\infty}^0 \frac{1}{2} e^{-|\xi - \xi'|} Q(\xi') \ d\xi' \\
-    -c \alpha Q' &= 1 - Q - \beta Q H(-\xi).
-\end{align*}
+    Pulses have less variety, as "regressive" pulses are simply reflections of progressive pulses. Fronts have asymmetric limiting behaviours so regressive fronts are distinct.
+</p>
+
+<!--********************************************************************-->
+<h1 id="">Wave Response</h1>
+<p>
+    Figure 2 shows how a traveling front responds to a spatially global, instantanious stimulus. We see that the stimulated pulse eventually stabilizes to a translate of the original front. This translation is called the <em>wave response</em>.
+</p>
+
+<figure>
+    <video controls autoplay muted loop>
+        <source src="20230310_recruitment_poster/animations/delta_time_u.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+    </video>
+    <caption><b>Fig 2.</b> We have a traveling front that is stimulated globally by a delta pulse in time, and the same pulse that is unstimulated. We see the wave instantaiously jump up, deform, and stabilize to a translate of the original traveling wave solution.</caption>
+</figure>
+
+<!--********************************************************************-->
+<h1 id="">Asymptotics</h1>
+<p>
+    For details in the asymptotic approximation see <a href="../reports/report20220516.html" target=blank>Report 2022-05-16</a>. This report is somewhat old and there have since been some small changes to the model. This should give the jist of what the calculations involve.
 </p>
 
 <p>
-    The form of this equation motivates division by $c$, and so we first consider the case $c = 0$ separately.
+Figures 3, 4, and 5 show front responses to instantaious global stimuli in both $u$ and $q$. We see that the approximation is quite poor for $q$, even for small stimlui. We believe this is due to the persistence of stimlui in $q$ due to the long time scale, as well as the limitations of the numerical stimulation.
 </p>
 
-<!--**********************-->
-<button class="accordion">Case: $c=0$</button>
-<div class="panel">
+<figure>
+    <img src="20230310_recruitment_poster/web_images/fig_spatially_homogeneous_limit.png" width="100%"/>
+    <caption><b>Fig 3.</b> The wave response to gobal instatainous stimulus in $u$ as the magintude of the stimulus varries. We see the asymptotic prediction holds for small stimluli.</caption>
+</figure>
+
+<figure>
+    <img src="20230310_recruitment_poster/web_images/fig_spatially_homogeneous_limit_q.png" width="100%"/>
+    <caption><b>Fig 4.</b> The wave response to gobal instatainous stimulus in $q$ as the magintude of the stimulus varries. We see the asymptotic prediction is off even though the magintude of the stimulus is small.</caption>
+</figure>
+
+<figure>
+    <img src="20230310_recruitment_poster/web_images/delta_time_amp_grid.png" width="100%"/>
+    <caption><b>Fig 5.</b> The wave response to gobal instatainous stimulus in both $u$ and $q$ at different magnitudes compared to our asymptotic prediction. The asymptotic prediction breaks down due to the very slow synaptic time scale and numerical error.</caption>
+</figure>
+
 <p>
-Our system simplifies to an integral system
-\begin{align*}
-    0 &= -U + \int_{-\infty}^0 \frac{1}{2} e^{-|\xi - \xi'|} Q(\xi') \ d\xi' \\
-    0 &= 1 - Q - \beta Q H(-\xi).
-\end{align*}
-Solving the second equation algebraically gives the piecewise constant equation
-\begin{align*}
-    Q &= \frac{1}{1 + \beta H(-\xi)} = 
-        \begin{cases}
-            1, & \xi > 0 \\
-            \gamma, & \xi < 0 .
-        \end{cases}
-\end{align*}
-Recall that $\gamma = \frac{1}{1+\beta}$.
-Substituting, we find
-\begin{align*}
-    U &= \int_{-\infty}^0 \frac{1}{2} e^{-|\xi - \xi'|} \gamma \ d\xi' \\
-        &= \frac{\gamma}{2} \int_{-\infty}^0 e^{-|\xi - \xi'|} \ d\xi' \\
-        &= \frac{\gamma}{2}
-            \begin{cases}   
-                \int_{-\infty}^0 e^{-\xi} e^{\xi'} \ d\xi', & \xi > 0 \\
-                \int_{-\infty}^\xi e^{-\xi} e^{\xi'} \ d\xi' + \int_{\xi}^0 e^{\xi} e^{-\xi'} d \xi', & \xi < 0
-            \end{cases} \\
-        &= \frac{\gamma}{2}
-            \begin{cases}   
-                e^{-\xi}, & \xi > 0 \\
-                e^{-\xi}(e^\xi - 0) + e^{\xi}(-1 + e^{-\xi}), & \xi < 0
-            \end{cases} \\
-        &= \frac{\gamma}{2}
-            \begin{cases}   
-                e^{-\xi}, & \xi > 0 \\
-                2 - e^{\xi}, & \xi < 0
-            \end{cases} \\
-        &= 
-            \begin{cases}
-                \frac{\gamma}{2} e^{-\xi}, & \xi > 0 \\
-                \gamma - \frac{\gamma}{2} e^{\xi}, & \xi < 0.
-            \end{cases}
-\end{align*}
-Enforcing consistency gives $\theta = U(0) = \frac{\gamma}{2}$ and we see that $c = 0$ is only possible for the very specific parameter choice
-$$
-    2 \theta = \gamma.
-$$
+    In contrast, when we have local stimulation of pulses, the asymptotic prediction does quite well. Figures 6 and 7 show the effects of small spatially localized stimuli applied to each $u$ and $q$. We see that asymptotic theory matches the simulations and that both predict the wave response will be proportional to the stimulus (narrow square pulse in space) convovled with the null-space of the adjoin.
 </p>
-</div>
-<!--**********************-->
-<p>
-    Assuming $c \ne 0$ we have
-\begin{align*}
-    U' - \frac{1}{c\mu} U &= -\frac{1}{2c\mu} \int_{-\infty}^0 e^{-|-\xi - \xi'|} Q(\xi') \ d\xi' \\
-    Q' - \frac{1 + \beta H(-\xi)}{c\alpha}Q &= - \frac{1}{c\alpha}.
-\end{align*}
-Note that the second equation is independent of $U$, and has piecewise constant coefficients. Letting $r_\xi = -\frac{1 + \beta H(-\xi)}{c \alpha}$ we solve
-\begin{align*}
-    Q' + r_\xi Q &= -\frac{1}{c\alpha} \\
-    \big[ Q e^{r_\xi \xi} \big]' &= -\frac{1}{c\alpha} e^{r_\xi \xi} \\
-    Q e^{r_\xi \xi} &= Q_0 + -\frac{1}{c\alpha}\int_{0}^\xi e^{r_\xi \xi'} \ d\xi' \\
-        &= Q_0 - \frac{1}{c\alpha r_\xi} \big( e^{r_\xi \xi} - 1 \big) \\
-    Qe^{r_\xi \xi} &= \left( Q_0 + \frac{1}{c \alpha r_\xi} \right) - \frac{1}{c\alpha r_\xi} e^{r_\xi \xi} \\ 
-    Q &= \left( Q_0 + \frac{1}{c \alpha r_\xi} \right)e^{-r_\xi \xi} - \frac{1}{c\alpha r_\xi} \\ 
-    Q &= \begin{cases}
-            (Q_0 - 1)e^{\xi/c \alpha} + 1, & \xi > 0 \\
-            (Q_0 - \gamma)e^{\xi/c\alpha\gamma} + \gamma , & \xi < 0.
-        \end{cases}
-\end{align*}
-</p>
+<figure>
+    <img src="20230310_recruitment_poster/web_images/spatially_localized.png" width="100%"/>
+    <caption><b>Fig 6.</b> Pulse response to localized stimulus of $u$.</caption>
+</figure>
 
-<p>
-    Here we see the crucial error. Previously, we argued that $e^{\xi/c\alpha}$ grows without bound on $\xi > 0$ and thus $Q_0 = 1$. This is only true if $c > 0$. If the converse is true, we must enforce boundedness on the other piece and conclude that $Q_0 = \gamma$. We will first consider this new case. 
-</p>
+<figure>
+    <img src="20230310_recruitment_poster/web_images/spatially_localized_q.png" width="100%"/>
+    <caption><b>Fig 7.</b> Pulse response to localized stimulus of $q$.</caption>
+</figure>
 
-<!--**********************-->
-<button class="accordion">Case: $c<0$</button>
-<div class="panel">
-
-
-<p>
-    We have
-\begin{align*}
-    Q(\xi) &= \begin{cases}
-            1 + (\gamma - 1) e^{\xi / c\alpha}, & \xi > 0 \\
-            \gamma, & \xi < 0
-        \end{cases} \\
-    U' - \frac{1}{c\mu} U &= -\frac{\gamma}{2c \mu} \int_{-\infty}^0 e^{-|\xi - \xi'|} \ d\xi' \\
-        &= -\frac{\gamma}{2c \mu} \begin{cases}
-                e^{-\xi} \int_{-\infty}^0 e^{\xi'} d \xi', & \xi > 0 \\
-                e^{-\xi} \int_{-\infty}^\xi e^{\xi'} \ d\xi' + e^{\xi} \int_{\xi}^0 e^{-\xi'} \ d\xi' , & \xi < 0
-            \end{cases} \\
-        &= -\frac{\gamma}{2c \mu} \begin{cases}
-                e^{-\xi} , & \xi > 0 \\
-                2 - e^{\xi}, & \xi< 0               
-            \end{cases} \\
-    \big[ U e^{-\xi/c\mu} \big]'
-        &= -\frac{\gamma}{2c \mu} \begin{cases}
-                e^{-\frac{1 + c\mu}{c\mu} \xi} , & \xi > 0 \\
-                2e^{-\xi/c\mu} - e^{-\frac{1 - c\mu}{c\mu}\xi}, & \xi< 0               
-            \end{cases} \\
-    U e^{-\xi/c\mu}
-        &= U_0 -\frac{\gamma}{2c \mu} \begin{cases}
-                \int_{0}^\xi e^{-\frac{1 + c\mu}{c\mu} \xi'} \ d\xi', & \xi > 0 \\
-                \int_0^\xi 2e^{-\xi'/c\mu} - e^{-\frac{1 - c\mu}{c\mu}\xi'} \ d\xi', & \xi< 0               
-            \end{cases} \\
-        &= U_0 -\frac{\gamma}{2c \mu} \begin{cases}
-                -\frac{c\mu}{1+c\mu}\left(e^{-\frac{1 + c\mu}{c\mu} \xi} - 1\right), & \xi > 0 \\
-                -2c\mu \left(e^{-\xi/c\mu} - 1\right) + \frac{c\mu}{1 - c\mu}\left( e^{-\frac{1 - c\mu}{c\mu}\xi} - 1 \right), & \xi< 0               
-            \end{cases} \\
-        &= U_0 -\frac{\gamma}{2} \begin{cases}
-                -\frac{1}{1+c\mu}\left(e^{-\frac{1 + c\mu}{c\mu} \xi} - 1\right), & \xi > 0 \\
-                2 - \frac{1}{1-c\mu} -2 e^{-\xi/c\mu} + \frac{1}{1 - c\mu} e^{-\frac{1 - c\mu}{c\mu}\xi}, & \xi< 0               
-            \end{cases} \\
-    U(\xi) &= \begin{cases}
-                \left(U_0 - \frac{\gamma}{2(1+c\mu)} \right)e^{\xi/c\mu} + \frac{\gamma}{2(1+c\mu)}e^{-\xi}, & \xi > 0 \\
-                \left(U_0 - \gamma + \frac{\gamma}{2(1-c\mu)} \right)e^{\xi/c\mu} + \gamma - \frac{\gamma}{2(1-c\mu)}e^{\xi}, & \xi < 0.
-            \end{cases}
-\end{align*}
-</p>
-
-<p>
-    Since $c < 0$ this is bounded for the $\xi > 0$ piece, but for it to remain bounded in $\xi < 0$ we require
-\begin{align*}
-    0 &= U_0 - \gamma + \frac{\gamma}{2(1-c\mu)} \\
-    \gamma - \theta &= \frac{\gamma}{2(1-c\mu)} \\
-    1 - c\mu &= \frac{\gamma}{2(\gamma - \theta)} \\
-    1 - \frac{\gamma}{2(\gamma - \theta)} &= c \mu \\
-    \frac{\gamma - 2\theta}{2(\gamma - \theta)} &= c \mu \\
-    c &= \frac{1}{2\mu} \left(1 - \frac{\theta}{\gamma - \theta} \right).
-\end{align*}
-</p>
-<p>
-    We require $\gamma < 2 \theta$ for the sign of $c$ to be consistent. Since we also require $\gamma > \theta$ for the front to exist, we conclude that regressive fronts only occur when
-$$ \theta < \gamma < 2\theta. $$
-</p>
-
-</div>
-<!--**********************-->
-
-<p>
-    Thus, regressive fronts only occur when $\theta < \gamma < 2\theta$ and have the form
-\begin{align*}
-    U(\xi) &= \begin{cases}
-                \left(\theta - \frac{\gamma}{2(1+c\mu)} \right)e^{\xi/c\mu} + \frac{\gamma}{2(1+c\mu)}e^{-\xi}, & \xi > 0 \\
-                \gamma - \frac{\gamma}{2(1-c\mu)}e^{\xi}, & \xi < 0.
-            \end{cases} \\
-    Q(\xi) &= \begin{cases}
-            1 + (\gamma - 1) e^{\xi / c\alpha}, & \xi > 0 \\
-            \gamma, & \xi < 0
-        \end{cases}
-\end{align*}
-with speed given by
-$$
-c = \frac{1}{2\mu} \left( 1 - \frac{\theta}{\gamma - \theta}\right).
-$$
-</p>    
-
-<!--**********************-->
-<button class="accordion">Case: $c>0$</button>
-<div class="panel">
-
-<p>
-    We have
-\begin{align*}
-    Q(\xi) &= \begin{cases}
-                1, & \xi > 0 \\
-                \gamma + (1- \gamma)e^{\xi/c\alpha\gamma}, & \xi < 0
-            \end{cases} \\
-    -c\mu U' + U &= \frac{1}{2} \int_{-\infty}^0 e^{-|\xi - \xi'|} \bigg[ \gamma + (1-\gamma) e^{\xi'/c\alpha\gamma} \bigg] \ d \xi' \\
-    U' - \frac{1}{c\mu} U 
-            &= -\frac{1}{2c\mu} \int_{-\infty}^0 e^{-|\xi - \xi'|} \bigg[ \gamma + (1-\gamma) e^{\xi'/c\alpha\gamma} \bigg] \ d \xi'.
-\end{align*}
-</p>
-<p>
-    Suppose $\xi > 0$. Then
-\begin{align*}
-    U' - \frac{1}{c\mu} U 
-        &= -\frac{1}{2 c \mu} e^{-\xi} \int_{-\infty}^0 \gamma e^{\xi'} + (1-\gamma) e^{\frac{1+c\alpha \gamma}{c\alpha \gamma} \xi'} \ d \xi' \\
-        &= -\frac{1}{2c\mu}e^{-\xi} \bigg[ \gamma + \frac{c\alpha\gamma(1-\gamma)}{1 + c\alpha\gamma} \bigg] \\
-    \big[U e^{-\xi/c\mu} \big]' 
-        &= - \frac{\gamma + c\alpha\gamma}{2c\mu(1+c\alpha\gamma)} e^{-\frac{1+c\mu}{c\mu} \xi} \\
-    U e^{-\xi/c\mu} 
-        &= U_0 - \frac{\gamma + c\alpha\gamma}{2c\mu(1+c\alpha\gamma)} \int_0^\xi e^{-\frac{1+c\mu}{c\mu} \xi'} \ d\xi' \\
-        &=U_0 + \frac{\gamma + c\alpha\gamma}{2(1+c\alpha\gamma)(1+c\mu)} \big( e^{-\frac{1+c\mu}{c\mu} \xi} - 1\big) \\
-    U(\xi) 
-        &= \left( U_0 - \frac{\gamma + c\alpha\gamma}{2(1+c\alpha\gamma)(1+c\mu)} \right) e^{\xi/c\mu} + \frac{\gamma + c\alpha\gamma}{2(1+c\alpha\gamma)(1+c\mu)} e^{-\xi}
-\end{align*}
-</p>
-<p>
-    Suppose that $\xi < 0$. Then
-\begin{align*}
-    U' - \frac{1}{c\mu}U 
-        &= 
-        -\frac{1}{2c\mu} \int_{-\infty}^0 e^{-|\xi - \xi'|} \bigg( \gamma + (1-\gamma)e^{\xi' / c\alpha \gamma} \bigg) \ d\xi' \\
-        &= -\frac{1}{2c\mu} \bigg[ e^{-\xi} \int_{-\infty}^\xi \gamma e^{\xi'} + (1-\gamma) e^{\frac{1+c\alpha\gamma}{c\alpha\gamma} \xi'} \ d\xi' + e^{\xi} \int_{\xi}^0 \gamma e^{-\xi'} + (1-\gamma) e^{\frac{1-c\alpha\gamma}{c\alpha\gamma} \xi'} \ d\xi' \bigg] \\
-        &= -\frac{1}{2c\mu} \bigg[ e^{-\xi} \bigg(\gamma e^{\xi} + \frac{(1-\gamma)c\alpha\gamma}{1+c\alpha\gamma} e^{\frac{1+c\alpha\gamma}{c\alpha\gamma} \xi} \bigg) + e^{\xi}\bigg( -\gamma + \gamma (e^{-\xi}) + \frac{(1-\gamma)c\alpha\gamma}{1-c\alpha\gamma} \left( 1 - e^{\frac{1-c\alpha\gamma}{c\alpha\gamma} \xi}\right) \bigg)\bigg] \\
-        &= -\frac{\gamma}{c\mu} - \frac{1}{2c\mu} \left( \frac{(1-\gamma)c\alpha\gamma}{1+c\alpha\gamma} - \frac{(1-\gamma)c\alpha\gamma}{1-c\alpha\gamma} \right) e^{\xi/c\alpha\gamma} -\frac{1}{2c\mu} \bigg(\frac{(1-\gamma)c\alpha\gamma}{1-c\alpha\gamma} - \gamma \bigg) e^{\xi} \\
-        &= -\frac{\gamma}{c\mu} \underbrace{-\frac{(1-\gamma)c\alpha^2\gamma^2}{\mu(1 - c^2\alpha^2\gamma^2)}}_{K_1} e^{\xi/c\alpha\gamma} \underbrace{-\frac{1}{2c\mu} \bigg(\frac{(1-\gamma)c\alpha\gamma}{1-c\alpha\gamma} - \gamma \bigg)}_{K_2} e^{\xi} \\
-    [Ue^{-\xi/c\mu}]' 
-        &= -\frac{\gamma}{c\mu}e^{-\xi/c\mu} + K_1 e^{r\xi} + K_2 e^{\frac{c\mu - 1}{c\mu}\xi} \tag{$r = \frac{1}{c\alpha \gamma} - \frac{1}{c\mu}$} \\
-    Ue^{-\xi/c\mu} 
-        &= U_0 + \gamma(e^{-\xi/c\mu} - 1) + \frac{K_1}{r}(e^{r\xi} - 1) + \frac{K_2 c\mu}{c\mu - 1} (e^{\frac{c\mu-1}{c\mu}} - 1) \\
-    U(\xi) &= \bigg(U_0 - \gamma - \frac{K_1}{r} - \frac{K_2c\mu}{c\mu - 1} \bigg) e^{\xi/c\mu} + \gamma + \frac{K_1}{r}e^{\xi/c\alpha\gamma} + \frac{K_2c\mu}{c\mu-1}e^{\xi}.
-\end{align*}
-We see that the $\xi<0$ piece is bounded for $c > 0$ regardless of the other parameters. However, enforcing boundedness on the $\xi > 0$ piece, gives
-\[
-    \theta = \frac{\gamma + c\alpha\gamma}{2(1+c\alpha\gamma)(1+c\mu)}.  
-\]
-</p>
-
-</div>
-<!--**********************-->
-
-<p>
-    The animation below shows three solutions for the same initial condition, but with different values of $\gamma$. One simulation is in the $\theta < \gamma < 2\theta$ regime, and shows a regressing front. A second is in the $\gamma = 2\theta$ regime and has wave speed $c = 0$. A third is in the $\gamma > 2\theta$ regime, for which there is no regressive front, and this solution stabilizes to a traveling wave with $c > 0$. 
-</p>
-
-</div>
-
-<!--button class="accordion">BUTTON NAME</button>
-<div class="panel">
-</div-->
-
-<!--video controls autoplay muted loop>
-    <source src="../working/synaptic_depression_perturbation.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video-->
-
-<!--figure>
-    <img src="../working/wave_response_small.png" width="100%"/>
-    <caption><b>Fig 2.</b> The asymptotic approximation of the wave response to $\epsilon I(x, t) = 0.01 \delta(t - 1)$.</caption>
-</figure=-->
-
-<!--************************************************************************-->
+<figure>
+    <video controls autoplay muted loop>
+        <source src="20230310_recruitment_poster/animations/square_space_delta_time_u.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+    </video>
+    <caption><b>Fig 8.</b> A traveling pulse responding to an instantanious localized simtulus.</caption>
+</figure>
 
 <!--***************************************************************************
 *******************************************************************************
