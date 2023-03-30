@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Shaw comprehensive exam</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
@@ -18,18 +18,306 @@
 			<div class="slides">
 <!--##################################################-->
 <section>
-<img src="tex_stuff.png">
-<p>
-    Since it's html, it has MathJax. It's beautiful:
-</p>
-<p>
-    $$
-        u_t = -u + \int_{-\infty}^{\infty} w(x,x^\prime)f(u(x^\prime)) \ d x^\prime
-    $$
-</p>
+	<section>
+		<h1>Control of traveling waves in adaptive neural fields</h1>
+		<p>Sage Shaw - April 4<sup>th</sup>, 2023</p>
+	</section>
+	<section>
+		<h1>Outline</h1>
+		<ul>
+			<li>Neural field model</li>
+			<li>Traveling wave solutions</li>
+			<li>The wave response</li>
+			<li>Entrainment</li>
+			<li>Future work</li>
+		</ul>
+		<aside class="notes">But first, a teaser.</aside>
+	</section>
+	<section>
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<img src="media/apparent_motion.gif" width=100%/>
+			</div>
+			<div style="float: right; width: 50%">
+				<img src="media/migrainepainting.jpeg" width=100%/>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>Explain apparent motion</li>
+				<li>Explain Scotomoa (blindspot) and relation to migraine.</li>
+			</ul>
+		</aside>
+	</section>
 </section>
+<!--##################################################-->
 <section>
-Some math: $y = mx+b$.
+	<section>
+		<h1>Neural Field Model</h1>
+	</section>
+	<section>
+		<img src="media/neuron.png" width="70%"/>
+		<p>Image courtesy of Heather Cihak.</p>
+		<aside class="notes">
+			<ul>
+				<li>firing</li>
+				<li>pre-synaptic resources</li>
+				<li>population firing rate and firing-rate function</li>
+				<li>System of coupled non-linear equations.</li>
+				<li>Burle (1956) introduced neural field models.</li>
+			</ul>
+		</aside>
+	</section>
+	<section>
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<img src="media/wilson_cowan_network.png" width=100%/>
+				<img src="media/wilson_cowan_pulse.png" width=100%/>
+				<p>Wilson and Cowan (1973)</p>
+			</div>
+			<div style="float: right; width: 50%">
+				<img src="media/Laing_spiral_2005.png" width=100%/>
+				<p>Liang (2005)</p>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>firing</li>
+				<li>pre-synaptic resources</li>
+				<li>population firing rate and firing-rate function</li>
+				<li>System of coupled non-linear equations.</li>
+				<li>Burle (1956) introduced neural field models.</li>
+			</ul>
+		</aside>
+	</section>
+	<section>
+		<p data-id="models">
+        \begin{align*}
+		\color{gray}{\tau_u} \color{green}{u}_t &= -\color{green}{u} + \int_\mathbb{R} \color{yellow}{w}(x, y) \color{cyan}{q}(y,t)  \color{magenta}{f}(\color{green}{u}(y,t)) \ dy \\
+		\color{gray}{\tau_q} \color{cyan}{q}_t & = 1 -\color{cyan}{q} - \color{gray}{\beta} \color{cyan}{q}\color{magenta}{f}(\color{green}{u})
+        \end{align*}
+    </p>
+    <p>
+        <ul>
+            <li>$\color{green}{u}(x,t)$ - Activity</li>
+			<li>$\color{cyan}{q}(x,t)$ - Synaptic efficacy</li>
+            <li>$\color{gray}{\tau_u}, \color{gray}{\tau_q}$ - time constants</li>
+			<li>$\color{yellow}{w}(x,y) = \frac{1}{2}e^{-|x-y|}$ - Weight kernel</li>
+            <li>$\color{magenta}{f} = H(\cdot - \theta)$ - firing-rate function </li>
+			<li>$\color{gray}{\beta}$ - rate of depletion</li>
+			<li>$\gamma = \frac{1}{1+\beta}$</li>
+        </ul>
+		<aside class="notes">
+			<ul>
+				<li>activity and efficacy, are normalized</li>
+				<li>Note that $\tau_q > \tau_u$</li>
+				<li>Explain $\gamma$</li>
+			</ul>
+    </p>
+	</section>
+	<section>
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<video controls loop muted autoplay>
+					<source src="media/regressive.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+			<div style="float: right; width: 50%">
+				<img src="media/pulse_generation.gif" width=100%/>
+			</div>
+		<aside class="notes">
+			<ul>
+				<li>Three kinds of fronts</li>
+				<li>One kind of pulse.</li>
+				<li>Constant speeds.</li>
+				<li>Can the pulse position encode the position of a moving object?</li>
+			</ul>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h1>Traveling wave solutions</h1>
+	</section>
+	<section>
+		<p>
+			Look for steady-state solutions in the traveling wave coordinate frame $\xi = x - ct$.
+		</p>
+		<p>
+			$$
+			\begin{align}
+			-c\tau_u U' &= -U + \int_\mathbb{R} \frac{1}{2} e^{-|\xi - \xi'|} Q(\xi')f\big[U(\xi')\big] \ d\xi' \\
+				-c \tau_q Q' &= 1 - Q - \beta Q f[U].
+			\end{align}
+			$$
+		</p>
+		<aside class="notes">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+	</section>
+	<section>
+		<p>
+		Progressive fronts: $c > 0$, Active region $= (-\infty, 0)$.
+		$$
+			\begin{align}
+			-c\tau_u U' &= -U + \int_{-\infty}^0 \frac{1}{2} e^{-|\xi - \xi'|} Q(\xi')\big] \ d\xi' \\
+				-c \tau_q Q' &= 1 - Q - \beta Q H(-\xi).
+			\end{align}
+		$$
+		</p>
+		<aside class="notes">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<section>
+		<p>
+		$$
+			\begin{align*}
+		Q(\xi) &= \begin{cases}
+					1, & \xi > 0 \\
+					\gamma + (1- \gamma)e^{\xi/c\tau_q\gamma}, & \xi < 0
+				\end{cases} \\
+		U(\xi)
+			&= \begin{cases}
+				\frac{\gamma + c\tau_q\gamma}{2(1+c\tau_q\gamma)(1+c\tau_u)} e^{-\xi}, & \xi > 0 \\
+				\gamma + \frac{K_1}{r}e^{\xi/c\tau_q\gamma} + \frac{K_2c\tau_u}{c\tau_u-1}e^{\xi}, & \xi < 0
+			\end{cases} \\
+		K_1 &= -\frac{(1-\gamma)c\tau_q^2\gamma^2}{\tau_u(1 - c^2\tau_q^2\gamma^2)} \\
+		K_2 &= -\frac{1}{2c\tau_u} \bigg(\frac{(1-\gamma)c\tau_q\gamma}{1-c\tau_q\gamma} - \gamma \bigg) \\
+		\theta &= \frac{\gamma + c\tau_q\gamma}{2(1+c\tau_q\gamma)(1+c\tau_u)}
+	\end{align*}
+		$$
+		</p>
+		<aside class="notes">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<section>
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<img src="media/speed_by_gamma.png" width=100%/>
+			</div>
+			<div style="float: right; width: 50%">
+				<img src="media/speed_by_tau_q.png" width=100%/>
+			</div>
+		</div>
+		
+	</section>
+	<section>
+		<p>Pulses: Active region = $(-\Delta, 0)$.
+		$$
+		\begin{align*}
+			Q(\xi) &= \begin{cases}
+				1, & 0 \le \xi \\
+				\gamma + (1-\gamma)e^{\xi/c\gamma\tau_q }, & -\Delta \le \xi < 0 \\
+				1 + \big[-1 + Q(-\Delta) \big] e^{(\xi + \Delta)/c\tau_q}, & \xi < -\Delta.
+			\end{cases}\\
+		 	U(\xi) &=
+				\begin{cases} 
+					A_{L} e^{\frac{\xi}{\tau_u c}} + B_{12} e^{\xi}, & \: \xi \le -\Delta \\
+					A_{M} e^{\frac{\xi}{c\tau_u}} + B_{1} + B_{10} e^{\xi} + B_{11} e^{\xi/c\gamma\tau_q} + B_{9} e^{- \xi}, &\: -\Delta < \xi \le 0 \\
+					\theta e^{- \xi}, & 0 < \xi
+				\end{cases}
+			\end{align*}
+		$$
+	</section>
+	<section>
+		<p>
+			Animation of "shooting method" proceedure.
+		</p>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h1>Wave response</h1>
+	</section>
+	<section>
+		<p>
+			Wave response animation.
+		</p>
+	</section>
+	<section>
+		$$
+			\begin{align*}
+				u(\xi, t) &= U\big( \xi - \varepsilon \nu(t) \big) + \varepsilon \phi + \mathcal{O}(\varepsilon^2) \\
+				q(\xi, t) &= Q\big( \xi - \varepsilon \nu(t) \big) + \varepsilon \psi + \mathcal{O}(\varepsilon^2)
+			\end{align*}
+		$$
+	</section>
+	<section>
+		$$
+		\begin{align*}
+			\tau_u u_t &= -u + w * (q f[u]) + \varepsilon I_u(x, t) \label{eqn:forced_u} \\
+			\tau_q q_t &= 1 - q - \beta q f[u] + \varepsilon I_q(x, t). \label{eqn:forced_q}
+		\end{align*}
+		$$
+	</section>
+	<section>
+		$$\begin{align*}
+		M\begin{bmatrix}\phi \\ \psi \end{bmatrix}_t + \mathcal{L}\begin{bmatrix}\phi \\ \psi \end{bmatrix}
+        &=
+        \begin{bmatrix} I_u + \tau_u U' \nu' \\ I_q + \tau_q Q' \nu ' \end{bmatrix}
+		\end{align*}$$
+
+		$$
+		\mathcal{L}(\vec{v}) = \vec{v} - cM \vec{v} +
+        \begin{bmatrix}
+            -w Q f'(U) * \cdot  & -w f(U) * \cdot \\
+            \beta Q f'(U) & \beta f(U)
+        \end{bmatrix}
+		\vec{v}
+		$$
+
+	</section>
+	<section>
+		<p>
+		Bounded solutions exist if the inhomogeneity is orthogonal to $\mathcal{N}\{\mathcal{L}\}$. For $(v_1, v_2) \in \mathcal{N}\{\mathcal{L}\}$
+		$$\begin{align*}
+    	-c \tau_u v_1' &= v_1 - Qf'(U) \int w(y,\xi) v_1(y) \ dy + \beta Qf'(U) v_2 \\
+    	-c \tau_q v_2' &= v_2 - f(U) \int w(y, \xi) v_1(y) \ dy + \beta f(U) v_2.
+		\end{align*}$$
+		</p>
+	</section>
+	<section>
+		Pulse response and epsilon vs. nu plot.
+	</section>
+	<section>
+		Front response and epsilon vs x0 plots.
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h1>Entrainment</h1>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h1>Future work</h1>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<p>Thank you</p>
+	</section>
 </section>
 <!--##################################################-->
 			</div>
