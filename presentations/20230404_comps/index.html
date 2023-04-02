@@ -8,7 +8,7 @@
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+		<link rel="stylesheet" href="dist/theme/gray.css">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
@@ -19,7 +19,8 @@
 <!--##################################################-->
 <section>
 	<section>
-		<h1>Control of traveling waves in adaptive neural fields</h1>
+		<h2>Control of traveling waves in adaptive neural fields</h2>
+		<p>Comprehensive Exam</p>
 		<p>Sage Shaw - April 4<sup>th</sup>, 2023</p>
 	</section>
 	<section>
@@ -34,14 +35,7 @@
 		<aside class="notes">But first, a teaser.</aside>
 	</section>
 	<section>
-		<div style="width: 100%">
-			<div style="float: left; width: 50%">
-				<img src="media/apparent_motion.gif" width=100%/>
-			</div>
-			<div style="float: right; width: 50%">
-				<img src="media/migrainepainting.jpeg" width=100%/>
-			</div>
-		</div>
+		<img class="r-stretch" src="media/apparent_motion_demo.gif" width=100%/>
 		<aside class="notes">
 			<ul>
 				<li>Explain apparent motion</li>
@@ -76,7 +70,7 @@
 				<p>Wilson and Cowan (1973)</p>
 			</div>
 			<div style="float: right; width: 50%">
-				<img src="media/Laing_spiral_2005.png" width=100%/>
+				<img src="media/Liang_spiral_2005.png" width=100%/>
 				<p>Liang (2005)</p>
 			</div>
 		</div>
@@ -91,29 +85,40 @@
 		</aside>
 	</section>
 	<section>
+		<h3>Model</h3>
 		<p data-id="models">
         \begin{align*}
-		\color{gray}{\tau_u} \color{green}{u}_t &= -\color{green}{u} + \int_\mathbb{R} \color{yellow}{w}(x, y) \color{cyan}{q}(y,t)  \color{magenta}{f}(\color{green}{u}(y,t)) \ dy \\
-		\color{gray}{\tau_q} \color{cyan}{q}_t & = 1 -\color{cyan}{q} - \color{gray}{\beta} \color{cyan}{q}\color{magenta}{f}(\color{green}{u})
+		\tau_u \frac{\partial}{\partial t}\underbrace{u(x,t)}_{\text{Activity}} &=
+		-u + \underbrace{w \ast \big( q f[u] \big)}_{\substack{\text{network}\\\text{stimulation}}} \\
+			\tau_q \frac{\partial}{\partial t}\underbrace{q(x,t)}_{\substack{\text{Synaptic}\\\text{Efficacy}}} &=
+			1 - q - \underbrace{\beta}_{\substack{\text{rate of}\\\text{depletion}}} q f(u)
         \end{align*}
-    </p>
-    <p>
-        <ul>
-            <li>$\color{green}{u}(x,t)$ - Activity</li>
-			<li>$\color{cyan}{q}(x,t)$ - Synaptic efficacy</li>
-            <li>$\color{gray}{\tau_u}, \color{gray}{\tau_q}$ - time constants</li>
-			<li>$\color{yellow}{w}(x,y) = \frac{1}{2}e^{-|x-y|}$ - Weight kernel</li>
-            <li>$\color{magenta}{f} = H(\cdot - \theta)$ - firing-rate function </li>
-			<li>$\color{gray}{\beta}$ - rate of depletion</li>
-			<li>$\gamma = \frac{1}{1+\beta}$</li>
-        </ul>
+		</p>
+		<div style="float: left; width: 50%">
+			<p>
+				$f[u] = H(u - \theta)$: All or nothing firing-rate function.
+			</p>
+		</div>
+		<div style="float: right; width: 50%">
+			<p>$w(|x-y|) = \frac{1}{2}e^{-|x-y|}$: network connectivity.</p>
+		</div>
 		<aside class="notes">
 			<ul>
 				<li>activity and efficacy, are normalized</li>
 				<li>Note that $\tau_q > \tau_u$</li>
 				<li>Explain $\gamma$</li>
 			</ul>
-    </p>
+		</aside>
+	</section>
+	<section>
+		<img class="r-stretch" src="media/pulse_diagram.png"/>
+		<aside class="notes">
+			<ul>
+				<li>pulse profile</li>
+				<li>threshold and active region</li>
+				<li>weight kenrel and convolution</li>
+			</ul>
+		</aside>
 	</section>
 	<section>
 		<div style="width: 100%">
@@ -126,6 +131,7 @@
 			<div style="float: right; width: 50%">
 				<img src="media/pulse_generation.gif" width=100%/>
 			</div>
+		</div>
 		<aside class="notes">
 			<ul>
 				<li>Three kinds of fronts</li>
@@ -141,17 +147,29 @@
 		<h1>Traveling wave solutions</h1>
 	</section>
 	<section>
-		<p>
-			Look for steady-state solutions in the traveling wave coordinate frame $\xi = x - ct$.
-		</p>
-		<p>
-			$$
-			\begin{align}
-			-c\tau_u U' &= -U + \int_\mathbb{R} \frac{1}{2} e^{-|\xi - \xi'|} Q(\xi')f\big[U(\xi')\big] \ d\xi' \\
-				-c \tau_q Q' &= 1 - Q - \beta Q f[U].
-			\end{align}
-			$$
-		</p>
+		<h3>Front solutions</h3>
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<ul>
+					<li>$\xi = x - ct$</li>
+					<li>Active region: $(-\infty, 0)$</li>
+					<li>Restrict to $c > 0$</li>
+				</ul>
+				<img class="r-stretch" src="media/progressive_front.gif" width=90%/>
+			</div>
+			<div style="float: right; width: 50%">
+				<ul>
+					<li>Linearizes equations</li>
+					<li>Decouples $q$ from $u$</li>
+					<li>$U(-\infty) = \gamma > \theta$</li>
+				</ul>
+				<p>
+				$$
+					\theta = \frac{\gamma + c\tau_q\gamma}{2(1+c\tau_q\gamma)(1+c\tau_u)}
+				$$
+				</p>
+			</div>
+		</div>
 		<aside class="notes">
 			<ul>
 				<li></li>
@@ -161,80 +179,83 @@
 			</ul>
 	</section>
 	<section>
-		<p>
-		Progressive fronts: $c > 0$, Active region $= (-\infty, 0)$.
-		$$
-			\begin{align}
-			-c\tau_u U' &= -U + \int_{-\infty}^0 \frac{1}{2} e^{-|\xi - \xi'|} Q(\xi')\big] \ d\xi' \\
-				-c \tau_q Q' &= 1 - Q - \beta Q H(-\xi).
-			\end{align}
-		$$
-		</p>
-		<aside class="notes">
-			<ul>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-			</ul>
-		</aside>
-	</section>
-	<section>
-		<p>
-		$$
-			\begin{align*}
-		Q(\xi) &= \begin{cases}
-					1, & \xi > 0 \\
-					\gamma + (1- \gamma)e^{\xi/c\tau_q\gamma}, & \xi < 0
-				\end{cases} \\
-		U(\xi)
-			&= \begin{cases}
-				\frac{\gamma + c\tau_q\gamma}{2(1+c\tau_q\gamma)(1+c\tau_u)} e^{-\xi}, & \xi > 0 \\
-				\gamma + \frac{K_1}{r}e^{\xi/c\tau_q\gamma} + \frac{K_2c\tau_u}{c\tau_u-1}e^{\xi}, & \xi < 0
-			\end{cases} \\
-		K_1 &= -\frac{(1-\gamma)c\tau_q^2\gamma^2}{\tau_u(1 - c^2\tau_q^2\gamma^2)} \\
-		K_2 &= -\frac{1}{2c\tau_u} \bigg(\frac{(1-\gamma)c\tau_q\gamma}{1-c\tau_q\gamma} - \gamma \bigg) \\
-		\theta &= \frac{\gamma + c\tau_q\gamma}{2(1+c\tau_q\gamma)(1+c\tau_u)}
-	\end{align*}
-		$$
-		</p>
-		<aside class="notes">
-			<ul>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-			</ul>
-		</aside>
-	</section>
-	<section>
+		<h3>Front Bifurcations</h3>
 		<div style="width: 100%">
 			<div style="float: left; width: 50%">
 				<img src="media/speed_by_gamma.png" width=100%/>
 			</div>
 			<div style="float: right; width: 50%">
-				<img src="media/speed_by_tau_q.png" width=100%/>
+				<ul>
+					<li>Three solutions for $\theta < \gamma < 2\theta$</li>
+					<li>One solution for $2\theta < \gamma$</li>
+					<li>$\gamma = 1 \iff \beta = 0$: no depression</li>
+				</ul>
 			</div>
 		</div>
 		
 	</section>
 	<section>
-		<p>Pulses: Active region = $(-\Delta, 0)$.
-		$$
-		\begin{align*}
-			Q(\xi) &= \begin{cases}
-				1, & 0 \le \xi \\
-				\gamma + (1-\gamma)e^{\xi/c\gamma\tau_q }, & -\Delta \le \xi < 0 \\
-				1 + \big[-1 + Q(-\Delta) \big] e^{(\xi + \Delta)/c\tau_q}, & \xi < -\Delta.
-			\end{cases}\\
-		 	U(\xi) &=
-				\begin{cases} 
-					A_{L} e^{\frac{\xi}{\tau_u c}} + B_{12} e^{\xi}, & \: \xi \le -\Delta \\
-					A_{M} e^{\frac{\xi}{c\tau_u}} + B_{1} + B_{10} e^{\xi} + B_{11} e^{\xi/c\gamma\tau_q} + B_{9} e^{- \xi}, &\: -\Delta < \xi \le 0 \\
-					\theta e^{- \xi}, & 0 < \xi
-				\end{cases}
-			\end{align*}
-		$$
+		<h3>Front Bifurcations</h3>
+				<img class="r-stretch" src="media/speed_by_tau_q.png" width=100%/>
+		<!--div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<img class="r-stretch" src="media/speed_by_tau_q.png" width=100%/>
+			</div>
+			<div style="float: right; width: 50%">
+				<ul>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+			</div>
+		</div-->
+		
+	</section>
+	<section>
+		<h3>Pulse solutions</h3>
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<ul>
+					<li>$\xi = x - ct$</li>
+					<li>Active region: $(-\Delta, 0)$</li>
+				</ul>
+			</div>
+			<div style="float: right; width: 50%">
+				<ul>
+					<li>Linearizes equations</li>
+					<li>Decouples $q$ from $u$</li>
+				</ul>
+			</div>
+		</div>
+		&nbsp;
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<img class="r-stretch" src="media/pulse_profile.png" width=90%/>
+			</div>
+			<div style="float: right; width: 50%">
+				<p>Two consistency equations for $c$ and $\Delta$.</p>
+			</div>
+		</div>
+		</p>
+		<aside class="notes">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+	</section>
+	<section>
+		<h3>Pulse Bifurcations</h3>
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<img src="media/bifurcation_alpha_speed.png" width=100%/>
+			</div>
+			<div style="float: right; width: 50%">
+				<img src="media/bifurcation_alpha_width.png" width=100%/>
+			</div>
+		</div>
+		
 	</section>
 	<section>
 		<p>
@@ -248,33 +269,43 @@
 		<h1>Wave response</h1>
 	</section>
 	<section>
-		<img src="media/delta_time_u.gif"/>
+		<img class="r-stretch" src="media/bun_tracking.gif"/>
 	</section>
 	<section>
-		$$
-			\begin{align*}
-				u(\xi, t) &= U\big( \xi - \varepsilon \nu(t) \big) + \varepsilon \phi + \mathcal{O}(\varepsilon^2) \\
-				q(\xi, t) &= Q\big( \xi - \varepsilon \nu(t) \big) + \varepsilon \psi + \mathcal{O}(\varepsilon^2)
-			\end{align*}
-		$$
+		<h3>Spatially homogeneous pulse</h3>
+		<img class="r-stretch" src="media/front_delta_time.gif"/>
 	</section>
 	<section>
+		<p>
+		<h3>Aysmptotic Approximation</h3>
+		Add stimulus terms
 		$$
 		\begin{align*}
 			\tau_u u_t &= -u + w * (q f[u]) + \varepsilon I_u(x, t) \label{eqn:forced_u} \\
 			\tau_q q_t &= 1 - q - \beta q f[u] + \varepsilon I_q(x, t). \label{eqn:forced_q}
 		\end{align*}
 		$$
+		</p>
+		<p>
+		substitute with the expansion
+		$$
+			\begin{align*}
+				u(\xi, t) &= U\big( \xi - \varepsilon \nu(t) \big) + \varepsilon \phi + \mathcal{O}(\varepsilon^2) \\
+				q(\xi, t) &= Q\big( \xi - \varepsilon \nu(t) \big) + \varepsilon \psi + \mathcal{O}(\varepsilon^2)
+			\end{align*}
+		$$
+		</p>
 	</section>
 	<section>
+		<p>Collect the $\mathcal{O}(\varepsilon)$ terms</p>
 		$$\begin{align*}
-		M\begin{bmatrix}\phi \\ \psi \end{bmatrix}_t + \mathcal{L}\begin{bmatrix}\phi \\ \psi \end{bmatrix}
+		\underbrace{\begin{bmatrix}\tau_u & 0 \\ 0 & \tau_q\end{bmatrix}}_{T} \begin{bmatrix}\phi \\ \psi \end{bmatrix}_t + \mathcal{L}\begin{bmatrix}\phi \\ \psi \end{bmatrix}
         &=
         \begin{bmatrix} I_u + \tau_u U' \nu' \\ I_q + \tau_q Q' \nu ' \end{bmatrix}
 		\end{align*}$$
 
 		$$
-		\mathcal{L}(\vec{v}) = \vec{v} - cM \vec{v} +
+		\mathcal{L}(\vec{v}) = \vec{v} - cT \vec{v} +
         \begin{bmatrix}
             -w Q f'(U) * \cdot  & -w f(U) * \cdot \\
             \beta Q f'(U) & \beta f(U)
@@ -285,7 +316,7 @@
 	</section>
 	<section>
 		<p>
-		Bounded solutions exist if the inhomogeneity is orthogonal to $\mathcal{N}\{\mathcal{L}\}$. For $(v_1, v_2) \in \mathcal{N}\{\mathcal{L}\}$
+		Bounded solutions exist if the inhomogeneity is orthogonal to $\mathcal{N}\{\mathcal{L^*}\}$. For $(v_1, v_2) \in \mathcal{N}\{\mathcal{L^*}\}$
 		$$\begin{align*}
     	-c \tau_u v_1' &= v_1 - Qf'(U) \int w(y,\xi) v_1(y) \ dy + \beta Qf'(U) v_2 \\
     	-c \tau_q v_2' &= v_2 - f(U) \int w(y, \xi) v_1(y) \ dy + \beta f(U) v_2.
@@ -293,9 +324,19 @@
 		</p>
 	</section>
 	<section>
+		<h3>Wave response function</h3>
+		$$
+		\nu(t) = - \frac{\int_\mathbb{R} v_1 \int_0^t I_u(\xi, \tau) \ d\tau + v_2 \int_0^t I_q(\xi, \tau) \ d\tau \ d\xi}{\int_\mathbb{R} \tau_u U' v_1 + \tau_q Q' v_2 \ d\xi}
+		$$
+	</section>
+	<section>
+		<h3>Spatially Homogenious Pulse</h3>
+		$$
+			\varepsilon I_u = \varepsilon \delta(t - 1)
+		$$
 		<div style="width: 100%">
 			<div style="float: left; width: 50%">
-				<img src="media/front_response_heatmap.png" width=100%/>
+				<img src="media/front_delta_time.gif" width=100%/>
 			</div>
 			<div style="float: right; width: 50%">
 				<img src="media/front_response_epsilon.png" width=100%/>
@@ -303,6 +344,11 @@
 		</div>
 	</section>
 	<section>
+		<h3>Spatially localized pulse</h3>
+		<img class=r-strech src="media/square_space_delta_time_u.gif"/>
+	</section>
+	<section>
+		<h3>Spatially localized pulse</h3>
 		<div style="width: 100%">
 			<div style="float: left; width: 50%">
 				<img class=r-strech src="media/spatially_localized.png"/>
@@ -342,6 +388,127 @@
 <section>
 	<section>
 		<h1>Future work</h1>
+	</section>
+	<section>
+		<h3>Spreading Depression</h3>
+		<img class="r-stretch" src="media/Zandt_CSD.png"/>
+		<br>
+		<a href="https://www.degruyter.com/document/doi/10.1515/revneuro-2014-0069/html" target=blank>Zandt, Haken, van Putten, and Markus (2015)</a>
+	</section>
+	<section>
+		<h3>Retinotopic Map</h3>
+		<img class="r-stretch" src="media/Zandt_retinotopic_map.png"/>
+		<br>
+		<a href="https://www.degruyter.com/document/doi/10.1515/revneuro-2014-0069/html" target=blank>Zandt, Haken, van Putten, and Markus (2015)</a>
+	</section>
+	<section>
+		<h3>Scintilating Scotoma</h3>
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<img src="media/scotoma_anon.jpeg" height="200em"/>
+				<img src="media/scotoma_weed_2017.jpeg" height="300em"/>
+			</div>
+			<div style="float: right; width: 50%">
+				<img src="media/scotoma_airy_1870.png"/>
+			</div>
+		</div>
+	</section>
+	<section>
+		<div style="width: 100%">
+			<h3>Reaction Diffusion Model</h3>
+			<div style="float: left; width: 60%">
+				<p style="font-size:80%;">
+				$$\begin{align*}
+				u_t &= \underbrace{u - \frac{1}{3}u^3}_{\text{excitable}} - \underbrace{v}_{\text{recovery}} + \underbrace{D\nabla^2 u}_{\text{Diffusion}} \\
+				\frac{1}{\varepsilon} v_t &= u + \beta + \underbrace{K\int H(u) d \Omega}_{\substack{\text{neurovascular}\\\text{feedback}}}
+				\end{align*}$$
+				</p>
+			</div>
+			<div style="float: right; width: 40%">
+				<a href="https://mathematical-neuroscience.springeropen.com/articles/10.1186/2190-8567-3-7#MOESM4" target=blank">
+				<img src="media/Dahlem_transient.png"/>
+				</a>
+			</div>
+			<p>
+				Markus A. Dahlem (2013)
+			</p>
+		</div>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Coupled neural field and diffusion equation</h3>
+		$$\begin{align*}
+			v_t &= -v + w \ast s_p(v, k) + g_v \\
+			k_t &= \delta k_{xx} + g_k(s, s_p, a, b) + I
+		\end{align*}$$
+		<ul>
+			<li>Neural field model</li>
+			<li>Coupled potassium concentration</li> 
+			<li>Models both ignition and propagation of CSD</li>
+		</ul>
+	</section>
+	<!--###########-->
+	<section>
+		<div style="width: 100%">
+			<h3>Reaction Diffusion on surfaces</h3>
+			<div style="float: left; width: 50%">
+				<p style="font-size: .7em">
+				$$\begin{align*}
+					u_t &= 3u - u^3 - v + D \Delta_{\mathcal{M}}u \\ 
+					\frac{1}{\varepsilon} v_t &= u + \beta + K \int_{\mathcal{M}} H(u) \ d \mu_{\mathcal{M}}
+				\end{align*}$$
+				<ul>
+					<li>Surface operators: $\Delta_{\mathcal{M}}, \int_{\mathcal{M}} \cdot d \mu_{\mathcal{M}}$</li>
+					<li>Affects speed and stability of waves</li>
+				</ul>
+				</p>
+			</div>
+			<div style="float: right; width: 50%">
+				<video controls loop muted autoplay>
+					<source src="media/Kneer_torus.ogg" type="video/ogg">
+					Your browser does not support the video tag.
+				</video>
+				Kneer, Scholl, Dahlem (2014)
+			</div>
+		</div>
+	</section>
+	<section>
+		<div style="width: 100%">
+			<h3>A Turring Reaction Diffusion System using RBFs</h3>
+			$$\begin{align*}
+				u_t &= \delta_u \Delta_{\mathcal{M}} u + \alpha(1-\tau_1 v^2) + v(1-\tau_2 u)\\
+				v_t &= \delta_v \Delta_{\mathcal{M}} v + \beta(1-\frac{\alpha\tau_1}{\beta} uv) + u(\gamma-\tau_2 v)\\
+			\end{align*}$$
+			<div style="float: left; width: 50%">
+				<video controls loop muted autoplay>
+					<source src="media/torus_spots.ogg" type="video/ogg">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+			<div style="float: right; width: 50%">
+				<video controls loop muted autoplay>
+					<source src="media/torus_stripes.ogg" type="video/ogg">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+		</div>
+	</section>
+	<section>
+		<div style="width: 100%">
+			<h3>A Turring Reaction Diffusion System using RBFs</h3>
+			<div style="float: left; width: 50%">
+				<video controls loop muted autoplay>
+					<source src="media/bunny_spots.ogg" type="video/ogg">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+			<div style="float: right; width: 50%">
+				<video controls loop muted autoplay>
+					<source src="media/bunny_stripes.ogg" type="video/ogg">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+		</div>
 	</section>
 </section>
 <!--##################################################-->
