@@ -33,7 +33,13 @@
 			<li>Entrainment</li>
 			<li>Future work</li>
 		</ul>
-		<aside class="notes">But first, a teaser.</aside>
+		<aside class="notes">
+			<ul>
+				<li>Examine differences</li>
+				<li>Apparent motion is a clue to how we work</li>
+				<li>Models should be susceptible.</li>
+			</ul>
+		</aside>
 	</section>
 	<!--###########-->
 	<section>
@@ -53,15 +59,14 @@
 	</section>
 	<!--###########-->
 	<section>
-		<img src="media/neuron.png" width="70%"/>
-		<p>Image courtesy of Heather Cihak.</p>
+		<h3>Biological Neural Networks</h3>
+		<img class="r-stretch" src="media/neuron.png" width="70%"/>
 		<aside class="notes">
 			<ul>
 				<li>firing</li>
-				<li>pre-synaptic resources</li>
-				<li>population firing rate and firing-rate function</li>
-				<li>System of coupled non-linear equations.</li>
-				<li>Burle (1956) introduced neural field models.</li>
+				<li>synapse</li>
+				<li>population firing rates</li>
+				<li>Sensory information has spatial organization</li>
 			</ul>
 		</aside>
 	</section>
@@ -82,7 +87,9 @@
 		</div>
 		<aside class="notes">
 			<ul>
-				<li></li>
+				<li>Expanding anulus</li>
+				<li>rotating wedge</li>
+				<li>colors are continuous</li>
 			</ul>
 		</aside>
 	</section>
@@ -97,11 +104,9 @@
 		<img src="media/network_diagram.png" />
 		<aside class="notes">
 			<ul>
-				<li>firing</li>
-				<li>pre-synaptic resources</li>
-				<li>population firing rate and firing-rate function</li>
-				<li>System of coupled non-linear equations.</li>
-				<li>Burle (1956) introduced neural field models.</li>
+				<li>connections for a single neuron</li>
+				<li>strength/probabiliy decays with distance</li>
+				<li>continuum limit</li>
 			</ul>
 		</aside>
 	</section>
@@ -124,11 +129,7 @@
 		</div>
 		<aside class="notes">
 			<ul>
-				<li>firing</li>
-				<li>pre-synaptic resources</li>
-				<li>population firing rate and firing-rate function</li>
-				<li>System of coupled non-linear equations.</li>
-				<li>Burle (1956) introduced neural field models.</li>
+				<li></li>
 			</ul>
 		</aside>
 	</section>
@@ -153,11 +154,8 @@
 		</div>
 		<aside class="notes">
 			<ul>
-				<li>firing</li>
-				<li>pre-synaptic resources</li>
-				<li>population firing rate and firing-rate function</li>
-				<li>System of coupled non-linear equations.</li>
-				<li>Burle (1956) introduced neural field models.</li>
+				<li>Left, voltage-sensitive dye recordings</li>
+				<li>Right, Simulation on doubly periodic domain</li>
 			</ul>
 		</aside>
 	</section>
@@ -168,7 +166,9 @@
 		<img src="media/depression.png" width="70%"/>
 		<aside class="notes">
 			<ul>
-				<li></li>
+				<li>Firing releases neurotransimitters</li>
+				<li>Rapid firing depletes the pre-synaptic resources.</li>
+				<li>incorporate this into our neural field model.
 			</ul>
 		</aside>
 	</section>
@@ -186,27 +186,32 @@
 		<aside class="notes">
 			<ul>
 				<li>activity and efficacy, are normalized</li>
+				<li>Sum over inputs becomes integral</li>
 				<li>Note that $\tau_q > \tau_u$</li>
-				<li>Explain $\gamma$</li>
+				<li>firing-rate and weight kernel next slide</li>
 			</ul>
 		</aside>
 	</section>
 	<!--###########-->
 	<section>
 		<h3>Model</h3>
-		<div style="width: 100%">
-			<div style="float: left; width: 65%">
-				<img src="media/pulse_diagram.png"/>
-			</div>
-			<div style="float: right; width: 35%">
-				<ul>
-					<li>$f[u] = H(u - \theta)$</li>
-					<li>All or nothing firing-rate function.</li>
-					<li>$w(|x-y|) = \frac{1}{2}e^{-|x-y|}$</li>
-					<li>network connectivity kernel</li>
-				</ul>
-			</div>
-		</div>
+		<ul>
+			<li>$f[u] = H(u - \theta)$ - All or nothing firing-rate function.</li>
+			<li>$w(|x-y|) = \frac{1}{2}e^{-|x-y|}$ - network connectivity kernel</li>
+			<li>$\frac{1}{1+\beta} = \gamma \in (0, 1]$ - Relative timescale of synaptic depletion.</li>
+		</ul>
+		<aside class="notes">
+			<ul>
+				<li>activity and efficacy, are normalized</li>
+				<li>Sum over inputs becomes integral</li>
+				<li>Note that $\tau_q > \tau_u$</li>
+				<li>Explain $\gamma$?</li>
+			</ul>
+		</aside>
+	</section>
+	<section>
+		<h3>Model</h3>
+		<img class="r-stretch" src="media/pulse_diagram.png"/>
 		<aside class="notes">
 			<ul>
 				<li>pulse profile</li>
@@ -323,6 +328,7 @@
 				<li></li>
 				<li></li>
 			</ul>
+		</aside>
 	</section>
 	<!--###########-->
 	<section>
@@ -455,26 +461,49 @@
 	</section>
 	<!--###########-->
 	<section>
+		<h3>Tracking a moving stimulus</h3>
+		<img class="r-stretch" src="media/smooth_dot.gif"/>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Tracking a moving stimulus</h3>
 		<img class="r-stretch" src="media/entrainment.gif"/>
 	</section>
 	<!--###########-->
 	<section>
+		<h3>Tracking a moving stimulus</h3>
 		<img class="r-stretch" src="media/entrainment_contour.png"/>
 	</section>
 	<!--###########-->
 	<section>
+		<h3>Tracking a flashing stimulus</h3>
+		<img class="r-stretch" src="media/flashing_dot.gif"/>
+	</section>
+	<section>
+		<h3>Tracking a flashing stimulus</h3>
 		<img class="r-stretch" src="media/entrainment_square_time.gif"/>
 	</section>
 	<!--###########-->
 	<section>
+		<h3>Tracking a flashing stimulus</h3>
 		<img class="r-stretch" src="media/entrainment_square_time_contour.png"/>
 	</section>
 	<!--###########-->
 	<section>
+		<h3>Tracking apparent motion</h3>
+		<img class="r-stretch" src="media/apparent_dot.gif"/>
+	</section>
+	<section>
+		<h3>Tracking apparent motion</h3>
 		<img class="r-stretch" src="media/apparent_motion_pulse.gif"/>
 	</section>
 	<!--###########-->
 	<section>
+		<h3>Tracking apparent motion</h3>
+		<ul>
+			<li>Preliminary results</li>
+			<li>Needs some investigation</li>
+		</ul>
 		<img class="r-stretch" src="media/apparent_motion_entrainment.png"/>
 	</section>
 </section>
@@ -483,6 +512,14 @@
 <section>
 	<section>
 		<h1>Future work</h1>
+		<aside class="notes">
+			<ul>
+				<li>Interested in modeling other kinds of traveling waves</li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
 	</section>
 	<!--###########-->
 	<section>
@@ -490,6 +527,14 @@
 		<img class="r-stretch" src="media/Zandt_CSD.png"/>
 		<br>
 		<a href="https://www.degruyter.com/document/doi/10.1515/revneuro-2014-0069/html" target=blank>Zandt, Haken, van Putten, and Markus (2015)</a>
+		<aside class="notes">
+			<ul>
+				<li>Slow moving chemical wave.</li>
+				<li>Believed to cause migrains.</li>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
 	</section>
 	<!--###########-->
 	<section>
@@ -497,6 +542,14 @@
 		<img class="r-stretch" src="media/Zandt_retinotopic_map.png"/>
 		<br>
 		<a href="https://www.degruyter.com/document/doi/10.1515/revneuro-2014-0069/html" target=blank>Zandt, Haken, van Putten, and Markus (2015)</a>
+		<aside class="notes">
+			<ul>
+				<li>Slow moving waves in cortex are percieved</li>
+				<li>Left: visual field</li>
+				<li>Right: cortex</li>
+				<li></li>
+			</ul>
+		</aside>
 	</section>
 	<!--###########-->
 	<section>
@@ -510,6 +563,14 @@
 				<img src="media/scotoma_airy_1870.png"/>
 			</div>
 		</div>
+		<aside class="notes">
+			<ul>
+				<li>Blind spots</li>
+				<li>Slowly moves for a few hours.</li>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
 	</section>
 	<!--###########-->
 	<section>
@@ -532,6 +593,14 @@
 				Markus A. Dahlem (2013)
 			</p>
 		</div>
+		<aside class="notes">
+			<ul>
+				<li>Excitable medium, with recovery and diffustion</li>
+				<li>Integral term represents vascular feedback</li>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
 	</section>
 	<!--###########-->
 	<section>
@@ -545,6 +614,15 @@
 			<li>Coupled potassium concentration</li> 
 			<li>Models both ignition and propagation of CSD</li>
 		</ul>
+		<aside class="notes">
+			<ul>
+				<li>Neural field model and potassium</li>
+				<li>Apply our analysis to understand control.</li>
+				<li>Ultimately, find a way to disrupt CSD</li>
+				<li>Another area I'm interested in is understanding the role of curvature.</li>
+				<li>Brain is wrikly</li>
+			</ul>
+		</aside>
 	</section>
 	<!--###########-->
 	<section>
@@ -570,6 +648,15 @@
 				Kneer, Scholl, Dahlem (2014)
 			</div>
 		</div>
+		<aside class="notes">
+			<ul>
+				<li>Same model as before</li>
+				<li>Diffusion is Laplace-Beltrami</li>
+				<li>Integral is with respect to a measure that incorporates the curvature.</li>
+				<li>Curvature affects speed and stability.</li>
+				<li>I've worked with sufface PDEs before.</li>
+			</ul>
+		</aside>
 	</section>
 	<!--###########-->
 	<section>
@@ -592,6 +679,15 @@
 				</video>
 			</div>
 		</div>
+		<aside class="notes">
+			<ul>
+				<li>Reaction diffusion system.</li>
+				<li>Parameters control spots or stripes</li>
+				<li>RBF interpolation: high order, any dimension, no mesh</li>
+				<li>I compared 3 ways of using RBFs for making FD approximations to LB</li>
+				<li>No need for curvilinear coordinates.</li>
+			</ul>
+		</aside>
 	</section>
 	<!--###########-->
 	<section>
@@ -610,13 +706,28 @@
 				</video>
 			</div>
 		</div>
+		<aside class="notes">
+			<ul>
+				<li>No need for curvilinear coordinates.</li>
+				<li>Closed surfface, LB transpose nullspace gives quadrature weights.</li>
+			</ul>
+		</aside>
 	</section>
 </section>
 <!--##################################################-->
 <section>
 	<section>
-		<p>Thank you</p>
+		<h3>Thank you</h3>
 	</section>
+	<aside class="notes">
+		<ul>
+			<li>Zack</li>
+			<li>Tahra</li>
+			<li>Nick</li>
+			<li>Heather</li>
+			<li>Committee and audience</li>
+		</ul>
+	</aside>
 </section>
 <!--##################################################-->
 			</div>
