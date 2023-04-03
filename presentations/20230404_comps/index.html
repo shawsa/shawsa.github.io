@@ -8,7 +8,7 @@
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/gray.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
@@ -33,21 +33,15 @@
 			<li>Entrainment</li>
 			<li>Future work</li>
 		</ul>
-		<aside class="notes">
-			<ul>
-				<li>Examine differences</li>
-				<li>Apparent motion is a clue to how we work</li>
-				<li>Models should be susceptible.</li>
-			</ul>
-		</aside>
 	</section>
 	<!--###########-->
 	<section>
 		<img class="r-stretch" src="media/apparent_motion_demo.gif" width=100%/>
 		<aside class="notes">
 			<ul>
-				<li>Explain apparent motion</li>
-				<li>Explain Scotomoa (blindspot) and relation to migraine.</li>
+				<li>Examine differences</li>
+				<li>Apparent motion is a clue to how we work</li>
+				<li>Models should be susceptible.</li>
 			</ul>
 		</aside>
 	</section>
@@ -87,7 +81,7 @@
 		</div>
 		<aside class="notes">
 			<ul>
-				<li>Expanding anulus</li>
+				<li>Expanding annulus</li>
 				<li>rotating wedge</li>
 				<li>colors are continuous</li>
 			</ul>
@@ -105,7 +99,7 @@
 		<aside class="notes">
 			<ul>
 				<li>connections for a single neuron</li>
-				<li>strength/probabiliy decays with distance</li>
+				<li>strength decays with distance</li>
 				<li>continuum limit</li>
 			</ul>
 		</aside>
@@ -166,7 +160,7 @@
 		<img src="media/depression.png" width="70%"/>
 		<aside class="notes">
 			<ul>
-				<li>Firing releases neurotransimitters</li>
+				<li>Firing releases neurotransmitters</li>
 				<li>Rapid firing depletes the pre-synaptic resources.</li>
 				<li>incorporate this into our neural field model.
 			</ul>
@@ -178,7 +172,7 @@
 		<p data-id="models">
         \begin{align*}
 		\tau_u \frac{\partial}{\partial t}\underbrace{u(x,t)}_{\text{Activity}} &=
-		-u + \underbrace{\overbrace{w}^{\substack{\text{conectivity}\\\text{kernel}}} \ast \big( q f[u] \big)}_{\substack{\text{network}\\\text{stimulation}}} \\
+		-u + \underbrace{\overbrace{w}^{\substack{\text{network}\\\text{connectivity}\\\text{kernel}}} \ast \big( q f[u] \big)}_{\substack{\text{network}\\\text{stimulation}}} \\
 			\tau_q \frac{\partial}{\partial t}\underbrace{q(x,t)}_{\substack{\text{Synaptic}\\\text{Efficacy}}} &=
 			1 - q - \underbrace{\beta}_{\substack{\text{rate of}\\\text{depletion}}} q \underbrace{f(u)}_{\substack{\text{firing-rate}\\\text{function}}}
         \end{align*}
@@ -216,7 +210,7 @@
 			<ul>
 				<li>pulse profile</li>
 				<li>threshold and active region</li>
-				<li>weight kenrel and convolution</li>
+				<li>weight kernel and convolution</li>
 			</ul>
 		</aside>
 	</section>
@@ -263,36 +257,21 @@
 	<section>
 		<h3>Front Bifurcations</h3>
 		<div style="width: 100%">
-			<div style="float: left; width: 50%">
-				<img src="media/speed_by_gamma.png" width=100%/>
-			</div>
-			<div style="float: right; width: 50%">
+			<img src="media/speed_by_gamma.png" width=100%/>
+			<aside class="notes">
 				<ul>
-					<li>Three solutions for $\theta < \gamma < 2\theta$</li>
-					<li>One solution for $2\theta < \gamma$</li>
-					<li>$\gamma = 1 \iff \beta = 0$: no depression</li>
+					<li>Three solutions for theta &lt; gamma &lt; 2theta</li>
+					<li>One solution for 2theta &lt; gamma</li>
+					<li>gamma = 1 iff beta = 0: no depression</li>
 				</ul>
-			</div>
+			</aside>
 		</div>
 		
 	</section>
 	<!--###########-->
 	<section>
 		<h3>Front Bifurcations</h3>
-				<img class="r-stretch" src="media/speed_by_tau_q.png" width=100%/>
-		<!--div style="width: 100%">
-			<div style="float: left; width: 50%">
-				<img class="r-stretch" src="media/speed_by_tau_q.png" width=100%/>
-			</div>
-			<div style="float: right; width: 50%">
-				<ul>
-					<li></li>
-					<li></li>
-					<li></li>
-				</ul>
-			</div>
-		</div-->
-		
+				<img class="r-stretch" src="media/speed_by_tau_q.png" width=100%/>		
 	</section>
 	<!--###########-->
 	<section>
@@ -335,13 +314,18 @@
 		<h3>Pulse Bifurcations</h3>
 		<div style="width: 100%">
 			<div style="float: left; width: 50%">
-				<img src="media/bifurcation_alpha_speed.png" width=100%/>
-			</div>
-			<div style="float: right; width: 50%">
 				<img src="media/bifurcation_alpha_width.png" width=100%/>
 			</div>
+			<div style="float: right; width: 50%">
+				<img src="media/bifurcation_alpha_speed.png" width=100%/>
+			</div>
 		</div>
-		
+		<aside class="notes">
+			<ul>
+				<li>Slow depression takes longer to recover, so wider pulse</li>
+				<li>Wider pulse means more stimulation at the font so faster speed</li>
+			</ul>
+		</aside>
 	</section>
 </section>
 <!--##################################################-->
@@ -351,7 +335,7 @@
 	</section>
 	<!--###########-->
 	<section>
-		<h3>Correcting Possition</h3>
+		<h3>Correcting Position</h3>
 		<img class="r-stretch" src="media/bun_tracking.gif"/>
 		<ul>
 			<li>Position encoded as a pules</li>
@@ -360,13 +344,13 @@
 	</section>
 	<!--###########-->
 	<section>
-		<h3>Spatially homogeneous pulse</h3>
+		<h3>Spatially homogeneous perturbation</h3>
 		<img class="r-stretch" src="media/front_delta_time.gif"/>
 	</section>
 	<!--###########-->
 	<section>
 		<p>
-		<h3>Aysmptotic Approximation</h3>
+		<h3>Asymptotic Approximation</h3>
 		Add stimulus terms
 		$$
 		\begin{align*}
@@ -423,7 +407,7 @@
 	</section>
 	<!--###########-->
 	<section>
-		<h3>Spatially Homogenious Pulse</h3>
+		<h3>Spatially Homogeneous perturbation</h3>
 		$$
 			\varepsilon I_u = \varepsilon \delta(t - 1)
 		$$
@@ -438,20 +422,17 @@
 	</section>
 	<!--###########-->
 	<section>
-		<h3>Spatially localized pulse</h3>
-		<img class=r-strech src="media/square_space_delta_time_u.gif"/>
+		<h3>Spatially localized perturbation</h3>
+		<img  src="media/square_space_delta_time_u.gif" width=80%/>
 	</section>
 	<!--###########-->
 	<section>
-		<h3>Spatially localized pulse</h3>
-		<div style="width: 100%">
-			<div style="float: left; width: 50%">
-				<img class=r-strech src="media/spatially_localized.png"/>
-			</div>
-			<div style="float: right; width: 50%">
-				<img src="media/spatially_localized_q.png" width=100%/>
-			</div>
-		</div>
+		<h3>Spatially localized perturbation</h3>
+		<img src="media/spatially_localized.png" width=100%/>
+	</section>
+	<section>
+		<h3>Spatially localized perturbation</h3>
+		<img src="media/spatially_localized_q.png" width=100%/>
 	</section>
 </section>
 <!--##################################################-->
@@ -502,7 +483,7 @@
 		<h3>Tracking apparent motion</h3>
 		<ul>
 			<li>Preliminary results</li>
-			<li>Needs some investigation</li>
+			<li>Similar to the moving, flashing stimulus.</li>
 		</ul>
 		<img class="r-stretch" src="media/apparent_motion_entrainment.png"/>
 	</section>
@@ -530,7 +511,7 @@
 		<aside class="notes">
 			<ul>
 				<li>Slow moving chemical wave.</li>
-				<li>Believed to cause migrains.</li>
+				<li>Believed to cause migraines.</li>
 				<li></li>
 				<li></li>
 			</ul>
@@ -544,7 +525,7 @@
 		<a href="https://www.degruyter.com/document/doi/10.1515/revneuro-2014-0069/html" target=blank>Zandt, Haken, van Putten, and Markus (2015)</a>
 		<aside class="notes">
 			<ul>
-				<li>Slow moving waves in cortex are percieved</li>
+				<li>Slow moving waves in cortex are perceived</li>
 				<li>Left: visual field</li>
 				<li>Right: cortex</li>
 				<li></li>
@@ -553,7 +534,7 @@
 	</section>
 	<!--###########-->
 	<section>
-		<h3>Scintilating Scotoma</h3>
+		<h3>Scintillating Scotoma</h3>
 		<div style="width: 100%">
 			<div style="float: left; width: 50%">
 				<img src="media/scotoma_anon.jpeg" height="200em"/>
@@ -590,12 +571,12 @@
 				</a>
 			</div>
 			<p>
-				Markus A. Dahlem (2013)
+			<a href="https://aip.scitation.org/doi/full/10.1063/1.4813815" target=blank>Markus A. Dahlem (2013)</a>
 			</p>
 		</div>
 		<aside class="notes">
 			<ul>
-				<li>Excitable medium, with recovery and diffustion</li>
+				<li>Excitable medium, with recovery and diffusion</li>
 				<li>Integral term represents vascular feedback</li>
 				<li></li>
 				<li></li>
@@ -620,7 +601,7 @@
 				<li>Apply our analysis to understand control.</li>
 				<li>Ultimately, find a way to disrupt CSD</li>
 				<li>Another area I'm interested in is understanding the role of curvature.</li>
-				<li>Brain is wrikly</li>
+				<li>Brain is wrinkly</li>
 			</ul>
 		</aside>
 	</section>
@@ -654,18 +635,73 @@
 				<li>Diffusion is Laplace-Beltrami</li>
 				<li>Integral is with respect to a measure that incorporates the curvature.</li>
 				<li>Curvature affects speed and stability.</li>
-				<li>I've worked with sufface PDEs before.</li>
+				<li>I've worked with surface PDEs before.</li>
 			</ul>
 		</aside>
 	</section>
 	<!--###########-->
 	<section>
 		<div style="width: 100%">
-			<h3>A Turring Reaction Diffusion System using RBFs</h3>
+			<h3>A Turing Reaction Diffusion System using RBFs</h3>
 			$$\begin{align*}
 				u_t &= \delta_u \Delta_{\mathcal{M}} u + \alpha(1-\tau_1 v^2) + v(1-\tau_2 u)\\
 				v_t &= \delta_v \Delta_{\mathcal{M}} v + \beta(1-\frac{\alpha\tau_1}{\beta} uv) + u(\gamma-\tau_2 v)\\
 			\end{align*}$$
+			<div style="float: left; width: 50%">
+				<video controls loop muted >
+					<source src="media/bunny_spots.ogg" type="video/ogg">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+			<div style="float: right; width: 50%">
+				<video controls loop muted >
+					<source src="media/bunny_stripes.ogg" type="video/ogg">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>Reaction diffusion system.</li>
+				<li>Parameters control spots or stripes</li>
+				<li>RBF interpolation: high order, any dimension, no mesh</li>
+				<li>I compared 3 ways of using RBFs for making FD approximations to LB</li>
+				<li>No need for curvilinear coordinates.</li>
+				<li>Closed surface, LB transpose nullspace gives quadrature weights.</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h3>Thank you</h3>
+	<aside class="notes">
+		<ul>
+			<li>Zack</li>
+			<li>Tahra</li>
+			<li>Nick</li>
+			<li>Heather</li>
+			<li>Committee and audience</li>
+		</ul>
+	</aside>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h3>Auxiliary Slides</h3>
+	<aside class="notes">
+		<ul>
+			<li></li>
+		</ul>
+	</aside>
+	</section>
+    <!--###########-->
+	<section>
+		<div style="width: 100%">
+			<h3>A Turing Reaction Diffusion System using RBFs</h3>
 			<div style="float: left; width: 50%">
 				<video controls loop muted autoplay>
 					<source src="media/torus_spots.ogg" type="video/ogg">
@@ -681,53 +717,19 @@
 		</div>
 		<aside class="notes">
 			<ul>
-				<li>Reaction diffusion system.</li>
-				<li>Parameters control spots or stripes</li>
-				<li>RBF interpolation: high order, any dimension, no mesh</li>
-				<li>I compared 3 ways of using RBFs for making FD approximations to LB</li>
-				<li>No need for curvilinear coordinates.</li>
 			</ul>
 		</aside>
 	</section>
-	<!--###########-->
+    <!--###########-->
 	<section>
 		<div style="width: 100%">
-			<h3>A Turring Reaction Diffusion System using RBFs</h3>
-			<div style="float: left; width: 50%">
-				<video controls loop muted autoplay>
-					<source src="media/bunny_spots.ogg" type="video/ogg">
-					Your browser does not support the video tag.
-				</video>
-			</div>
-			<div style="float: right; width: 50%">
-				<video controls loop muted autoplay>
-					<source src="media/bunny_stripes.ogg" type="video/ogg">
-					Your browser does not support the video tag.
-				</video>
-			</div>
-		</div>
+			<h3>Numerical Continuation</h3>
+			<img class="r-stretch" src="media/numerical_continuation.png"/>
 		<aside class="notes">
 			<ul>
-				<li>No need for curvilinear coordinates.</li>
-				<li>Closed surfface, LB transpose nullspace gives quadrature weights.</li>
 			</ul>
 		</aside>
 	</section>
-</section>
-<!--##################################################-->
-<section>
-	<section>
-		<h3>Thank you</h3>
-	</section>
-	<aside class="notes">
-		<ul>
-			<li>Zack</li>
-			<li>Tahra</li>
-			<li>Nick</li>
-			<li>Heather</li>
-			<li>Committee and audience</li>
-		</ul>
-	</aside>
 </section>
 <!--##################################################-->
 			</div>
