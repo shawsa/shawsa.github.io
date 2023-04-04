@@ -53,8 +53,9 @@
 	</section>
 	<!--###########-->
 	<section>
-		<h3>Biological Neural Networks</h3>
+		<h3>Biological Neural Networks</h 3>
 		<img class="r-stretch" src="media/neuron.png" width="70%"/>
+        <p>Image courtesy of Heather Cihak.</p>
 		<aside class="notes">
 			<ul>
 				<li>firing</li>
@@ -114,9 +115,9 @@
 			</div>
 			<div style="float: right; width: 50%">
 				<ul>
-					<li>Progressive fronts</li>
-					<li>Regressive fronts</li>
-					<li>Pulses</li>
+					<li><span style="color: green;">Progressive fronts</span></li>
+					<li><span style="color: magenta;">Regressive fronts</span></li>
+					<li><span style="color: blue">Pulses</span></li>
 				</ul>
 				<img src="media/pulse_generation.gif"/>
 			</div>
@@ -124,32 +125,6 @@
 		<aside class="notes">
 			<ul>
 				<li></li>
-			</ul>
-		</aside>
-	</section>
-	<!--###########-->
-	<section>
-		<h3>2D Neural Fields</h3>
-		<div style="width: 100%">
-			<div style="float: left; width: 50%">
-				<video controls loop muted autoplay>
-					<source src="media/Huang_spiral.ogg" type="video/ogg">
-					Your browser does not support the video tag.
-				</video>
-				<p><a href="https://www.sciencedirect.com/science/article/pii/S0896627310009141" target=blank>Huang et al. (2010)</a></p>
-			</div>
-			<div style="float: right; width: 50%">
-				<video controls loop muted autoplay>
-					<source src="media/Laing_spiral.ogg" type="video/ogg">
-					Your browser does not support the video tag.
-				</video>
-				<p><a href="https://epubs.siam.org/doi/abs/10.1137/040612890" target=blank>Laing (2005)</a></p>
-			</div>
-		</div>
-		<aside class="notes">
-			<ul>
-				<li>Left, voltage-sensitive dye recordings</li>
-				<li>Right, Simulation on doubly periodic domain</li>
 			</ul>
 		</aside>
 	</section>
@@ -311,7 +286,7 @@
 	</section>
 	<!--###########-->
 	<section>
-		<h3>Pulse Bifurcations</h3>
+		<h3>Pulse Speed and Width</h3>
 		<div style="width: 100%">
 			<div style="float: left; width: 50%">
 				<img src="media/bifurcation_alpha_width.png" width=100%/>
@@ -338,7 +313,7 @@
 		<h3>Correcting Position</h3>
 		<img class="r-stretch" src="media/bun_tracking.gif"/>
 		<ul>
-			<li>Position encoded as a pules</li>
+			<li>Position encoded as a pulse</li>
 			<li>Must be corrected</li>
 		</ul>
 	</section>
@@ -351,11 +326,11 @@
 	<section>
 		<p>
 		<h3>Asymptotic Approximation</h3>
-		Add stimulus terms
+		add stimulus terms
 		$$
 		\begin{align*}
 			\tau_u u_t &= -u + w * (q f[u]) + \varepsilon I_u(x, t) \label{eqn:forced_u} \\
-			\tau_q q_t &= 1 - q - \beta q f[u] + \varepsilon I_q(x, t). \label{eqn:forced_q}
+			\tau_q q_t &= 1 - q - \beta q f[u] + \varepsilon I_q(x, t) \label{eqn:forced_q}
 		\end{align*}
 		$$
 		</p>
@@ -425,11 +400,17 @@
 		<h3>Spatially localized perturbation</h3>
 		<img  src="media/square_space_delta_time_u.gif" width=80%/>
 	</section>
+    <!--###########-->
+	<section>
+		<h3>Spatially localized perturbation</h3>
+		<img src="media/localized_diagram.png" width=100%/>
+	</section>
 	<!--###########-->
 	<section>
 		<h3>Spatially localized perturbation</h3>
 		<img src="media/spatially_localized.png" width=100%/>
 	</section>
+    <!--###########-->
 	<section>
 		<h3>Spatially localized perturbation</h3>
 		<img src="media/spatially_localized_q.png" width=100%/>
@@ -481,11 +462,17 @@
 	<!--###########-->
 	<section>
 		<h3>Tracking apparent motion</h3>
-		<ul>
-			<li>Preliminary results</li>
-			<li>Similar to the moving, flashing stimulus.</li>
-		</ul>
-		<img class="r-stretch" src="media/apparent_motion_entrainment.png"/>
+        <div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<ul>
+			        <li>Preliminary results</li>
+			        <li>Similar to the moving, flashing stimulus.</li>
+		        </ul>
+			</div>
+			<div style="float: right; width: 50%">
+				<img class="r-stretch" src="media/apparent_motion_cropped.png"/>
+			</div>
+		</div>
 	</section>
 </section>
 </section>
@@ -727,6 +714,32 @@
 			<img class="r-stretch" src="media/numerical_continuation.png"/>
 		<aside class="notes">
 			<ul>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>2D Neural Fields</h3>
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<video controls loop muted autoplay>
+					<source src="media/Huang_spiral.ogg" type="video/ogg">
+					Your browser does not support the video tag.
+				</video>
+				<p><a href="https://www.sciencedirect.com/science/article/pii/S0896627310009141" target=blank>Huang et al. (2010)</a></p>
+			</div>
+			<div style="float: right; width: 50%">
+				<video controls loop muted autoplay>
+					<source src="media/Laing_spiral.ogg" type="video/ogg">
+					Your browser does not support the video tag.
+				</video>
+				<p><a href="https://epubs.siam.org/doi/abs/10.1137/040612890" target=blank>Laing (2005)</a></p>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>Left, voltage-sensitive dye recordings</li>
+				<li>Right, Simulation on doubly periodic domain</li>
 			</ul>
 		</aside>
 	</section>
