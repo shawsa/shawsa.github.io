@@ -1,0 +1,293 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <!-- Mathjax commands -->
+    $
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\OO}{\mathcal{O}}
+    \newcommand{\mathcow}{\OO}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\KK}{\mathbb{K}}
+    \newcommand{\PP}{\mathcal{P}}
+    \newcommand{\TT}{\mathcal{T}}
+    \newcommand{\BB}{\mathcal{B}}
+    \newcommand{\LL}{\mathcal{L}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+
+    \newcommand{\veca}{\vec{a}}
+    \newcommand{\vecb}{\vec{b}}
+    \newcommand{\vecd}{\vec{d}}
+    \newcommand{\vece}{\vec{e}}
+    \newcommand{\vecf}{\vec{f}}
+    \newcommand{\vecn}{\vec{n}}
+    \newcommand{\vecp}{\vec{p}}
+    \newcommand{\vecr}{\vec{r}}
+    \newcommand{\vecu}{\vec{u}}
+    \newcommand{\vecv}{\vec{v}}
+    \newcommand{\vecw}{\vec{w}}
+    \newcommand{\vecx}{\vec{x}}
+    \newcommand{\vecy}{\vec{y}}
+    \newcommand{\vecz}{\vec{z}}
+
+    \renewcommand{\vec}[1]{\mathbf{#1}}
+    $
+
+    <!-- Plotly code for interactive plots -->
+    <script src="../plotly-2.0.0-rc.2.min.js"></script>
+    
+    <!--Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+
+
+
+    
+<!--************************************************************************-->
+<title>Shaw Research Notes</title>
+</head>
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<body>
+
+<div class="top-bar">
+    <a href="../index.html"><img src="../frame/boulder-logo.png"></a>
+</div>
+
+<div id="side-bar" class="side-bar">
+    <p><a href="../reports/reports.html" target="_top">Reports</a></p>
+    <p><a href="../presentations/presentations.html" target="_top">Presentations</a></p>
+    <p><a href="../todo/todo.html" target="_top">To Do List</a></p>
+    <p><a href="../about/about.html" target="_top">About</a></p>
+    <hr>
+    <p><a href="../old-rbf/index.html" target="_top">Old Site</a></p>
+</div>
+
+<div class="page-content">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<h1 id="Title">Working</h1>
+<p id="summary">
+   Lorem
+</p>
+
+
+<div id="slider-plot" style="width:auto;"></div>
+
+<!--************************************************************************-->
+
+<hr>
+<!--********************************************************************-->
+
+<h1 id="">Asymptotic Entrainment Calculation</h1>
+
+<p>
+    We consider the scalar equation
+$$
+u_t = -u + w \ast f[u].
+$$
+In characteristic coordinates (and with a slight abuse of notation) this is
+$$
+-cu_\xi + u_t = -u + w\ast f[u].
+$$
+</p>
+
+<p>
+    For a small stimulus term $\varepsilon I(\xi, t)$ we use the expansion
+$$\begin{align*}
+    u(\xi, t) &= U(\xi - \varepsilon \nu(t)) + \varepsilon \phi(\xi - \varepsilon \nu, t) + \mathcal{O}(\varepsilon^2) \\
+    u_\xi &= U' + \varepsilon \phi_\xi + \mathcal{O}(\varepsilon^2) \\
+    u_t &= -\varepsilon \nu' U' -\varepsilon^2 \nu' \phi_\xi + \varepsilon \phi_t + \mathcal{O}(\varepsilon^2) \\
+        &= -\varepsilon \nu' U' + \varepsilon \phi_t + \mathcal{O}(\varepsilon^2)
+\end{align*}$$
+</p>
+
+<p>
+    Substituting, and collecting the $\mathcal{O}(\varepsilon)$ terms, we have
+$$\begin{align*}
+    -c\phi_\xi - \nu'U' + \phi_t &= -\phi + w \ast \big(f'[U]\phi \big) I(\xi + \varepsilon \nu, t) \\
+    \phi_t + \underbrace{\phi - c\phi_\xi - w \ast \big( f'[U] \phi \big)}_{\mathcal{L}} &= \nu'U' + I(\xi + \varepsilon \nu, t).
+\end{align*}$$
+</p>
+
+<p>
+    We require the RHS to be orthogonal to every term in the nullspace of $\mathcal{L}^*$. This one-dimensional null-space is spanned by $v(\xi) = H(\xi)e^{-\xi / c}$. This gives our wave response as 
+$$
+\nu' = -\frac{ \langle I(\xi + \varepsilon \nu, t), v \rangle}{\langle U', v \rangle}.
+$$
+</p>
+
+<p>
+    From <a href="https://journals.aps.org/pre/abstract/10.1103/PhysRevE.85.021910" target=blank>Kilpatrick 2012</a> we have $U'(\xi) = \frac{1}{2(c+1)}e^{-\xi}$. Thus
+$$\begin{align*}
+    \langle U', v \rangle &= \frac{1}{2(c+1)}\int_0^\infty e^{-\xi} e^{-\xi/c} d \xi \\
+        &= \int_0^\infty e^{- \frac{1+c}{c} \xi} \ d\xi \\
+        &= \frac{c}{2(c+1)^2}.
+\end{align*}$$
+</p>
+
+<p>
+    We will take $\varepsilon I$ to be a moving Heaviside stimulus
+$$
+    \varepsilon I(\xi, t) = \varepsilon H\big( -(\xi - \Delta_c t) \big).
+$$
+Thus
+$$\begin{align*}
+    \langle I(\xi + \varepsilon \nu), v \rangle 
+        &= \int_0^\infty e^{-\xi / c} H\big( -( \xi + \varepsilon \nu - \Delta_c t) \big) d \xi \\
+        &= \int_0^{\Delta_c t - \varepsilon \nu} e^{-\xi/c} \ d\xi \\
+        &= -c (1 - e^{\frac{\varepsilon \nu - \Delta_c t}{c}})
+\end{align*}$$
+and our wave response satisfies
+$$
+\nu' = 2(c+1)^2(1 - e^{\frac{\varepsilon \nu - \Delta_c t}{c}}).
+$$
+</p>
+
+<p>
+    We make the change of variables 
+$$\begin{align*}
+    y(t) &= \frac{ \varepsilon \nu - \Delta_c t}{c} \\
+    \nu &= \frac{y + \Delta_c t}{\varepsilon} \\
+    \nu' &= \frac{y' + \Delta_c}{\varepsilon}
+\end{align*}$$
+and substitute to obtain
+$$\begin{align*}
+    \frac{y' + \Delta_c}{\varepsilon} &= 2(c+1)^2(1 - e^y) \\
+    y' &= -\Delta_c + 2 \varepsilon(c+1)^2(1 - e^y) := F(y).
+\end{align*}$$
+</p>
+
+<p>
+    A traveling wave solution will reach a steady state where $\nu'(t) = \Delta_c$ or equivalently $y' = 0$. Such a steady state $\bar{y}$ satisfies
+$$\begin{align*}
+    0 &= F(\bar{y}) \\
+        &= -\Delta_c + 2 \varepsilon(c+1)^2(1 - e^\bar{y}) \\
+    \frac{\Delta_c}{2\varepsilon(c+1)^2)} &= 1 - e^{\bar{y}} \\
+    \bar{y} &= \log \left( 1 - \frac{\Delta_c}{2\varepsilon(c+1)^2)} \right).
+\end{align*}$$
+</p>
+
+<p>
+    This will be stable if $F'(\bar{y}) < 0$. We check
+$$\begin{align*}
+    F'(\bar{y}) &= -2\varepsilon (c+1)^2 e^\bar{y} \\
+        &= -2\varepsilon (c+1)^2 \left( 1 - \frac{\Delta_c}{2\varepsilon (c+1)^2} \right) \\
+        &= \Delta_c - 2\varepsilon(c+1)^2.
+\end{align*}$$
+This will be negative if
+$$
+    \Delta_c < 2\varepsilon(c+1)^2.
+$$
+</p>
+
+<h2>Comparison to constant input</h2>
+<p>
+    Suppose that the stimulus is too fast. Then we have essentially that $\varepsilon I \to \varepsilon$ as $t \to \infty$. As the stimulus moves farther ahead of the front, the front will accelerate until it reaches some maximum speed. This maximum speed must be less than the speed of the stimulus otherwise the speeds would eventually match and the front would entrain to the stimulus. This gives a condition on the stimulus speed. 
+</p>
+
+<p>
+    In the case of the stimlulus $\varepsilon I = \varepsilon$ we make the change of variables $\hat{u} = u - \varepsilon$ $\hat{\theta} = \theta - \varepsilon$ and we obtain the original unperturbed equation in $\hat{u}$. Thus, we expect
+$$\begin{align*}
+\hat{c} = c + \Delta_c &= \frac{1}{2\hat{\theta}} - 1 \\
+    \Delta_c &= \frac{1}{2(\frac{1}{2(c+1)} - \varepsilon)} - 1 - c \\
+            &= \frac{c+1}{1 - 2(c+1)\varepsilon} - (1+c) \\
+            &= 2\varepsilon(c+1)^2 + \mathcal{O}(\varepsilon^2)
+\end{align*}$$
+which is consistent with the above analysis to first order.
+</p>
+
+
+<!--button class="accordion">BUTTON NAME</button>
+<div class="panel">
+</div-->
+
+<!--video controls autoplay muted loop>
+    <source src="../working/synaptic_depression_perturbation.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video-->
+
+<!--figure>
+    <img src="../working/wave_response_small.png" width="100%"/>
+    <caption><b>Fig 2.</b> The asymptotic approximation of the wave response to $\epsilon I(x, t) = 0.01 \delta(t - 1)$.</caption>
+</figure=-->
+
+<!--************************************************************************-->
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+</div>
+
+<!-- Accordion script -->
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+
+var expand_all_accordions = true;
+
+if (expand_all_accordions){
+    for (i = 0; i < acc.length; i++) {
+      acc[i].nextElementSibling.style.display = "block";
+    }
+}
+
+}
+</script>
+
+<!-- Tabs script -->
+<script>
+function openTab(evt, tabId) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(tabId).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
+
+</body>
+    
+</html>
