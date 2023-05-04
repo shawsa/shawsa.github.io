@@ -215,6 +215,73 @@ $$\begin{align*}
 which is consistent with the above analysis to first order.
 </p>
 
+<h1>Synaptic Depression with moving Heaviside stimulus</h1>
+<p>
+    The model incorporating synaptic depression similarly yields the wave response equation
+$$
+\nu' = \frac{ \langle v_1, I_u(\xi + \varepsilon \nu) \rangle + \langle v_2, I_q(\xi + \varepsilon \nu) \rangle }{ \underbrace{\tau_u \langle v_1, U' \rangle + \tau_q \langle v_2, Q' \rangle}_{D} }.
+$$
+We will take the stimulus $\varepsilon I_q = 0$ and $\varepsilon I_u(\xi, t) = H(-(\xi - \Delta_c t))$ and the relevant nullspace equation is
+$$
+v_1(\xi) = A_{-\Delta} H(\xi + \Delta) e^{-\xi/c\tau_u} + H(\xi)e^{-\xi/c\tau_u}.
+$$
+</p>
+
+<p>
+    We then have
+$$\begin{align*}
+    D \nu' &= \langle v_1, I_u(\xi + \varepsilon \nu) \rangle \\
+        &= \int_0^\infty H(-(\xi + \varepsilon \nu - \Delta_c t))e^{-\xi/c\tau_u} \ d\xi + \int_{-\Delta}^\infty H(-(\xi + \varepsilon \nu - \Delta_c t)) e^{-\xi/c\tau_u} \ d\xi \\
+        &= \int_0^{\Delta_c t - \varepsilon \nu} e^{-\xi/c\tau_u} \ d\xi + A_{-\Delta} \int_{-\Delta}^{\Delta_c t - \varepsilon \nu} e^{-\xi/c\tau_u} \ d\xi \\
+        &= c\tau_u \bigg( (1 - e^{\frac{\varepsilon \nu - \Delta_c t}{c \tau_u}}) + A_{-\Delta}(e^{\Delta/c\tau_u} - e^{\frac{\varepsilon \nu - \Delta_c t}{c \tau_u}}) \bigg) \\
+        &= c\tau_u (1 + A_{-\Delta}e^{\Delta/c\tau_u}) - c\tau_u(1+A_{-\Delta})e^{\frac{\varepsilon \nu - \Delta_c t}{c \tau_u}}.
+\end{align*}$$
+</p>
+
+<p>
+    Similarly to before, we make the change of variables $y(t) = \varepsilon \nu(t) - \Delta_c t$. If $\varepsilon \nu(t)$ is the location of the fore threshold crossing in the traveling wave coordinate frame, $y(t)$ is the location of the fore threshold crossing in the stimulus coordinate frame (speed $c + \Delta_c$). This gives
+$$\begin{align*}
+    D \frac{y' + \Delta_c}{\varepsilon} &= c\tau_u (1 + A_{-\Delta}e^{\Delta/c\tau_u}) - c\tau_u(1+A_{-\Delta})e^{y/c\tau_u} \\
+        y' &= -\Delta_c + \frac{\varepsilon c \tau_u}{D} \bigg( (1 + A_{-\Delta}e^{\Delta/c\tau_u}) - (1+A_{-\Delta})e^{y/c\tau_u} \bigg) := F(y).
+\end{align*}$$
+</p>
+
+<p>
+    This has a steady state at
+$$\begin{align*}
+    0 &= F'(\bar{y}) \\
+        &= -\Delta_c + \frac{\varepsilon c \tau_u}{D} \bigg( (1 + A_{-\Delta}e^{\Delta/c\tau_u}) - (1+A_{-\Delta})e^{\bar{y}/c\tau_u} \bigg) \\
+    e^{\bar{y}/c\tau_u} &= \frac{-\frac{D \Delta_c}{\varepsilon c \tau_u} + (1 + A_{-\Delta}e^{\Delta/c\tau_u}) }{ 1 + A_{-\Delta}} \tag{*} \\
+    \bar{y} &= c\tau_u \log \left(  \frac{(1 + A_{-\Delta}e^{\Delta/c\tau_u}) -\frac{D \Delta_c}{\varepsilon c \tau_u}}{ 1 + A_{-\Delta}} \right).
+\end{align*}$$
+This steady state is stable if 
+$$\begin{align*}
+    0 &> F'(\bar{y}) \\
+        &= - \frac{\varepsilon (1 + A_{-\Delta})}{D} e^{\bar{y} /c\tau_u} \tag{substitute (*)} \\
+        &= - \frac{\varepsilon (1 + A_{-\Delta})}{D} \frac{-\frac{D \Delta_c}{\varepsilon c \tau_u} + (1 + A_{-\Delta}e^{\Delta/c\tau_u}) }{ 1 + A_{-\Delta}} \\
+        &= \frac{\Delta_c}{c \tau_u} - \frac{\varepsilon}{D}(1 + A_{-\Delta}e^{\Delta/c\tau_u}) \\
+    \Delta_c &< \varepsilon \frac{c\tau_u}{D}(1+A_{-\Delta}e^{\Delta/c\tau_u}).
+\end{align*}$$
+</p>
+
+<h3>A note on a moving square stimulus</h3>
+
+<p>
+    In the $\tau_q \gg \tau_u$ regime, we expect $A_{-\Delta} \approx 0$. In this case, there are no effects from the rear threshold-crossing. Then if we consider a moving square stimulus of width $y^*$
+$$
+    \varepsilon I_u(\xi, t) = \varepsilon \bigg( H( - (\xi - \Delta_c t)) - H(\xi - \Delta_c t  y^*) \bigg)
+$$
+then our analysis will be identical to the above provided $-\bar{y} > y^*$. That is, if the back end of the square stimulus is in the active region of the steady-state perturbed traveling wave. I susspect that this will be a requisite condition on entrainment for the square stimulus case. 
+</p>
+
+<p>
+    Specifically, the effect of the stimulus on an entrained traveling wave would be maximal when the rear end of the stimulus is at the threshold crossing. If this effect from the stimulus is too strong, then the wave will advance and the rear of the stimulus will be in the active region. If this effect from the stimulus is too week, then the wave would lag behind and the effect from the stimulus will lessen even more.
+</p>
+
+<p>
+    In this regime the comparison to a constant stimulus will similarly be relevant, though the speed (and pulse width) is specified implicity. Still, it may be possible to derive a first order approximation to the entrainment condition.
+</p>
+
 
 <!--button class="accordion">BUTTON NAME</button>
 <div class="panel">
