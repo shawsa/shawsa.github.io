@@ -205,7 +205,7 @@ $$
 </p>
 
 <p>
-    In the case of the stimlulus $\varepsilon I = \varepsilon$ we make the change of variables $\hat{u} = u - \varepsilon$ $\hat{\theta} = \theta - \varepsilon$ and we obtain the original unperturbed equation in $\hat{u}$. Thus, we expect
+    In the case of the stimulus $\varepsilon I = \varepsilon$ we make the change of variables $\hat{u} = u - \varepsilon$ $\hat{\theta} = \theta - \varepsilon$ and we obtain the original unperturbed equation in $\hat{u}$. Thus, we expect
 $$\begin{align*}
 \hat{c} = c + \Delta_c &= \frac{1}{2\hat{\theta}} - 1 \\
     \Delta_c &= \frac{1}{2(\frac{1}{2(c+1)} - \varepsilon)} - 1 - c \\
@@ -271,15 +271,114 @@ $$\begin{align*}
 $$
     \varepsilon I_u(\xi, t) = \varepsilon \bigg( H( - (\xi - \Delta_c t)) - H(\xi - \Delta_c t  y^*) \bigg)
 $$
-then our analysis will be identical to the above provided $-\bar{y} > y^*$. That is, if the back end of the square stimulus is in the active region of the steady-state perturbed traveling wave. I susspect that this will be a requisite condition on entrainment for the square stimulus case. 
+then our analysis will be identical to the above provided $-\bar{y} > y^*$. That is, if the back end of the square stimulus is in the active region of the steady-state perturbed traveling wave. I suspect that this will be a requisite condition on entrainment for the square stimulus case. 
 </p>
 
 <p>
-    Specifically, the effect of the stimulus on an entrained traveling wave would be maximal when the rear end of the stimulus is at the threshold crossing. If this effect from the stimulus is too strong, then the wave will advance and the rear of the stimulus will be in the active region. If this effect from the stimulus is too week, then the wave would lag behind and the effect from the stimulus will lessen even more.
+    Specifically, the effect of the stimulus on an entrained traveling wave would be maximal when the rear end of the stimulus is at the threshold crossing. If this effect from the stimulus is too strong, then the wave will advance and the rear of the stimulus will be in the active region. If this effect from the stimulus is too weak, then the wave would lag behind and the effect from the stimulus will lessen even more.
 </p>
 
 <p>
     In this regime the comparison to a constant stimulus will similarly be relevant, though the speed (and pulse width) is specified implicity. Still, it may be possible to derive a first order approximation to the entrainment condition.
+</p>
+
+<h1>Moving square stimulus</h1>
+<p>
+    We next consider a moving square stimulus of the form
+$$
+\varepsilon I_u(\xi, t) = \varepsilon \bigg[ H\big( -(\xi - \Delta_c t) \big) - H(\xi + y^* - \Delta_c t) \bigg]
+$$
+where $y^*$ is the width of the stimulus and $\Delta_c$ is the speed of the stimulus in the unperturbed traveling wave coordinate frame. Our entrainment calculation now has several cases. In the $\tau_q \gg \tau_u$ parameter regime, we expect the pulse width to be large, so we will assume $y^* \ll \Delta$. Also, the effect from the rear of the pulse is vanishingly small so we expect the front of the stimulus to be ahead of the fore threshold crossing. This reduces us to two cases: one where the back of the stimulus is in the active region and one where the back of the stimulus is ahead of the pulse. Intuitively we expect that if the rear of the stimulus is ahead of the pulse this will have a weaker effect than if the rear of the stimulus were at $\xi = 0$, and thus such a solution will be unstable. Therefore we choose to first consider the case where the stimulus overlaps with the active region, as seen in the diagram below. 
+</p>
+
+<img src="working/stim_diagram.png" width=100%/>
+
+<p>
+    Our wave response is then give by
+$$\begin{align*}
+    \underbrace{ \tau_u \langle v_1, U' \rangle }_{D} \nu' &= \langle v_1, I(\xi + \varepsilon \nu, t) \rangle \\
+        &= \int_0^{\Delta_c t - \varepsilon \nu} e^{-\xi/c\tau_u} \ d\xi + A_{-\Delta} \int_{\Delta_c t - \varepsilon \nu - y^*}^{\Delta_c t - \varepsilon \nu} e^{-\xi/c\tau_u} \ d\xi \\
+        &= c\tau_u \left[1 - \exp\left(\frac{\varepsilon \nu - \Delta_c t}{c \tau_u}\right)\right] + c\tau_u A_{-\Delta} \left[ \exp\left(\frac{y^* + \varepsilon \nu - \Delta_c t}{c \tau_u}\right) - \exp\left(\frac{\varepsilon \nu - \Delta_c t}{c \tau_u}\right) \right] \\
+        &= c \tau_u \left[ 1 + \left( A_{-\Delta} e^{y^*/c\tau_u} -(1+A_{-\Delta}) \right) \exp\left(\frac{\varepsilon \nu - \Delta_c t}{c \tau_u}\right) \right] \\
+    \nu' &= \frac{c \tau_u}{D} \left[ 1 + \left( A_{-\Delta} e^{y^*/c\tau_u} -(1+A_{-\Delta}) \right) \exp\left(\frac{\varepsilon \nu - \Delta_c t}{c \tau_u}\right) \right].
+\end{align*}$$ 
+</p>
+
+<p>
+    Define $y = \varepsilon \nu - \Delta_c t$ to be the distance between the fore threshold crossing and the front of the stimulus. Then $\nu' = \frac{y' + \Delta_c}{\varepsilon}$ and
+$$\begin{align*}
+    \frac{y' + \Delta_c}{\varepsilon} &= \frac{c \tau_u}{D} \left[ 1 + \left( A_{-\Delta} e^{y^*/c\tau_u} -(1+A_{-\Delta}) \right) e^{y/c\tau_u} \right] \\
+    y' &= -\Delta_c + \frac{ \varepsilon c \tau_u}{D} \left[ 1 + \left( A_{-\Delta} e^{y^*/c\tau_u} -(1+A_{-\Delta}) \right) e^{y/c\tau_u} \right] := F(y).
+\end{align*}$$
+</p>
+
+<p>
+    This has a steady state $\bar{y}$ give by
+$$\begin{align*}
+    0 &= F(\bar{y}) \\
+        &= -\Delta_c + \frac{ \varepsilon c \tau_u}{D} \left[ 1 + \left( A_{-\Delta} e^{y^*/c\tau_u} -(1+A_{-\Delta}) \right) e^{\bar{y}/c\tau_u} \right] \\
+    \frac{\Delta_c D}{\varepsilon c \tau_u} &= 1 + \left( A_{-\Delta} e^{y^*/c\tau_u} -(1+A_{-\Delta}) \right) e^{\bar{y}/c\tau_u} \\
+    e^{\bar{y}/c\tau_u} &= \frac{1 - \frac{\Delta_c D}{\varepsilon c \tau_u}}{1 + A_{-\Delta} - A_{-\Delta}e^{y^*/c\tau_u}} \\
+    \bar{y} &= c\tau_u \log\left( \frac{1 - \frac{\Delta_c D}{\varepsilon c \tau_u}}{1 + A_{-\Delta} - A_{-\Delta}e^{y^*/c\tau_u}} \right).
+\end{align*}$$
+
+Note that we require $0 > \bar{y} - y^* > \Delta$ in order for the rear of the stimulus to be in the active region, which is consistent with this case.
+</p>
+
+<p>
+    We have stability if
+$$\begin{align*}
+    0 &> F'(\bar{y}) \\
+        &= \frac{\varepsilon }{D} \left( A_{-\Delta} e^{y^*/c\tau_u} -(1+A_{-\Delta}) \right) e^{\bar{y}/c\tau_u} \\
+        &= \frac{\varepsilon }{D} \left( A_{-\Delta} e^{y^*/c\tau_u} -(1+A_{-\Delta}) \right) \frac{1 - \frac{\Delta_c D}{\varepsilon c \tau_u}}{1 + A_{-\Delta} - A_{-\Delta}e^{y^*/c\tau_u}} \\
+        &= \frac{\varepsilon}{D} \left( \frac{\Delta_c D}{\varepsilon c\tau_u} - 1 \right) \\
+        &= \frac{\Delta_c}{c \tau_u} - \frac{\varepsilon}{D} \\
+    \Delta_c < \frac{\varepsilon c \tau_u}{D}.
+\end{align*}$$
+</p>
+
+<h3>The inconsistent case</h3>
+<p>
+    We postulated that the case where the rear of the stimulus is ahead of the pulse is inconsistent. Here, we justify that analytically. This case is depicted in the following diagram.
+</p>
+<img src="working/stim_diagram2.png" width=100%/>
+
+<p>
+    We proceed
+$$\begin{align*}
+    D\nu' &= \int_{\Delta_c t - \varepsilon \nu - y^*}^{\Delta_c t - \varepsilon \nu} e^{-\xi/c\tau_u} \ d\xi + A_{-\Delta} \int_{\Delta_c t - \varepsilon \nu - y^*}^{\Delta_c t - \varepsilon \nu} e^{-\xi/c\tau_u} \ d\xi \\
+        &= c\tau_u(1+A_{-\Delta}) \left[ \exp\left(\frac{y^* + \varepsilon \nu - \Delta_c t}{c\tau_u} \right) - \exp\left(\frac{\varepsilon \nu - \Delta_c t}{c\tau_u} \right) \right] \\
+        &= c\tau_u(1+A_{-\Delta}) \exp\left(\frac{\varepsilon \nu - \Delta_c t}{c \tau_u} \right) \left( e^{y^*/c\tau_u} - 1 \right).
+\end{align*}$$
+</p>
+
+<p>
+    We change variables $y = \varepsilon \nu - \Delta_c t$ and $\nu' = \frac{y' + \Delta_c}{\varepsilon}$ yielding
+$$\begin{align*}
+    \frac{D}{\varepsilon} (y' + \Delta_c) &= c\tau_u(1+A_{-\Delta}) e^{y/ c \tau_u} \left( e^{y^*/c\tau_u} - 1 \right) \\
+    y' &= -\Delta_c + \frac{\varepsilon c \tau_u (1+A_{-\Delta})}{D} \left( e^{y^*/c\tau_u} - 1 \right) e^{y/ c \tau_u} := F(y).
+\end{align*}$$
+</p>
+
+<p>
+    We have a steady state at
+$$\begin{align*}
+    0 &= F(\bar{y}) \\
+        &= -\Delta_c + \frac{\varepsilon c \tau_u (1+A_{-\Delta})}{D} \left( e^{y^*/c\tau_u} - 1 \right) e^{\bar{y}/ c \tau_u} \\
+    e^{\bar{y}/c\tau_u} &= \frac{\Delta_c D}{\varepsilon c\tau_u (1+A_{-\Delta}) \left( e^{y^*/c\tau_u} - 1 \right) } \\
+    \bar{y} &= c\tau_u \log \left( \frac{\Delta_c D}{\varepsilon c\tau_u (1+A_{-\Delta}) \left( e^{y^*/c\tau_u} - 1 \right) } \right).
+\end{align*}$$
+</p>
+
+<p>
+    However, this solution is unstable as shown by the following calculation
+$$\begin{align*}
+    0 &> F'(\bar{y}) \\
+        &= \frac{\varepsilon (1+A_{-\Delta})}{D}(e^{y^*/c\tau_u} - 1) e^{\bar{y}/c\tau_u} \\
+        &= \frac{\varepsilon (1+A_{-\Delta})}{D}(e^{y^*/c\tau_u} - 1) \frac{\Delta_c D}{\varepsilon c\tau_u (1+A_{-\Delta}) \left( e^{y^*/c\tau_u} - 1 \right) } \\
+        &= \frac{\Delta_c}{c\tau_u}
+\end{align*}$$
+which is a contradiction since all terms are positive.
 </p>
 
 
