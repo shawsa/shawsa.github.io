@@ -136,11 +136,11 @@ $$
 </p>
 
 <p>
-    From <a href="https://journals.aps.org/pre/abstract/10.1103/PhysRevE.85.021910" target=blank>Kilpatrick 2012</a> we have $U'(\xi) = \frac{1}{2(c+1)}e^{-\xi}$. Thus
+    From <a href="https://journals.aps.org/pre/abstract/10.1103/PhysRevE.85.021910" target=blank>Kilpatrick 2012</a> we have $U'(\xi) = -\frac{1}{2(c+1)}e^{-\xi}$. Thus
 $$\begin{align*}
-    \langle U', v \rangle &= \frac{1}{2(c+1)}\int_0^\infty e^{-\xi} e^{-\xi/c} d \xi \\
-        &= \int_0^\infty e^{- \frac{1+c}{c} \xi} \ d\xi \\
-        &= \frac{c}{2(c+1)^2}.
+    \langle U', v \rangle &= -\frac{1}{2(c+1)}\int_0^\infty e^{-\xi} e^{-\xi/c} d \xi \\
+        &= -\int_0^\infty e^{- \frac{1+c}{c} \xi} \ d\xi \\
+        &= -\frac{c}{2(c+1)^2}.
 \end{align*}$$
 </p>
 
@@ -154,7 +154,7 @@ $$\begin{align*}
     \langle I(\xi + \varepsilon \nu), v \rangle 
         &= \int_0^\infty e^{-\xi / c} H\big( -( \xi + \varepsilon \nu - \Delta_c t) \big) d \xi \\
         &= \int_0^{\Delta_c t - \varepsilon \nu} e^{-\xi/c} \ d\xi \\
-        &= -c (1 - e^{\frac{\varepsilon \nu - \Delta_c t}{c}})
+        &= c (1 - e^{\frac{\varepsilon \nu - \Delta_c t}{c}})
 \end{align*}$$
 and our wave response satisfies
 $$
@@ -215,11 +215,12 @@ $$\begin{align*}
 which is consistent with the above analysis to first order.
 </p>
 
+<!--##########################-->
 <h1>Synaptic Depression with moving Heaviside stimulus</h1>
 <p>
     The model incorporating synaptic depression similarly yields the wave response equation
 $$
-\nu' = \frac{ \langle v_1, I_u(\xi + \varepsilon \nu) \rangle + \langle v_2, I_q(\xi + \varepsilon \nu) \rangle }{ \underbrace{\tau_u \langle v_1, U' \rangle + \tau_q \langle v_2, Q' \rangle}_{D} }.
+\nu' = \frac{ \langle v_1, I_u(\xi + \varepsilon \nu) \rangle + \langle v_2, I_q(\xi + \varepsilon \nu) \rangle }{ \underbrace{-\tau_u \langle v_1, U' \rangle - \tau_q \langle v_2, Q' \rangle}_{D} }.
 $$
 We will take the stimulus $\varepsilon I_q = 0$ and $\varepsilon I_u(\xi, t) = H(-(\xi - \Delta_c t))$ and the relevant nullspace equation is
 $$
@@ -249,7 +250,7 @@ $$\begin{align*}
 <p>
     This has a steady state at
 $$\begin{align*}
-    0 &= F'(\bar{y}) \\
+    0 &= F(\bar{y}) \\
         &= -\Delta_c + \frac{\varepsilon c \tau_u}{D} \bigg( (1 + A_{-\Delta}e^{\Delta/c\tau_u}) - (1+A_{-\Delta})e^{\bar{y}/c\tau_u} \bigg) \\
     e^{\bar{y}/c\tau_u} &= \frac{-\frac{D \Delta_c}{\varepsilon c \tau_u} + (1 + A_{-\Delta}e^{\Delta/c\tau_u}) }{ 1 + A_{-\Delta}} \tag{*} \\
     \bar{y} &= c\tau_u \log \left(  \frac{(1 + A_{-\Delta}e^{\Delta/c\tau_u}) -\frac{D \Delta_c}{\varepsilon c \tau_u}}{ 1 + A_{-\Delta}} \right).
@@ -286,7 +287,7 @@ then our analysis will be identical to the above provided $-\bar{y} > y^*$. That
 <p>
     We next consider a moving square stimulus of the form
 $$
-\varepsilon I_u(\xi, t) = \varepsilon \bigg[ H\big( -(\xi - \Delta_c t) \big) - H(\xi + y^* - \Delta_c t) \bigg]
+\varepsilon I_u(\xi, t) = \varepsilon \bigg[ H\big( -(\xi - \Delta_c t) \big) - H\big(-(\xi + y^* - \Delta_c t) \big) \bigg]
 $$
 where $y^*$ is the width of the stimulus and $\Delta_c$ is the speed of the stimulus in the unperturbed traveling wave coordinate frame. Our entrainment calculation now has several cases. In the $\tau_q \gg \tau_u$ parameter regime, we expect the pulse width to be large, so we will assume $y^* \ll \Delta$. Also, the effect from the rear of the pulse is vanishingly small so we expect the front of the stimulus to be ahead of the fore threshold crossing. This reduces us to two cases: one where the back of the stimulus is in the active region and one where the back of the stimulus is ahead of the pulse. Intuitively we expect that if the rear of the stimulus is ahead of the pulse this will have a weaker effect than if the rear of the stimulus were at $\xi = 0$, and thus such a solution will be unstable. Therefore we choose to first consider the case where the stimulus overlaps with the active region, as seen in the diagram below. 
 </p>
@@ -333,7 +334,7 @@ $$\begin{align*}
         &= \frac{\varepsilon }{D} \left( A_{-\Delta} e^{y^*/c\tau_u} -(1+A_{-\Delta}) \right) \frac{1 - \frac{\Delta_c D}{\varepsilon c \tau_u}}{1 + A_{-\Delta} - A_{-\Delta}e^{y^*/c\tau_u}} \\
         &= \frac{\varepsilon}{D} \left( \frac{\Delta_c D}{\varepsilon c\tau_u} - 1 \right) \\
         &= \frac{\Delta_c}{c \tau_u} - \frac{\varepsilon}{D} \\
-    \Delta_c < \frac{\varepsilon c \tau_u}{D}.
+    \Delta_c &< \frac{\varepsilon c \tau_u}{D}.
 \end{align*}$$
 </p>
 

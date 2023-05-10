@@ -1,0 +1,231 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <!-- Mathjax commands -->
+    $
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\OO}{\mathcal{O}}
+    \newcommand{\mathcow}{\OO}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\KK}{\mathbb{K}}
+    \newcommand{\PP}{\mathcal{P}}
+    \newcommand{\TT}{\mathcal{T}}
+    \newcommand{\BB}{\mathcal{B}}
+    \newcommand{\LL}{\mathcal{L}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+
+    \newcommand{\veca}{\vec{a}}
+    \newcommand{\vecb}{\vec{b}}
+    \newcommand{\vecd}{\vec{d}}
+    \newcommand{\vece}{\vec{e}}
+    \newcommand{\vecf}{\vec{f}}
+    \newcommand{\vecn}{\vec{n}}
+    \newcommand{\vecp}{\vec{p}}
+    \newcommand{\vecr}{\vec{r}}
+    \newcommand{\vecu}{\vec{u}}
+    \newcommand{\vecv}{\vec{v}}
+    \newcommand{\vecw}{\vec{w}}
+    \newcommand{\vecx}{\vec{x}}
+    \newcommand{\vecy}{\vec{y}}
+    \newcommand{\vecz}{\vec{z}}
+
+    \renewcommand{\vec}[1]{\mathbf{#1}}
+    $
+
+    <!-- Plotly code for interactive plots -->
+    <script src="../plotly-2.0.0-rc.2.min.js"></script>
+    
+    <!--Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+
+
+
+    
+<!--************************************************************************-->
+<title>Shaw Research Notes</title>
+</head>
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<body>
+
+<div class="top-bar">
+    <a href="../index.html"><img src="../frame/boulder-logo.png"></a>
+</div>
+
+<div id="side-bar" class="side-bar">
+    <p><a href="../reports/reports.html" target="_top">Reports</a></p>
+    <p><a href="../presentations/presentations.html" target="_top">Presentations</a></p>
+    <p><a href="../todo/todo.html" target="_top">To Do List</a></p>
+    <p><a href="../about/about.html" target="_top">About</a></p>
+    <hr>
+    <p><a href="../old-rbf/index.html" target="_top">Old Site</a></p>
+</div>
+
+<div class="page-content">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<h1 id="Title">May 10<sup>th</sup>, APPM Recruitment Poster</h1>
+<p id="summary">
+   This is the online supplement for <a href="20230310_recruitment_poster/texaux/shaw_poster.pdf" target=blank>my poster</a> in the APPM recruitment poster presentation. Please note that most of content on this site are my personal research notes and are not necessarily intended to be public facing. This page is of course an exception. I will however link to other pages for anyone interested in the details. Consider those pages to be scratchwork that I don't mind sharing.
+</p>
+
+
+<div id="slider-plot" style="width:auto;"></div>
+
+<!--************************************************************************-->
+
+<hr>
+<!--********************************************************************-->
+<h1 id="">Traveling Wave Solution</h1>
+
+<p>
+    Figure 1 shows some (but not all!) of the variety of traveling wave solutions we see in this model. These solutions are using different parameter values but the same initial conditions, demonstrating that <em>both</em> the parameters and initial conditions determine which traveling wave solution emerges. 
+</p>
+
+<figure>
+    <video controls autoplay muted loop>
+        <source src="20230310_recruitment_poster/animations/regressive.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+    </video>
+    <caption><b>Fig 1.</b> Three overlayed simulations with different parameter values for $\gamma$ but with identical initial conditions. The Solid lines represent the activity variable ($u$) while the dashed lines represent the synaptic efficacy variable ($q$). We see three traveling wave solutions emerge: a regressive front (magenta), a stationary front (green) and a progressive front (blue).</caption>
+</figure>
+
+<p>
+    For a single set of parameters, we will have either one, or three traveling wave solutions: either a single progressive front (possibly stationary); or a regressive front, a slow unstable progressive front, and a fast stable progressive front. 
+</p>
+
+<p>
+    Pulses have less variety, as "regressive" pulses are simply reflections of progressive pulses. Fronts have asymmetric limiting behaviors so regressive fronts are distinct.
+</p>
+
+<!--********************************************************************-->
+<h1 id="">Wave Response</h1>
+<p>
+    Figure 2 shows how a traveling front responds to a spatially global, instantaneous stimulus. We see that the stimulated pulse eventually stabilizes to a translate of the original front. This translation is called the <em>wave response</em>.
+</p>
+
+<figure>
+    <video controls autoplay muted loop>
+        <source src="20230310_recruitment_poster/animations/delta_time_u.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+    </video>
+    <caption><b>Fig 2.</b> We have a traveling front that is stimulated globally by a delta pulse in time, and the same pulse that is unstimulated. We see the wave instantaneously jump up, deform, and stabilize to a translate of the original traveling wave solution.</caption>
+</figure>
+
+<!--********************************************************************-->
+<h1 id="">Asymptotics</h1>
+<p>
+    For details in the asymptotic approximation see <a href="../reports/report20220516.html" target=blank>Report 2022-05-16</a>. This report is somewhat old and there have since been some small changes to the model. This should give the jist of what the calculations involve.
+</p>
+
+<p>
+Figures 3, 4, and 5 show front responses to instantaneous global stimuli in both $u$ and $q$. We see that the approximation is quite poor for $q$, even for small stimuli. We believe this is due to the persistence of stimuli in $q$ due to the long time scale, as well as the limitations of the numerical stimulation.
+</p>
+
+<figure>
+    <img src="20230310_recruitment_poster/web_images/fig_spatially_homogeneous_limit.png" width="100%"/>
+    <caption><b>Fig 3.</b> The wave response to global instantaneous stimulus in $u$ as the magnitude of the stimulus varies. We see the asymptotic prediction holds for small stimuli.</caption>
+</figure>
+
+<figure>
+    <img src="20230310_recruitment_poster/web_images/fig_spatially_homogeneous_limit_q.png" width="100%"/>
+    <caption><b>Fig 4.</b> The wave response to global instantaneous stimulus in $q$ as the magnitude of the stimulus varies. We see the asymptotic prediction is off even though the magnitude of the stimulus is small.</caption>
+</figure>
+
+<figure>
+    <img src="20230310_recruitment_poster/web_images/delta_time_amp_grid.png" width="100%"/>
+    <caption><b>Fig 5.</b> The wave response to global instantaneous stimulus in both $u$ and $q$ at different magnitudes compared to our asymptotic prediction. The asymptotic prediction breaks down due to the very slow synaptic time scale and numerical error.</caption>
+</figure>
+
+<p>
+    In contrast, when we have local stimulation of pulses, the asymptotic prediction does quite well. Figures 6 and 7 show the effects of small spatially localized stimuli applied to each $u$ and $q$. We see that asymptotic theory matches the simulations and that both predict the wave response will be proportional to the stimulus (narrow square pulse in space) convolved with the null-space of the adjoint.
+</p>
+<figure>
+    <img src="20230310_recruitment_poster/web_images/spatially_localized.png" width="100%"/>
+    <caption><b>Fig 6.</b> Pulse response to localized stimulus of $u$.</caption>
+</figure>
+
+<figure>
+    <img src="20230310_recruitment_poster/web_images/spatially_localized_q.png" width="100%"/>
+    <caption><b>Fig 7.</b> Pulse response to localized stimulus of $q$.</caption>
+</figure>
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+</div>
+
+<!-- Accordion script -->
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+
+var expand_all_accordions = false;
+
+if (expand_all_accordions){
+    for (i = 0; i < acc.length; i++) {
+      acc[i].nextElementSibling.style.display = "block";
+    }
+}
+
+}
+</script>
+
+<!-- Tabs script -->
+<script>
+function openTab(evt, tabId) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(tabId).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
+
+</body>
+    
+</html>
