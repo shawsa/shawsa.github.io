@@ -84,9 +84,9 @@
 *******************************************************************************
 ****************************************************************************-->
 
-<h1 id="Title">Working</h1>
+<h1 id="Title">May 12<sup>th</sup>, 2023</h1>
 <p id="summary">
-   Lorem
+   Zack had a clever idea for the asymptotic expansion. This new expansion allows us to get a differential equation for the wave response which can successfully predict entrainment for weak stimuli. We walk through the derivation in the scalar case (no synaptic depression) for a moving Heaviside stimulus. For the pulse regime in the synaptic depression model we also consider a moving Heaviside, and a moving square wave.
 </p>
 
 
@@ -292,7 +292,7 @@ $$
 where $y^*$ is the width of the stimulus and $\Delta_c$ is the speed of the stimulus in the unperturbed traveling wave coordinate frame. Our entrainment calculation now has several cases. In the $\tau_q \gg \tau_u$ parameter regime, we expect the pulse width to be large, so we will assume $y^* \ll \Delta$. Also, the effect from the rear of the pulse is vanishingly small so we expect the front of the stimulus to be ahead of the fore threshold crossing. This reduces us to two cases: one where the back of the stimulus is in the active region and one where the back of the stimulus is ahead of the pulse. Intuitively we expect that if the rear of the stimulus is ahead of the pulse this will have a weaker effect than if the rear of the stimulus were at $\xi = 0$, and thus such a solution will be unstable. Therefore we choose to first consider the case where the stimulus overlaps with the active region, as seen in the diagram below. 
 </p>
 
-<img src="working/stim_diagram.png" width=100%/>
+<img src="./report20230512/stim_diagram.png" width=100%/>
 
 <p>
     Our wave response is then give by
@@ -342,7 +342,7 @@ $$\begin{align*}
 <p>
     We postulated that the case where the rear of the stimulus is ahead of the pulse is inconsistent. Here, we justify that analytically. This case is depicted in the following diagram.
 </p>
-<img src="working/stim_diagram2.png" width=100%/>
+<img src="./report20230512/stim_diagram2.png" width=100%/>
 
 <p>
     We proceed
@@ -382,18 +382,33 @@ $$\begin{align*}
 which is a contradiction since all terms are positive.
 </p>
 
+<h1>Final Comments</h1>
+
+<p>
+    I've compared this approximation to simulations in the case of a moving square wave perturbing a traveling pulse. As seen below, this is a good approximation to the domain of entrainment for small $\varepsilon$.
+</p>
+
+<img src="./report20230512/entrainment_square_contour.png" width="100%"/img>
+
+For the paper, I think it would be better to instead use the substitution
+$$
+y(t) = \Delta_c t - \varepsilon \nu(t).
+$$
+Then $\bar{y}$ would be positive and would be the distance from the active region to the front of the stimulus. The condition that $\bar{y}$ is less than the stimulus width ($y^*$) will give a stronger condition. In effect, it multiplies the slope by roughly $1 - e^{y^*/c\mu}$. For wide stimuli this factor is roughly 1. This is consistent with the figure above. It will be good to also test this approximation for thin stimuli.
+
+
 
 <!--button class="accordion">BUTTON NAME</button>
 <div class="panel">
 </div-->
 
 <!--video controls autoplay muted loop>
-    <source src="../working/synaptic_depression_perturbation.mp4" type="video/mp4">
+    <source src="../report20230512/synaptic_depression_perturbation.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video-->
 
 <!--figure>
-    <img src="../working/wave_response_small.png" width="100%"/>
+    <img src="../report20230512/wave_response_small.png" width="100%"/>
     <caption><b>Fig 2.</b> The asymptotic approximation of the wave response to $\epsilon I(x, t) = 0.01 \delta(t - 1)$.</caption>
 </figure=-->
 
