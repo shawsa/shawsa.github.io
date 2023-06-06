@@ -1,0 +1,230 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <!-- Mathjax commands -->
+    $
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\OO}{\mathcal{O}}
+    \newcommand{\mathcow}{\OO}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\KK}{\mathbb{K}}
+    \newcommand{\PP}{\mathcal{P}}
+    \newcommand{\TT}{\mathcal{T}}
+    \newcommand{\BB}{\mathcal{B}}
+    \newcommand{\LL}{\mathcal{L}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+
+    \newcommand{\veca}{\vec{a}}
+    \newcommand{\vecb}{\vec{b}}
+    \newcommand{\vecd}{\vec{d}}
+    \newcommand{\vece}{\vec{e}}
+    \newcommand{\vecf}{\vec{f}}
+    \newcommand{\vecn}{\vec{n}}
+    \newcommand{\vecp}{\vec{p}}
+    \newcommand{\vecr}{\vec{r}}
+    \newcommand{\vecu}{\vec{u}}
+    \newcommand{\vecv}{\vec{v}}
+    \newcommand{\vecw}{\vec{w}}
+    \newcommand{\vecx}{\vec{x}}
+    \newcommand{\vecy}{\vec{y}}
+    \newcommand{\vecz}{\vec{z}}
+
+    \renewcommand{\vec}[1]{\mathbf{#1}}
+    $
+
+    <!-- Plotly code for interactive plots -->
+    <script src="../plotly-2.0.0-rc.2.min.js"></script>
+    
+    <!--Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+
+
+
+    
+<!--************************************************************************-->
+<title>Shaw Research Notes</title>
+</head>
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<body>
+
+<div class="top-bar">
+    <a href="../index.html"><img src="../frame/boulder-logo.png"></a>
+</div>
+
+<div id="side-bar" class="side-bar">
+    <p><a href="../reports/reports.html" target="_top">Reports</a></p>
+    <p><a href="../presentations/presentations.html" target="_top">Presentations</a></p>
+    <p><a href="../todo/todo.html" target="_top">To Do List</a></p>
+    <p><a href="../about/about.html" target="_top">About</a></p>
+    <hr>
+    <p><a href="../old-rbf/index.html" target="_top">Old Site</a></p>
+</div>
+
+<div class="page-content">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<h1 id="Title">Working</h1>
+<p id="summary">
+   We apply the new wave response differential equation to the problem of apparent motion.
+</p>
+
+
+<div id="slider-plot" style="width:auto;"></div>
+
+<!--************************************************************************-->
+
+<hr>
+<!--********************************************************************-->
+
+<h1>Apparent Motion - Simple Case</h1>
+
+<p>
+We choose our stimulus to be of the form
+$$
+I_u(x,t) = I_{(y^* - \Delta, y^*)}\left(x - \left\lfloor \frac{t}{T} \right\rfloor *T\Delta_c\right)
+$$
+where $T$ is the constant amount of time between shifts of the apparent motion stimulus, and $T\Delta_c$ is the distance moved. We will first restrict ourselves to the time interval $t \in (0, T)$. Then, our stimulus in characteristic coordinates is given by
+$$
+I_u(\xi, t) = I_{(y^* - \Delta - ct, y^* - ct)}(\xi).
+$$
+In the simplest case, we will assume that the threshold crossing remains in the interior of the stimulus region for this time interval.
+</p>
+
+<p>
+We substitute into the differential equation
+$$\begin{align*}
+    D\nu' &= \langle v_1, I_u(\xi + \varepsilon \nu, t) \rangle \\
+        &= \langle v_1 , I_{(y^* - \Delta - ct - \varepsilon \nu, y^* - ct - \varepsilon \nu)}(\xi) \rangle.
+\end{align*}$$
+</p>
+<p>
+Assuming that the effect from the back of the pulse is negligible, we then have
+$$\begin{align*}
+    D\nu' &= \int_0^{y^* - \varepsilon \nu - ct} e^{-\xi/c\mu} \ d\xi \\
+        &= c\mu \big( 1 - e^{y^*}e^{-\varepsilon \nu - ct} \big).
+\end{align*}$$
+We make the change of variables $y = \varepsilon \nu - ct$ and have
+$$\begin{align*}
+    D \frac{y' - c}{\varepsilon} &= c\mu \big( 1 - e^{y^*}e^{-y} \big) \\
+    y' &= \underbrace{c + \frac{\varepsilon c \mu}{D}}_{a} - \underbrace{\frac{\varepsilon}{D}e^{y^*} }_{b}e^{-y} \\
+    y' &= a - be^{-y}.
+\end{align*}$$
+</p>
+
+<p>
+We make the $u$-substitution $u = e^y$ and $u' = y'u$ and substitute
+$$\begin{align*}
+    \frac{u'}{u} &= a - \frac{b}{u} \\
+    u' &= au - b \\
+    u' - au &= -b \\
+    \left[u e^{-at} \right]' &= -be^{-at} \\
+    ue^{-at} &= u_0 + \int_0^t -be^{-a\tau} \ d\tau \\
+            &= u_0 - \frac{b}{a}\left(1 - e^{-at} \right) \\
+    u(t) &= \frac{b}{a} + \left(u_0 - \frac{b}{a}\right)e^{at} \\
+    y(t) &= \log \left[ \frac{b}{a} + \left(e^{y_0} - \frac{b}{a}\right)e^{at} \right].
+\end{align*}$$
+<p>
+
+<p>
+We define the mapping $f(y_0) = y(T)-\Delta_c T$ and are interested in stable fixed points.
+</p>
+
+
+
+
+<!--button class="accordion">BUTTON NAME</button>
+<div class="panel">
+</div-->
+
+<!--video controls autoplay muted loop>
+    <source src="../report20230512/synaptic_depression_perturbation.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video-->
+
+<!--figure>
+    <img src="../report20230512/wave_response_small.png" width="100%"/>
+    <caption><b>Fig 2.</b> The asymptotic approximation of the wave response to $\epsilon I(x, t) = 0.01 \delta(t - 1)$.</caption>
+</figure=-->
+
+<!--************************************************************************-->
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+</div>
+
+<!-- Accordion script -->
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+
+var expand_all_accordions = true;
+
+if (expand_all_accordions){
+    for (i = 0; i < acc.length; i++) {
+      acc[i].nextElementSibling.style.display = "block";
+    }
+}
+
+}
+</script>
+
+<!-- Tabs script -->
+<script>
+function openTab(evt, tabId) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(tabId).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
+
+</body>
+    
+</html>
