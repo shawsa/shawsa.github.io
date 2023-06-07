@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Group Update - June 7th, 2023</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+        <link rel="stylesheet" href="custom.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+<!--##################################################-->
+<section>
+<section>
+<h2 style="text-transform: capitalize;">Group Update - June 7<sup>th</sup>, 2023</h2>
+<p>
+    Sage Shaw - CU Boulder
+</p>
+</section>
+
+<!--####################-->
+<section>
+<h2>Neural field Model with synaptic depression.<h2>
+<p>
+\begin{align*}
+\tau_u u' &= -u + w \ast (qf[u]) \\
+\tau_q q' &= 1 - q - \beta q f[u]
+\end{align*}
+</p>
+</section>
+<!--####################-->
+<section>
+<img class="r-stretch" src="media/pulse_diagram.png"/>
+</section>
+<!--####################-->
+<section>
+<p>
+Marginally Stable Solutions
+</p>
+<img class="r-stretch" src="media/front_delta_time.gif"/>
+</section>
+<!--####################-->
+<section>
+<p>
+Asymptotic approximation to the wave response.
+$$
+\nu' = -\frac{\langle v_1, I_u(\xi, t) \rangle + \langle v_2, I_q(\xi, t) \rangle}{\tau_u \langle v_1, U' \rangle + \tau_q \langle v_2, Q' \rangle}
+$$
+</p>
+</section>
+<!--####################-->
+<section>
+<p>
+Entrainment can't be predicted with this formula.
+</p>
+<img class="r-stretch" src="media/entrainment.gif"/>
+</section>
+<!--####################-->
+<section>
+<p>
+We change the expansion and derive a new wave response.
+$$
+\nu' = -\frac{\langle v_1, I_u(\xi + 
+\varepsilon \nu, t) \rangle + \langle v_2, I_q(\xi + \varepsilon \nu, t) \rangle}{\tau_u \langle v_1, U' \rangle + \tau_q \langle v_2, Q' \rangle}
+$$
+</p>
+</section>
+<!--####################-->
+<section>
+<p>
+Pulse will entrain if steady-state solutions are stable. <a href="../../reports/report20230512.html" target=blank>Link to derivation.</a>
+</p>
+</section>
+<!--####################-->
+<section>
+<p>
+Next we're working on the apparent motion stimulus.
+</p>
+<img class="r-stretch" src="media/apparent_dot.gif"/>
+</section>
+</section>
+<!--##################################################-->
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+        <script src="plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ]
+			});
+		</script>
+	</body>
+</html>
