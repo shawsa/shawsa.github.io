@@ -97,61 +97,81 @@
 <hr>
 <!--********************************************************************-->
 
-<h1>Apparent Motion - Simple Case</h1>
+<h1>The Apparent Motion Stimulus</h1>
 
 <p>
-We choose our stimulus to be of the form
-$$
-I_u(x,t) = I_{(y^* - \Delta, y^*)}\left(x - \left\lfloor \frac{t}{T} \right\rfloor *T\Delta_c\right)
-$$
-where $T$ is the constant amount of time between shifts of the apparent motion stimulus, and $T\Delta_c$ is the distance moved. We will first restrict ourselves to the time interval $t \in (0, T)$. Then, our stimulus in characteristic coordinates is given by
-$$
-I_u(\xi, t) = I_{(y^* - \Delta - ct, y^* - ct)}(\xi).
-$$
-In the simplest case, we will assume that the threshold crossing remains in the interior of the stimulus region for this time interval.
+    For the apparent motion experiment, we will select the stimulus to have certain properties. It is flashing, so it will be non-zero for a length of time $T_\text{on}$ and will be zero for a length of time $T_\text{off}$. During the on period, the stimulus will be localized and stationary. For this analysis, we will take the spatial profile of the stimulus to be a square pulse. We will call $T = T_\text{on} + T_\text{off}$ the period of the stimulus, and $\frac{1}{T}$ the frequency. Between successive on periods, the stimulus will shift forward by the fixed amount $T\Delta_c$, where $\Delta_c$ is the effective speed of the stimulus.
 </p>
 
 <p>
-We substitute into the differential equation
-$$\begin{align*}
-    D\nu' &= \langle v_1, I_u(\xi + \varepsilon \nu, t) \rangle \\
-        &= \langle v_1 , I_{(y^* - \Delta - ct - \varepsilon \nu, y^* - ct - \varepsilon \nu)}(\xi) \rangle.
-\end{align*}$$
-</p>
-<p>
-Assuming that the effect from the back of the pulse is negligible, we then have
-$$\begin{align*}
-    D\nu' &= \int_0^{y^* - \varepsilon \nu - ct} e^{-\xi/c\mu} \ d\xi \\
-        &= c\mu \big( 1 - e^{y^*}e^{-\varepsilon \nu - ct} \big).
-\end{align*}$$
-We make the change of variables $y = \varepsilon \nu - ct$ and have
-$$\begin{align*}
-    D \frac{y' - c}{\varepsilon} &= c\mu \big( 1 - e^{y^*}e^{-y} \big) \\
-    y' &= \underbrace{c + \frac{\varepsilon c \mu}{D}}_{a} - \underbrace{\frac{\varepsilon}{D}e^{y^*} }_{b}e^{-y} \\
-    y' &= a - be^{-y}.
-\end{align*}$$
+    These criteria give the following formula for the activity stimulus
+$$
+    I_u(x, t) = I_{(y^* - \Delta_y, y^*)}\left(x - \left\lfloor \frac{t}{T} \right\rfloor T\Delta_c \right) I_{(0, T_\text{on})}\left( t - \left\lfloor \frac{t}{T} \right\rfloor T \right).
+$$
+We will restrict our analysis to the first period, in which the stimulus simplifies to
+\begin{align*}
+    I_u(x,t) = \begin{cases}
+        I_{(y^* - \Delta_y, y^*)}(x), & t < T_\text{on} \\
+        0, & \text{else}.
+    \end{cases} \\
+    I_u(\xi, t) = \begin{cases}
+        I_{(y^* - ct - \Delta_y, y^* - ct)}(\xi), & t < T_\text{on} \\
+        0, & \text{else}.
+    \end{cases}
+\end{align*}
 </p>
 
 <p>
-We make the $u$-substitution $u = e^y$ and $u' = y'u$ and substitute
-$$\begin{align*}
-    \frac{u'}{u} &= a - \frac{b}{u} \\
-    u' &= au - b \\
-    u' - au &= -b \\
-    \left[u e^{-at} \right]' &= -be^{-at} \\
-    ue^{-at} &= u_0 + \int_0^t -be^{-a\tau} \ d\tau \\
-            &= u_0 - \frac{b}{a}\left(1 - e^{-at} \right) \\
-    u(t) &= \frac{b}{a} + \left(u_0 - \frac{b}{a}\right)e^{at} \\
-    y(t) &= \log \left[ \frac{b}{a} + \left(e^{y_0} - \frac{b}{a}\right)e^{at} \right].
-\end{align*}$$
-<p>
-
-<p>
-We define the mapping $f(y_0) = y(T)-\Delta_c T$ and are interested in stable fixed points.
+    Our wave response formula is given by
+$$
+    D \nu' = \langle v_1, I_u(\xi + \varepsilon \nu, t) \rangle
+$$
+where $D = -\tau_u \langle v_1, U' \rangle - \tau_q \langle v_2, Q' \rangle$. We will also take $v_1(\xi) \approx v(\xi) = H(\xi) e^{-\xi/c\tau_u}$ since the difference is small and it simplifies the analysis dramatically. 
 </p>
 
+<p>
+    We then have, for $t \in (0, T_\text{on})$, 
+\begin{align*}
+    D \nu' &= \langle v, I_u(\xi + \varepsilon \nu, t) \rangle \\
+        &= \langle H(\xi)e^{-\xi/c\tau_u}, I_{(y^* - ct - \Delta_y, y^* - ct)}(\xi + \varepsilon \nu) \rangle \\
+        &= \int_{0}^{y^* - \varepsilon \nu - ct} e^{-\xi/c\tau_u} \ d\xi \\
+        &= c \tau_u \left(1 - e^{-y^*/c\tau_u} e^{\frac{\varepsilon \nu + ct}{c\tau_u}} \right).
+\end{align*}
+We next make the change of variables $y = \varepsilon \nu + ct$ which is the location of the front, relative to the stationary stimulus. This gives $y' = \varepsilon \nu' + c$ and
+\begin{align*}
+    D\frac{y' - c}{\varepsilon} &= c \tau_u \left(1 - e^{-y^*/c\tau_u} e^{\frac{y}{c\tau_u}} \right) \\
+    y' &= \underbrace{c + \frac{\varepsilon c\tau_u}{D}}_{a} - \underbrace{\frac{\varepsilon c\tau_u}{D}e^{y^*}}_{b} e^{y/\underbrace{c\tau_u}_{r}} \\
+        &= a - b e^{y/r}.
+\end{align*}
+</p>
 
+<p>
+    We next solve this differential equation with the following change of variables $u = e^{-y/r}$. This gives $u' = -\frac{1}{r}y'u \iff -r \frac{u'}{u} = y'$. Substituting,
+\begin{align*}
+    -r\frac{u'}{u} &= a - \frac{b}{u} \\
+    u' &= \frac{b}{r} - \frac{a}{r}u \\
+    u' +\frac{a}{r}u &= \frac{b}{r} \\
+    \left[ u e^{at/r} \right]' &= \frac{b}{r}e^{at/r} \\
+    u e^{at/r} &= u_0 + \int_{0}^t \frac{b}{r}e^{a\tau/r} \ d\tau \\
+    u e^{at/r} &= u_0 + \frac{b}{a}\left( e^{at/r} - 1\right) \\
+    u(t) &= \frac{b}{a} + \left(u_0 - \frac{b}{a} \right)e^{-at/r} \\
+    e^{-y/r} &= \frac{b}{a} + \left(e^{-y_0/r} - \frac{b}{a} \right)e^{-at/r} \\
+    y(t) &= -r \log\left[ \frac{b}{a} + \left(e^{-y_0/r} - \frac{b}{a} \right)e^{-at/r} \right] \\
+        &= -c\tau_u \log\left[ \frac{\varepsilon \tau_u}{D + \varepsilon \tau_u} + \left(e^{-y_0/c\tau_u} - \frac{\varepsilon \mu}{D + \varepsilon \mu} \right)e^{-\frac{D+\varepsilon \tau_u}{D\tau_u}t} \right].
+\end{align*}
+</p>
 
+<p>
+    During $t \in (T_\text{on}, T)$, the formula is much simpler, since $\nu' = 0 \iff y' = c.$ Thus, after a full period we have
+$$
+    y(T) = -c\tau_u \log\left[ \frac{\varepsilon \tau_u}{D + \varepsilon \tau_u} + \left(e^{-y_0/c\tau_u} - \frac{\varepsilon \mu}{D + \varepsilon \mu} \right)e^{-\frac{D+\varepsilon \tau_u}{D\tau_u}T_\text{on}} \right] + cT_\text{off}.
+$$
+Repeating this work on the next period is the same, but we map $y(T) \to y_0$ and shift coordinates forward. This motivates the mapping
+$$
+    f(y_0) = -c\tau_u \log\left[ \frac{\varepsilon \tau_u}{D + \varepsilon \tau_u} + \left(e^{-y_0/c\tau_u} - \frac{\varepsilon \mu}{D + \varepsilon \mu} \right)e^{-\frac{D+\varepsilon \tau_u}{D\tau_u}T_\text{on}} \right] + cT_\text{off} - (c + \Delta_c)T.
+$$
+A fixed point of this function represents a periodic solution in the moving (discrete jumping) stimulus coordinate frame.
+</p>
 
 <!--button class="accordion">BUTTON NAME</button>
 <div class="panel">
