@@ -121,12 +121,17 @@ We will restrict our analysis to the first period, in which the stimulus simplif
 \end{align*}
 </p>
 
+<h2>Simple Case</h2>
 <p>
     Our wave response formula is given by
 $$
     D \nu' = \langle v_1, I_u(\xi + \varepsilon \nu, t) \rangle
 $$
 where $D = -\tau_u \langle v_1, U' \rangle - \tau_q \langle v_2, Q' \rangle$. We will also take $v_1(\xi) \approx v(\xi) = H(\xi) e^{-\xi/c\tau_u}$ since the difference is small and it simplifies the analysis dramatically. 
+</p>
+
+<p>
+    When evaluating this inner product, the bounds of the integral depend on the relationship between the support of the stimulus and the threshold crossings. Since the threshold crossings change over time, this may result in a piecewise differential equation. In this simplest case we will assume that the fore threshold crossing is in the support of the stimulus for the duration of the on interval. Some other more complicated cases include: the threshold crossing is accelerated past the stimulus, or the threshold crossing is accelerated into the support of the stimulus.
 </p>
 
 <p>
@@ -140,7 +145,7 @@ where $D = -\tau_u \langle v_1, U' \rangle - \tau_q \langle v_2, Q' \rangle$. We
 We next make the change of variables $y = \varepsilon \nu + ct$ which is the location of the front, relative to the stationary stimulus. This gives $y' = \varepsilon \nu' + c$ and
 \begin{align*}
     D\frac{y' - c}{\varepsilon} &= c \tau_u \left(1 - e^{-y^*/c\tau_u} e^{\frac{y}{c\tau_u}} \right) \\
-    y' &= \underbrace{c + \frac{\varepsilon c\tau_u}{D}}_{a} - \underbrace{\frac{\varepsilon c\tau_u}{D}e^{y^*}}_{b} e^{y/\underbrace{c\tau_u}_{r}} \\
+    y' &= \underbrace{c + \frac{\varepsilon c\tau_u}{D}}_{a} - \underbrace{\frac{\varepsilon c\tau_u}{D}e^{-y^*}}_{b} e^{y/\underbrace{c\tau_u}_{r}} \\
         &= a - b e^{y/r}.
 \end{align*}
 </p>
@@ -157,20 +162,58 @@ We next make the change of variables $y = \varepsilon \nu + ct$ which is the loc
     u(t) &= \frac{b}{a} + \left(u_0 - \frac{b}{a} \right)e^{-at/r} \\
     e^{-y/r} &= \frac{b}{a} + \left(e^{-y_0/r} - \frac{b}{a} \right)e^{-at/r} \\
     y(t) &= -r \log\left[ \frac{b}{a} + \left(e^{-y_0/r} - \frac{b}{a} \right)e^{-at/r} \right] \\
-        &= -c\tau_u \log\left[ \frac{\varepsilon \tau_u}{D + \varepsilon \tau_u} + \left(e^{-y_0/c\tau_u} - \frac{\varepsilon \mu}{D + \varepsilon \mu} \right)e^{-\frac{D+\varepsilon \tau_u}{D\tau_u}t} \right].
+        &= -c\tau_u \log\left[ \frac{\varepsilon \tau_u}{D + \varepsilon \tau_u}e^{-y^*/c\tau_u} + \left(e^{-y_0/c\tau_u} - \frac{\varepsilon \mu}{D + \varepsilon \mu}e^{-y^*/c\tau_u} \right)e^{-\frac{D+\varepsilon \tau_u}{D\tau_u}t} \right].
 \end{align*}
 </p>
 
 <p>
     During $t \in (T_\text{on}, T)$, the formula is much simpler, since $\nu' = 0 \iff y' = c.$ Thus, after a full period we have
 $$
-    y(T) = -c\tau_u \log\left[ \frac{\varepsilon \tau_u}{D + \varepsilon \tau_u} + \left(e^{-y_0/c\tau_u} - \frac{\varepsilon \mu}{D + \varepsilon \mu} \right)e^{-\frac{D+\varepsilon \tau_u}{D\tau_u}T_\text{on}} \right] + cT_\text{off}.
+    y(T) = -c\tau_u \log\left[ \frac{\varepsilon \tau_u}{D + \varepsilon \tau_u}e^{-y^*/c\tau_u} + \left(e^{-y_0/c\tau_u} - \frac{\varepsilon \mu}{D + \varepsilon \mu}e^{-y^*/c\tau_u} \right)e^{-\frac{D+\varepsilon \tau_u}{D\tau_u}T_\text{on}} \right] + cT_\text{off}.
 $$
+</p>
+
+<!--################################-->
+<h3>Initial value mapping</h3>
+<p>
 Repeating this work on the next period is the same, but we map $y(T) \to y_0$ and shift coordinates forward. This motivates the mapping
 $$
-    f(y_0) = -c\tau_u \log\left[ \frac{\varepsilon \tau_u}{D + \varepsilon \tau_u} + \left(e^{-y_0/c\tau_u} - \frac{\varepsilon \mu}{D + \varepsilon \mu} \right)e^{-\frac{D+\varepsilon \tau_u}{D\tau_u}T_\text{on}} \right] + cT_\text{off} - (c + \Delta_c)T.
+    f(y_0) = -c\tau_u \log\left[ \frac{\varepsilon \tau_u}{D + \varepsilon \tau_u}e^{-y^*/c\tau_u} + \left(e^{-y_0/c\tau_u} - \frac{\varepsilon \mu}{D + \varepsilon \mu}e^{-y^*/c\tau_u} \right)e^{-\frac{D+\varepsilon \tau_u}{D\tau_u}T_\text{on}} \right] + cT_\text{off} - (c + \Delta_c)T.
 $$
-A fixed point of this function represents a periodic solution in the moving (discrete jumping) stimulus coordinate frame.
+</p>
+
+<p>
+A fixed point of this function represents a periodic solution in the moving (discrete jumping) stimulus coordinate frame. We require first that fixed point iteration converges to a fixed point, and second that the fixed point is in the interval $(y^* - \Delta_y, y^*)$ so that our assumptions for this case remain valid.
+</p>
+
+<p>
+We first find the fixed point $z$,
+\begin{align*}
+    z &= f(z) = -c\tau_u \log\left[ \underbrace{\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u}e^{-y^*/c\tau_u}}_{A} + \left(e^{-z/c\tau_u} - \underbrace{\frac{\varepsilon \mu}{D + \varepsilon \mu}e^{-y^*/c\tau_u}}_{A} \right)\underbrace{e^{-\frac{D+\varepsilon \tau_u}{D\tau_u}T_\text{on}}}_{B} \right] + \underbrace{cT_\text{off} - (c + \Delta_c)T}_{K} \\
+        &= -c\tau_u \log\left[(1-B)A + Be^{-z/c\tau_u} \right] + K \\
+    -\frac{z}{c\tau_u} &= \log\left[(1-B)A + Be^{-z/c\tau_u} \right] - \frac{K}{c\tau_u} \\
+    e^{-z/c\tau_u} &= e^{-K/c\tau_u} \left((1-B)A + Be^{-z/c\tau_u} \right) \\
+    \left(1 - Be^{-K/c\tau_u}\right)e^{-z/c\tau_u} &= (1-B)Ae^{-K/c\tau_u} \\
+    e^{-z/c\tau_u} &= \frac{1 - B}{e^{K/c\tau_u} - B}A \\
+    e^{-z/c\tau_u} &= \frac{1 - B}{e^{K/c\tau_u} - B} \frac{\varepsilon \mu}{D + \varepsilon \mu} e^{-y^*/c\tau_u} \\
+    z &= y^* - c\tau_u \log\left[ \frac{1 - B}{e^{K/c\tau_u} - B} \frac{\varepsilon \mu}{D + \varepsilon \mu} \right].
+\end{align*}
+</p>
+
+<p>
+    We check convergence of the iteration. We first note that $A, B > 0 > K$ and $B \lt 1$ provided $\mu > 1$. We proceed
+\begin{align*}
+    1 > |f'(z)|\\
+         &= \left| -c\tau_u \frac{1}{\left|(1-B)A + Be^{-z/c\tau_u}\right|}B\frac{-1}{c\tau_u}e^{-z/c\tau_u} \right| \\
+        &= \frac{B}{(1-B)A e^{z/c\tau_u} + B} \\
+    (1-B)A e^{z/c\tau_u} + B > B \\
+    (1-B)A e^{z/c\tau_u} > 0
+\end{align*}
+which is satisfied for any choice of parameters.
+</p>
+
+<p>
+    Entrainment is thus determined by the second condition. Namely, The pulse will entrain if $z \in (y^* - \Delta_y, y^*)$. If the fixed point is not in this interval, then we must turn to other cases.
 </p>
 
 <!--button class="accordion">BUTTON NAME</button>
