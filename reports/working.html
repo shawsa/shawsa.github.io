@@ -121,7 +121,14 @@ We will restrict our analysis to the first period, in which the stimulus simplif
 \end{align*}
 </p>
 
-<h2>Simple Case</h2>
+<p>
+It is helpful to divide the scenario into several cases involving the position of the threshold crossing relative to the active region during the on-interval. We will consider the simplest case first. In the simplest case (Case 1) we will assume that the fore threshold crossing is in the support of the stimulus for the duration of the on interval. In the second case (Case 2) the stimulus jumps beyond the threshold crossing, but the period is long enough for the stimulus to catch up and enter the active region before the stimulus turns off.
+</p>
+
+<h2>Case 1: Short Periods</h2>
+<p>
+In this simplest case we will assume that the fore threshold crossing is in the support of the stimulus for the duration of the on interval. Some other more complicated cases include: the threshold crossing is accelerated past the stimulus, or the threshold crossing is accelerated into the support of the stimulus.
+</p>
 <p>
     Our wave response formula is given by
 $$
@@ -131,7 +138,7 @@ where $D = -\tau_u \langle v_1, U' \rangle - \tau_q \langle v_2, Q' \rangle$. We
 </p>
 
 <p>
-    When evaluating this inner product, the bounds of the integral depend on the relationship between the support of the stimulus and the threshold crossings. Since the threshold crossings change over time, this may result in a piecewise differential equation. In this simplest case we will assume that the fore threshold crossing is in the support of the stimulus for the duration of the on interval. Some other more complicated cases include: the threshold crossing is accelerated past the stimulus, or the threshold crossing is accelerated into the support of the stimulus.
+    When evaluating this inner product, the bounds of the integral depend on the relationship between the support of the stimulus and the threshold crossings. Since the threshold crossings change over time, this may result in a piecewise differential equation. 
 </p>
 
 <p>
@@ -162,75 +169,81 @@ We next make the change of variables $y = \varepsilon \nu + ct$ which is the loc
     u(t) &= \frac{b}{a} + \left(u_0 - \frac{b}{a} \right)e^{-at/r} \\
     e^{-y/r} &= \frac{b}{a} + \left(e^{-y_0/r} - \frac{b}{a} \right)e^{-at/r} \\
     y(t) &= -r \log\left[ \frac{b}{a} + \left(e^{-y_0/r} - \frac{b}{a} \right)e^{-at/r} \right] \\
-        &= -c\tau_u \log\left[ \frac{\varepsilon \tau_u}{D + \varepsilon \tau_u}e^{-y^*/c\tau_u} + \left(e^{-y_0/c\tau_u} - \frac{\varepsilon \mu}{D + \varepsilon \mu}e^{-y^*/c\tau_u} \right)e^{-\frac{D+\varepsilon \tau_u}{D\tau_u}t} \right].
+		&= -r \log\left[ e^{-(y_0 - at)/r} + (1 - e^{-at/r})\frac{b}{a} \right] \\
 \end{align*}
 </p>
 
 <p>
-    During $t \in (T_\text{on}, T)$, the formula is much simpler, since $\nu' = 0 \iff y' = c.$ Thus, after a full period we have
+By our convention, $y_0 = 0$ at the beginning of each period, and $y^*$ changes so that the stimulus location is given relative to the threshold crossing. Entrainment then looks like $y^*$ being fixed from period to period. Our expression then simplifies to
 $$
-    y(T) = -c\tau_u \log\left[ \frac{\varepsilon \tau_u}{D + \varepsilon \tau_u}e^{-y^*/c\tau_u} + \left(e^{-y_0/c\tau_u} - \frac{\varepsilon \mu}{D + \varepsilon \mu}e^{-y^*/c\tau_u} \right)e^{-\frac{D+\varepsilon \tau_u}{D\tau_u}T_\text{on}} \right] + cT_\text{off}.
+y(t) = -c\tau_u \log\left[ \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} t\right) + \left(1 - \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} t \right)\right)\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u}e^{-y^*/c\tau_u}  \right].
 $$
-</p>
-
-<!--################################-->
-<h3>Initial value mapping</h3>
-<p>
-Repeating this work on the next period is the same, but we map $y(T) \to y_0$ and shift coordinates forward. This motivates the mapping
+During $t \in (T_\text{on}, T)$, the formula is much simpler, since $\nu' = 0 \iff y' = c.$ Thus, after a full period we have
 $$
-    f(y_0) = -c\tau_u \log\left[ \frac{\varepsilon \tau_u}{D + \varepsilon \tau_u}e^{-y^*/c\tau_u} + \left(e^{-y_0/c\tau_u} - \frac{\varepsilon \mu}{D + \varepsilon \mu}e^{-y^*/c\tau_u} \right)e^{-\frac{D+\varepsilon \tau_u}{D\tau_u}T_\text{on}} \right] + cT_\text{off} - (c + \Delta_c)T.
+y(T) = -c\tau_u \log\left[ \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T\right) + \left(1 - \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T \right)\right)\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u}e^{-y^*/c\tau_u}  \right] + c T_\text{off}.
 $$
 </p>
 
 <p>
-A fixed point of this function represents a periodic solution in the moving (discrete jumping) stimulus coordinate frame. We require first that fixed point iteration converges to a fixed point, and second that the fixed point is in the interval $(y^* - \Delta_y, y^*)$ so that our assumptions for this case remain valid.
+We are interested in fixed points of the mapping
+$$\begin{align*}
+F(y^*) &= y(T) - (c+\Delta_c)T \\
+	&= -c\tau_u \log\left[ \underbrace{\exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T\right)}_{a} + \underbrace{\left(1 - \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T \right)\right)\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u}}_{b} e^{-y^*/c\tau_u}  \right] + \underbrace{c T_\text{off} - (c+\Delta_c)T}_{K}.
+\end{align*}$$
 </p>
 
 <p>
-We first find the fixed point $z$,
+We have
+$$\begin{align*}
+y^* &= F(y^*) \\
+	&= -c\tau_u \log\left[ a + b e^{-y^*/c\tau_u}  \right] + K \\
+\frac{-y^*}{c\tau_u} + \frac{K}{c\tau_u} 
+	&= \log\left[ a + b e^{-y^*/c\tau_u}  \right] \\
+e^{-y^*/c\tau_u} e^{K/c\tau_u} &= a + b e^{-y^*/c\tau_u} \\
+e^{-y^*/c\tau_u} &= \frac{a}{e^{K/c\tau_u} - b} \\
+y^* &= -c\tau_u \log\left[ \frac{a}{e^{K/c\tau_u} - b} \right].
+\end{align*}$$
+Before proceeding we note that
+$$\begin{align*}
+F'(y^*) &= e^{-y^*/c\tau_u} \frac{1}{a + b e^{-y^*/c\tau_u}} \\
+	&= \frac{a}{e^{K/c\tau_u} - b} \frac{1}{a + b \frac{a}{e^{K/c\tau_u} - b}} \\
+	&= \frac{a}{a(e^{K/c\tau_u} - b) + ab} \\
+	&= e^{-K/c\tau_u} \\
+|F'(y^*)| &\lt 1
+\end{align*}$$
+and thus fixed point iteration will always converge to $y^*$ regardless of parameter choices, provided that $y^*$ exists and the conditions for this case are met at each iteration.
+</p>
+
+<p>
+We note that $a \gt 0$ and thus $y^*$ will exist if
 \begin{align*}
-    z &= f(z) = -c\tau_u \log\left[ \underbrace{\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u}e^{-y^*/c\tau_u}}_{A} + \left(e^{-z/c\tau_u} - \underbrace{\frac{\varepsilon \mu}{D + \varepsilon \mu}e^{-y^*/c\tau_u}}_{A} \right)\underbrace{e^{-\frac{D+\varepsilon \tau_u}{D\tau_u}T_\text{on}}}_{B} \right] + \underbrace{cT_\text{off} - (c + \Delta_c)T}_{K} \\
-        &= -c\tau_u \log\left[(1-B)A + Be^{-z/c\tau_u} \right] + K \\
-    -\frac{z}{c\tau_u} &= \log\left[(1-B)A + Be^{-z/c\tau_u} \right] - \frac{K}{c\tau_u} \\
-    e^{-z/c\tau_u} &= e^{-K/c\tau_u} \left((1-B)A + Be^{-z/c\tau_u} \right) \\
-    \left(1 - Be^{-K/c\tau_u}\right)e^{-z/c\tau_u} &= (1-B)Ae^{-K/c\tau_u} \\
-    e^{-z/c\tau_u} &= \frac{1 - B}{e^{K/c\tau_u} - B}A \\
-    e^{-z/c\tau_u} &= \frac{1 - B}{e^{K/c\tau_u} - B} \frac{\varepsilon \mu}{D + \varepsilon \mu} e^{-y^*/c\tau_u} \\
-    z &= y^* - c\tau_u \log\left[ \frac{1 - B}{e^{K/c\tau_u} - B} \frac{\varepsilon \mu}{D + \varepsilon \mu} \right].
+	e^{K/c\tau_u} & \gt b \\
+		&= \left(1 - \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T \right)\right)\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u} \\
+	K & \gt c\tau_u \log\left[ \left(1 - \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T \right)\right)\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u} \right] \\
+	-cT_\text{off} - \Delta_c T & \gt c\tau_u \log\left[ \left(1 - \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T \right)\right)\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u} \right] \\
+	\Delta_c & \lt \frac{c\tau_u \log\left[ \left(1 - \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T \right)\right)\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u} \right] +cT_\text{off} }{-T}.
 \end{align*}
 </p>
 
 <p>
-    We check convergence of the iteration. We first note that $A, B > 0 > K$ and $B \lt 1$ provided $\mu \ge 1$. We proceed
-\begin{align*}
-    1 > |f'(z)| 
-         &= \left| -c\tau_u \frac{1}{\left|(1-B)A + Be^{-z/c\tau_u}\right|}B\frac{-1}{c\tau_u}e^{-z/c\tau_u} \right| \\
-        &= \frac{B}{(1-B)A e^{z/c\tau_u} + B} \\
-    (1-B)A e^{z/c\tau_u} + B > B \\
-    (1-B)A e^{z/c\tau_u} > 0
-\end{align*}
-which is satisfied for any choice of parameters.
+This case is only valid if $y^* \lt \Delta_y$, otherwise, it could be the case that the threshold crossing is completely behind the stimulus for some portion of the on-interval, but catches up before the stimulus turns off. This can occur if $T$ is large even for slow $\Delta_c$.
+$$\begin{align*}
+	\Delta_y &\gt y^* \\
+		&= -c\tau_u \log\left[ \frac{a}{e^{K/c\tau_u} - b} \right] \\
+	e^{-\Delta_y / c\tau_u} &\lt \frac{a}{e^{K/c\tau_u} - b} \\
+	e^{K/c\tau_u} - b &\lt ae^{\Delta_y/c\tau_u} \\
+	K &\lt c\tau_u \log\left[ b + a e^{\Delta_y/c\tau_u} \right] \\
+	-\Delta_cT - cT_\text{off} &\le c\tau_u \log\left[ b + a e^{\Delta_y/c\tau_u} \right] \\
+	\Delta_c & \gt \frac{c T_\text{off} + c\tau_u \log\left[ b + a e^{\Delta_y/c\tau_u} \right] }{-T}.
+\end{align*}$$
 </p>
 
+
+<h2>Case 2: Long Periods</h2>
 <p>
-    Entrainment is thus determined by the second condition. Namely, The pulse will entrain if $z \in (y^* - \Delta_y, y^*)$. If the fixed point is not in this interval, then we must turn to other cases.
+Lorem
 </p>
 
-<!--button class="accordion">BUTTON NAME</button>
-<div class="panel">
-</div-->
-
-<!--video controls autoplay muted loop>
-    <source src="../report20230512/synaptic_depression_perturbation.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video-->
-
-<!--figure>
-    <img src="../report20230512/wave_response_small.png" width="100%"/>
-    <caption><b>Fig 2.</b> The asymptotic approximation of the wave response to $\epsilon I(x, t) = 0.01 \delta(t - 1)$.</caption>
-</figure=-->
-
-<!--************************************************************************-->
 
 <!--***************************************************************************
 *******************************************************************************
