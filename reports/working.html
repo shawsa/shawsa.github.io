@@ -106,7 +106,7 @@
 <p>
     These criteria give the following formula for the activity stimulus
 $$
-    I_u(x, t) = I_{(y^* - \Delta_y, y^*)}\left(x - \left\lfloor \frac{t}{T} \right\rfloor T\Delta_c \right) I_{(0, T_\text{on})}\left( t - \left\lfloor \frac{t}{T} \right\rfloor T \right).
+    I_u(x, t) = I_{(y^* - \Delta_y, y^*)}\left(x - \left\lfloor \frac{t}{T} \right\rfloor (c + \Delta_c)T \right) I_{(0, T_\text{on})}\left( t - \left\lfloor \frac{t}{T} \right\rfloor T \right).
 $$
 We will restrict our analysis to the first period, in which the stimulus simplifies to
 \begin{align*}
@@ -178,9 +178,17 @@ By our convention, $y_0 = 0$ at the beginning of each period, and $y^*$ changes 
 $$
 y(t) = -c\tau_u \log\left[ \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} t\right) + \left(1 - \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} t \right)\right)\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u}e^{-y^*/c\tau_u}  \right].
 $$
-During $t \in (T_\text{on}, T)$, the formula is much simpler, since $\nu' = 0 \iff y' = c.$ Thus, after a full period we have
+During $t \in (T_\text{on}, T)$, the formula is much simpler, since $\nu' = 0 \iff y' = c$. This gives
 $$
-y(T) = -c\tau_u \log\left[ \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T\right) + \left(1 - \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T \right)\right)\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u}e^{-y^*/c\tau_u}  \right] + c T_\text{off}.
+y(t) = \begin{cases}
+	-c\tau_u \log\left[ \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} t\right) + \left(1 - \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} t \right)\right)\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u}e^{-y^*/c\tau_u}  \right] ,& t \in [0, T_\text{on}] \\
+	y(T_{\text{on}}) + c(t - T_\text{on}) ,& t \in (t_\text{on}, T)
+\end{cases}
+$$
+
+After a full period we have
+$$
+y(T) = -c\tau_u \log\left[ \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T_\text{on}\right) + \left(1 - \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T_\text{on} \right)\right)\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u}e^{-y^*/c\tau_u}  \right] + c T_\text{off}.
 $$
 </p>
 
@@ -188,7 +196,7 @@ $$
 We are interested in fixed points of the mapping
 $$\begin{align*}
 F(y^*) &= y(T) - (c+\Delta_c)T \\
-	&= -c\tau_u \log\left[ \underbrace{\exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T\right)}_{a} + \underbrace{\left(1 - \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T \right)\right)\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u}}_{b} e^{-y^*/c\tau_u}  \right] + \underbrace{c T_\text{off} - (c+\Delta_c)T}_{K}.
+	&= -c\tau_u \log\left[ \underbrace{\exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T_\text{on}\right)}_{a} + \underbrace{\left(1 - \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T_\text{on} \right)\right)\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u}}_{b} e^{-y^*/c\tau_u}  \right] + \underbrace{c T_\text{off} - (c+\Delta_c)T}_{K}.
 \end{align*}$$
 </p>
 
@@ -238,6 +246,18 @@ $$\begin{align*}
 \end{align*}$$
 </p>
 
+<h3>Inconsistencies</h3>
+<p>
+There is one features of this result that casts some doubt on it's correctness. Specifically, it is the behaviour as $\Delta_c \to 0$. At this extreme, one would expect the bound to also go to zero as $\varepsilon \to 0$. That is, by definition, a pulse is always entrained to a stimulus of magnitude zero that is moving at the same speed. But for a stimulus moving faster than the pulse, there will always be a magnitude small enough such that the pulse will fail to entrain. 
+</p>
+
+<p>
+I'm not certain where the error is, but I believe that the convention of $y_0 = 0$ at each iteration is inconsistent with the shift $(c + \Delta_c)T$ at each period. I think at least one of these is inconsistent with the choice of reference frame. If the reference frame is the jumping stimulus, then $y_0 \mapsto y(T) - (c+\Delta_c)T \ne 0$. If the reference frame is the defined such that $y_0 = 0$ and the frame is not moving, then our reference frame is not shifting by $(c+\Delta_c)T$ at each jump (as assumed in the construction of $F$ above). 
+</p>
+
+<p>
+I think the simplest solution is to choose the reference frame of the stimulus at each jump. In this case, $y^*$ remains fixed and we will be iterating on $y_0$. This should salvage most of the work so far. We'll need to slightly modify our formula for $y(t)$ to not assume $y_0 = 0$ and then recalculate the fixed point of the same mapping, but with respect to $y_0$ rather than $y^*$ and also the stability calculation for that fixed point.
+</p>
 
 <h2>Case 2: Long Periods</h2>
 <p>
