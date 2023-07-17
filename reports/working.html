@@ -100,7 +100,7 @@
 <h1>The Apparent Motion Stimulus</h1>
 
 <p>
-    For the apparent motion experiment, we will select the stimulus to have certain properties. It is flashing, so it will be non-zero for a length of time $T_\text{on}$ and will be zero for a length of time $T_\text{off}$. During the on period, the stimulus will be localized and stationary. For this analysis, we will take the spatial profile of the stimulus to be a square pulse. We will call $T = T_\text{on} + T_\text{off}$ the period of the stimulus, and $\frac{1}{T}$ the frequency. Between successive on periods, the stimulus will shift forward by the fixed amount $T\Delta_c$, where $\Delta_c$ is the effective speed of the stimulus.
+For the apparent motion experiment, we will select the stimulus to have certain properties. It is flashing, so it will be non-zero for a length of time $T_\text{on}$ and will be zero for a length of time $T_\text{off}$. During the on period, the stimulus will be localized and stationary. For this analysis, we will take the spatial profile of the stimulus to be a square pulse with rising edge at $\hat{y}-\Delta_y$ and falling edge at $\hat{y}$. We will call $T = T_\text{on} + T_\text{off}$ the period of the stimulus, and $\frac{1}{T}$ the frequency. Between successive on periods, the stimulus will shift forward by the fixed amount $(c + \Delta_c) T$, where $\Delta_c$ is the speed of the stimulus relative to the natural (unstimulated) pulse speed.
 </p>
 
 <p>
@@ -108,7 +108,7 @@
 $$
     I_u(x, t) = I_{(y^* - \Delta_y, y^*)}\left(x - \left\lfloor \frac{t}{T} \right\rfloor (c + \Delta_c)T \right) I_{(0, T_\text{on})}\left( t - \left\lfloor \frac{t}{T} \right\rfloor T \right).
 $$
-We will restrict our analysis to the first period, in which the stimulus simplifies to
+We will restrict our analysis to the first period, which simplifies the stimulus to
 \begin{align*}
     I_u(x,t) = \begin{cases}
         I_{(y^* - \Delta_y, y^*)}(x), & t < T_\text{on} \\
@@ -138,130 +138,133 @@ where $D = -\tau_u \langle v_1, U' \rangle - \tau_q \langle v_2, Q' \rangle$. We
 </p>
 
 <p>
-    When evaluating this inner product, the bounds of the integral depend on the relationship between the support of the stimulus and the threshold crossings. Since the threshold crossings change over time, this may result in a piecewise differential equation. 
-</p>
-
-<p>
     We then have, for $t \in (0, T_\text{on})$, 
 \begin{align*}
     D \nu' &= \langle v, I_u(\xi + \varepsilon \nu, t) \rangle \\
-        &= \langle H(\xi)e^{-\xi/c\tau_u}, I_{(y^* - ct - \Delta_y, y^* - ct)}(\xi + \varepsilon \nu) \rangle \\
-        &= \int_{0}^{y^* - \varepsilon \nu - ct} e^{-\xi/c\tau_u} \ d\xi \\
-        &= c \tau_u \left(1 - e^{-y^*/c\tau_u} e^{\frac{\varepsilon \nu + ct}{c\tau_u}} \right).
+		&= \langle H(\xi)e^{-\xi/c\tau_u}, I_{(\hat{y} - ct - \Delta_y, y^* - ct)}(\xi + \varepsilon \nu) \rangle \\
+		&= \int_{0}^{\hat{y} - \varepsilon \nu - ct} e^{-\xi/c\tau_u} \ d\xi \\
+		&= c \tau_u \left(1 - e^{-\hat{y}/c\tau_u} e^{\frac{\varepsilon \nu + ct}{c\tau_u}} \right).
 \end{align*}
 We next make the change of variables $y = \varepsilon \nu + ct$ which is the location of the front, relative to the stationary stimulus. This gives $y' = \varepsilon \nu' + c$ and
 \begin{align*}
-    D\frac{y' - c}{\varepsilon} &= c \tau_u \left(1 - e^{-y^*/c\tau_u} e^{\frac{y}{c\tau_u}} \right) \\
-    y' &= \underbrace{c + \frac{\varepsilon c\tau_u}{D}}_{a} - \underbrace{\frac{\varepsilon c\tau_u}{D}e^{-y^*}}_{b} e^{y/\underbrace{c\tau_u}_{r}} \\
-        &= a - b e^{y/r}.
+D\frac{y' - c}{\varepsilon} &= c \tau_u \left(1 - e^{-\hat{y}/c\tau_u} e^{\frac{y}{c\tau_u}} \right) \\
+y' &= c + \frac{\varepsilon c\tau_u}{D} - \frac{\varepsilon c\tau_u}{D}e^{-\hat{y}} e^{y/c\tau_u}_{r} \\
 \end{align*}
+For ease of notation, let us define 
+$$
+	b_1 = c\frac{\varepsilon \tau_u}{D}, \qquad a = c + b_1, \qquad b = b_1 e^{-\hat{y}}, \qquad r = \frac{1}{c\tau_u}.
+$$
+Then our differential equation becomes
+$$
+
+        y' = a - b e^{ry}.
+$$
 </p>
 
 <p>
-    We next solve this differential equation with the following change of variables $u = e^{-y/r}$. This gives $u' = -\frac{1}{r}y'u \iff -r \frac{u'}{u} = y'$. Substituting,
+The variable $b_1$ is not immediately useful, but will be useful later.
+</p>
+
+<p>
+    We solve this differential equation with the following change of variables $u = e^{-ry}$. This gives $u' = -ry'u \iff -\frac{u'}{ru} = y'$. Substituting,
 \begin{align*}
-    -r\frac{u'}{u} &= a - \frac{b}{u} \\
-    u' &= \frac{b}{r} - \frac{a}{r}u \\
-    u' +\frac{a}{r}u &= \frac{b}{r} \\
-    \left[ u e^{at/r} \right]' &= \frac{b}{r}e^{at/r} \\
-    u e^{at/r} &= u_0 + \int_{0}^t \frac{b}{r}e^{a\tau/r} \ d\tau \\
-    u e^{at/r} &= u_0 + \frac{b}{a}\left( e^{at/r} - 1\right) \\
-    u(t) &= \frac{b}{a} + \left(u_0 - \frac{b}{a} \right)e^{-at/r} \\
-    e^{-y/r} &= \frac{b}{a} + \left(e^{-y_0/r} - \frac{b}{a} \right)e^{-at/r} \\
-    y(t) &= -r \log\left[ \frac{b}{a} + \left(e^{-y_0/r} - \frac{b}{a} \right)e^{-at/r} \right] \\
-		&= -r \log\left[ e^{-(y_0 - at)/r} + (1 - e^{-at/r})\frac{b}{a} \right] \\
+    -\frac{u'}{ru} &= a - \frac{b}{u} \\
+	u' &= -aru + br \\
+	u' + aru &= br \\
+	\left[ u e^{art} \right]' &= br e^{art} \\
+	u e^{art} &= u_0 + \int_0^t br e^{ar\tau} d\ \tau \\
+		&= u_0 + \frac{b}{a} (e^{art} - 1) \\
+	u(t) &= \frac{b}{a} + \left(u_0 - \frac{b}{a}\right)e^{-art} \\
+	y(t) &= -\frac{1}{r} \log\left[ \frac{b}{a} + \left(e^{-ry_0} - \frac{b}{a}\right)e^{-art} \right].
 \end{align*}
 </p>
 
 <p>
-By our convention, $y_0 = 0$ at the beginning of each period, and $y^*$ changes so that the stimulus location is given relative to the threshold crossing. Entrainment then looks like $y^*$ being fixed from period to period. Our expression then simplifies to
+Recall that this differential equation is only valid for the on-interval: $t \in (0, T_\text{off})$. For the remainder of the period the stimulus is off and our differential equation becomes $\nu' = 0$. This gives a piecewise equation describing an entire period
 $$
-y(t) = -c\tau_u \log\left[ \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} t\right) + \left(1 - \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} t \right)\right)\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u}e^{-y^*/c\tau_u}  \right].
-$$
-During $t \in (T_\text{on}, T)$, the formula is much simpler, since $\nu' = 0 \iff y' = c$. This gives
-$$
-y(t) = \begin{cases}
-	-c\tau_u \log\left[ \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} t\right) + \left(1 - \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} t \right)\right)\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u}e^{-y^*/c\tau_u}  \right] ,& t \in [0, T_\text{on}] \\
-	y(T_{\text{on}}) + c(t - T_\text{on}) ,& t \in (t_\text{on}, T)
-\end{cases}
-$$
-
-After a full period we have
-$$
-y(T) = -c\tau_u \log\left[ \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T_\text{on}\right) + \left(1 - \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T_\text{on} \right)\right)\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u}e^{-y^*/c\tau_u}  \right] + c T_\text{off}.
+	y(t) = \begin{cases}
+			-\frac{1}{r} \log\left[ \frac{b}{a} + \left(e^{-ry_0} - \frac{b}{a}\right)e^{-art} \right] , & 0 \le t \le T_\text{on} \\
+		y(T_\text{on}) + (t - T_\text{on})c, & T_\text{on} \le t \le T.
+	\end{cases}
 $$
 </p>
 
 <p>
-We are interested in fixed points of the mapping
-$$\begin{align*}
-F(y^*) &= y(T) - (c+\Delta_c)T \\
-	&= -c\tau_u \log\left[ \underbrace{\exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T_\text{on}\right)}_{a} + \underbrace{\left(1 - \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T_\text{on} \right)\right)\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u}}_{b} e^{-y^*/c\tau_u}  \right] + \underbrace{c T_\text{off} - (c+\Delta_c)T}_{K}.
-\end{align*}$$
-</p>
-
-<p>
-We have
-$$\begin{align*}
-y^* &= F(y^*) \\
-	&= -c\tau_u \log\left[ a + b e^{-y^*/c\tau_u}  \right] + K \\
-\frac{-y^*}{c\tau_u} + \frac{K}{c\tau_u} 
-	&= \log\left[ a + b e^{-y^*/c\tau_u}  \right] \\
-e^{-y^*/c\tau_u} e^{K/c\tau_u} &= a + b e^{-y^*/c\tau_u} \\
-e^{-y^*/c\tau_u} &= \frac{a}{e^{K/c\tau_u} - b} \\
-y^* &= -c\tau_u \log\left[ \frac{a}{e^{K/c\tau_u} - b} \right].
-\end{align*}$$
-Before proceeding we note that
-$$\begin{align*}
-F'(y^*) &= e^{-y^*/c\tau_u} \frac{1}{a + b e^{-y^*/c\tau_u}} \\
-	&= \frac{a}{e^{K/c\tau_u} - b} \frac{1}{a + b \frac{a}{e^{K/c\tau_u} - b}} \\
-	&= \frac{a}{a(e^{K/c\tau_u} - b) + ab} \\
-	&= e^{-K/c\tau_u} \\
-|F'(y^*)| &\lt 1
-\end{align*}$$
-and thus fixed point iteration will always converge to $y^*$ regardless of parameter choices, provided that $y^*$ exists and the conditions for this case are met at each iteration.
-</p>
-
-<p>
-We note that $a \gt 0$ and thus $y^*$ will exist if
+We are interested in how $y_0$ changes from period to period. In particular, if it converges to a fixed point, then the pulse has entrained to the stimulus. We define the mapping
 \begin{align*}
-	e^{K/c\tau_u} & \gt b \\
-		&= \left(1 - \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T \right)\right)\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u} \\
-	K & \gt c\tau_u \log\left[ \left(1 - \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T \right)\right)\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u} \right] \\
-	-cT_\text{off} - \Delta_c T & \gt c\tau_u \log\left[ \left(1 - \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T \right)\right)\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u} \right] \\
-	\Delta_c & \lt \frac{c\tau_u \log\left[ \left(1 - \exp\left(-\frac{D + \varepsilon \tau_u}{D\tau_u} T \right)\right)\frac{\varepsilon \tau_u}{D + \varepsilon \tau_u} \right] +cT_\text{off} }{-T}.
+F(y_0) &= y(T) - (c+\Delta_c)T\\
+&= -\frac{1}{r} \log\left[ \frac{b}{a} + \left(e^{-ry_0} - \frac{b}{a}\right)e^{-arT_\text{on}} \right] + (T - T_\text{on})c - (c+\Delta_c)T \\
+&= -\frac{1}{r} \log\left[ \frac{b}{a} + \left(e^{-ry_0} - \frac{b}{a}\right)e^{-arT_\text{on}} \right] - (\underbrace{c T_\text{on} + \Delta_c T}_{K})
+\end{align*}
+and look for a fixed point $y^*$
+\begin{align*}
+	y^* &= F(y^*) \\
+	&= -\frac{1}{r} \log\left[ \frac{b}{a} + \left(e^{-ry^*} - \frac{b}{a}\right)e^{-arT_\text{on}} \right] - (\underbrace{c T_\text{on} + \Delta_c T}_{K}) \\
+	-ry^* -rK &= \log\left[ \frac{b}{a} + \left(e^{-ry^*} - \frac{b}{a}\right)e^{-arT_\text{on}} \right] \\
+	e^{-ry^*}e^{-rK} &= \frac{b}{a} + \left(e^{-ry^*} - \frac{b}{a}\right)e^{-arT_\text{on}} \\
+	e^{-ry^*}\left( e^{-rK} - e^{-arT_\text{on}} \right) &= \frac{b}{a}\left( 1 - e^{-arT_\text{on}}\right) \\
+	e^{-ry^*} &= \frac{b}{a} \cdot \frac{1 - e^{-arT_\text{on}}}{e^{-rK} - e^{-arT_\text{on}}} \\
+	y^* &= -\frac{1}{r} \log\left[ \frac{b}{a} \cdot \frac{1 - e^{-arT_\text{on}}}{e^{-rK} - e^{-arT_\text{on}}} \right] \\
+		&= -\frac{1}{r} \log\left[ e^{-r\hat{y}}\frac{b_1}{a} \cdot \frac{1 - e^{-arT_\text{on}}}{e^{-rK} - e^{-arT_\text{on}}} \right] \\
+	y^* &= \hat{y} - \frac{1}{r} \log\left[ \frac{b_1}{a} \cdot \frac{1 - e^{-arT_\text{on}}}{e^{-rK} - e^{-arT_\text{on}}} \right].
 \end{align*}
 </p>
 
 <p>
-This case is only valid if $y^* \lt \Delta_y$, otherwise, it could be the case that the threshold crossing is completely behind the stimulus for some portion of the on-interval, but catches up before the stimulus turns off. This can occur if $T$ is large even for slow $\Delta_c$.
-$$\begin{align*}
-	\Delta_y &\gt y^* \\
-		&= -c\tau_u \log\left[ \frac{a}{e^{K/c\tau_u} - b} \right] \\
-	e^{-\Delta_y / c\tau_u} &\lt \frac{a}{e^{K/c\tau_u} - b} \\
-	e^{K/c\tau_u} - b &\lt ae^{\Delta_y/c\tau_u} \\
-	K &\lt c\tau_u \log\left[ b + a e^{\Delta_y/c\tau_u} \right] \\
-	-\Delta_cT - cT_\text{off} &\le c\tau_u \log\left[ b + a e^{\Delta_y/c\tau_u} \right] \\
-	\Delta_c & \gt \frac{c T_\text{off} + c\tau_u \log\left[ b + a e^{\Delta_y/c\tau_u} \right] }{-T}.
-\end{align*}$$
-</p>
-
-<h3>Inconsistencies</h3>
-<p>
-There is one features of this result that casts some doubt on it's correctness. Specifically, it is the behaviour as $\Delta_c \to 0$. At this extreme, one would expect the bound to also go to zero as $\varepsilon \to 0$. That is, by definition, a pulse is always entrained to a stimulus of magnitude zero that is moving at the same speed. But for a stimulus moving faster than the pulse, there will always be a magnitude small enough such that the pulse will fail to entrain. 
-</p>
-
-<p>
-I'm not certain where the error is, but I believe that the convention of $y_0 = 0$ at each iteration is inconsistent with the shift $(c + \Delta_c)T$ at each period. I think at least one of these is inconsistent with the choice of reference frame. If the reference frame is the jumping stimulus, then $y_0 \mapsto y(T) - (c+\Delta_c)T \ne 0$. If the reference frame is the defined such that $y_0 = 0$ and the frame is not moving, then our reference frame is not shifting by $(c+\Delta_c)T$ at each jump (as assumed in the construction of $F$ above). 
+To check if this is reasonable, we will modify this form. But first, we note the following 
+\begin{align*}
+	\frac{b_1}{a} &= \frac{c \frac{\varepsilon \tau_u}{D}}{c + c\frac{\varepsilon \tau_u}{D}} \\
+	&= \frac{\varepsilon \tau_u}{D} \frac{1}{1 + \frac{\varepsilon \tau_u}{D}} \\
+	&= \frac{\varepsilon \tau_u}{D} \sum_{n=0}^\infty \left(\frac{\varepsilon \tau_u}{D}\right)^n \\
+	&= \sum_{n=1}^\infty \left(\frac{\varepsilon \tau_u}{D}\right)^n \\
+	&= \frac{\varepsilon \tau_u}{D} + \OO(\varepsilon^2) \\
+	arT_\text{on} &= \frac{1}{c\tau_u} T_\text{on} \cdot c(1 + \frac{\varepsilon \tau_u}{D}) \\
+		&= \frac{T_\text{on}}{\tau_u} + \varepsilon\frac{T_\text{on}}{D} \\
+	rK &= \frac{1}{c\tau_u} (cT_\text{on} + \Delta_c T) \\
+		&= \frac{T_\text{on}}{\tau_u} + \frac{\Delta_c}{c} \frac{T}{\tau_u}.
+\end{align*}
+Substituting all but the first of these gives
+\begin{align*}
+y^* &= \hat{y} - \frac{1}{r} \log\left[ \frac{b_1}{a} \cdot \frac{e^{T\text{on}/\tau_u} - e^{-\varepsilon T_\text{on}/D}}{e^{-\Delta_c T/c\tau_u} - e^{-\varepsilon T_\text{on}/D}} \right].
+\end{align*}
 </p>
 
 <p>
-I think the simplest solution is to choose the reference frame of the stimulus at each jump. In this case, $y^*$ remains fixed and we will be iterating on $y_0$. This should salvage most of the work so far. We'll need to slightly modify our formula for $y(t)$ to not assume $y_0 = 0$ and then recalculate the fixed point of the same mapping, but with respect to $y_0$ rather than $y^*$ and also the stability calculation for that fixed point.
+We see that for $y^*$ to exist, we require the denominator of this expression to be positive. That is
+\begin{align*}
+-\frac{\Delta_c T}{c\tau_u} &\gt -\frac{\varepsilon T_\text{on}}{D} \\
+\Delta_c &\lt \varepsilon \frac{T_\text{on}}{T}\frac{c\tau_u}{D}
+\end{align*}
+and we have a condition on entrainment.
 </p>
 
-<h2>Case 2: Long Periods</h2>
 <p>
-Lorem
+Furthermore, this formula is consistent with our intuition. For example, we satisfy this inequality and have a fixed point. If we consider continuously reducing the magnitude $\varepsilon \searrow \Delta_c \frac{T D}{T_\text{on}c\tau_u}$, we find that the denominator in the argument to the logarithm remains positive and tends toward zero, thus $y^* \to -\infty$. When $\varepsilon$ reaches this value or goes below it, the inequality no longer holds and $y^*$ is undefined. In particular, $\varepsilon = 0$ will fail to entrain if $\Delta_c \lt 0$, as we expect.
+</p>
+
+<p>
+As another example, consider taking $T_\text{on} \to 0$ while keeping $T$ fixed (so $T_\text{off} = T - T_\text{on}$). We find that the right hand side of this inequality goes to zero and eventually entrainment breaks. This makes sense, as the portion of the period where the stimulus is on is vanishing and thus providing less acceleration each period. 
+</p>
+
+<p>
+Lastly, we note that this fixed point iteration is stable so long as the fixed point exists. We check
+\begin{align*}
+F'(x) &= -\frac{1}{r} \frac{1}{\frac{b}{a} + \left(e^{-rx} - \frac{b}{a}\right)e^{-arT_\text{on}}} (-r)e^{-rx}e^{-arT_\text{on}} \\
+	&= \frac{e^{-rx}e^{-arT_\text{on}}}{\frac{b}{a} + \left(e^{-rx} - \frac{b}{a}\right)e^{-arT_\text{on}}} \\
+	&= \frac{e^{-rx}e^{-arT_\text{on}}}{e^{-rx}e^{-arT_\text{on}} + \frac{b}{a} (1-e^{-arT_\text{on}})} \\
+	&= \frac{1}{1 + \frac{b}{a} \frac{1-e^{-arT_\text{on}}}{e^{-rx}e^{-arT_\text{on}}}} \\
+F'(y^*) &= \frac{1}{1 + \frac{b}{a} \frac{1-e^{-arT_\text{on}}}{e^{-ry^*}e^{-arT_\text{on}}}} \\
+&= \frac{1}{1 + \frac{b}{a} \frac{1-e^{-arT_\text{on}}}{\frac{b}{a} \frac{1-e^{-arT_\text{on}}}{e^{-rK} - e^{-arT_\text{on}}} e^{-arT_\text{on}}}} \\
+&= \frac{1}{1 + \frac{e^{-rK} - e^{-arT_\text{on}}}{e^{-arT_\text{on}}}} \\
+&= \frac{e^{-arT_\text{on}}}{e^{-arT_\text{on}} + e^{-rK} - e^{-arT_\text{on}} }\\
+&= e^{rK - arT_\text{on}}
+\end{align*}
+then
+\begin{align*}
+|F'(y^*)| \lt 1 &\iff rK \lt arT_\text{on} \\
+	& \iff \Delta_c \lt \varepsilon \frac{T_\text{on}}{T}\frac{c\tau_u}{D}
+\end{align*}
+and we have that the fixed point iteration is stable provided $y^*$ exists.
 </p>
 
 

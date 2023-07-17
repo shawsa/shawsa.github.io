@@ -8,3 +8,5 @@ __pycache__
 
 papers
 manuscript
+
+*.swp
