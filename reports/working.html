@@ -267,6 +267,20 @@ then
 and we have that the fixed point iteration is stable provided $y^*$ exists.
 </p>
 
+<h3>Consistency with finite width</h3>
+
+<p>
+We can improve this bound by incorporating the consistency condition $y^* \gt \hat{y} - \Delta_y$. That is, we require the fixed point not to fall behind the stimulus entirely. We proceed
+\begin{align*}
+\Delta_y &\gt \frac{1}{r} \log\left[ \frac{b_1}{a} \frac{e^{T_{\text{on}}/\tau_u} - e^{-\varepsilon T_\text{on} / D}}{e^{-\Delta_c T r} - e^{-\varepsilon T_\text{on} / D}} \right] \\
+e^{r \Delta_y} &\gt \frac{b_1}{a} \frac{e^{T_{\text{on}}/\tau_u} - e^{-\varepsilon T_\text{on} / D}}{e^{-\Delta_c T r} - e^{-\varepsilon T_\text{on} / D}} \\
+e^{r \Delta_y} \left(e^{-\Delta_c T r} - e^{-\varepsilon T_\text{on} / D}\right) &\gt \frac{b_1}{a} \left(e^{T_{\text{on}}/\tau_u} - e^{-\varepsilon T_\text{on} / D}\right) \\
+e^{-\Delta_c T r} &\gt \frac{b_1}{a} e^{-r\Delta_y} \left(e^{T_{\text{on}}/\tau_u} - e^{-\varepsilon T_\text{on} / D}\right) + e^{-\varepsilon T_\text{on} / D} \\
+\Delta_c &\lt - \frac{c\tau_u}{T} \log\left[ \frac{b_1}{a} e^{-r\Delta_y} \left(e^{T_{\text{on}}/\tau_u} - e^{-\varepsilon T_\text{on} / D}\right) + e^{-\varepsilon T_\text{on} / D} \right] \\
+\end{align*}
+Observe that if we were to take $\Delta_y \to \infty$ then $e^{-r\Delta_y} \to 0$ and this reduces to the same condition as before.
+</p>
+
 
 <!--***************************************************************************
 *******************************************************************************
