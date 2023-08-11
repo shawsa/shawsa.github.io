@@ -84,9 +84,9 @@
 *******************************************************************************
 ****************************************************************************-->
 
-<h1 id="Title">April 24<sup>th</sup>, 2023</h1>
+<h1 id="Title">Working</h1>
 <p id="summary">
-   We apply our asymptotic wave response approximation to a moving localized stimulus. We determine that the asymptotic formulation cannot differentiate between entrainment and non-entrainment and thus a new formulation is required.
+   We apply the new wave response differential equation to the problem of apparent motion.
 </p>
 
 
@@ -97,128 +97,211 @@
 <hr>
 <!--********************************************************************-->
 
-<h1 id="">Entrainment Simulations</h1>
+<h1>The Apparent Motion Stimulus</h1>
 
 <p>
-    For some moving localized stimuli, we observe a phenomenon called entrainment: the speed of the traveling wave adjusts to match the speed of the stimulus. We say that the wave has <i>entrained to the stimulus</i>. We are interested in entrainment as a possible control mechanism. Figure 1 shows an example of a traveling pulse solution accelerating (and changing profile) to match the speed of a moving Gaussian stimulus. As the stimulus overtakes the front of the pulse, we see the pulse accelerates to match the stimulus speed and a new steady-state in the traveling-stimulus coordinate frame is achieved.
-</p>
-
-<figure>
-    <img src="./reports/report20230424/entrainment.gif" width="100%"/>
-    <caption><b>Fig 1.</b> Entrainment to a moving Gaussian stimulus.</caption>
-</figure>
-
-<p>
-    Not all localized moving stimuli achieve entrainment. For example, if a weak stimulus is moving to quickly, it will outpace a traveling pulse solution before it can accelerate the traveling pulse to match its speed. Figure 2 below shows two simulations (again with a moving Gaussian stimulus) that vary in their speed and thus achieve entrainment (left) or fail to achieve entrainment (right). 
-</p>
-
-<figure>
-    <div>
-        <div style="float: left; width: 50%;">
-            <img src="./reports/report20230424/entrainment_pannel_success.png" width="100%"/>
-        </div>
-        <div style="float: right; width: 50%;">
-            <img src="./reports/report20230424/entrainment_pannel_failure.png" width="100%"/>
-        </div>
-    </div>
-    <caption><b>Fig 2.</b> Examples of entrainment (left) and non-entrainment (right).</caption>
-</figure>
-
-<p>
-    Weak moving Gaussian stimuli can be characterized by their magnitude (specifically their maximum value) and their speed. Figure 3 roughly partitions this domain into regions of entrainment and regions of non-entrainment using numerical simulation. We see that strong slow stimuli entrain, while weak fast stimuli fail to entrain.
-</p>
-
-<figure>
-    <img src="./reports/report20230424/entrainment_contour.png" width="100%"/>
-    <caption><b>Fig 3.</b> Lorem</caption>
-</figure>
-
-<p>
-    The objective of this report is to determine if our asymptotic wave-response approximation can be used to predict entrainment of stimuli. Before we address this, we first make a few observations about entrainment.
+For the apparent motion experiment, we will select the stimulus to have certain properties. It is flashing, so it will be non-zero for a length of time $T_\text{on}$ and will be zero for a length of time $T_\text{off}$. During the on period, the stimulus will be localized and stationary. For this analysis, we will take the spatial profile of the stimulus to be a square pulse with rising edge at $\hat{y}-\Delta_y$ and falling edge at $\hat{y}$. We will call $T = T_\text{on} + T_\text{off}$ the period of the stimulus, and $\frac{1}{T}$ the frequency. Between successive on periods, the stimulus will shift forward by the fixed amount $(c + \Delta_c) T$, where $\Delta_c$ is the speed of the stimulus relative to the natural (unstimulated) pulse speed.
 </p>
 
 <p>
-    Firstly, our wave response predicts no way to meaningfully slow our traveling pulses, and similarly we expect that our pulses cannot entrain to stimuli slower than the natural speed of the traveling pulses. This is somewhat restrictive if we wish to encode a wide range of slow speeds, but can be remedied by choosing appropriate model parameters. In particular, we can artificially change the firing-rate threshold by adding a constant external stimulus to achieve a wide range of wave speeds. This is straightforward to do analytically and has been observed in vitro (citation needed).
-</p>
-
-<p>
-    We also note that if a stimulus is strong enough to actually generate traveling wave solutions then it may not be appropriate to say that the traveling pulse entrains to the stimulus. We avoid resolving this issue by only considering weak stimuli.
-</p>
-
-<p>
-    Lastly, and keeping the previous limitation in mind, we require a formal definition of entrainment if we are to address the question analytically. To that end we define entrainment as follows: for a traveling pulse with natural speed $c$, and a moving localized stimulus with constant speed $d = c + \Delta_c$ for $\Delta_c > 0$, we say that the pulse entrains to the stimulus if the fore threshold crossing of the pulse is $o(d \cdot t + K)$ for some constant $K \in \RR$. 
-</p>
-
-<h1>Asymptotic Wave Response</h1>
-
-<p>
-    While the numerical simulations above use moving Gaussian stimuli, we will instead use moving square pulses as they are more amenable to analytic calculation. For a direct comparison, we ought to redo the simulations above using a moving square stimulus, be we expect the results to be similar and thus will forgo a direct comparison for the time being.
-</p>
-
-<p>
-    In general, a moving stimulus can be expressed
+    These criteria give the following formula for the activity stimulus
 $$
-    I_u(\xi, t) = g(\xi - \Delta_c \cdot t)
+    I_u(x, t) = I_{(y^* - \Delta_y, y^*)}\left(x - \left\lfloor \frac{t}{T} \right\rfloor (c + \Delta_c)T \right) I_{(0, T_\text{on})}\left( t - \left\lfloor \frac{t}{T} \right\rfloor T \right).
 $$
-    in the traveling wave coordinate frame, where $\Delta_c$ is the difference between the stimulus speed and the natural wave speed and $g$ is a pulse profile that is constant with respect to time. In particular, we will use the square pulse
-$$
-    I_u(\xi, t) = \varepsilon I_{(0, 1)}(\xi - \Delta_c \cdot t)
-$$
-where
-$$
-    I_A(\xi) = \begin{cases}
-        1, & \xi \in A \\
-        0, & \text{else}
+We will restrict our analysis to the first period, which simplifies the stimulus to
+\begin{align*}
+    I_u(x,t) = \begin{cases}
+        I_{(y^* - \Delta_y, y^*)}(x), & t < T_\text{on} \\
+        0, & \text{else}.
+    \end{cases} \\
+    I_u(\xi, t) = \begin{cases}
+        I_{(y^* - ct - \Delta_y, y^* - ct)}(\xi), & t < T_\text{on} \\
+        0, & \text{else}.
     \end{cases}
-$$
-is an indicator function.
+\end{align*}
 </p>
 
 <p>
-    Applying our asymptotic approximation we find
-$$\begin{align*}
-    \nu(t) \propto& \int_0^t \int_\mathbb{R} v_1(\xi) \cdot I_u(\xi, \tau) \ d\xi d\tau \\
-        &= \int_0^t \int_\mathbb{R} H(\xi)e^{-\xi/c\mu} \varepsilon I_{(0, 1)}(\xi - \Delta_c \cdot \tau) \ d\xi d\tau \\
-        &= \varepsilon \int_0^t \int_\mathbb{R} e^{-\xi/c\mu} I_{(\Delta_c \tau, \Delta_c \tau + 1)}(\xi) \ d\xi d\tau \\
-        &= \varepsilon \int_0^t \int_{\Delta_c \tau}^{\Delta_c \tau + 1} e^{-\xi/c\mu} \ d\xi d\tau \\
-        &= \varepsilon \int_0^t c\mu (e^{(-\Delta_c \tau)/c\mu} - e^{-(\Delta_c \tau + 1)/c\mu} \ d\tau \\
-        &= c\mu \big( 1 - e^{-1/c\mu} \big) \varepsilon \int_0^t e^{-\Delta_c \tau /c\mu} \ d\tau \\
-        &= \frac{c^2\mu^2 \big( 1 - e^{-1/c\mu} \big)}{ \Delta_c} \varepsilon \big( 1 - e^{-\Delta_c t /c\mu} \big).
-\end{align*}$$
+It is helpful to divide the scenario into several cases involving the position of the threshold crossing relative to the active region during the on-interval. We will consider the simplest case first. In the simplest case (Case 1) we will assume that the fore threshold crossing is in the support of the stimulus for the duration of the on interval. In the second case (Case 2) the stimulus jumps beyond the threshold crossing, but the period is long enough for the stimulus to catch up and enter the active region before the stimulus turns off.
+</p>
+
+<h2>Case 1: Short Periods</h2>
+<p>
+In this simplest case we will assume that the fore threshold crossing is in the support of the stimulus for the duration of the on interval. Some other more complicated cases include: the threshold crossing is accelerated past the stimulus, or the threshold crossing is accelerated into the support of the stimulus.
+</p>
+<p>
+    Our wave response formula is given by
+$$
+    D \nu' = \langle v_1, I_u(\xi + \varepsilon \nu, t) \rangle
+$$
+where $D = -\tau_u \langle v_1, U' \rangle - \tau_q \langle v_2, Q' \rangle$. We will also take $v_1(\xi) \approx v(\xi) = H(\xi) e^{-\xi/c\tau_u}$ since the difference is small and it simplifies the analysis dramatically. 
 </p>
 
 <p>
-    This predicts a finite wave response in the $t \to \infty$ limit which is inconsistent with entrainment. At best, we expect this to be a reasonable approximation when the stimulus parameters ($\Delta_c$ and $\varepsilon$) place us far away from the domain of entrainment.
+    We then have, for $t \in (0, T_\text{on})$, 
+\begin{align*}
+    D \nu' &= \langle v, I_u(\xi + \varepsilon \nu, t) \rangle \\
+		&= \langle H(\xi)e^{-\xi/c\tau_u}, I_{(\hat{y} - ct - \Delta_y, y^* - ct)}(\xi + \varepsilon \nu) \rangle \\
+		&= \int_{0}^{\hat{y} - \varepsilon \nu - ct} e^{-\xi/c\tau_u} \ d\xi \\
+		&= c \tau_u \left(1 - e^{-\hat{y}/c\tau_u} e^{\frac{\varepsilon \nu + ct}{c\tau_u}} \right).
+\end{align*}
+We next make the change of variables $y = \varepsilon \nu + ct$ which is the location of the front, relative to the stationary stimulus. This gives $y' = \varepsilon \nu' + c$ and
+\begin{align*}
+D\frac{y' - c}{\varepsilon} &= c \tau_u \left(1 - e^{-\hat{y}/c\tau_u} e^{\frac{y}{c\tau_u}} \right) \\
+y' &= c + \frac{\varepsilon c\tau_u}{D} - \frac{\varepsilon c\tau_u}{D}e^{-\hat{y}} e^{y/c\tau_u}_{r} \\
+\end{align*}
+For ease of notation, let us define 
+$$
+	b_1 = c\frac{\varepsilon \tau_u}{D}, \qquad a = c + b_1, \qquad b = b_1 e^{-\hat{y}}, \qquad r = \frac{1}{c\tau_u}.
+$$
+Then our differential equation becomes
+$$
+
+        y' = a - b e^{ry}.
+$$
 </p>
 
 <p>
-    We note that for small $t$, we can Taylor expand this approximation 
-    $$\begin{align*}
-        \nu(t) \propto c \mu (1 - e^{-1/c\mu}) \varepsilon t + \mathcal{O}(\Delta_c^2)
-    \end{align*}$$
-    and see that up to leading order, the response has speed
-$$
-    \Delta_c^* = c \mu (1 - e^{1/c\mu}) \varepsilon
-$$
-which unfortunately is independent of $\Delta_c$ and does depend on $\varepsilon$ &ndash; two properties inconsistent with entrainment.
+The variable $b_1$ is not immediately useful, but will be useful later.
 </p>
 
+<p>
+    We solve this differential equation with the following change of variables $u = e^{-ry}$. This gives $u' = -ry'u \iff -\frac{u'}{ru} = y'$. Substituting,
+\begin{align*}
+    -\frac{u'}{ru} &= a - \frac{b}{u} \\
+	u' &= -aru + br \\
+	u' + aru &= br \\
+	\left[ u e^{art} \right]' &= br e^{art} \\
+	u e^{art} &= u_0 + \int_0^t br e^{ar\tau} d\ \tau \\
+		&= u_0 + \frac{b}{a} (e^{art} - 1) \\
+	u(t) &= \frac{b}{a} + \left(u_0 - \frac{b}{a}\right)e^{-art} \\
+	y(t) &= -\frac{1}{r} \log\left[ \frac{b}{a} + \left(e^{-ry_0} - \frac{b}{a}\right)e^{-art} \right].
+\end{align*}
+</p>
 
-<!--button class="accordion">BUTTON NAME</button>
-<div class="panel">
-</div-->
+<p>
+Recall that this differential equation is only valid for the on-interval: $t \in (0, T_\text{off})$. For the remainder of the period the stimulus is off and our differential equation becomes $\nu' = 0$. This gives a piecewise equation describing an entire period
+$$
+	y(t) = \begin{cases}
+			-\frac{1}{r} \log\left[ \frac{b}{a} + \left(e^{-ry_0} - \frac{b}{a}\right)e^{-art} \right] , & 0 \le t \le T_\text{on} \\
+		y(T_\text{on}) + (t - T_\text{on})c, & T_\text{on} \le t \le T.
+	\end{cases}
+$$
+</p>
 
-<!--video controls autoplay muted loop>
-    <source src="./working/synaptic_depression_perturbation.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video-->
+<p>
+We are interested in how $y_0$ changes from period to period. In particular, if it converges to a fixed point, then the pulse has entrained to the stimulus. We define the mapping
+\begin{align*}
+F(y_0) &= y(T) - (c+\Delta_c)T\\
+&= -\frac{1}{r} \log\left[ \frac{b}{a} + \left(e^{-ry_0} - \frac{b}{a}\right)e^{-arT_\text{on}} \right] + (T - T_\text{on})c - (c+\Delta_c)T \\
+&= -\frac{1}{r} \log\left[ \frac{b}{a} + \left(e^{-ry_0} - \frac{b}{a}\right)e^{-arT_\text{on}} \right] - (\underbrace{c T_\text{on} + \Delta_c T}_{K})
+\end{align*}
+and look for a fixed point $y^*$
+\begin{align*}
+	y^* &= F(y^*) \\
+	&= -\frac{1}{r} \log\left[ \frac{b}{a} + \left(e^{-ry^*} - \frac{b}{a}\right)e^{-arT_\text{on}} \right] - (\underbrace{c T_\text{on} + \Delta_c T}_{K}) \\
+	-ry^* -rK &= \log\left[ \frac{b}{a} + \left(e^{-ry^*} - \frac{b}{a}\right)e^{-arT_\text{on}} \right] \\
+	e^{-ry^*}e^{-rK} &= \frac{b}{a} + \left(e^{-ry^*} - \frac{b}{a}\right)e^{-arT_\text{on}} \\
+	e^{-ry^*}\left( e^{-rK} - e^{-arT_\text{on}} \right) &= \frac{b}{a}\left( 1 - e^{-arT_\text{on}}\right) \\
+	e^{-ry^*} &= \frac{b}{a} \cdot \frac{1 - e^{-arT_\text{on}}}{e^{-rK} - e^{-arT_\text{on}}} \\
+	y^* &= -\frac{1}{r} \log\left[ \frac{b}{a} \cdot \frac{1 - e^{-arT_\text{on}}}{e^{-rK} - e^{-arT_\text{on}}} \right] \\
+		&= -\frac{1}{r} \log\left[ e^{-r\hat{y}}\frac{b_1}{a} \cdot \frac{1 - e^{-arT_\text{on}}}{e^{-rK} - e^{-arT_\text{on}}} \right] \\
+	y^* &= \hat{y} - \frac{1}{r} \log\left[ \frac{b_1}{a} \cdot \frac{1 - e^{-arT_\text{on}}}{e^{-rK} - e^{-arT_\text{on}}} \right].
+\end{align*}
+</p>
 
-<!--figure>
-    <img src="./working/wave_response_small.png" width="100%"/>
-    <caption><b>Fig 2.</b> The asymptotic approximation of the wave response to $\epsilon I(x, t) = 0.01 \delta(t - 1)$.</caption>
-</figure=-->
+<p>
+To check if this is reasonable, we will modify this form. But first, we note the following 
+\begin{align*}
+	\frac{b_1}{a} &= \frac{c \frac{\varepsilon \tau_u}{D}}{c + c\frac{\varepsilon \tau_u}{D}} \\
+	&= \frac{\varepsilon \tau_u}{D} \frac{1}{1 + \frac{\varepsilon \tau_u}{D}} \\
+	&= \frac{\varepsilon \tau_u}{D} \sum_{n=0}^\infty \left(\frac{\varepsilon \tau_u}{D}\right)^n \\
+	&= \sum_{n=1}^\infty \left(\frac{\varepsilon \tau_u}{D}\right)^n \\
+	&= \frac{\varepsilon \tau_u}{D} + \OO(\varepsilon^2) \\
+	arT_\text{on} &= \frac{1}{c\tau_u} T_\text{on} \cdot c(1 + \frac{\varepsilon \tau_u}{D}) \\
+		&= \frac{T_\text{on}}{\tau_u} + \varepsilon\frac{T_\text{on}}{D} \\
+	rK &= \frac{1}{c\tau_u} (cT_\text{on} + \Delta_c T) \\
+		&= \frac{T_\text{on}}{\tau_u} + \frac{\Delta_c}{c} \frac{T}{\tau_u}.
+\end{align*}
+Substituting all but the first of these gives
+\begin{align*}
+y^* &= \hat{y} - \frac{1}{r} \log\left[ \frac{b_1}{a} \cdot \frac{e^{T\text{on}/\tau_u} - e^{-\varepsilon T_\text{on}/D}}{e^{-\Delta_c T/c\tau_u} - e^{-\varepsilon T_\text{on}/D}} \right].
+\end{align*}
+</p>
 
-<!--************************************************************************-->
+<p>
+We see that for $y^*$ to exist, we require the denominator of this expression to be positive. That is
+\begin{align*}
+-\frac{\Delta_c T}{c\tau_u} &\gt -\frac{\varepsilon T_\text{on}}{D} \\
+\Delta_c &\lt \varepsilon \frac{T_\text{on}}{T}\frac{c\tau_u}{D}
+\end{align*}
+and we have a condition on entrainment.
+</p>
+
+<p>
+Furthermore, this formula is consistent with our intuition. For example, we satisfy this inequality and have a fixed point. If we consider continuously reducing the magnitude $\varepsilon \searrow \Delta_c \frac{T D}{T_\text{on}c\tau_u}$, we find that the denominator in the argument to the logarithm remains positive and tends toward zero, thus $y^* \to -\infty$. When $\varepsilon$ reaches this value or goes below it, the inequality no longer holds and $y^*$ is undefined. In particular, $\varepsilon = 0$ will fail to entrain if $\Delta_c \lt 0$, as we expect.
+</p>
+
+<p>
+As another example, consider taking $T_\text{on} \to 0$ while keeping $T$ fixed (so $T_\text{off} = T - T_\text{on}$). We find that the right hand side of this inequality goes to zero and eventually entrainment breaks. This makes sense, as the portion of the period where the stimulus is on is vanishing and thus providing less acceleration each period. 
+</p>
+
+<p>
+Lastly, we note that this fixed point iteration is stable so long as the fixed point exists. We check
+\begin{align*}
+F'(x) &= -\frac{1}{r} \frac{1}{\frac{b}{a} + \left(e^{-rx} - \frac{b}{a}\right)e^{-arT_\text{on}}} (-r)e^{-rx}e^{-arT_\text{on}} \\
+	&= \frac{e^{-rx}e^{-arT_\text{on}}}{\frac{b}{a} + \left(e^{-rx} - \frac{b}{a}\right)e^{-arT_\text{on}}} \\
+	&= \frac{e^{-rx}e^{-arT_\text{on}}}{e^{-rx}e^{-arT_\text{on}} + \frac{b}{a} (1-e^{-arT_\text{on}})} \\
+	&= \frac{1}{1 + \frac{b}{a} \frac{1-e^{-arT_\text{on}}}{e^{-rx}e^{-arT_\text{on}}}} \\
+F'(y^*) &= \frac{1}{1 + \frac{b}{a} \frac{1-e^{-arT_\text{on}}}{e^{-ry^*}e^{-arT_\text{on}}}} \\
+&= \frac{1}{1 + \frac{b}{a} \frac{1-e^{-arT_\text{on}}}{\frac{b}{a} \frac{1-e^{-arT_\text{on}}}{e^{-rK} - e^{-arT_\text{on}}} e^{-arT_\text{on}}}} \\
+&= \frac{1}{1 + \frac{e^{-rK} - e^{-arT_\text{on}}}{e^{-arT_\text{on}}}} \\
+&= \frac{e^{-arT_\text{on}}}{e^{-arT_\text{on}} + e^{-rK} - e^{-arT_\text{on}} }\\
+&= e^{rK - arT_\text{on}}
+\end{align*}
+then
+\begin{align*}
+|F'(y^*)| \lt 1 &\iff rK \lt arT_\text{on} \\
+	& \iff \Delta_c \lt \varepsilon \frac{T_\text{on}}{T}\frac{c\tau_u}{D}
+\end{align*}
+and we have that the fixed point iteration is stable provided $y^*$ exists.
+</p>
+
+<h3>Consistency with finite width</h3>
+
+<p>
+We can improve this bound by incorporating the consistency condition $y^* \gt \hat{y} - \Delta_y$. That is, we require the fixed point not to fall behind the stimulus entirely. We proceed
+\begin{align*}
+\Delta_y &\gt \frac{1}{r} \log\left[ \frac{b_1}{a} \frac{e^{T_{\text{on}}/\tau_u} - e^{-\varepsilon T_\text{on} / D}}{e^{-\Delta_c T r} - e^{-\varepsilon T_\text{on} / D}} \right] \\
+e^{r \Delta_y} &\gt \frac{b_1}{a} \frac{e^{T_{\text{on}}/\tau_u} - e^{-\varepsilon T_\text{on} / D}}{e^{-\Delta_c T r} - e^{-\varepsilon T_\text{on} / D}} \\
+e^{r \Delta_y} \left(e^{-\Delta_c T r} - e^{-\varepsilon T_\text{on} / D}\right) &\gt \frac{b_1}{a} \left(e^{T_{\text{on}}/\tau_u} - e^{-\varepsilon T_\text{on} / D}\right) \\
+e^{-\Delta_c T r} &\gt \frac{b_1}{a} e^{-r\Delta_y} \left(e^{T_{\text{on}}/\tau_u} - e^{-\varepsilon T_\text{on} / D}\right) + e^{-\varepsilon T_\text{on} / D} \\
+\Delta_c &\lt - \frac{c\tau_u}{T} \log\left[ \frac{b_1}{a} e^{-r\Delta_y} \left(e^{T_{\text{on}}/\tau_u} - e^{-\varepsilon T_\text{on} / D}\right) + e^{-\varepsilon T_\text{on} / D} \right] \\
+\end{align*}
+Observe that if we were to take $\Delta_y \to \infty$ then $e^{-r\Delta_y} \to 0$ and this reduces to the same condition as before.
+</p>
+
+<h1>Simulation</h1>
+<p>
+We compare our asymptotic approximation to a grid of pulse magnitudes and relative pulse speeds for several configurations of $T_\text{on}$ and $T_\text{off}$. We name these scenarios <em>50 50</em> ($T_\text{on}=0.5, T_\text{off}=0.5$), <em>mostly on</em> ($T_\text{on}=0.5, T_\text{off}=0.05$), and <em> mostly off</em> ($T_\text{on}=0.05, T_\text{off}=0.5$).
+Other parameters are chosen as our standard pulse experiment $\tau_u = 1, \tau_q = 20, \theta=0.2, \beta = 5$.
+</p>
+
+<figure>
+    <img src="./reports/reports/report20230811/apparent_motion_mag_speed_50_50.png" width="100%"/>
+	<caption><strong>Fig 1. The 50 50 case.</strong> Here we have $T_\text{on} = T_\text{off} = 0.5$. Other parameters are chosen as our standard pulse experiment $\tau_u = 1, \tau_q = 20, \theta=0.2, \beta = 5$. We have our entrainment threshold prediction in blue, successful entrainment simulations as green pluses and failed entrainment simulations as magenta Xs.</caption>
+</figure>
+<figure>
+    <img src="./reports/reports/report20230811/apparent_motion_mag_speed_mostly_off.png" width="100%"/>
+	<caption><strong>Fig 2. The mostly off case.</strong> Here we have $T_\text{on} = T_\text{off} = 0.5$. Other parameters are chosen as our standard pulse experiment $\tau_u = 1, \tau_q = 20, \theta=0.2, \beta = 5$. We have our entrainment threshold prediction in blue, successful entrainment simulations as green pluses and failed entrainment simulations as magenta Xs.</caption>
+</figure>
+<figure>
+    <img src="./reports/reports/report20230811/apparent_motion_mag_speed_mostly_on.png" width="100%"/>
+	<caption><strong>Fig 3. The mostly on case.</strong> Here we have $T_\text{on} = T_\text{off} = 0.5$. Other parameters are chosen as our standard pulse experiment $\tau_u = 1, \tau_q = 20, \theta=0.2, \beta = 5$. We have our entrainment threshold prediction in blue, successful entrainment simulations as green pluses and failed entrainment simulations as magenta Xs.</caption>
+</figure>
+
+In all cases we see the theory aligns with the simulations for small magnitudes and speeds.
+
 
 <!--***************************************************************************
 *******************************************************************************
