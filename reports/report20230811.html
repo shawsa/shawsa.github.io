@@ -281,6 +281,27 @@ e^{-\Delta_c T r} &\gt \frac{b_1}{a} e^{-r\Delta_y} \left(e^{T_{\text{on}}/\tau_
 Observe that if we were to take $\Delta_y \to \infty$ then $e^{-r\Delta_y} \to 0$ and this reduces to the same condition as before.
 </p>
 
+<h1>Simulation</h1>
+<p>
+We compare our asymptotic approximation to a grid of pulse magnitudes and relative pulse speeds for several configurations of $T_\text{on}$ and $T_\text{off}$. We name these scenarios <em>50 50</em> ($T_\text{on}=0.5, T_\text{off}=0.5$), <em>mostly on</em> ($T_\text{on}=0.5, T_\text{off}=0.05$), and <em> mostly off</em> ($T_\text{on}=0.05, T_\text{off}=0.5$).
+Other parameters are chosen as our standard pulse experiment $\tau_u = 1, \tau_q = 20, \theta=0.2, \beta = 5$.
+</p>
+
+<figure>
+    <img src="../reports/report20230811/apparent_motion_mag_speed_50_50.png" width="100%"/>
+	<caption><strong>Fig 1. The 50 50 case.</strong> Here we have $T_\text{on} = T_\text{off} = 0.5$. Other parameters are chosen as our standard pulse experiment $\tau_u = 1, \tau_q = 20, \theta=0.2, \beta = 5$. We have our entrainment threshold prediction in blue, successful entrainment simulations as green pluses and failed entrainment simulations as magenta Xs.</caption>
+</figure>
+<figure>
+    <img src="../reports/report20230811/apparent_motion_mag_speed_mostly_off.png" width="100%"/>
+	<caption><strong>Fig 2. The mostly off case.</strong> Here we have $T_\text{on} = T_\text{off} = 0.5$. Other parameters are chosen as our standard pulse experiment $\tau_u = 1, \tau_q = 20, \theta=0.2, \beta = 5$. We have our entrainment threshold prediction in blue, successful entrainment simulations as green pluses and failed entrainment simulations as magenta Xs.</caption>
+</figure>
+<figure>
+    <img src="../reports/report20230811/apparent_motion_mag_speed_mostly_on.png" width="100%"/>
+	<caption><strong>Fig 3. The mostly on case.</strong> Here we have $T_\text{on} = T_\text{off} = 0.5$. Other parameters are chosen as our standard pulse experiment $\tau_u = 1, \tau_q = 20, \theta=0.2, \beta = 5$. We have our entrainment threshold prediction in blue, successful entrainment simulations as green pluses and failed entrainment simulations as magenta Xs.</caption>
+</figure>
+
+In all cases we see the theory aligns with the simulations for small magnitudes and speeds.
+
 
 <!--***************************************************************************
 *******************************************************************************
