@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
+		<!--link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+<!--##################################################-->
+<section>
+	<section>
+		<h1>Group Update</h1>
+		<h2>August 16<sup>th</sup>, 2023</h2>
+	</section>
+	<section>
+		<img class="r-stretch" src="media/entrainment.gif"/>
+	</section>
+	<section>
+		<img class="r-stretch" src="media/apparent_dot.gif"/>
+	</section>
+	<section>
+		<img class="r-stretch" src="media/apparent_motion_panel1.gif"/>
+	</section>
+	<section>
+		<img class="r-stretch" src="media/apparent_motion_panel2.gif"/>
+	</section>
+	<section>
+		<img class="r-stretch" src="media/apparent_motion_panel3.gif"/>
+	</section>
+	<section>
+		<img class="r-stretch" src="media/apparent_motion_entrainment_success.gif"/>
+	</section>
+	<section>
+		<img class="r-stretch" src="media/apparent_motion_entrianment_failure.gif"/>
+	</section>
+	<section>
+		<h2>Entrainment Threshold</h2>
+		<div>
+			<div style="float: left; width: 50%">
+				Moving Square Stimulus
+				$$
+					\Delta_c \lt \varepsilon \frac{c \tau_u}{D}		
+				$$
+			</div>
+			<div style="float: right; width: 50%">
+				Apparently Moving Square Stimulus
+				$$
+				\Delta_c \lt \varepsilon \frac{c \tau_u}{D} \frac{T_{\text{on}}}{T}
+				$$
+			</div>
+		</div>
+	</section>
+	<section>
+		<img class="r-stretch" src="media/apparent_motion_mag_speed_mostly_on.png"/>
+	</section>
+	<section>
+		<img class="r-stretch" src="media/apparent_motion_mag_speed_50_50.png"/>
+	</section>
+	<section>
+		<img class="r-stretch" src="media/apparent_motion_mag_speed_mostly_off.png"/>
+	</section>
+</section>
+<!--##################################################-->
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+        <script src="plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ]
+			});
+		</script>
+	</body>
+</html>
