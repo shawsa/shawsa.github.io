@@ -1,0 +1,577 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>UChicago Talk</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+<!--##################################################-->
+<section>
+	<section>
+		<h2>Wave response theory for neural representations of apparent motion</h2>
+		<p>Sage Shaw - Oct 20<sup>th</sup>, 2023</p>
+		<p>Kilpatrick Lab at University of Colorado Boulder</p>
+	</section>
+	<!--###########-->
+	<section>
+		<h1>The Kilpatrick Lab</h1>
+		<div style="width: 100%">
+			<div style="float: left; width: 24%">
+				<img src="media/headshot_zack.png"/>
+				<p>Prof. Zack Kilpatrick</p>
+			</div>
+			<div style="float: left; width: 24%">
+				<img src="media/headshot_tahra.jpeg"/>
+				<p>Dr. Tahra Eissa</p>
+			</div>
+			
+			<div style="float: left; width: 24%">
+				<img src="media/headshot_heather.png"/>
+				<p>Heather Cihack</p>
+			</div>
+			<div style="float: left; width: 24%">
+				<img src="media/headshot_sage.png"/>
+				<p>Sage Shaw</p>
+			</div>
+		</div>
+	</section>
+	<!--###########-->
+	<section>
+		<h1>Outline</h1>
+		<ul>
+			<li>Neural field model</li>
+			<li>Traveling wave solutions</li>
+			<li>The wave response function</li>
+			<li>Entrainment</li>
+			<li>Apparent Motion Entrainment</li>
+		</ul>
+	</section>
+	<!--###########-->
+	<section>
+		<img class="r-stretch" src="media/apparent_motion_demo.gif" width=100%/>
+		<aside class="notes">
+			<ul>
+				<li>Examine differences</li>
+				<li>Apparent motion is a clue to how we work</li>
+				<li>Models should be susceptible.</li>
+			</ul>
+		</aside>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h1>Neural Field Model</h1>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Biological Neural Networks</h3>
+		<img class="r-stretch" src="media/neuron.png" width="70%"/>
+        <p>Image courtesy of Heather Cihak.</p>
+		<aside class="notes">
+			<ul>
+				<li>firing</li>
+				<li>synapse</li>
+				<li>population firing rates</li>
+				<li>Sensory information has spatial organization</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Retinotopic Map</h3>
+		<div style="width: 100%">
+			<div style="float: left; width: 30%">
+				<ul>
+					<li>Primary visual area (V1)</li>
+					<li>Sensory areas have spatially organized topologies</li>
+				</ul>
+			</div>
+			<div style="float: right; width: 70%">
+				<img src="media/Dougherty_2003.jpeg" width="70%"/>
+				<p><a href="https://jov.arvojournals.org/article.aspx?articleid=2192509" target=blank>Dougherty et al. (2003)</a></p>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>Expanding annulus</li>
+				<li>rotating wedge</li>
+				<li>colors are continuous</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Neural Field Models</h3>
+		<ul>
+			<li>Organize neural populations on a line</li>
+			<li>Connectivity is determined by distance</li>
+			<li>Extend to a continuum limit</li>
+		</ul>
+		<img src="media/network_diagram.png" />
+		<aside class="notes">
+			<ul>
+				<li>connections for a single neuron</li>
+				<li>strength decays with distance</li>
+				<li>continuum limit</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Synaptic Depression</h3>
+		<p>Rapid firing depletes pre-synaptic resources.</p>
+		<img src="media/depression.png" width="70%"/>
+		<aside class="notes">
+			<ul>
+				<li>Firing releases neurotransmitters</li>
+				<li>Rapid firing depletes the pre-synaptic resources.</li>
+				<li>incorporate this into our neural field model.
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Model</h3>
+		<p data-id="models">
+        \begin{align*}
+		\tau_u \frac{\partial}{\partial t}\underbrace{u(x,t)}_{\text{Activity}} &=
+		-u + \underbrace{\overbrace{w}^{\substack{\text{network}\\\text{connectivity}\\\text{kernel}}} \ast \big( q f[u] \big)}_{\substack{\text{network}\\\text{stimulation}}} \\
+			\tau_q \frac{\partial}{\partial t}\underbrace{q(x,t)}_{\substack{\text{Synaptic}\\\text{Efficacy}}} &=
+			1 - q - \underbrace{\beta}_{\substack{\text{rate of}\\\text{depletion}}} q \underbrace{f(u)}_{\substack{\text{firing-rate}\\\text{function}}}
+        \end{align*}
+		</p>
+		<aside class="notes">
+			<ul>
+				<li>activity and efficacy, are normalized</li>
+				<li>Sum over inputs becomes integral</li>
+				<li>Note that $\tau_q > \tau_u$</li>
+				<li>firing-rate and weight kernel next slide</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Model</h3>
+		<ul>
+			<li>$f[u] = H(u - \theta)$ - All or nothing firing-rate function.</li>
+			<li>$w(|x-y|) = \frac{1}{2}e^{-|x-y|}$ - network connectivity kernel</li>
+			<li>$\frac{1}{1+\beta} = \gamma \in (0, 1]$ - Relative timescale of synaptic depletion.</li>
+		</ul>
+		<aside class="notes">
+			<ul>
+				<li>activity and efficacy, are normalized</li>
+				<li>Sum over inputs becomes integral</li>
+				<li>Note that $\tau_q > \tau_u$</li>
+				<li>Explain $\gamma$?</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>1D Neural Fields</h3>
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<img src="media/progressive_front_gen.gif"/>
+				<img src="media/regressive.gif"/>
+			</div>
+			<div style="float: right; width: 50%">
+				<ul>
+					<li><span style="color: green;">Progressive fronts</span></li>
+					<li><span style="color: magenta;">Regressive fronts</span></li>
+					<li><span style="color: blue">Pulses</span></li>
+				</ul>
+				<img src="media/pulse_generation.gif"/>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<section>
+		<h3>Model</h3>
+		<img class="r-stretch" src="media/pulse_diagram.png"/>
+		<aside class="notes">
+			<ul>
+				<li>pulse profile</li>
+				<li>threshold and active region</li>
+				<li>weight kernel and convolution</li>
+			</ul>
+		</aside>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h1>Traveling wave solutions</h1>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Front solutions</h3>
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<ul>
+					<li>$\xi = x - ct$</li>
+					<li>Active region: $(-\infty, 0)$</li>
+					<li>Restrict to $c > 0$</li>
+				</ul>
+				<img class="r-stretch" src="media/progressive_front.gif" width=90%/>
+			</div>
+			<div style="float: right; width: 50%">
+				<ul>
+					<li>Linearizes equations</li>
+					<li>Decouples $q$ from $u$</li>
+					<li>$U(-\infty) = \gamma > \theta$</li>
+				</ul>
+				<p>
+				$$
+					\theta = \frac{\gamma + c\tau_q\gamma}{2(1+c\tau_q\gamma)(1+c\tau_u)}
+				$$
+				</p>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Front Bifurcations</h3>
+		<div style="width: 100%">
+			<img src="media/speed_by_gamma.png" width=100%/>
+			<aside class="notes">
+				<ul>
+					<li>Three solutions for theta &lt; gamma &lt; 2theta</li>
+					<li>One solution for 2theta &lt; gamma</li>
+					<li>gamma = 1 iff beta = 0: no depression</li>
+				</ul>
+			</aside>
+		</div>
+		
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Front Bifurcations</h3>
+				<img class="r-stretch" src="media/speed_by_tau_q.png" width=100%/>		
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Pulse solutions</h3>
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<ul>
+					<li>$\xi = x - ct$</li>
+					<li>Active region: $(-\Delta, 0)$</li>
+				</ul>
+			</div>
+			<div style="float: right; width: 50%">
+				<ul>
+					<li>Linearizes equations</li>
+					<li>Decouples $q$ from $u$</li>
+				</ul>
+			</div>
+		</div>
+		&nbsp;
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<img class="r-stretch" src="media/pulse_profile.png" width=90%/>
+			</div>
+			<div style="float: right; width: 50%">
+				<p>Two consistency equations for $c$ and $\Delta$.</p>
+			</div>
+		</div>
+		</p>
+		<aside class="notes">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Pulse Speed and Width</h3>
+		<img class="r-stretch" src="media/hi_res_figure2.png" width=100%/>
+		<aside class="notes">
+			<ul>
+				<li>Slow depression takes longer to recover, so wider pulse</li>
+				<li>Wider pulse means more stimulation at the font so faster speed</li>
+			</ul>
+		</aside>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h1>Wave response</h1>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Correcting Position</h3>
+		<img class="r-stretch" src="media/bun_tracking.gif"/>
+		<ul>
+			<li>Position encoded as a pulse</li>
+			<li>Must be corrected</li>
+		</ul>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Spatially homogeneous perturbation</h3>
+		<img class="r-stretch" src="media/front_delta_time.gif"/>
+	</section>
+	<!--###########-->
+	<section>
+		<p>
+		<h3>Asymptotic Approximation</h3>
+		add stimulus terms
+		$$
+		\begin{align*}
+			\tau_u u_t &= -u + w * (q f[u]) + \varepsilon I_u(x, t) \label{eqn:forced_u} \\
+			\tau_q q_t &= 1 - q - \beta q f[u] + \varepsilon I_q(x, t) \label{eqn:forced_q}
+		\end{align*}
+		$$
+		</p>
+		<p>
+		substitute with the expansion
+		$$
+			\begin{align*}
+				u(\xi, t) &= U\big( \xi - \varepsilon \nu(t) \big) + \varepsilon \phi + \mathcal{O}(\varepsilon^2) \\
+				q(\xi, t) &= Q\big( \xi - \varepsilon \nu(t) \big) + \varepsilon \psi + \mathcal{O}(\varepsilon^2)
+			\end{align*}
+		$$
+		</p>
+	</section>
+	<!--###########-->
+	<section>
+		<p>Collect the $\mathcal{O}(\varepsilon)$ terms</p>
+		$$\begin{align*}
+		\underbrace{\begin{bmatrix}\tau_u & 0 \\ 0 & \tau_q\end{bmatrix}}_{T} \begin{bmatrix}\phi \\ \psi \end{bmatrix}_t + \mathcal{L}\begin{bmatrix}\phi \\ \psi \end{bmatrix}
+        &=
+        \begin{bmatrix} I_u + \tau_u U' \nu' \\ I_q + \tau_q Q' \nu ' \end{bmatrix}
+		\end{align*}$$
+
+		$$
+		\mathcal{L}(\vec{v}) = \vec{v} - cT \vec{v} +
+        \begin{bmatrix}
+            -w Q f'(U) * \cdot  & -w f(U) * \cdot \\
+            \beta Q f'(U) & \beta f(U)
+        \end{bmatrix}
+		\vec{v}
+		$$
+
+	</section>
+	<!--###########-->
+	<section>
+		<p>
+		Bounded solutions exist if the inhomogeneity is orthogonal to $\mathcal{N}\{\mathcal{L^*}\}$. For $(v_1, v_2) \in \mathcal{N}\{\mathcal{L^*}\}$
+		$$\begin{align*}
+    	-c \tau_u v_1' &= v_1 - Qf'(U) \int w(y,\xi) v_1(y) \ dy + \beta Qf'(U) v_2 \\
+    	-c \tau_q v_2' &= v_2 - f(U) \int w(y, \xi) v_1(y) \ dy + \beta f(U) v_2.
+		\end{align*}$$
+		</p>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Wave response function</h3>
+		$$
+		\nu(t) = - \frac{\int_\mathbb{R} v_1 \int_0^t I_u(\xi, \tau) \ d\tau + v_2 \int_0^t I_q(\xi, \tau) \ d\tau \ d\xi}{\int_\mathbb{R} \tau_u U' v_1 + \tau_q Q' v_2 \ d\xi}
+		$$
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Spatially Homogeneous perturbation</h3>
+		$$
+			\varepsilon I_u = \varepsilon \delta(t - 1)
+		$$
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<img src="media/front_delta_time.gif" width=100%/>
+			</div>
+			<div style="float: right; width: 50%">
+				<img src="media/front_response_epsilon.png" width=100%/>
+			</div>
+		</div>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Spatially localized perturbation</h3>
+		<img  src="media/square_space_delta_time_u.gif" width=80%/>
+	</section>
+    <!--###########-->
+	<section>
+		<h3>Spatially localized perturbation</h3>
+		<img src="media/localized_diagram.png" width=100%/>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Spatially localized perturbation</h3>
+		<img src="media/spatially_localized.png" width=100%/>
+	</section>
+    <!--###########-->
+	<section>
+		<h3>Spatially localized perturbation</h3>
+		<img src="media/spatially_localized_q.png" width=100%/>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h1>Entrainment</h1>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Tracking a moving stimulus</h3>
+		<img class="r-stretch" src="media/smooth_dot.gif"/>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Tracking a moving stimulus</h3>
+		<img class="r-stretch" src="media/entrainment.gif"/>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>old expasion</h3>
+		$$
+			\begin{align*}
+				u(\xi, t) &= U\big( \xi - \varepsilon \nu \big) + \varepsilon \phi + \mathcal{O}(\varepsilon^2) \\
+				q(\xi, t) &= Q\big( \xi - \varepsilon \nu \big) + \varepsilon \psi + \mathcal{O}(\varepsilon^2)
+			\end{align*}
+		$$
+		<h3>new expansion</h3>
+		$$
+			\begin{align*}
+				u(\xi, t) &= U\big( \xi - \varepsilon \nu \big) + \varepsilon \phi(\xi \color{blue}{- \varepsilon \nu}, t) + \mathcal{O}(\varepsilon^2) \\
+				q(\xi, t) &= Q\big( \xi - \varepsilon \nu \big) + \varepsilon \psi(\xi \color{blue}{- \varepsilon \nu}, t) + \mathcal{O}(\varepsilon^2)
+			\end{align*}
+		$$
+	</section>
+	<!--###########-->
+	<section>
+		<h3>old wave response</h3>
+		$$
+		\frac{\partial}{\partial t}\nu = \frac{ \langle v_1 ,I_u(\xi, \tau)\rangle + \langle v_2, I_q(\xi, \tau)\rangle }{-\tau_u \langle v_1, U' \rangle - \tau_q \langle v_2, Q' \rangle}
+		$$
+		<h3>new wave response</h3>
+		$$
+		\frac{\partial}{\partial t}\nu = \frac{ \langle v_1 ,I_u(\xi + \varepsilon \nu + ct, \tau)\rangle + \langle v_2, I_q(\xi + \varepsilon \nu + ct, \tau)\rangle }{\underbrace{-\tau_u \langle v_1, U' \rangle - \tau_q \langle v_2, Q' \rangle}_{K}}
+		$$
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Entrainment to a moving Square wave</h3>
+		<img class="r-stretch" src="media/entrainment_square_profile.png"/>
+	</section>
+	<section>
+		<h3>Entraining to a moving stimulus</h3>
+		<div style="width: 100%">
+			<div style="float: left; width: 70%">
+				<img class="r-stretch" src="media/entrainment_square_contour.png"/>
+			</div>
+			<div style="float: right; width: 30%">
+				<p>Asymptotic threshold<p>
+				$$ \Delta_c \lt \varepsilon \frac{c\tau_u}{K}$$
+			</div>
+		</div>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h2>Apparent Motion Entrainment</h2>
+	<aside class="notes">
+		<ul>
+			<li>Zack</li>
+			<li>Tahra</li>
+			<li>Nick</li>
+			<li>Heather</li>
+			<li>Committee and audience</li>
+		</ul>
+	</aside>
+	</section>
+	<section>
+		<img class="r-stretch" src="media/apparent_motion_demo.gif" width=100%/>
+	</section>
+	<section data-auto-animate>
+		<img class="r-stretch" src="media/apparent_motion_panel1.gif"/>
+	</section>
+	<section data-auto-animate>
+		<img class="r-stretch" src="media/apparent_motion_panel2.gif"/>
+	</section>
+	<section data-auto-animate>
+		<img class="r-stretch" src="media/apparent_motion_panel3.gif"/>
+	</section>
+	<section>
+		<img class="r-stretch" src="media/apparent_motion_entrainment_success.gif"/>
+	</section>
+	<section>
+		<img class="r-stretch" src="media/apparent_motion_entrianment_failure.gif"/>
+	</section>
+	<section>
+		<h3>Asymptotic Entrainment Threshold</h3>
+		$$
+		\Delta_c < \varepsilon \frac{c\tau_u}{K} \frac{T_\text{on}}{T}
+		$$
+		<img class="r-stretch" src="media/fig6_hi_res.png"/>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h3>Thank you</h3>
+		<ul>
+			<li>Manuscript on ArXiv soon!</li>
+			<li>Slides and Public Notes: shawsa.github.io</li>
+			<li>Code repository: github.com/shawsa/neural-field-synaptic-depression</li>
+		</ul>
+	<aside class="notes">
+		<ul>
+			<li>Zack</li>
+			<li>Tahra</li>
+			<li>Nick</li>
+			<li>Heather</li>
+			<li>Committee and audience</li>
+		</ul>
+	</aside>
+	</section>
+</section>
+<!--##################################################-->
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+        <script src="plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ]
+			});
+		</script>
+	</body>
+</html>

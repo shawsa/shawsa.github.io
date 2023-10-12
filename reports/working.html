@@ -87,7 +87,7 @@
 <!--h1 id="Title">August 8<sup>th</sup>, 2023</h1-->
 <h1 id="Title">Working</h1>
 <p id="summary">
-	Summary
+	We're finishing the manuscript for the work on stimulus response to traveling wave solutions in a neural field model with synaptic depression. Some steps in the calculations in the manuscript are skipped to save space. Here, for our convenience, we present those in full, or link to a report that has the computation.
 </p>
 
 
@@ -97,6 +97,89 @@
 
 <hr>
 <!--********************************************************************-->
+<h1>Advancing Traveling Front Derivation</h1>
+<p>
+In characteristic coordinates, the traveling front solution satisfies
+\begin{align*}
+	-c\tau_u U' + U &= w \ast (Qf[U]) \\
+	-c\tau_q Q' + Q &= 1 - \beta Q f[U].
+\end{align*}
+We take the active region to be $(-\infty, 0)$ and we have
+\begin{align*}
+	-c\tau_u U' + U &= \int_{-\infty}^0 \frac{1}{2} e^{|\xi - y|} Q(y) \ dy \\
+	-c\tau_q Q' + Q &= 1 - \beta Q H(-\xi).
+\end{align*}
+For $\xi \gt 0$ we enforce boundedness on $Q$ and find $Q = 1$ in this region.
+</p>
+<p>
+For $\xi \lt 0$ our equation for $Q$ becomes
+\begin{align*}
+	-c\tau_q Q' + (1+\beta)Q
+		&= 1 \\
+	Q' - \frac{1}{c \gamma \tau_q} Q
+		&= - \frac{1}{c\tau_q} \\
+	\left[ Q e^{-\xi/ (c \gamma \tau_q)} \right]'
+		&= -\frac{1}{c\tau_q} e^{-\xi/ (c \gamma \tau_q)} \\
+	Q e^{-\xi/ (c \gamma \tau_q)}
+		&= 1 - \frac{1}{c\tau_q} \int_0^\xi e^{-y/ (c \gamma \tau_q)} \ dy \\
+		&= 1 - \gamma \left(1 - e^{-\xi/(c\gamma \tau_q)} \right) \\
+	Q(\xi) &= \gamma + (1- \gamma) \exp \left( \frac{\xi}{c\gamma \tau_q} \right).
+\end{align*}
+Thus we have $Q$ over the entire domain
+\begin{align*}
+Q(\xi) = \begin{cases}
+	1, & \ \xi \ge 0, \\ 
+	\gamma + (1- \gamma) \exp \left( \frac{\xi}{c\gamma \tau_q} \right) , & \ \xi \lt 0.
+	\end{cases}
+\end{align*}
+</p>
+<p>
+Substituting into our equation for $U$, we have
+\begin{align*}
+-c\tau_u U' + U &= \int_{-\infty}^0 \frac{1}{2} \left[ \gamma + (1 - \gamma) e^{y/(c\gamma\tau_q)}\right] e^{-|\xi - y|} \ dy.
+\end{align*}
+</p>
+<p>
+We will evaluate the integral on the right hand side. First, consider $\xi \gt 0$. Then
+\begin{align*}
+	\int_{-\infty}^0 \frac{1}{2} \left[ \gamma + (1 - \gamma) e^{y/(c\gamma\tau_q)}\right] e^{-|\xi - y|} \ dy
+		&= e^{-\xi} \int_{-\infty}^0 \frac{1}{2} \left[ \gamma + (1 - \gamma) e^{y/(c\gamma\tau_q)}\right] e^{y} \ dy \\
+		&= e^{-\xi} \left[ \int_{-\infty}^0 \frac{1}{2} \gamma e^y \ dy + \int_{-\infty}^0 \frac{1}{2}(1 - \gamma) e^{y(1 + c\gamma\tau_q)/(c\gamma\tau_q)} \ dy \right] \\
+		&= e^{-\xi} \left[ \frac{1}{2}\gamma + \frac{1}{2}(1-\gamma) \frac{c\gamma\tau_q}{1 + c\gamma\tau_q} \right] \\
+		&= e^{-\xi} \frac{1}{2} \left[ \frac{\gamma + c\gamma^2 \tau_q}{1+c\gamma\tau_q} + \frac{c\gamma\tau_q - c\gamma^2\tau_q}{1+c\gamma\tau_q} \right]  \\
+		&= e^{-\xi} \frac{1}{2} \frac{\gamma + c\gamma\tau_q}{1 + c\gamma\tau_q}.
+\end{align*}
+Then we have
+\begin{align*}
+\left[ U e^{-\xi/(c\tau_u)} \right]' &= -\frac{1}{2c\tau_u} \frac{\gamma + c\gamma\tau_q}{1 + c\gamma\tau_q} e^{-\xi (1+c\tau_u)/(c\tau_u)}  \\
+U e^{-\xi/(c\tau_u)} &= U_0 + \int_0^\xi -\frac{1}{2c\tau_u} \frac{\gamma + c\gamma\tau_q}{1 + c\gamma\tau_q} e^{-y (1+c\tau_u)/(c\tau_u)} \ dy  \\
+U e^{-\xi/(c\tau_u)} &= U_0 + \frac{1}{2c\tau_u} \frac{\gamma + c\gamma\tau_q}{1 + c\gamma\tau_q}\frac{c\tau_u}{1+c\tau_u} (e^{-\xi(1+c\tau_u)/(c\tau_u)} - 1)  \\
+U(\xi) &= e^{\xi/(c \tau_u)} \left( U_0 - \frac{1}{2c\tau_u} \frac{\gamma + c\gamma\tau_q}{1 + c\gamma\tau_q}\frac{c\tau_u}{1+c\tau_u} \right) + e^{-\xi} \frac{1}{2c\tau_u} \frac{\gamma + c\gamma\tau_q}{1 + c\gamma\tau_q}\frac{c\tau_u}{1+c\tau_u}.
+\end{align*}
+To enforce a bounded solution we set the $e^{\xi/(c\tau_u)}$ coefficient to zero, giving
+\begin{align*}
+U(\xi) &= \frac{\gamma + c\gamma \tau_q}{2(1+c\tau_u)(1+c\gamma\tau_q)} e^{-\xi}\\
+	U_0 = \theta &= \frac{\gamma + c\gamma \tau_q}{2(1+c\tau_u)(1+c\gamma\tau_q)}.
+\end{align*}
+</p>
+<p>
+Next, we consider $\xi \lt 0$. Our right-hand-side integral becomes
+\begin{align*}
+	\text{RHS} &= \int_{-\infty}^0 \frac{1}{2} \left[ \gamma + (1 - \gamma) e^{y/(c\gamma\tau_q)}\right] e^{-|\xi - y|} \ dy \\ 
+		&= \int_{-\infty}^\xi \frac{1}{2} \left[ \gamma + (1 - \gamma) e^{y/(c\gamma\tau_q)}\right] e^{-|\xi - y|} \ dy + \int_{\xi}^0 \frac{1}{2} \left[ \gamma + (1 - \gamma) e^{y/(c\gamma\tau_q)}\right] e^{-|\xi - y|} \ dy \\ 
+		&= \frac{1}{2} e^{-\xi} \int_{-\infty}^\xi \left[ \gamma + (1 - \gamma) e^{y/(c\gamma\tau_q)}\right] e^{y} \ dy + \frac{1}{2} e^{\xi}\int_{\xi}^0 \left[ \gamma + (1 - \gamma) e^{y/(c\gamma\tau_q)}\right] e^{-y} \ dy \\
+		&= \frac{1}{2} e^{-\xi} \int_{-\infty}^\xi \gamma e^y + (1-\gamma)e^{y(1+c\gamma\tau_q)/(c\gamma\tau_q)} \ dy + \frac{1}{2} e^{\xi} \int_{\xi}^0 \gamma e^{-y} + (1-\gamma)e^{y(1-c\gamma\tau_q)/(c\gamma\tau_q)} \ dy \\
+		&= \frac{1}{2} e^{-\xi} \left( \gamma e^{\xi} + \frac{(1-\gamma)(c\gamma\tau_q)}{1+c\gamma\tau_q} e^{\xi(1+c\gamma\tau_q)/(c\gamma\tau_q)} \right) + \frac{1}{2}e^\xi \left(\gamma(1-e^{-\xi}) + \frac{(1-\gamma)(c\gamma\tau_q)}{1-c\gamma\tau_q} (1 - e^{\xi(1-c\gamma\tau_q)/(c\gamma\tau_q)}) \right) \\ 
+		&= \frac{1}{2}\gamma + \frac{(1-\gamma)(c\gamma\tau_q)}{2(1+c\gamma\tau_q)} e^{\xi/(c\gamma\tau_q)} + \frac{1}{2}\gamma e^{\xi} - \frac{1}{2}\gamma + e^{\xi} \frac{(1-\gamma)(c\gamma\tau_q)}{2(1-c\gamma\tau_q)} - \frac{(1-\gamma)(c\gamma\tau_q)}{2(1-c\gamma\tau_q)} e^{\xi/(c\gamma\tau_q)} \\
+		&= \frac{(1-\gamma)(c\gamma\tau_q)}{2}\left[ \frac{1}{1+c\gamma\tau_q} - \frac{1}{1-c\gamma\tau_q} \right] e^{\xi/(c\gamma\tau_q)} + \left[ \frac{1}{2}\gamma  + \frac{(1-\gamma)(c\gamma\tau_q)}{2(1-c\gamma\tau_q)}\right] e^{\xi}  \\
+		&= \frac{(\gamma-1)(c\gamma\tau_q)^2}{2-2(c\gamma\tau_q)^2} e^{\xi/(c\gamma\tau_q)} + \frac{\gamma + c\gamma\tau_q - 2c\gamma^2\tau_q}{2 - 2c\gamma\tau-q} e^{\xi} .
+\end{align*}
+Then we have
+\begin{align*}
+	\left[ Ue^{-\xi/(c\tau_u)} \right] &= 
+\end{align*}
+</p>
+
 
 
 
