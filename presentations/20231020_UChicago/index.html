@@ -202,18 +202,6 @@
 			</ul>
 		</aside>
 	</section>
-	<!--###########-->
-	<section>
-		<h3>Model</h3>
-		<img class="r-stretch" src="media/pulse_diagram.png"/>
-		<aside class="notes">
-			<ul>
-				<li>pulse profile</li>
-				<li>threshold and active region</li>
-				<li>weight kernel and convolution</li>
-			</ul>
-		</aside>
-	</section>
 </section>
 <!--##################################################-->
 <section>
@@ -231,8 +219,8 @@
 	</section>
 	<!--###########-->
 	<section>
-		<h3>Spatially homogeneous perturbation</h3>
-		<img class="r-stretch" src="media/front_delta_time.gif"/>
+		<h3>Spatially localized perturbation</h3>
+		<img  src="media/square_space_delta_time_u.gif" width=80%/>
 	</section>
 	<!--###########-->
 	<section>
@@ -250,8 +238,8 @@
 		substitute with the expansion
 		$$
 			\begin{align*}
-				u(\xi, t) &= U\big( \xi - \varepsilon \nu(t) \big) + \varepsilon \phi + \mathcal{O}(\varepsilon^2) \\
-				q(\xi, t) &= Q\big( \xi - \varepsilon \nu(t) \big) + \varepsilon \psi + \mathcal{O}(\varepsilon^2)
+				u(\xi, t) &= U\big( \xi - \varepsilon \nu(t) \big) + \varepsilon \phi\big(\xi - \varepsilon \nu(t), t\big) + \mathcal{O}(\varepsilon^2) \\
+				q(\xi, t) &= Q\big( \xi - \varepsilon \nu(t) \big) + \varepsilon \psi\big(\xi - \varepsilon \nu(t), t\big) + \mathcal{O}(\varepsilon^2)
 			\end{align*}
 		$$
 		</p>
@@ -289,43 +277,13 @@
 	<section>
 		<h3>Wave response function</h3>
 		$$
-		\nu(t) = \frac{\int_{0}^t \langle v_1(\cdot), I_u(\cdot, \tau) \rangle + \langle v_2(\cdot), I_q(\cdot, \tau) \rangle \ d\tau}{- \tau_u \langle v_1, U' \rangle - \tau_q \langle v_2, Q' \rangle}
+		\frac{\partial}{\partial t}\nu = \frac{ \langle v_1 ,I_u(\xi + \color{blue}{\varepsilon \nu}, t)\rangle + \langle v_2, I_q(\xi +\color{blue}{\varepsilon \nu}, t)\rangle }{\underbrace{-\tau_u \langle v_1, U' \rangle - \tau_q \langle v_2, Q' \rangle}_{K}}
 		$$
-	</section>
-	<!--###########-->
-	<section>
-		<h3>Spatially Homogeneous perturbation</h3>
-		$$
-			\varepsilon I_u = \varepsilon \delta(t - 1)
-		$$
-		<div style="width: 100%">
-			<div style="float: left; width: 50%">
-				<img src="media/front_delta_time.gif" width=100%/>
-			</div>
-			<div style="float: right; width: 50%">
-				<img src="media/front_response_epsilon.png" width=100%/>
-			</div>
-		</div>
-	</section>
-	<!--###########-->
-	<section>
-		<h3>Spatially localized perturbation</h3>
-		<img  src="media/square_space_delta_time_u.gif" width=80%/>
-	</section>
-    <!--###########-->
-	<section>
-		<h3>Spatially localized perturbation</h3>
-		<img src="media/localized_diagram.png" width=100%/>
 	</section>
 	<!--###########-->
 	<section>
 		<h3>Spatially localized perturbation</h3>
 		<img src="media/spatially_localized.png" width=100%/>
-	</section>
-    <!--###########-->
-	<section>
-		<h3>Spatially localized perturbation</h3>
-		<img src="media/spatially_localized_q.png" width=100%/>
 	</section>
 </section>
 <!--##################################################-->
@@ -342,23 +300,6 @@
 	<section>
 		<h3>Tracking a moving stimulus</h3>
 		<img class="r-stretch" src="media/entrainment.gif"/>
-	</section>
-	<!--###########-->
-	<section>
-		<h3>old expasion</h3>
-		$$
-			\begin{align*}
-				u(\xi, t) &= U\big( \xi - \varepsilon \nu \big) + \varepsilon \phi + \mathcal{O}(\varepsilon^2) \\
-				q(\xi, t) &= Q\big( \xi - \varepsilon \nu \big) + \varepsilon \psi + \mathcal{O}(\varepsilon^2)
-			\end{align*}
-		$$
-		<h3>new expansion</h3>
-		$$
-			\begin{align*}
-				u(\xi, t) &= U\big( \xi - \varepsilon \nu \big) + \varepsilon \phi(\xi \color{blue}{- \varepsilon \nu}, t) + \mathcal{O}(\varepsilon^2) \\
-				q(\xi, t) &= Q\big( \xi - \varepsilon \nu \big) + \varepsilon \psi(\xi \color{blue}{- \varepsilon \nu}, t) + \mathcal{O}(\varepsilon^2)
-			\end{align*}
-		$$
 	</section>
 	<!--###########-->
 	<section>
