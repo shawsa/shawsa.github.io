@@ -55,6 +55,7 @@
 			<li>The wave response function</li>
 			<li>Entrainment</li>
 			<li>Apparent Motion Entrainment</li>
+			<li>Future Work</li>
 		</ul>
 	</section>
 	<!--###########-->
@@ -167,7 +168,7 @@
 		<ul>
 			<li>$f[u] = H(u - \theta)$ - All or nothing firing-rate function.</li>
 			<li>$w(|x-y|) = \frac{1}{2}e^{-|x-y|}$ - network connectivity kernel</li>
-			<li>$\frac{1}{1+\beta} = \gamma \in (0, 1]$ - Relative timescale of synaptic depletion.</li>
+			<li>$\gamma = \frac{1}{1+\beta} \in (0, 1]$</li>
 		</ul>
 		<aside class="notes">
 			<ul>
@@ -201,6 +202,7 @@
 			</ul>
 		</aside>
 	</section>
+	<!--###########-->
 	<section>
 		<h3>Model</h3>
 		<img class="r-stretch" src="media/pulse_diagram.png"/>
@@ -209,112 +211,6 @@
 				<li>pulse profile</li>
 				<li>threshold and active region</li>
 				<li>weight kernel and convolution</li>
-			</ul>
-		</aside>
-	</section>
-</section>
-<!--##################################################-->
-<section>
-	<section>
-		<h1>Traveling wave solutions</h1>
-	</section>
-	<!--###########-->
-	<section>
-		<h3>Front solutions</h3>
-		<div style="width: 100%">
-			<div style="float: left; width: 50%">
-				<ul>
-					<li>$\xi = x - ct$</li>
-					<li>Active region: $(-\infty, 0)$</li>
-					<li>Restrict to $c > 0$</li>
-				</ul>
-				<img class="r-stretch" src="media/progressive_front.gif" width=90%/>
-			</div>
-			<div style="float: right; width: 50%">
-				<ul>
-					<li>Linearizes equations</li>
-					<li>Decouples $q$ from $u$</li>
-					<li>$U(-\infty) = \gamma > \theta$</li>
-				</ul>
-				<p>
-				$$
-					\theta = \frac{\gamma + c\tau_q\gamma}{2(1+c\tau_q\gamma)(1+c\tau_u)}
-				$$
-				</p>
-			</div>
-		</div>
-		<aside class="notes">
-			<ul>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-			</ul>
-	</section>
-	<!--###########-->
-	<section>
-		<h3>Front Bifurcations</h3>
-		<div style="width: 100%">
-			<img src="media/speed_by_gamma.png" width=100%/>
-			<aside class="notes">
-				<ul>
-					<li>Three solutions for theta &lt; gamma &lt; 2theta</li>
-					<li>One solution for 2theta &lt; gamma</li>
-					<li>gamma = 1 iff beta = 0: no depression</li>
-				</ul>
-			</aside>
-		</div>
-		
-	</section>
-	<!--###########-->
-	<section>
-		<h3>Front Bifurcations</h3>
-				<img class="r-stretch" src="media/speed_by_tau_q.png" width=100%/>		
-	</section>
-	<!--###########-->
-	<section>
-		<h3>Pulse solutions</h3>
-		<div style="width: 100%">
-			<div style="float: left; width: 50%">
-				<ul>
-					<li>$\xi = x - ct$</li>
-					<li>Active region: $(-\Delta, 0)$</li>
-				</ul>
-			</div>
-			<div style="float: right; width: 50%">
-				<ul>
-					<li>Linearizes equations</li>
-					<li>Decouples $q$ from $u$</li>
-				</ul>
-			</div>
-		</div>
-		&nbsp;
-		<div style="width: 100%">
-			<div style="float: left; width: 50%">
-				<img class="r-stretch" src="media/pulse_profile.png" width=90%/>
-			</div>
-			<div style="float: right; width: 50%">
-				<p>Two consistency equations for $c$ and $\Delta$.</p>
-			</div>
-		</div>
-		</p>
-		<aside class="notes">
-			<ul>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-			</ul>
-		</aside>
-	</section>
-	<!--###########-->
-	<section>
-		<h3>Pulse Speed and Width</h3>
-		<img class="r-stretch" src="media/hi_res_figure2.png" width=100%/>
-		<aside class="notes">
-			<ul>
-				<li>Slow depression takes longer to recover, so wider pulse</li>
-				<li>Wider pulse means more stimulation at the font so faster speed</li>
 			</ul>
 		</aside>
 	</section>
@@ -476,10 +372,11 @@
 		$$
 	</section>
 	<!--###########-->
-	<section>
+	<!--section>
 		<h3>Entrainment to a moving Square wave</h3>
 		<img class="r-stretch" src="media/entrainment_square_profile.png"/>
-	</section>
+	</section-->
+	<!--###########-->
 	<section>
 		<h3>Entraining to a moving stimulus</h3>
 		<div style="width: 100%">
@@ -492,38 +389,8 @@
 			</div>
 		</div>
 	</section>
-</section>
-<!--##################################################-->
-<section>
-	<section>
-		<h2>Apparent Motion Entrainment</h2>
-	<aside class="notes">
-		<ul>
-			<li>Zack</li>
-			<li>Tahra</li>
-			<li>Nick</li>
-			<li>Heather</li>
-			<li>Committee and audience</li>
-		</ul>
-	</aside>
-	</section>
 	<section>
 		<img class="r-stretch" src="media/apparent_motion_demo.gif" width=100%/>
-	</section>
-	<section data-auto-animate>
-		<img class="r-stretch" src="media/apparent_motion_panel1.gif"/>
-	</section>
-	<section data-auto-animate>
-		<img class="r-stretch" src="media/apparent_motion_panel2.gif"/>
-	</section>
-	<section data-auto-animate>
-		<img class="r-stretch" src="media/apparent_motion_panel3.gif"/>
-	</section>
-	<section>
-		<img class="r-stretch" src="media/apparent_motion_entrainment_success.gif"/>
-	</section>
-	<section>
-		<img class="r-stretch" src="media/apparent_motion_entrianment_failure.gif"/>
 	</section>
 	<section>
 		<h3>Asymptotic Entrainment Threshold</h3>
@@ -532,6 +399,191 @@
 		$$
 		<img class="r-stretch" src="media/fig6_hi_res.png"/>
 	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h1>Future work</h1>
+		<aside class="notes">
+			<ul>
+				<li>Interested in modeling other kinds of traveling waves</li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Spreading Depression</h3>
+		<img class="r-stretch" src="media/Zandt_CSD.png"/>
+		<br>
+		<a href="https://www.degruyter.com/document/doi/10.1515/revneuro-2014-0069/html" target=blank>Zandt, Haken, van Putten, and Markus (2015)</a>
+		<aside class="notes">
+			<ul>
+				<li>Slow moving chemical wave.</li>
+				<li>Believed to cause migraines.</li>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Retinotopic Map</h3>
+		<img class="r-stretch" src="media/Zandt_retinotopic_map.png"/>
+		<br>
+		<a href="https://www.degruyter.com/document/doi/10.1515/revneuro-2014-0069/html" target=blank>Zandt, Haken, van Putten, and Markus (2015)</a>
+		<aside class="notes">
+			<ul>
+				<li>Slow moving waves in cortex are perceived</li>
+				<li>Left: visual field</li>
+				<li>Right: cortex</li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Scintillating Scotoma</h3>
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<img src="media/scotoma_anon.jpeg" height="200em"/>
+				<img src="media/scotoma_weed_2017.jpeg" height="300em"/>
+			</div>
+			<div style="float: right; width: 50%">
+				<img src="media/scotoma_airy_1870.png"/>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>Blind spots</li>
+				<li>Slowly moves for a few hours.</li>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<div style="width: 100%">
+			<h3>Reaction Diffusion Model</h3>
+			<div style="float: left; width: 60%">
+				<p style="font-size:80%;">
+				$$\begin{align*}
+				u_t &= \underbrace{u - \frac{1}{3}u^3}_{\text{excitable}} - \underbrace{v}_{\text{recovery}} + \underbrace{D\nabla^2 u}_{\text{Diffusion}} \\
+				\frac{1}{\varepsilon} v_t &= u + \beta + \underbrace{K\int H(u) d \Omega}_{\substack{\text{neurovascular}\\\text{feedback}}}
+				\end{align*}$$
+				</p>
+			</div>
+			<div style="float: right; width: 40%">
+				<a href="https://mathematical-neuroscience.springeropen.com/articles/10.1186/2190-8567-3-7#MOESM4" target=blank">
+				<img src="media/Dahlem_transient.png"/>
+				</a>
+			</div>
+			<p>
+			<a href="https://aip.scitation.org/doi/full/10.1063/1.4813815" target=blank>Markus A. Dahlem (2013)</a>
+			</p>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>Excitable medium, with recovery and diffusion</li>
+				<li>Integral term represents vascular feedback</li>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<div style="width: 100%">
+			<h3>Reaction Diffusion on surfaces</h3>
+			<div style="float: left; width: 50%">
+				<p style="font-size: .7em">
+				$$\begin{align*}
+					u_t &= 3u - u^3 - v + D \Delta_{\mathcal{M}}u \\ 
+					\frac{1}{\varepsilon} v_t &= u + \beta + K \int_{\mathcal{M}} H(u) \ d \mu_{\mathcal{M}}
+				\end{align*}$$
+				<ul>
+					<li>Surface operators: $\Delta_{\mathcal{M}}, \int_{\mathcal{M}} \cdot d \mu_{\mathcal{M}}$</li>
+					<li>Affects speed and stability of waves</li>
+				</ul>
+				</p>
+			</div>
+			<div style="float: right; width: 50%">
+				<video controls loop muted autoplay>
+					<source src="media/Kneer_torus.ogg" type="video/ogg">
+					Your browser does not support the video tag.
+				</video>
+				Kneer, Scholl, Dahlem (2014)
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>Same model as before</li>
+				<li>Diffusion is Laplace-Beltrami</li>
+				<li>Integral is with respect to a measure that incorporates the curvature.</li>
+				<li>Curvature affects speed and stability.</li>
+				<li>I've worked with surface PDEs before.</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Coupled neural field and diffusion equation</h3>
+		$$\begin{align*}
+			v_t &= -v + w \ast s_p(v, k) + g_v \\
+			k_t &= \delta k_{xx} + g_k(s, s_p, a, b) + I
+		\end{align*}$$
+		<ul>
+			<li>Neural field model</li>
+			<li>Coupled potassium concentration</li> 
+			<li>Models both ignition and propagation of CSD</li>
+		</ul>
+		<p><a href="https://hal.science/hal-04008117/document" target=blank>Baspinar et al. (2023)</a></p>
+		<aside class="notes">
+			<ul>
+				<li>Neural field model and potassium</li>
+				<li>Apply our analysis to understand control.</li>
+				<li>Ultimately, find a way to disrupt CSD</li>
+				<li>Another area I'm interested in is understanding the role of curvature.</li>
+				<li>Brain is wrinkly</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<div style="width: 100%">
+			<h3>A Turing Reaction Diffusion System using RBFs</h3>
+			$$\begin{align*}
+				u_t &= \delta_u \Delta_{\mathcal{M}} u + \alpha(1-\tau_1 v^2) + v(1-\tau_2 u)\\
+				v_t &= \delta_v \Delta_{\mathcal{M}} v + \beta(1-\frac{\alpha\tau_1}{\beta} uv) + u(\gamma-\tau_2 v)\\
+			\end{align*}$$
+			<div style="float: left; width: 50%">
+				<video controls loop muted >
+					<source src="media/bunny_spots.ogg" type="video/ogg">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+			<div style="float: right; width: 50%">
+				<video controls loop muted >
+					<source src="media/bunny_stripes.ogg" type="video/ogg">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>Reaction diffusion system.</li>
+				<li>Parameters control spots or stripes</li>
+				<li>RBF interpolation: high order, any dimension, no mesh</li>
+				<li>I compared 3 ways of using RBFs for making FD approximations to LB</li>
+				<li>No need for curvilinear coordinates.</li>
+				<li>Closed surface, LB transpose nullspace gives quadrature weights.</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
 </section>
 <!--##################################################-->
 <section>
@@ -548,9 +600,144 @@
 			<li>Tahra</li>
 			<li>Nick</li>
 			<li>Heather</li>
+		</ul>
+	</aside>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h1>Auxiliary Slides</h1>
+	<aside class="notes">
+		<ul>
+			<li>Zack</li>
+			<li>Tahra</li>
+			<li>Nick</li>
+			<li>Heather</li>
 			<li>Committee and audience</li>
 		</ul>
 	</aside>
+	</section>
+	<section data-auto-animate>
+		<img class="r-stretch" src="media/apparent_motion_panel1.gif"/>
+	</section>
+	<section data-auto-animate>
+		<img class="r-stretch" src="media/apparent_motion_panel2.gif"/>
+	</section>
+	<section data-auto-animate>
+		<img class="r-stretch" src="media/apparent_motion_panel3.gif"/>
+	</section>
+	<section>
+		<img class="r-stretch" src="media/apparent_motion_entrainment_success.gif"/>
+	</section>
+	<section>
+		<img class="r-stretch" src="media/apparent_motion_entrianment_failure.gif"/>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h1>Traveling wave solutions</h1>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Front solutions</h3>
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<ul>
+					<li>$\xi = x - ct$</li>
+					<li>Active region: $(-\infty, 0)$</li>
+					<li>Restrict to $c > 0$</li>
+				</ul>
+				<img class="r-stretch" src="media/progressive_front.gif" width=90%/>
+			</div>
+			<div style="float: right; width: 50%">
+				<ul>
+					<li>Linearizes equations</li>
+					<li>Decouples $q$ from $u$</li>
+					<li>$U(-\infty) = \gamma > \theta$</li>
+				</ul>
+				<p>
+				$$
+					\theta = \frac{\gamma + c\tau_q\gamma}{2(1+c\tau_q\gamma)(1+c\tau_u)}
+				$$
+				</p>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Front Bifurcations</h3>
+		<div style="width: 100%">
+			<img src="media/speed_by_gamma.png" width=100%/>
+			<aside class="notes">
+				<ul>
+					<li>Three solutions for theta &lt; gamma &lt; 2theta</li>
+					<li>One solution for 2theta &lt; gamma</li>
+					<li>gamma = 1 iff beta = 0: no depression</li>
+				</ul>
+			</aside>
+		</div>
+		
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Front Bifurcations</h3>
+				<img class="r-stretch" src="media/speed_by_tau_q.png" width=100%/>		
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Pulse solutions</h3>
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<ul>
+					<li>$\xi = x - ct$</li>
+					<li>Active region: $(-\Delta, 0)$</li>
+				</ul>
+			</div>
+			<div style="float: right; width: 50%">
+				<ul>
+					<li>Linearizes equations</li>
+					<li>Decouples $q$ from $u$</li>
+				</ul>
+			</div>
+		</div>
+		&nbsp;
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<img class="r-stretch" src="media/pulse_profile.png" width=90%/>
+			</div>
+			<div style="float: right; width: 50%">
+				<p>Two consistency equations for $c$ and $\Delta$.</p>
+			</div>
+		</div>
+		</p>
+		<aside class="notes">
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Pulse Speed and Width</h3>
+		<img class="r-stretch" src="media/hi_res_figure2.png" width=100%/>
+		<aside class="notes">
+			<ul>
+				<li>Slow depression takes longer to recover, so wider pulse</li>
+				<li>Wider pulse means more stimulation at the font so faster speed</li>
+			</ul>
+		</aside>
 	</section>
 </section>
 <!--##################################################-->
