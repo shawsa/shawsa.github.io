@@ -289,7 +289,7 @@
 	<section>
 		<h3>Wave response function</h3>
 		$$
-		\nu(t) = - \frac{\int_\mathbb{R} v_1 \int_0^t I_u(\xi, \tau) \ d\tau + v_2 \int_0^t I_q(\xi, \tau) \ d\tau \ d\xi}{\int_\mathbb{R} \tau_u U' v_1 + \tau_q Q' v_2 \ d\xi}
+		\nu(t) = \frac{\int_{0}^t \langle v_1(\cdot), I_u(\cdot, \tau) \rangle + \langle v_2(\cdot), I_q(\cdot, \tau) \rangle \ d\tau}{- \tau_u \langle v_1, U' \rangle - \tau_q \langle v_2, Q' \rangle}
 		$$
 	</section>
 	<!--###########-->
@@ -368,7 +368,7 @@
 		$$
 		<h3>new wave response</h3>
 		$$
-		\frac{\partial}{\partial t}\nu = \frac{ \langle v_1 ,I_u(\xi + \varepsilon \nu + ct, \tau)\rangle + \langle v_2, I_q(\xi + \varepsilon \nu + ct, \tau)\rangle }{\underbrace{-\tau_u \langle v_1, U' \rangle - \tau_q \langle v_2, Q' \rangle}_{K}}
+		\frac{\partial}{\partial t}\nu = \frac{ \langle v_1 ,I_u(\xi + \color{blue}{\varepsilon \nu}, \tau)\rangle + \langle v_2, I_q(\xi +\color{blue}{\varepsilon \nu}, \tau)\rangle }{\underbrace{-\tau_u \langle v_1, U' \rangle - \tau_q \langle v_2, Q' \rangle}_{K}}
 		$$
 	</section>
 	<!--###########-->
