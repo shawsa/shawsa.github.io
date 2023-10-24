@@ -1,0 +1,302 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Python in Scientific Computing</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+<!--##################################################-->
+<section>
+	<section
+		data-background="images/python_logo.png" 
+		data-background-position="bottom 5% left 5%" 
+		data-background-size="25%">
+		<h2>Python in Scientific Computing: Why and How?</h2>
+		<p>Sage Shaw - Oct 26<sup>th</sup>, 2023</p>
+		<p>Graduate Student Seminar</p>
+
+		<aside class="notes">
+			<ul>
+				<li>Thank organizers.</li>
+				<li>Talk about who I am.</li>
+				<li>Thesis: embrace the language you chose.</li>
+				<li>Languages are different. Learn the language you choose.</li>
+				<li>You should probably be using generators.</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h2>Who are you?</h2>
+		<p class="fragment fade-in">Would you rather...</p>
+		<div class="fragment fade-in" style="width: 100%">
+			<div style="float: left; width: 45%">
+				<p>spend 50% less time waiting for code to finish?</p>
+			</div>
+			<div style="float: left; width: 45%">
+				<p>spend 50% less time writing code?</p>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>This advice is not for everyone, so who is it for?</li>
+				<li>Python not designed with efficiency as 1st priorety.</li>
+				<li>It is designed with modularity and flexibility in mind. (general purpose)</li>
+				<li>Language design is a trade off between efficiency and modularity.</li>
+				<li>Runtime vs screen time</li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h2>Who are you?</h2>
+		<p>Do you use Python?<span class="fragment fade-in"> v3.11</span></p>
+		<p class="fragment fade-in">Do you work with sequences?<span class="fragment fade-in"> (yes you do)</span></p>
+		<p class="fragment fade-in">Are your codes proceedural?</p>
+		<p class="fragment fade-in">Functional?</p>
+		<p class="fragment fade-in">Object oriented?</p>
+		<aside class="notes">
+			<ul>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h2>Who are you?</h2>
+		<p>How many keywords do you recognize (use)?</p>
+		<div class="fragment fade-in" style="width: 100%">
+			<pre>False      await      else       import     pass
+None       break      except     in         raise
+True       class      finally    is         return
+and        continue   for        lambda     try
+as         def        from       nonlocal   while
+assert     del        global     not        with
+async      elif       if         or         yield</pre>
+			<p>
+				<pre class="fragment fade-in">match      case</pre>
+			</p>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h2>Who are you?</h2>
+		<p>Have you written a class?</p>
+		<p class="fragment fade-in">An <code style="color: green">__iter__</code> method?</p>
+		<p class="fragment fade-in">A generator comprehension?</p>
+		<aside class="notes">
+			<ul>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h1>Disclaimers</h1>
+		<ul>
+			<li class="fragment fade-in">Working code is good.</li>
+			<li class="fragment fade-in">Python is slow<sup>*</sup>.</li>
+			<li class="fragment fade-in">This talk is about generators</sup>.</li>
+		</ul>
+		<aside class="notes">
+			<ul>
+				<li>We're going to be critical of the proceedural style, but this is different than saying that it's bad.</li>
+				<li>Python has higher overhead than similar languages. Is it worth it? Can this be mitigated?</li>
+				<li>This is considered beginner/intermediate material in python circles.</li>
+				<li>This is uncommon (advanced?) in scientific computing circles.</li>
+			</ul>
+		</aside>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h1>Loops</h1>
+	</section>
+	<!--###########-->
+	<section>
+		<p>Types of loops</p>
+		<ul>
+			<li class="fragment fade-in">for loop</li>
+			<li class="fragment fade-in">while loop</li>
+			<li class="fragment fade-in">do while loop</li>
+			<li class="fragment fade-in">foreach loop</li>
+			<li class="fragment fade-in">recursion?</li>
+		</ul>
+		<p class="fragment fade-in">Loops are a kind of <a href="https://en.wikipedia.org/wiki/Control_flow#Loops">control flow</a>.</p>
+		<p class="fragment fade-in">Often defined as a <a href="https://en.wikipedia.org/wiki/Primitive_recursive_function">primitive recursive function</a>.</p>
+		<aside class="notes">
+			<ul>
+				<li>Is there a difference?</li>
+				<li>What is a loop? Repeated code? How about recursion?</li>
+				<li>Control flow: goto, branching</li>
+				<li>Would it surprise you to learn that Python doesn't have for loops. It has foreach loops.</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<p> What kind of loops are these?</p>
+		<div>
+			<div style="float: left; width: 100%">
+				<pre><code>n = 0
+while not done(n):
+    print(n)
+    n += 1</code></pre>
+			</div>
+			<div style="float: left; width: 100%">
+<pre><code>from itertools import count as positive_integers
+for n in positive_integers():
+    if done(n): break
+    print(n)
+</code></pre>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>They do the exact same thing.</li>
+				<li>They both may run forever.</li>
+				<li>Top is looping over integers using an increment.</li>
+				<li>Bottom is looping over integers too, but the increment is hidden to us.</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<p>Python "for loops"</p>
+<pre><code> # What you write
+for n in range(3):
+    #  loop body
+    print(n)
+</code></pre>
+
+		<div class="fragment fade-in">
+<pre><code data-line-numbers="1-9|2|3|4-7|8,9|1-9"> # What happens behind the scenes
+generator_object = range(3).__iter__()
+while True:
+    try:
+        n = generator_object.__next__()
+    except StopIteration:
+        break
+    #  loop body
+    print(n)
+</code></pre>
+		</div>
+		<p class="fragment fade-in">Why does Python work this way?</p>
+		<aside class="notes">
+			<ul>
+				<li><pre>__iter__</pre> callback is flexible</li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<p>Python loops are flexible</p>
+		<div class="fragment fade-in">
+<pre><code>for x, y in zip(x_values, y_values): </code></pre>
+		</div>
+		<div class="fragment fade-in">
+<pre><code>for alpha, beta in product(alphas, betas):
+</code></pre>
+		</div>
+		<div class="fragment fade-in">
+<pre><code>for time, u, v, w in solver.solution_generator():
+</code></pre>
+		</div>
+		<div class="fragment fade-in">
+<pre><code>for index, state in enumerate(markov_chain):
+</code></pre>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>Loop over multiple lists simultaineously</li>
+				<li>loop over a Cartesian product (parameter sweep)</li>
+				<li>loop over solutions to an ODE/PDE</li>
+				<li>loop over the index and state of a Markov chain</li>
+				<li>To harness this flexibility, you can make your own generators.</li>
+			</ul>
+		</aside>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<!--###########-->
+	<section>
+		<h1>Generators</h1>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<!--###########-->
+	<section>
+		<h1>Example: Rootfinding</h1>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<!--###########-->
+	<section>
+		<h1>Example: Data Pipeline</h1>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<!--###########-->
+	<section>
+		<h1>Example: ODE solver</h1>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<!--###########-->
+	<section>
+		<h3>Questions for you</h3>
+
+		<h3>Questions for me?</h3>
+	</section>
+</section>
+<!--##################################################-->
+<!--##################################################-->
+<!--##################################################-->
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+        <script src="plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ]
+			});
+		</script>
+	</body>
+</html>
