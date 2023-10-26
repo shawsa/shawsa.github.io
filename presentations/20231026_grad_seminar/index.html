@@ -156,14 +156,14 @@ async      elif       if         or         yield</pre>
 		<p> What kind of loops are these?</p>
 		<div>
 			<div style="float: left; width: 100%">
-				<pre><code>n = 0
+				<pre><code class="language-python">n = 0
 while not done(n):
     print(n)
     n += 1</code></pre>
 			</div>
 			<div style="float: left; width: 100%">
-<pre><code>from itertools import count as positive_integers
-for n in positive_integers():
+<pre><code class="language-python">from itertools import count as nonnegative_integers
+for n in nonnegative_integers():
     if done(n): break
     print(n)
 </code></pre>
@@ -181,14 +181,14 @@ for n in positive_integers():
 	<!--###########-->
 	<section>
 		<p>Python "for loops"</p>
-<pre><code> # What you write
+<pre><code class="language-python"> # What you write
 for n in range(3):
     #  loop body
     print(n)
 </code></pre>
 
 		<div class="fragment fade-in">
-<pre><code data-line-numbers="1-9|2|3|4-7|8,9|1-9"> # What happens behind the scenes
+<pre><code class="language-python" data-line-numbers="1-9|2|3|4-7|8,9|1-9"> # What happens behind the scenes
 generator_object = range(3).__iter__()
 while True:
     try:
@@ -214,18 +214,18 @@ while True:
 	<section>
 		<p>Python loops are flexible</p>
 		<div class="fragment fade-in">
-<pre><code>for x, y in zip(x_values, y_values): </code></pre>
+<pre><code class="language-python">for x, y in zip(x_values, y_values): </code></pre>
 		</div>
 		<div class="fragment fade-in">
-<pre><code>for alpha, beta in product(alphas, betas):
+<pre><code class="language-python">for alpha, beta in product(alphas, betas):
 </code></pre>
 		</div>
 		<div class="fragment fade-in">
-<pre><code>for time, u, v, w in solver.solution_generator():
+<pre><code class="language-python">for time, u, v, w in solver.solution_generator():
 </code></pre>
 		</div>
 		<div class="fragment fade-in">
-<pre><code>for index, state in enumerate(markov_chain):
+<pre><code class="language-python">for index, state in enumerate(markov_chain):
 </code></pre>
 		</div>
 		<aside class="notes">
@@ -245,6 +245,53 @@ while True:
 	<section>
 		<h1>Generators</h1>
 	</section>
+	<!--###########-->
+	<section>
+		<p>Look like functions.</p>
+<pre><code class="language-python">def example():
+	yield 1
+	yield 2
+	yield 3
+</code></pre>
+	</section>
+	<!--###########-->
+	<section>
+		<p>But returns generator objects.</p>
+<pre><code class="language-python">def example():
+	yield 1
+	yield 2
+	yield 3
+
+gen = example()
+type(gen)  # class 'generator'
+next(gen)  # 1
+next(gen)  # 2
+next(gen)  # 3
+next(gen)  # StopIteration exception
+</code></pre>
+		<aside class="notes">
+			<ul>
+				<li>Lazy - no execution until required.</li>
+				<li>Use next function to continue execution until next yield.</li>
+				<li>Don't use generators this way. Use them in the ecosystem.</li>
+				<li>Generators decouple iteration from the loop body.</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>The Single Responsibility Principle</h3>
+		<p><em>A unit of code should be responsible for one thing.</em></p>
+		<p>(First in the <a href="https://en.wikipedia.org/wiki/SOLID">SOLID</a> principles.)</p>
+		<aside class="notes">
+			<ul>
+				<li>What is a unit? In Python, should be a function or a class.</li>
+				<li>Counting is harder than it appears.</li>
+				<li>Counting is really deciding what a thing is.</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
 </section>
 <!--##################################################-->
 <section>
@@ -252,19 +299,134 @@ while True:
 	<section>
 		<h1>Example: Rootfinding</h1>
 	</section>
-</section>
-<!--##################################################-->
-<section>
 	<!--###########-->
 	<section>
-		<h1>Example: Data Pipeline</h1>
+		<h3>Newton's Method</h3>
+		$$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$$
+		<aside class="notes">
+			<ul>
+				<li>Generates an infinite sequence given a starting value.</li>
+			</ul>
+		</aside>
 	</section>
-</section>
-<!--##################################################-->
-<section>
 	<!--###########-->
 	<section>
-		<h1>Example: ODE solver</h1>
+		<h3>Newton's Method</h3>
+		<p class="fragment fade-in">How many things is this function doing?</p>
+		<pre><code class="language-python" data-line-numbers="1-7|5|2,6|4">def newton_old(x0, f, df):
+    seq = [x0]
+    x = x0
+    for _ in range(10):
+        x = x - f(x) / df(x)
+        seq.append(x)
+    return seq
+</code></pre>
+		<aside class="notes">
+			<ul>
+				<li>A common implementation of Newton's method.</li>
+				<li>There's a lot more here than the math. Three things in fact.</li>
+				<li>Making a list. Why a list?</li>
+				<li>Choosing a length. What about other stopping criteria?</li>
+				<li>Optional arguments are an option, but this requires modifications to extend functionality.</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h3>Let's separate the pieces.</h3>
+		<p class="fragment fade-in">The update step.</p>
+		<div class="fragment fade-in">
+		<pre><code class="language-python">def newton_update(x, f, df):
+    return x - f(x)/df(x)
+		</code></pre></div>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h3>Let's separate the pieces.</h3>
+		<p>The iteration.</p>
+		<div class="fragment fade-in">
+		<pre><code class="language-python">def iterate(x, func):
+    while True:
+        yield x
+        x = func(x)</code></pre></div>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h3>Let's separate the pieces.</h3>
+		<p>Truncate to length 10 and store in a list.</p>
+		<div class="fragment fade-in">
+		<pre><code class="language-python">def take10(seq):
+    return list(islice(seq, 0, 10))
+        </code></pre></div>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h3>And combine them.</h3>
+		<p>Make the infinte Newton sequence.</p>
+		<div class="fragment fade-in">
+		<pre><code class="language-python">def newton_seq(x, f, df):
+    update = partial(newton_update, f=f, df=df)
+    yield from iterate(x, update)
+        </code></pre></div>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h3>And combine them.</h3>
+		<p>Truncate and make into a list.</p>
+		<div class="fragment fade-in">
+		<pre><code class="language-python">def newton_same_as_old(x0, f, df):
+    return take10(newton_seq(x0, f, df))
+        </code></pre></div>
+		<aside class="notes">
+			<ul>
+				<li>Why is this better?</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>The Open/Closed principle.</h3>
+		<p class="fragment fade-in">Code should be open for extension, but closed to modification.</p>
+		<p>(Second in the <a href="https://en.wikipedia.org/wiki/SOLID">SOLID</a> principles.)</p>
+		<aside class="notes">
+			<ul>
+				<li>Don't change your code. Just add more.</li>
+				<li>If you never change it, it can never break.</li>
+				<li>Write your code with this in mind.</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>How would you change the old code to do...</h3>
+		<p class="fragment fade-in">Multidimesional Newton's?</p>
+		<p class="fragment fade-in">Broyden's method?</p>
+		<p class="fragment fade-in">To use an $f$ tolarance?</p>
+		<p class="fragment fade-in">To use a Cauchy tolarance?</p>
+		<p class="fragment fade-in">To have a maximum length?</p>
+		<p class="fragment fade-in">1D secant method?</p>
+		<aside class="notes">
+			<ul>
+				<li>Two choices: make a copy or add an optional arg.</li>
+				<li>Copy: code grows exponentially with features.</li>
+				<li>Optional arg: codes becomes complicated quickly.</li>
+				<li>New functional code: just add more and reuse what you can.</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<img src="images/newton_steps.jpg"/>
+		<aside class="notes">
+			<ul>
+				<li>$\mathbb{C}$ colored by number of steps for initial point to converge.</li>
+				<li>With generators, you can put off making desicions.</li>
+				<li>Separation of code matches the separation of ideas.</li>
+				<li>Single responsibility makes it easy to replace small pieces.</li>
+				<li>Open closed makes it hard to break anything.</li>
+				<li>We're really talking about modularity.</li>
+			</ul>
+		</aside>
 	</section>
 </section>
 <!--##################################################-->
@@ -293,7 +455,6 @@ while True:
 			// - https://revealjs.com/config/
 			Reveal.initialize({
 				hash: true,
-
 				// Learn about plugins: https://revealjs.com/plugins/
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ]
 			});

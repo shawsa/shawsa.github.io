@@ -8,8 +8,8 @@ while not done(n):
     n += 1
 
 
-from itertools import count as positive_integers
-for n in positive_integers():
+from itertools import count as nonnegative_integers
+for n in nonnegative_integers():
     if done(n):
         break
     print(n)
