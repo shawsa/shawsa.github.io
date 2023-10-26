@@ -76,19 +76,9 @@
 	<!--###########-->
 	<section data-auto-animate>
 		<h2>Who are you?</h2>
-		<p>How many keywords do you recognize (use)?</p>
-		<div class="fragment fade-in" style="width: 100%">
-			<pre>False      await      else       import     pass
-None       break      except     in         raise
-True       class      finally    is         return
-and        continue   for        lambda     try
-as         def        from       nonlocal   while
-assert     del        global     not        with
-async      elif       if         or         yield</pre>
-			<p>
-				<pre class="fragment fade-in">match      case</pre>
-			</p>
-		</div>
+		<p>Have you written a class?</p>
+		<p class="fragment fade-in">An <code style="color: green">__iter__</code> method?</p>
+		<p class="fragment fade-in">A generator comprehension?</p>
 		<aside class="notes">
 			<ul>
 				<li></li>
@@ -98,9 +88,17 @@ async      elif       if         or         yield</pre>
 	<!--###########-->
 	<section data-auto-animate>
 		<h2>Who are you?</h2>
-		<p>Have you written a class?</p>
-		<p class="fragment fade-in">An <code style="color: green">__iter__</code> method?</p>
-		<p class="fragment fade-in">A generator comprehension?</p>
+		<p>How many keywords do you recognize (use)?</p>
+		<div class="fragment fade-in" data-fragment-index="1" style="width: 100%">
+			<pre>False      await      else       import     pass
+None       break      except     in         raise
+True       class      finally    is         return
+and        continue   <span class="fragment highlight-green" data-fragment-index="2">for</span>        lambda     try
+as         def        from       nonlocal   while
+assert     del        global     not        with
+async      elif       if         or         <span class="fragment highlight-green" data-fragment-index="2">yield</span>
+match      case</pre>
+		</div>
 		<aside class="notes">
 			<ul>
 				<li></li>
@@ -433,9 +431,41 @@ next(gen)  # StopIteration exception
 <section>
 	<!--###########-->
 	<section>
-		<h3>Questions for you</h3>
-
+		<h3>Questions</h3>
+		<p>For you...</p>
+		<ul>
+			<li class="fragment fade-in">Did I convince you generators are useful?</li>
+			<li class="fragment fade-in">Are you going to explore other Python features?</li> 
+			<li class="fragment fade-in">Do you want to help me build a Python community?</li> 
+		</ul>
+		<aside class="notes">
+			<ul>
+				<li>Not a lot of resources for learning how to apply these techniques to scientific codes.</li>
+				<li>I have some (lots?) of resources and ideas for this, but I can't do it alone.</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
 		<h3>Questions for me?</h3>
+		<div style="float: left; width: 45%">
+			<p>Resources</p>
+			<ul>
+				<li><a href="https://docs.python.org/3/library/collections.html">collections</a></li>
+				<li><a href="https://docs.python.org/3/library/functools.html">functools</a></li>
+				<li><a href="https://docs.python.org/3/library/itertools.html">itertools</a></li>
+				<li><a href="https://pypi.org/project/more-itertools/">more-itertools</a></li>
+				<li><a href="https://github.com/shawsa/SOLID_example">my SOLID demo</a></li>
+			</ul>
+		</div>
+		<div style="float: left; width: 45%">
+			<p>
+				Slides: <a href="https://shawsa.github.io/presentations/presentations.html">shawsa.githut.io</a>
+			</p>
+			<img width="100%" src="images/qr-code.svg"/>
+		</div>
+		<div style="width:100%">
+		</div>
 	</section>
 </section>
 <!--##################################################-->
