@@ -106,16 +106,16 @@ For the apparent motion experiment, we will select the stimulus to have certain 
 <p>
     These criteria give the following formula for the activity stimulus
 $$
-    I_u(x, t) = I_{(y^* - \Delta_y, y^*)}\left(x - \left\lfloor \frac{t}{T} \right\rfloor (c + \Delta_c)T \right) I_{(0, T_\text{on})}\left( t - \left\lfloor \frac{t}{T} \right\rfloor T \right).
+	I_u(x, t) = I_{(\hat{y} - \Delta_y, \hat{y})}\left(x - \left\lfloor \frac{t}{T} \right\rfloor (c + \Delta_c)T \right) I_{(0, T_\text{on})}\left( t - \left\lfloor \frac{t}{T} \right\rfloor T \right).
 $$
 We will restrict our analysis to the first period, which simplifies the stimulus to
 \begin{align*}
     I_u(x,t) = \begin{cases}
-        I_{(y^* - \Delta_y, y^*)}(x), & t < T_\text{on} \\
+		I_{(\hat{y} - \Delta_y, \hat{y})}(x), & t < T_\text{on} \\
         0, & \text{else}.
     \end{cases} \\
     I_u(\xi, t) = \begin{cases}
-        I_{(y^* - ct - \Delta_y, y^* - ct)}(\xi), & t < T_\text{on} \\
+	    I_{(\hat{y} - ct - \Delta_y, \hat{y} - ct)}(\xi), & t < T_\text{on} \\
         0, & \text{else}.
     \end{cases}
 \end{align*}
@@ -141,7 +141,7 @@ where $D = -\tau_u \langle v_1, U' \rangle - \tau_q \langle v_2, Q' \rangle$. We
     We then have, for $t \in (0, T_\text{on})$, 
 \begin{align*}
     D \nu' &= \langle v, I_u(\xi + \varepsilon \nu, t) \rangle \\
-		&= \langle H(\xi)e^{-\xi/c\tau_u}, I_{(\hat{y} - ct - \Delta_y, y^* - ct)}(\xi + \varepsilon \nu) \rangle \\
+		&= \langle H(\xi)e^{-\xi/c\tau_u}, I_{(\hat{y} - ct - \Delta_y, \hat{y} - ct)}(\xi + \varepsilon \nu) \rangle \\
 		&= \int_{0}^{\hat{y} - \varepsilon \nu - ct} e^{-\xi/c\tau_u} \ d\xi \\
 		&= c \tau_u \left(1 - e^{-\hat{y}/c\tau_u} e^{\frac{\varepsilon \nu + ct}{c\tau_u}} \right).
 \end{align*}
