@@ -1,6 +1,8 @@
+<!doctype html>
 <html>
 
 <head>
+	<script type="text/javascript" src="http://livejs.com/live.js"></script>
     <link rel="stylesheet" href="./main.css">
     
     <!-- Mathjax scripts -->
@@ -14,18 +16,18 @@
     </script>
     <!-- Mathjax commands -->
     $
-    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\BB}{\mathcal{B}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\DD}{\mathcal{D}}
+    \newcommand{\KK}{\mathbb{K}}
+    \newcommand{\LL}{\mathcal{L}}
     \newcommand{\NN}{\mathbb{N}}
     \newcommand{\OO}{\mathcal{O}}
-    \newcommand{\mathcow}{\OO}
-    \newcommand{\QQ}{\mathbb{Q}}
-    \newcommand{\ZZ}{\mathbb{Z}}
-    \newcommand{\CC}{\mathbb{C}}
-    \newcommand{\KK}{\mathbb{K}}
     \newcommand{\PP}{\mathcal{P}}
-    \newcommand{\TT}{\mathcal{T}}
-    \newcommand{\BB}{\mathcal{B}}
-    \newcommand{\LL}{\mathcal{L}}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+
     \renewcommand{\Re}{\operatorname{Re}}
     \renewcommand{\Im}{\operatorname{Im}}
 
@@ -84,9 +86,14 @@
 *******************************************************************************
 ****************************************************************************-->
 
-<h1 id="Title">Working</h1>
+<!--h1 id="Title">August 8<sup>th</sup>, 2023</h1-->
+<h1 id="Title">Piecewise Polynomial Quadrature Formula</h1>
 <p id="summary">
-   We apply the new wave response differential equation to the problem of apparent motion.
+I've recently discovered a family of quadrature rules that I don't recognize and may be novel.
+It is an interpolation based quadrature that uses local piecewise polynomial interpolation.
+It is distinct from splines and from Newton-Cotes type quadratures.
+It works on arbitrary nodes.
+For equally spaced nodes it appears to be the trapezoidal rule, but with corrections near the boundary, similar to <a href="https://www.colorado.edu/amath/sites/default/files/attached-files/gregory.pdf" target=blank>Gregory's method</a> though it appears to be distinct.
 </p>
 
 
@@ -96,212 +103,361 @@
 
 <hr>
 <!--********************************************************************-->
-
-<h1>The Apparent Motion Stimulus</h1>
-
-<p>
-For the apparent motion experiment, we will select the stimulus to have certain properties. It is flashing, so it will be non-zero for a length of time $T_\text{on}$ and will be zero for a length of time $T_\text{off}$. During the on period, the stimulus will be localized and stationary. For this analysis, we will take the spatial profile of the stimulus to be a square pulse with rising edge at $\hat{y}-\Delta_y$ and falling edge at $\hat{y}$. We will call $T = T_\text{on} + T_\text{off}$ the period of the stimulus, and $\frac{1}{T}$ the frequency. Between successive on periods, the stimulus will shift forward by the fixed amount $(c + \Delta_c) T$, where $\Delta_c$ is the speed of the stimulus relative to the natural (unstimulated) pulse speed.
-</p>
+<h1>Interpolation</h1>
 
 <p>
-    These criteria give the following formula for the activity stimulus
+We will construct a piecewise interpolant for a function $f: [a,b] \to \RR$
+which we will call the <em>local polynomial interpolant</em> or just <em>local interpolant</em> for short.
+Let $\DD \subset \PP([a, b])$ be a partition of $[a, b]$.
+Let $\Xi = \{x_i\}_{i=1}^N \subset [a, b]$ which we will call <em>interpolation nodes</em>.
+For each subdomain $D \in \DD$ we will associate a stencil.
+More precisely, we will define the mapping $S: \DD \to \PP(\Xi)$ such that $S(D) \subset \Xi$ is non-empty for every $D \in \DD$,
+and we will refer to $S(D)$ as the stencil associated with the element $D$.
+Let $p_D$ be the polynomial that interpolates $f$ at the nodes $S(D)$. 
+Our piecewise polynomial interpolant is then given by
 $$
-    I_u(x, t) = I_{(y^* - \Delta_y, y^*)}\left(x - \left\lfloor \frac{t}{T} \right\rfloor (c + \Delta_c)T \right) I_{(0, T_\text{on})}\left( t - \left\lfloor \frac{t}{T} \right\rfloor T \right).
-$$
-We will restrict our analysis to the first period, which simplifies the stimulus to
-\begin{align*}
-    I_u(x,t) = \begin{cases}
-        I_{(y^* - \Delta_y, y^*)}(x), & t < T_\text{on} \\
-        0, & \text{else}.
-    \end{cases} \\
-    I_u(\xi, t) = \begin{cases}
-        I_{(y^* - ct - \Delta_y, y^* - ct)}(\xi), & t < T_\text{on} \\
-        0, & \text{else}.
-    \end{cases}
-\end{align*}
-</p>
-
-<p>
-It is helpful to divide the scenario into several cases involving the position of the threshold crossing relative to the active region during the on-interval. We will consider the simplest case first. In the simplest case (Case 1) we will assume that the fore threshold crossing is in the support of the stimulus for the duration of the on interval. In the second case (Case 2) the stimulus jumps beyond the threshold crossing, but the period is long enough for the stimulus to catch up and enter the active region before the stimulus turns off.
-</p>
-
-<h2>Case 1: Short Periods</h2>
-<p>
-In this simplest case we will assume that the fore threshold crossing is in the support of the stimulus for the duration of the on interval. Some other more complicated cases include: the threshold crossing is accelerated past the stimulus, or the threshold crossing is accelerated into the support of the stimulus.
-</p>
-<p>
-    Our wave response formula is given by
-$$
-    D \nu' = \langle v_1, I_u(\xi + \varepsilon \nu, t) \rangle
-$$
-where $D = -\tau_u \langle v_1, U' \rangle - \tau_q \langle v_2, Q' \rangle$. We will also take $v_1(\xi) \approx v(\xi) = H(\xi) e^{-\xi/c\tau_u}$ since the difference is small and it simplifies the analysis dramatically. 
-</p>
-
-<p>
-    We then have, for $t \in (0, T_\text{on})$, 
-\begin{align*}
-    D \nu' &= \langle v, I_u(\xi + \varepsilon \nu, t) \rangle \\
-		&= \langle H(\xi)e^{-\xi/c\tau_u}, I_{(\hat{y} - ct - \Delta_y, y^* - ct)}(\xi + \varepsilon \nu) \rangle \\
-		&= \int_{0}^{\hat{y} - \varepsilon \nu - ct} e^{-\xi/c\tau_u} \ d\xi \\
-		&= c \tau_u \left(1 - e^{-\hat{y}/c\tau_u} e^{\frac{\varepsilon \nu + ct}{c\tau_u}} \right).
-\end{align*}
-We next make the change of variables $y = \varepsilon \nu + ct$ which is the location of the front, relative to the stationary stimulus. This gives $y' = \varepsilon \nu' + c$ and
-\begin{align*}
-D\frac{y' - c}{\varepsilon} &= c \tau_u \left(1 - e^{-\hat{y}/c\tau_u} e^{\frac{y}{c\tau_u}} \right) \\
-y' &= c + \frac{\varepsilon c\tau_u}{D} - \frac{\varepsilon c\tau_u}{D}e^{-\hat{y}} e^{y/c\tau_u}_{r} \\
-\end{align*}
-For ease of notation, let us define 
-$$
-	b_1 = c\frac{\varepsilon \tau_u}{D}, \qquad a = c + b_1, \qquad b = b_1 e^{-\hat{y}}, \qquad r = \frac{1}{c\tau_u}.
-$$
-Then our differential equation becomes
-$$
-
-        y' = a - b e^{ry}.
+s(x) = \begin{cases}
+	p_D(x), & \text{ for } x \in D.
+\end{cases}
 $$
 </p>
 
 <p>
-The variable $b_1$ is not immediately useful, but will be useful later.
+This interpolation is parameterized by the set of interpolation points $\Xi$, the partition $\DD$,
+and the associated stencils given by the mapping $S: \DD \to \PP(\Xi)$.
+In principle these are all arbitrary, but there should be some reasonable restrictions imposed in order for
+the interpolant to be a good approximation to the function. 
 </p>
 
+<h3>Parameter selection</h3>
 <p>
-    We solve this differential equation with the following change of variables $u = e^{-ry}$. This gives $u' = -ry'u \iff -\frac{u'}{ru} = y'$. Substituting,
-\begin{align*}
-    -\frac{u'}{ru} &= a - \frac{b}{u} \\
-	u' &= -aru + br \\
-	u' + aru &= br \\
-	\left[ u e^{art} \right]' &= br e^{art} \\
-	u e^{art} &= u_0 + \int_0^t br e^{ar\tau} d\ \tau \\
-		&= u_0 + \frac{b}{a} (e^{art} - 1) \\
-	u(t) &= \frac{b}{a} + \left(u_0 - \frac{b}{a}\right)e^{-art} \\
-	y(t) &= -\frac{1}{r} \log\left[ \frac{b}{a} + \left(e^{-ry_0} - \frac{b}{a}\right)e^{-art} \right].
-\end{align*}
-</p>
-
-<p>
-Recall that this differential equation is only valid for the on-interval: $t \in (0, T_\text{off})$. For the remainder of the period the stimulus is off and our differential equation becomes $\nu' = 0$. This gives a piecewise equation describing an entire period
+A natural partion is given by the interpolation nodes (assuming they are ordered)
 $$
-	y(t) = \begin{cases}
-			-\frac{1}{r} \log\left[ \frac{b}{a} + \left(e^{-ry_0} - \frac{b}{a}\right)e^{-art} \right] , & 0 \le t \le T_\text{on} \\
-		y(T_\text{on}) + (t - T_\text{on})c, & T_\text{on} \le t \le T.
-	\end{cases}
+	\DD = \{ [a, x_1], [x_1, x_2], [x_2, x_3], ..., [x_{n-1}, x_n], [x_n, b] \}
 $$
+and possibly removing the first and last intervals if $a = x_1$ and $x_n = b$ respectively.
+We can then select stencils by choosing an <em>order parameter</em> $k$, and defining $S([x_i, x_{i+1}])$
+to be the $k$ closest points in $\Xi$ to the interval.
+If the points are well distributed then the interval $[x_i, x_{i+1}]$ will be near the
+center of the stencil, except near the boundary where the stencil will become one-sided.
 </p>
 
 <p>
-We are interested in how $y_0$ changes from period to period. In particular, if it converges to a fixed point, then the pulse has entrained to the stimulus. We define the mapping
-\begin{align*}
-F(y_0) &= y(T) - (c+\Delta_c)T\\
-&= -\frac{1}{r} \log\left[ \frac{b}{a} + \left(e^{-ry_0} - \frac{b}{a}\right)e^{-arT_\text{on}} \right] + (T - T_\text{on})c - (c+\Delta_c)T \\
-&= -\frac{1}{r} \log\left[ \frac{b}{a} + \left(e^{-ry_0} - \frac{b}{a}\right)e^{-arT_\text{on}} \right] - (\underbrace{c T_\text{on} + \Delta_c T}_{K})
-\end{align*}
-and look for a fixed point $y^*$
-\begin{align*}
-	y^* &= F(y^*) \\
-	&= -\frac{1}{r} \log\left[ \frac{b}{a} + \left(e^{-ry^*} - \frac{b}{a}\right)e^{-arT_\text{on}} \right] - (\underbrace{c T_\text{on} + \Delta_c T}_{K}) \\
-	-ry^* -rK &= \log\left[ \frac{b}{a} + \left(e^{-ry^*} - \frac{b}{a}\right)e^{-arT_\text{on}} \right] \\
-	e^{-ry^*}e^{-rK} &= \frac{b}{a} + \left(e^{-ry^*} - \frac{b}{a}\right)e^{-arT_\text{on}} \\
-	e^{-ry^*}\left( e^{-rK} - e^{-arT_\text{on}} \right) &= \frac{b}{a}\left( 1 - e^{-arT_\text{on}}\right) \\
-	e^{-ry^*} &= \frac{b}{a} \cdot \frac{1 - e^{-arT_\text{on}}}{e^{-rK} - e^{-arT_\text{on}}} \\
-	y^* &= -\frac{1}{r} \log\left[ \frac{b}{a} \cdot \frac{1 - e^{-arT_\text{on}}}{e^{-rK} - e^{-arT_\text{on}}} \right] \\
-		&= -\frac{1}{r} \log\left[ e^{-r\hat{y}}\frac{b_1}{a} \cdot \frac{1 - e^{-arT_\text{on}}}{e^{-rK} - e^{-arT_\text{on}}} \right] \\
-	y^* &= \hat{y} - \frac{1}{r} \log\left[ \frac{b_1}{a} \cdot \frac{1 - e^{-arT_\text{on}}}{e^{-rK} - e^{-arT_\text{on}}} \right].
-\end{align*}
+
 </p>
+<figure>
+	<img src="./reports/report20231208/stencil.png" width="100%"/>
+	<caption>
+		<b>Fig 1.</b> An example of an interval (black line), the associated stencil (black dots),
+		the associated interpolating polynomial (green dashed),
+		and the restriction of that polynomial to the interval (green solid).
+		The solid green curve would define the piecewise interpolant on the interval, and
+		the process is repeated for each interval.
+	</caption>
+</figure>
 
+<h1>Equally spaced nodes</h1>
 <p>
-To check if this is reasonable, we will modify this form. But first, we note the following 
-\begin{align*}
-	\frac{b_1}{a} &= \frac{c \frac{\varepsilon \tau_u}{D}}{c + c\frac{\varepsilon \tau_u}{D}} \\
-	&= \frac{\varepsilon \tau_u}{D} \frac{1}{1 + \frac{\varepsilon \tau_u}{D}} \\
-	&= \frac{\varepsilon \tau_u}{D} \sum_{n=0}^\infty \left(\frac{\varepsilon \tau_u}{D}\right)^n \\
-	&= \sum_{n=1}^\infty \left(\frac{\varepsilon \tau_u}{D}\right)^n \\
-	&= \frac{\varepsilon \tau_u}{D} + \OO(\varepsilon^2) \\
-	arT_\text{on} &= \frac{1}{c\tau_u} T_\text{on} \cdot c(1 + \frac{\varepsilon \tau_u}{D}) \\
-		&= \frac{T_\text{on}}{\tau_u} + \varepsilon\frac{T_\text{on}}{D} \\
-	rK &= \frac{1}{c\tau_u} (cT_\text{on} + \Delta_c T) \\
-		&= \frac{T_\text{on}}{\tau_u} + \frac{\Delta_c}{c} \frac{T}{\tau_u}.
-\end{align*}
-Substituting all but the first of these gives
-\begin{align*}
-y^* &= \hat{y} - \frac{1}{r} \log\left[ \frac{b_1}{a} \cdot \frac{e^{T\text{on}/\tau_u} - e^{-\varepsilon T_\text{on}/D}}{e^{-\Delta_c T/c\tau_u} - e^{-\varepsilon T_\text{on}/D}} \right].
-\end{align*}
-</p>
-
-<p>
-We see that for $y^*$ to exist, we require the denominator of this expression to be positive. That is
-\begin{align*}
--\frac{\Delta_c T}{c\tau_u} &\gt -\frac{\varepsilon T_\text{on}}{D} \\
-\Delta_c &\lt \varepsilon \frac{T_\text{on}}{T}\frac{c\tau_u}{D}
-\end{align*}
-and we have a condition on entrainment.
-</p>
-
-<p>
-Furthermore, this formula is consistent with our intuition. For example, we satisfy this inequality and have a fixed point. If we consider continuously reducing the magnitude $\varepsilon \searrow \Delta_c \frac{T D}{T_\text{on}c\tau_u}$, we find that the denominator in the argument to the logarithm remains positive and tends toward zero, thus $y^* \to -\infty$. When $\varepsilon$ reaches this value or goes below it, the inequality no longer holds and $y^*$ is undefined. In particular, $\varepsilon = 0$ will fail to entrain if $\Delta_c \lt 0$, as we expect.
-</p>
-
-<p>
-As another example, consider taking $T_\text{on} \to 0$ while keeping $T$ fixed (so $T_\text{off} = T - T_\text{on}$). We find that the right hand side of this inequality goes to zero and eventually entrainment breaks. This makes sense, as the portion of the period where the stimulus is on is vanishing and thus providing less acceleration each period. 
-</p>
-
-<p>
-Lastly, we note that this fixed point iteration is stable so long as the fixed point exists. We check
-\begin{align*}
-F'(x) &= -\frac{1}{r} \frac{1}{\frac{b}{a} + \left(e^{-rx} - \frac{b}{a}\right)e^{-arT_\text{on}}} (-r)e^{-rx}e^{-arT_\text{on}} \\
-	&= \frac{e^{-rx}e^{-arT_\text{on}}}{\frac{b}{a} + \left(e^{-rx} - \frac{b}{a}\right)e^{-arT_\text{on}}} \\
-	&= \frac{e^{-rx}e^{-arT_\text{on}}}{e^{-rx}e^{-arT_\text{on}} + \frac{b}{a} (1-e^{-arT_\text{on}})} \\
-	&= \frac{1}{1 + \frac{b}{a} \frac{1-e^{-arT_\text{on}}}{e^{-rx}e^{-arT_\text{on}}}} \\
-F'(y^*) &= \frac{1}{1 + \frac{b}{a} \frac{1-e^{-arT_\text{on}}}{e^{-ry^*}e^{-arT_\text{on}}}} \\
-&= \frac{1}{1 + \frac{b}{a} \frac{1-e^{-arT_\text{on}}}{\frac{b}{a} \frac{1-e^{-arT_\text{on}}}{e^{-rK} - e^{-arT_\text{on}}} e^{-arT_\text{on}}}} \\
-&= \frac{1}{1 + \frac{e^{-rK} - e^{-arT_\text{on}}}{e^{-arT_\text{on}}}} \\
-&= \frac{e^{-arT_\text{on}}}{e^{-arT_\text{on}} + e^{-rK} - e^{-arT_\text{on}} }\\
-&= e^{rK - arT_\text{on}}
-\end{align*}
-then
-\begin{align*}
-|F'(y^*)| \lt 1 &\iff rK \lt arT_\text{on} \\
-	& \iff \Delta_c \lt \varepsilon \frac{T_\text{on}}{T}\frac{c\tau_u}{D}
-\end{align*}
-and we have that the fixed point iteration is stable provided $y^*$ exists.
-</p>
-
-<h3>Consistency with finite width</h3>
-
-<p>
-We can improve this bound by incorporating the consistency condition $y^* \gt \hat{y} - \Delta_y$. That is, we require the fixed point not to fall behind the stimulus entirely. We proceed
-\begin{align*}
-\Delta_y &\gt \frac{1}{r} \log\left[ \frac{b_1}{a} \frac{e^{T_{\text{on}}/\tau_u} - e^{-\varepsilon T_\text{on} / D}}{e^{-\Delta_c T r} - e^{-\varepsilon T_\text{on} / D}} \right] \\
-e^{r \Delta_y} &\gt \frac{b_1}{a} \frac{e^{T_{\text{on}}/\tau_u} - e^{-\varepsilon T_\text{on} / D}}{e^{-\Delta_c T r} - e^{-\varepsilon T_\text{on} / D}} \\
-e^{r \Delta_y} \left(e^{-\Delta_c T r} - e^{-\varepsilon T_\text{on} / D}\right) &\gt \frac{b_1}{a} \left(e^{T_{\text{on}}/\tau_u} - e^{-\varepsilon T_\text{on} / D}\right) \\
-e^{-\Delta_c T r} &\gt \frac{b_1}{a} e^{-r\Delta_y} \left(e^{T_{\text{on}}/\tau_u} - e^{-\varepsilon T_\text{on} / D}\right) + e^{-\varepsilon T_\text{on} / D} \\
-\Delta_c &\lt - \frac{c\tau_u}{T} \log\left[ \frac{b_1}{a} e^{-r\Delta_y} \left(e^{T_{\text{on}}/\tau_u} - e^{-\varepsilon T_\text{on} / D}\right) + e^{-\varepsilon T_\text{on} / D} \right] \\
-\end{align*}
-Observe that if we were to take $\Delta_y \to \infty$ then $e^{-r\Delta_y} \to 0$ and this reduces to the same condition as before.
-</p>
-
-<h1>Simulation</h1>
-<p>
-We compare our asymptotic approximation to a grid of pulse magnitudes and relative pulse speeds for several configurations of $T_\text{on}$ and $T_\text{off}$. We name these scenarios <em>50 50</em> ($T_\text{on}=0.5, T_\text{off}=0.5$), <em>mostly on</em> ($T_\text{on}=0.5, T_\text{off}=0.05$), and <em> mostly off</em> ($T_\text{on}=0.05, T_\text{off}=0.5$).
-Other parameters are chosen as our standard pulse experiment $\tau_u = 1, \tau_q = 20, \theta=0.2, \beta = 5$.
+In the special case of equally spaced points (including endpoints) and $k = 2$ this
+gives the piecewise linear interpolant and thus will reproduce the trapezoidal rule.
+Though this procedure will yield a piecewise polynomial interpolant, we do not
+enforce any smoothness and thus this is different than spline interpolation
+as demonstrated by the figure below.
 </p>
 
 <figure>
-    <img src="./reports/reports/report20230811/apparent_motion_mag_speed_50_50.png" width="100%"/>
-	<caption><strong>Fig 1. The 50 50 case.</strong> Here we have $T_\text{on} = T_\text{off} = 0.5$. Other parameters are chosen as our standard pulse experiment $\tau_u = 1, \tau_q = 20, \theta=0.2, \beta = 5$. We have our entrainment threshold prediction in blue, successful entrainment simulations as green pluses and failed entrainment simulations as magenta Xs.</caption>
-</figure>
-<figure>
-    <img src="./reports/reports/report20230811/apparent_motion_mag_speed_mostly_off.png" width="100%"/>
-	<caption><strong>Fig 2. The mostly off case.</strong> Here we have $T_\text{on} = T_\text{off} = 0.5$. Other parameters are chosen as our standard pulse experiment $\tau_u = 1, \tau_q = 20, \theta=0.2, \beta = 5$. We have our entrainment threshold prediction in blue, successful entrainment simulations as green pluses and failed entrainment simulations as magenta Xs.</caption>
-</figure>
-<figure>
-    <img src="./reports/reports/report20230811/apparent_motion_mag_speed_mostly_on.png" width="100%"/>
-	<caption><strong>Fig 3. The mostly on case.</strong> Here we have $T_\text{on} = T_\text{off} = 0.5$. Other parameters are chosen as our standard pulse experiment $\tau_u = 1, \tau_q = 20, \theta=0.2, \beta = 5$. We have our entrainment threshold prediction in blue, successful entrainment simulations as green pluses and failed entrainment simulations as magenta Xs.</caption>
+	<img src="reports/report20231208/not_spline.png" width="100%"/>
+	<caption>
+		<b>Fig 2.</b> The local interpolant is not a spline.
+		In the top panel we show a Runge Function $f(x) = \frac{1}{1 + x^2}$
+		along with the local interpolant ($k = 4$) and the cubic spline
+		with not-a-knot conditions.
+		In the middle panel we show the derivative of each of these,
+		and in particular, the local interpolant clearly has a discontinuous
+		derivative and thus cannot be a spline of any kind.
+		The lower panel shows the second derivative of each.
+	</caption>
 </figure>
 
-In all cases we see the theory aligns with the simulations for small magnitudes and speeds.
+<p>
+In fact, if the boundaries of the partition do not coincide with interpolation nodes
+then the local interpolant need not even be continuous, though we do not
+explore this case in detail here.
+</p>
 
+<p>
+To understand the space of interpolants, it is helpful to look at a cardinal basis for this space.
+We can construct basis functions by setting the interpolation values to zero for all points except one.
+Doing so yields the basis functions in the figure below (also compared to corresponding cubic spline basis
+functions).
+</p>
+
+<figure>
+	<img src="reports/report20231208/cardinal_basis.png" width="100%"/>
+	<caption>
+		<b>Fig 3.</b> Some cardinal basis functions for the local interpolant
+		compared with corresponding cardinal basis functions for cubic splines.
+		Each panel shows a different basis function.
+		Several near the boundary are shown.
+		basis functions near the interior are simply translates of one another for the local interpolant
+		(not the case for splines)
+		and basis functions near the right boundary are reflections of basis functions
+		near the left boundary.
+	</caption>
+</figure>
+
+<p>
+Here we make several observations. First, we see that (with the exception of the first two
+functions near the boundary) that the basis functions are not smooth.
+We also see that their support is smaller than the entire domain.
+Specifically, any given interpolation point will only be contained in the stencil of $2k$
+intervals and thus will only affect the resulting interpolant on those intervals.
+It's difficult to see, but cubic splines (in general) are non-zero over the entire interval.
+Thus changing an interpolation value will change the spline interpolant over each interval.
+</p>
+
+<p>
+Since quadrature weights are given by analytically integrating these cardinal functions
+we also see that the weights for the interior nodes must be identical.
+Since this interpolation scheme reproduces polynomials, and in particular constants,
+the quadrature weights for interior nodes must be $1/h$ where $h$ is the mesh spacing.
+</p>
+
+<h1>Family of Quadrature Formulae</h1>
+<p>
+For equally spaced nodes, choosing an even order parameter $k$ leads to the following family 
+of quadrature formulae, where we only give the weights near the left boundary as the interior weights
+are $\frac{1}{h}$ and the weights at the right boundary are reflections of the left boundary.
+</p>
+
+<p>
+For $\mathcal{O}(h^2)$.
+$\frac{1}{2h} \big[ 1 \ 2 \ 2 \ 2 \ 2 ...$
+</p>
+
+<p>
+For $\mathcal{O}(h^4)$:
+$\frac{1}{24h} \big[ 8 \ 31 \ 20 \ 25 \ 24 \ 24 \ 24 ...$
+</p>
+
+<p>
+For $\mathcal{O}(h^6)$:
+$\frac{1}{1440h} \big[ 459 \ 1982 \ 944 \ 1746 \ 1333 \ 1456 \ 1440 \ 1440 \ 1440 ...$
+</p>
+
+<p>
+We can present these weights in a standardized format: choose a grid to be the positive integers (so $h=1$) and only report the weights that differ from 1.
+<div style="overflow-x: scroll; border-style: solid">
+<table style="margin: .2em; border-spacing: 1em">
+	<tr>
+		<td>$\mathcal{O}(2)$</td>
+		<td>$\frac{1}{2}$</td>
+	</tr>
+	<tr>
+		<td>$\mathcal{O}(4)$</td>
+		<td>$\frac{1}{3}$</td>
+		<td>$\frac{31}{24}$</td>
+		<td>$\frac{5}{6}$</td>
+		<td>$\frac{25}{24}$</td>
+	</tr>
+	<tr>
+		<td>$\mathcal{O}(6)$</td>
+		<td>$\frac{51}{160}$</td>
+		<td>$\frac{991}{720}$</td>
+		<td>$\frac{59}{90}$</td>
+		<td>$\frac{97}{80}$</td>
+		<td>$\frac{1333}{1440}$</td>
+		<td>$\frac{91}{90}$</td>
+	</tr>
+	<tr>
+		<td>$\mathcal{O}(8)$</td>
+		<td>$\frac{278}{945}$</td>
+		<td>$\frac{185153}{120960}$</td>
+		<td>$\frac{3667}{15120}$</td>
+		<td>$\frac{8167}{4480}$</td>
+		<td>$\frac{733}{1890}$</td>
+		<td>$\frac{156451}{120960}$</td>
+		<td>$\frac{2777}{3024}$</td>
+		<td>$\frac{905}{896}$</td>
+	</tr>
+	<tr>
+		<td>$\mathcal{O}(10)$</td>
+		<td>$\frac{81385}{290304}$</td>
+		<td>$\frac{5982811}{3628800}$</td>
+		<td>$- \frac{105103}{518400}$</td>
+		<td>$\frac{3384373}{1209600}$</td>
+		<td>$- \frac{27673}{28350}$</td>
+		<td>$\frac{371081}{145152}$</td>
+		<td>$\frac{175523}{1209600}$</td>
+		<td>$\frac{4758181}{3628800}$</td>
+		<td>$\frac{6767167}{7257600}$</td>
+		<td>$\frac{14269}{14175}$</td>
+	</tr>
+	<tr>
+		<td>$\mathcal{O}(12)$</td>
+		<td>$\frac{1657}{6160}$</td>
+		<td>$\frac{1693103359}{958003200}$</td>
+		<td>$- \frac{183182141}{239500800}$</td>
+		<td>$\frac{155823623}{35481600}$</td>
+		<td>$- \frac{52948363}{13305600}$</td>
+		<td>$\frac{41542229}{6386688}$</td>
+		<td>$- \frac{54633}{15400}$</td>
+		<td>$\frac{601537459}{159667200}$</td>
+		<td>$- \frac{2733413}{13305600}$</td>
+		<td>$\frac{48112633}{35481600}$</td>
+		<td>$\frac{44838553}{47900160}$</td>
+		<td>$\frac{38522153}{38320128}$</td>
+	</tr>
+	<tr>
+		<td>$\mathcal{O}(14)$</td>
+		<td>$\frac{27770156197}{106748928000}$</td>
+		<td>$\frac{4910982739693}{2615348736000}$</td>
+		<td>$- \frac{1830414679453}{1307674368000}$</td>
+		<td>$\frac{17308443934079}{2615348736000}$</td>
+		<td>$- \frac{3239871500473}{348713164800}$</td>
+		<td>$\frac{6802893055867}{435891456000}$</td>
+		<td>$- \frac{105610027}{7007000}$</td>
+		<td>$\frac{130582029653}{8895744000}$</td>
+		<td>$- \frac{13824839392867}{1743565824000}$</td>
+		<td>$\frac{2819830208717}{523069747200}$</td>
+		<td>$- \frac{752403440483}{1307674368000}$</td>
+		<td>$\frac{3634010752403}{2615348736000}$</td>
+		<td>$\frac{4920175305323}{5230697472000}$</td>
+		<td>$\frac{28145907}{28028000}$</td>
+	</tr>
+	<tr>
+		<td>$\mathcal{O}(16)$</td>
+		<td>$\frac{69181108}{273648375}$</td>
+		<td>$\frac{124527838997953}{62768369664000}$</td>
+		<td>$- \frac{8301345801121}{3923023104000}$</td>
+		<td>$\frac{602923312676921}{62768369664000}$</td>
+		<td>$- \frac{1596315823547}{89159616000}$</td>
+		<td>$\frac{2120764633122901}{62768369664000}$</td>
+		<td>$- \frac{172974549513301}{3923023104000}$</td>
+		<td>$\frac{21497071030031}{426995712000}$</td>
+		<td>$- \frac{53570696141}{1277025750}$</td>
+		<td>$\frac{1918959527598691}{62768369664000}$</td>
+		<td>$- \frac{58518753821611}{3923023104000}$</td>
+		<td>$\frac{474505422337963}{62768369664000}$</td>
+		<td>$- \frac{980645013239}{980755776000}$</td>
+		<td>$\frac{8132582533301}{5706215424000}$</td>
+		<td>$\frac{528870628631}{560431872000}$</td>
+		<td>$\frac{1285469654383}{1280987136000}$</td>
+	</tr>
+</table>
+</div>
+
+<p>
+These quadrature formulae are similar to the <a href="https://www.colorado.edu/amath/sites/default/files/attached-files/gregory.pdf">
+Gregory method</a> in that they appear to be boundary corrections to the trapezoidal rule. 
+The number of terms in a correction of a given order appears to be larger however.
+Also, choosing an odd order parameter makes stencil selection ambiguous and ruins the symmetry
+properties, which doesn't correspond Gregory's method.
+</p>
+
+<h1>Convergence</h1>
+<p>
+These order parameters appear to coincide with convergence order as the number of points
+grows.
+Below we show several numerical experiments approximating the order of convergence for several test functions.
+</p>
+
+<figure>
+	<img src="reports/report20231208/convergence_exp.png" width="100%"/>
+	<caption>
+		<b>Fig 4.</b>
+		Convergence for $f(x) = e^x$ on $[-1, 1]$.
+		We see that the convergence order corresponds to the order parameter.
+	</caption>
+</figure>
+
+<figure>
+	<img src="reports/report20231208/convergence_poly.png" width="100%"/>
+	<caption>
+		<b>Fig 5.</b> Convergence for a fifth degree polynomial.
+		We see that for $k=6$ the quadrature is exact up to numerical error.
+		For smaller order parameters, we are not exact, but see the expected
+		convergence rates.
+	</caption>
+</figure>
+
+<figure>
+	<img src="reports/report20231208/convergence_runge.png" width="100%"/>
+	<caption>
+		<b>Fig 6.</b> Convergence for Runge's function $f(x) = \frac{1}{1 + 25x^2}$.
+		We see expected convergence rates.
+		This is a noteworthy test case as the pole in the complex plane at $x = \frac{i}{5}$
+		causes instability for global polynomial interpolants with equally spaced points 
+		(known as <a href="https://en.wikipedia.org/wiki/Runge's_phenomenon" target=blank>Runge's Phenonmeon</a>).
+		This local interpolation method seems to be resistant to this effect.
+	</caption>
+</figure>
+
+<figure>
+	<img src="reports/report20231208/convergence_kink.png" width="100%"/>
+	<caption>
+		<b>Fig 7.</b> Convergence for the piecewise smooth function 
+		$f(x) = \cos(x) \left| x - \frac{1}{3} \right|$.
+		Here, we see that the order of accuracy is limited by the smoothness of the function
+		as is typical for interpolation based methods.
+	</caption>
+</figure>
+
+<h1>Advantages</h1>
+
+<p>
+The principle advantage to this method is flexibility.
+One can easily change the location of the nodes and derive quadrature weights.
+Additionally, one can easily change the choice of basis functions.
+Indeed, I discovered this method when working on Local Radial Basis Function Interpolation,
+which has the advantage of working well in arbitrary dimensions.
+</p>
+
+<p>
+Notably, one could enforce more constraints and increase the degree of polynomial.
+One can enforce smoothness conditions to get splines with higher order convergence.
+One can enforce Hermite interpolation conditions (possibly only at the boundary) to 
+reduce the number of end corrections. I suspect that something like this can be used
+to reproduce the Gregory weights.
+</p>
+
+
+<h1>Future Directions</h1>
+<p>
+It would be interesting to see if this could be the foundation of an adaptive
+quadrature method.
+Since the weights are determined by the location of only a few nearby nodes,
+selectively adapting the weights could allow for minimal function evaluation
+for a high-order adaptive method.
+</p>
+
+<p>
+Perhaps there is potential for maintaining high-order convergence for piecewise smooth
+functions if the locations of the knots are known in advance by enforcing that only
+a certain number of stencil nodes are allowed to cross these boundaries.
+For example, if you enforce that no nodes may cross the boundary, this is
+simply domain decomposition and of course will work for piecewise continuous functions.
+</p>
+
+<p>
+In the table above, we see that some of the weights become negative for orders 10 and above.
+Perhaps there is a way to avoid this by clustering nodes near the boundary.
+This would increase the number of end corrections since the stencil-translation argument
+wouldn't hold until far away from the non-equally spaced nodes,
+but perhaps it could avoid Runge's phenomenon, which I assume is the underling cause.
+</p>
+
+<p>
+It would be interesting to apply this to infinite domains with appropriate weight kernels,
+as in Gauss-Hermite or Gauss-Legendre interpolation.
+One could potentially get more accuracy by adding more points without sacrificing
+stability.
+</p>
+
+<h1>Code</h1>
+The code used to generate interpolants, quadrature weights, the trapezoidal end
+corrections, and convergence plots is publicly available at
+<a href="https://github.com/shawsa/ppqf">github.com/shawsa/ppqf</a>.
 
 <!--***************************************************************************
 *******************************************************************************

@@ -146,7 +146,7 @@ center of the stencil, except near the boundary where the stencil will become on
 
 </p>
 <figure>
-	<img src="working/stencil.png" width="100%"/>
+	<img src="./report20231208/stencil.png" width="100%"/>
 	<caption>
 		<b>Fig 1.</b> An example of an interval (black line), the associated stencil (black dots),
 		the associated interpolating polynomial (green dashed),
@@ -166,10 +166,10 @@ as demonstrated by the figure below.
 </p>
 
 <figure>
-	<img src="working/not_spline.png" width="100%"/>
+	<img src="report20231208/not_spline.png" width="100%"/>
 	<caption>
 		<b>Fig 2.</b> The local interpolant is not a spline.
-		In the top panel we show a Runge Function $f(x) = \frac{1}{1 + x**2}$
+		In the top panel we show a Runge Function $f(x) = \frac{1}{1 + x^2}$
 		along with the local interpolant ($k = 4$) and the cubic spline
 		with not-a-knot conditions.
 		In the middle panel we show the derivative of each of these,
@@ -193,7 +193,7 @@ functions).
 </p>
 
 <figure>
-	<img src="working/cardinal_basis.png" width="100%"/>
+	<img src="report20231208/cardinal_basis.png" width="100%"/>
 	<caption>
 		<b>Fig 3.</b> Some cardinal basis functions for the local interpolant
 		compared with corresponding cardinal basis functions for cubic splines.
@@ -363,7 +363,7 @@ Below we show several numerical experiments approximating the order of convergen
 </p>
 
 <figure>
-	<img src="working/convergence_exp.png" width="100%"/>
+	<img src="report20231208/convergence_exp.png" width="100%"/>
 	<caption>
 		<b>Fig 4.</b>
 		Convergence for $f(x) = e^x$ on $[-1, 1]$.
@@ -372,7 +372,7 @@ Below we show several numerical experiments approximating the order of convergen
 </figure>
 
 <figure>
-	<img src="working/convergence_poly.png" width="100%"/>
+	<img src="report20231208/convergence_poly.png" width="100%"/>
 	<caption>
 		<b>Fig 5.</b> Convergence for a fifth degree polynomial.
 		We see that for $k=6$ the quadrature is exact up to numerical error.
@@ -382,7 +382,7 @@ Below we show several numerical experiments approximating the order of convergen
 </figure>
 
 <figure>
-	<img src="working/convergence_runge.png" width="100%"/>
+	<img src="report20231208/convergence_runge.png" width="100%"/>
 	<caption>
 		<b>Fig 6.</b> Convergence for Runge's function $f(x) = \frac{1}{1 + 25x^2}$.
 		We see expected convergence rates.
@@ -394,7 +394,7 @@ Below we show several numerical experiments approximating the order of convergen
 </figure>
 
 <figure>
-	<img src="working/convergence_kink.png" width="100%"/>
+	<img src="report20231208/convergence_kink.png" width="100%"/>
 	<caption>
 		<b>Fig 7.</b> Convergence for the piecewise smooth function 
 		$f(x) = \cos(x) \left| x - \frac{1}{3} \right|$.
