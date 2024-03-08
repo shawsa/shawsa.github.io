@@ -1,0 +1,172 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../../main.css">
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <!-- Mathjax commands -->
+    $
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\OO}{\mathcal{O}}
+    \newcommand{\mathcow}{\OO}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\KK}{\mathbb{K}}
+    \newcommand{\PP}{\mathcal{P}}
+    \newcommand{\TT}{\mathcal{T}}
+    \newcommand{\BB}{\mathcal{B}}
+    \newcommand{\LL}{\mathcal{L}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+
+    \newcommand{\veca}{\vec{a}}
+    \newcommand{\vecb}{\vec{b}}
+    \newcommand{\vecd}{\vec{d}}
+    \newcommand{\vece}{\vec{e}}
+    \newcommand{\vecf}{\vec{f}}
+    \newcommand{\vecn}{\vec{n}}
+    \newcommand{\vecp}{\vec{p}}
+    \newcommand{\vecr}{\vec{r}}
+    \newcommand{\vecu}{\vec{u}}
+    \newcommand{\vecv}{\vec{v}}
+    \newcommand{\vecw}{\vec{w}}
+    \newcommand{\vecx}{\vec{x}}
+    \newcommand{\vecy}{\vec{y}}
+    \newcommand{\vecz}{\vec{z}}
+
+    \renewcommand{\vec}[1]{\mathbf{#1}}
+    $
+    
+    <!--Prisim for code highlighting -->
+    <script src="../../prism.js"></script>    
+    <link rel="stylesheet" href="../../prism.css">
+
+
+
+    
+<!--************************************************************************-->
+<title>Shaw Research Notes</title>
+</head>
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<body>
+
+<div class="top-bar">
+    <a href="../../index.html"><img src="../../frame/boulder-logo.png"></a>
+</div>
+
+<div id="side-bar" class="side-bar">
+    <p><a href="../../reports/reports.html" target="_top">Reports</a></p>
+    <p><a href="../../presentations/presentations.html" target="_top">Presentations</a></p>
+    <p><a href="../../todo/todo.html" target="_top">To Do List</a></p>
+    <p><a href="../../about/about.html" target="_top">About</a></p>
+    <hr>
+    <p><a href="../../old-rbf/index.html" target="_top">Old Site</a></p>
+</div>
+
+<div class="page-content">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<h1 id="Title">March 15<sup>th</sup>, 2024 - APPM Recruitment Poster</h1>
+<p id="summary">
+This is the online supplement for <a href="texaux/shaw_poster.pdf" target=blank>my poster</a> in the APPM recruitment poster presentation.
+Please note that most of content on this site are my personal research notes and are not necessarily intended to be public facing.
+This page is of course an exception. I will however link to other pages for anyone interested in the details.
+Consider those pages to be scratchwork that I don't mind sharing.
+</p>
+
+
+<div id="slider-plot" style="width:auto;"></div>
+
+<!--************************************************************************-->
+
+<hr>
+<!--********************************************************************-->
+<h1 id="">Heading 1</h1>
+
+<p>
+Lorem
+</p>
+
+<figure>
+	<img src="images/FILENAME.png", width="100%"/>
+    <caption>
+		<b>Fig 1.</b>
+		Lorem
+	</caption>
+</figure>
+
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+</div>
+
+<!-- Accordion script -->
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+
+var expand_all_accordions = false;
+
+if (expand_all_accordions){
+    for (i = 0; i < acc.length; i++) {
+      acc[i].nextElementSibling.style.display = "block";
+    }
+}
+
+}
+</script>
+
+<!-- Tabs script -->
+<script>
+function openTab(evt, tabId) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(tabId).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
+
+</body>
+    
+</html>
