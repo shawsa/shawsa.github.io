@@ -46,7 +46,9 @@
     \newcommand{\vecy}{\vec{y}}
     \newcommand{\vecz}{\vec{z}}
 
-    \renewcommand{\vec}[1]{\mathbf{#1}}
+	\renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
+
+	\newcommand{\norm}[1]{\lVert #1 \rVert}
     $
 
     <!-- Plotly code for interactive plots -->
@@ -86,14 +88,9 @@
 *******************************************************************************
 ****************************************************************************-->
 
-<!--h1 id="Title">August 8<sup>th</sup>, 2023</h1-->
-<h1 id="Title">Piecewise Polynomial Quadrature Formula</h1>
+<h1 id="Title">February 18<sup>th</sup>, 2024</h1>
 <p id="summary">
-I've recently discovered a family of quadrature rules that I don't recognize and may be novel.
-It is an interpolation based quadrature that uses local piecewise polynomial interpolation.
-It is distinct from splines and from Newton-Cotes type quadratures.
-It works on arbitrary nodes.
-For equally spaced nodes it appears to be the trapezoidal rule, but with corrections near the boundary, similar to <a href="https://www.colorado.edu/amath/sites/default/files/attached-files/gregory.pdf" target=blank>Gregory's method</a> though it appears to be distinct.
+Lorem
 </p>
 
 
@@ -103,361 +100,36 @@ For equally spaced nodes it appears to be the trapezoidal rule, but with correct
 
 <hr>
 <!--********************************************************************-->
-<h1>Interpolation</h1>
+
+<h1>Goals and Notation</h1>
 
 <p>
-We will construct a piecewise interpolant for a function $f: [a,b] \to \RR$
-which we will call the <em>local polynomial interpolant</em> or just <em>local interpolant</em> for short.
-Let $\DD \subset \PP([a, b])$ be a partition of $[a, b]$.
-Let $\Xi = \{x_i\}_{i=1}^N \subset [a, b]$ which we will call <em>interpolation nodes</em>.
-For each subdomain $D \in \DD$ we will associate a stencil.
-More precisely, we will define the mapping $S: \DD \to \PP(\Xi)$ such that $S(D) \subset \Xi$ is non-empty for every $D \in \DD$,
-and we will refer to $S(D)$ as the stencil associated with the element $D$.
-Let $p_D$ be the polynomial that interpolates $f$ at the nodes $S(D)$. 
-Our piecewise polynomial interpolant is then given by
+Our goal is to test RBF-QF methods. These methods are said to work on arbitrary 
+sets of quadrature nodes, but in order to be accurate they require some reasonable
+restrictions. One straightforward restriction is that that no two points can be
+too close, else the interpolation matrices containing the two points will become
+ill-conditioned. This suggests that sampling the points independently from a 
+distribution over the domain is not ideal.
+
+A more complicated condition is that points should be dense over the whole domain.
+To be more precise,
+<a href="https://www.worldscientific.com/worldscibooks/10.1142/6437#t=aboutBook">Fasshauer</a>
+defines the <i>fill distance</i> or
+<i>covering radius</i> to be
 $$
-s(x) = \begin{cases}
-	p_D(x), & \text{ for } x \in D.
-\end{cases}
+h = \sup_{\vecx \in \Omega} \min_{\vec{\xi} \in \Xi} \norm{\vecx - \vec{\xi}}.
 $$
-</p>
-
-<p>
-This interpolation is parameterized by the set of interpolation points $\Xi$, the partition $\DD$,
-and the associated stencils given by the mapping $S: \DD \to \PP(\Xi)$.
-In principle these are all arbitrary, but there should be some reasonable restrictions imposed in order for
-the interpolant to be a good approximation to the function. 
-</p>
-
-<h3>Parameter selection</h3>
-<p>
-A natural partion is given by the interpolation nodes (assuming they are ordered)
-$$
-	\DD = \{ [a, x_1], [x_1, x_2], [x_2, x_3], ..., [x_{n-1}, x_n], [x_n, b] \}
-$$
-and possibly removing the first and last intervals if $a = x_1$ and $x_n = b$ respectively.
-We can then select stencils by choosing an <em>order parameter</em> $k$, and defining $S([x_i, x_{i+1}])$
-to be the $k$ closest points in $\Xi$ to the interval.
-If the points are well distributed then the interval $[x_i, x_{i+1}]$ will be near the
-center of the stencil, except near the boundary where the stencil will become one-sided.
-</p>
-
-<p>
+This can be the interpreted as the largest distance from a point in the domain
+to the nearest point in the cloud.
+Equivalently, it is the radius of the largest open ball with center in the domain
+that does not contain any of the points in the point 
 
 </p>
-<figure>
-	<img src="working/stencil.png" width="100%"/>
-	<caption>
-		<b>Fig 1.</b> An example of an interval (black line), the associated stencil (black dots),
-		the associated interpolating polynomial (green dashed),
-		and the restriction of that polynomial to the interval (green solid).
-		The solid green curve would define the piecewise interpolant on the interval, and
-		the process is repeated for each interval.
-	</caption>
-</figure>
-
-<h1>Equally spaced nodes</h1>
-<p>
-In the special case of equally spaced points (including endpoints) and $k = 2$ this
-gives the piecewise linear interpolant and thus will reproduce the trapezoidal rule.
-Though this procedure will yield a piecewise polynomial interpolant, we do not
-enforce any smoothness and thus this is different than spline interpolation
-as demonstrated by the figure below.
-</p>
-
-<figure>
-	<img src="working/not_spline.png" width="100%"/>
-	<caption>
-		<b>Fig 2.</b> The local interpolant is not a spline.
-		In the top panel we show a Runge Function $f(x) = \frac{1}{1 + x**2}$
-		along with the local interpolant ($k = 4$) and the cubic spline
-		with not-a-knot conditions.
-		In the middle panel we show the derivative of each of these,
-		and in particular, the local interpolant clearly has a discontinuous
-		derivative and thus cannot be a spline of any kind.
-		The lower panel shows the second derivative of each.
-	</caption>
-</figure>
-
-<p>
-In fact, if the boundaries of the partition do not coincide with interpolation nodes
-then the local interpolant need not even be continuous, though we do not
-explore this case in detail here.
-</p>
-
-<p>
-To understand the space of interpolants, it is helpful to look at a cardinal basis for this space.
-We can construct basis functions by setting the interpolation values to zero for all points except one.
-Doing so yields the basis functions in the figure below (also compared to corresponding cubic spline basis
-functions).
-</p>
-
-<figure>
-	<img src="working/cardinal_basis.png" width="100%"/>
-	<caption>
-		<b>Fig 3.</b> Some cardinal basis functions for the local interpolant
-		compared with corresponding cardinal basis functions for cubic splines.
-		Each panel shows a different basis function.
-		Several near the boundary are shown.
-		basis functions near the interior are simply translates of one another for the local interpolant
-		(not the case for splines)
-		and basis functions near the right boundary are reflections of basis functions
-		near the left boundary.
-	</caption>
-</figure>
-
-<p>
-Here we make several observations. First, we see that (with the exception of the first two
-functions near the boundary) that the basis functions are not smooth.
-We also see that their support is smaller than the entire domain.
-Specifically, any given interpolation point will only be contained in the stencil of $2k$
-intervals and thus will only affect the resulting interpolant on those intervals.
-It's difficult to see, but cubic splines (in general) are non-zero over the entire interval.
-Thus changing an interpolation value will change the spline interpolant over each interval.
-</p>
-
-<p>
-Since quadrature weights are given by analytically integrating these cardinal functions
-we also see that the weights for the interior nodes must be identical.
-Since this interpolation scheme reproduces polynomials, and in particular constants,
-the quadrature weights for interior nodes must be $1/h$ where $h$ is the mesh spacing.
-</p>
-
-<h1>Family of Quadrature Formulae</h1>
-<p>
-For equally spaced nodes, choosing an even order parameter $k$ leads to the following family 
-of quadrature formulae, where we only give the weights near the left boundary as the interior weights
-are $\frac{1}{h}$ and the weights at the right boundary are reflections of the left boundary.
-</p>
-
-<p>
-For $\mathcal{O}(h^2)$.
-$\frac{1}{2h} \big[ 1 \ 2 \ 2 \ 2 \ 2 ...$
-</p>
-
-<p>
-For $\mathcal{O}(h^4)$:
-$\frac{1}{24h} \big[ 8 \ 31 \ 20 \ 25 \ 24 \ 24 \ 24 ...$
-</p>
-
-<p>
-For $\mathcal{O}(h^6)$:
-$\frac{1}{1440h} \big[ 459 \ 1982 \ 944 \ 1746 \ 1333 \ 1456 \ 1440 \ 1440 \ 1440 ...$
-</p>
-
-<p>
-We can present these weights in a standardized format: choose a grid to be the positive integers (so $h=1$) and only report the weights that differ from 1.
-<div style="overflow-x: scroll; border-style: solid">
-<table style="margin: .2em; border-spacing: 1em">
-	<tr>
-		<td>$\mathcal{O}(2)$</td>
-		<td>$\frac{1}{2}$</td>
-	</tr>
-	<tr>
-		<td>$\mathcal{O}(4)$</td>
-		<td>$\frac{1}{3}$</td>
-		<td>$\frac{31}{24}$</td>
-		<td>$\frac{5}{6}$</td>
-		<td>$\frac{25}{24}$</td>
-	</tr>
-	<tr>
-		<td>$\mathcal{O}(6)$</td>
-		<td>$\frac{51}{160}$</td>
-		<td>$\frac{991}{720}$</td>
-		<td>$\frac{59}{90}$</td>
-		<td>$\frac{97}{80}$</td>
-		<td>$\frac{1333}{1440}$</td>
-		<td>$\frac{91}{90}$</td>
-	</tr>
-	<tr>
-		<td>$\mathcal{O}(8)$</td>
-		<td>$\frac{278}{945}$</td>
-		<td>$\frac{185153}{120960}$</td>
-		<td>$\frac{3667}{15120}$</td>
-		<td>$\frac{8167}{4480}$</td>
-		<td>$\frac{733}{1890}$</td>
-		<td>$\frac{156451}{120960}$</td>
-		<td>$\frac{2777}{3024}$</td>
-		<td>$\frac{905}{896}$</td>
-	</tr>
-	<tr>
-		<td>$\mathcal{O}(10)$</td>
-		<td>$\frac{81385}{290304}$</td>
-		<td>$\frac{5982811}{3628800}$</td>
-		<td>$- \frac{105103}{518400}$</td>
-		<td>$\frac{3384373}{1209600}$</td>
-		<td>$- \frac{27673}{28350}$</td>
-		<td>$\frac{371081}{145152}$</td>
-		<td>$\frac{175523}{1209600}$</td>
-		<td>$\frac{4758181}{3628800}$</td>
-		<td>$\frac{6767167}{7257600}$</td>
-		<td>$\frac{14269}{14175}$</td>
-	</tr>
-	<tr>
-		<td>$\mathcal{O}(12)$</td>
-		<td>$\frac{1657}{6160}$</td>
-		<td>$\frac{1693103359}{958003200}$</td>
-		<td>$- \frac{183182141}{239500800}$</td>
-		<td>$\frac{155823623}{35481600}$</td>
-		<td>$- \frac{52948363}{13305600}$</td>
-		<td>$\frac{41542229}{6386688}$</td>
-		<td>$- \frac{54633}{15400}$</td>
-		<td>$\frac{601537459}{159667200}$</td>
-		<td>$- \frac{2733413}{13305600}$</td>
-		<td>$\frac{48112633}{35481600}$</td>
-		<td>$\frac{44838553}{47900160}$</td>
-		<td>$\frac{38522153}{38320128}$</td>
-	</tr>
-	<tr>
-		<td>$\mathcal{O}(14)$</td>
-		<td>$\frac{27770156197}{106748928000}$</td>
-		<td>$\frac{4910982739693}{2615348736000}$</td>
-		<td>$- \frac{1830414679453}{1307674368000}$</td>
-		<td>$\frac{17308443934079}{2615348736000}$</td>
-		<td>$- \frac{3239871500473}{348713164800}$</td>
-		<td>$\frac{6802893055867}{435891456000}$</td>
-		<td>$- \frac{105610027}{7007000}$</td>
-		<td>$\frac{130582029653}{8895744000}$</td>
-		<td>$- \frac{13824839392867}{1743565824000}$</td>
-		<td>$\frac{2819830208717}{523069747200}$</td>
-		<td>$- \frac{752403440483}{1307674368000}$</td>
-		<td>$\frac{3634010752403}{2615348736000}$</td>
-		<td>$\frac{4920175305323}{5230697472000}$</td>
-		<td>$\frac{28145907}{28028000}$</td>
-	</tr>
-	<tr>
-		<td>$\mathcal{O}(16)$</td>
-		<td>$\frac{69181108}{273648375}$</td>
-		<td>$\frac{124527838997953}{62768369664000}$</td>
-		<td>$- \frac{8301345801121}{3923023104000}$</td>
-		<td>$\frac{602923312676921}{62768369664000}$</td>
-		<td>$- \frac{1596315823547}{89159616000}$</td>
-		<td>$\frac{2120764633122901}{62768369664000}$</td>
-		<td>$- \frac{172974549513301}{3923023104000}$</td>
-		<td>$\frac{21497071030031}{426995712000}$</td>
-		<td>$- \frac{53570696141}{1277025750}$</td>
-		<td>$\frac{1918959527598691}{62768369664000}$</td>
-		<td>$- \frac{58518753821611}{3923023104000}$</td>
-		<td>$\frac{474505422337963}{62768369664000}$</td>
-		<td>$- \frac{980645013239}{980755776000}$</td>
-		<td>$\frac{8132582533301}{5706215424000}$</td>
-		<td>$\frac{528870628631}{560431872000}$</td>
-		<td>$\frac{1285469654383}{1280987136000}$</td>
-	</tr>
-</table>
-</div>
-
-<p>
-These quadrature formulae are similar to the <a href="https://www.colorado.edu/amath/sites/default/files/attached-files/gregory.pdf">
-Gregory method</a> in that they appear to be boundary corrections to the trapezoidal rule. 
-The number of terms in a correction of a given order appears to be larger however.
-Also, choosing an odd order parameter makes stencil selection ambiguous and ruins the symmetry
-properties, which doesn't correspond Gregory's method.
-</p>
-
-<h1>Convergence</h1>
-<p>
-These order parameters appear to coincide with convergence order as the number of points
-grows.
-Below we show several numerical experiments approximating the order of convergence for several test functions.
-</p>
-
-<figure>
-	<img src="working/convergence_exp.png" width="100%"/>
-	<caption>
-		<b>Fig 4.</b>
-		Convergence for $f(x) = e^x$ on $[-1, 1]$.
-		We see that the convergence order corresponds to the order parameter.
-	</caption>
-</figure>
-
-<figure>
-	<img src="working/convergence_poly.png" width="100%"/>
-	<caption>
-		<b>Fig 5.</b> Convergence for a fifth degree polynomial.
-		We see that for $k=6$ the quadrature is exact up to numerical error.
-		For smaller order parameters, we are not exact, but see the expected
-		convergence rates.
-	</caption>
-</figure>
-
-<figure>
-	<img src="working/convergence_runge.png" width="100%"/>
-	<caption>
-		<b>Fig 6.</b> Convergence for Runge's function $f(x) = \frac{1}{1 + 25x^2}$.
-		We see expected convergence rates.
-		This is a noteworthy test case as the pole in the complex plane at $x = \frac{i}{5}$
-		causes instability for global polynomial interpolants with equally spaced points 
-		(known as <a href="https://en.wikipedia.org/wiki/Runge's_phenomenon" target=blank>Runge's Phenonmeon</a>).
-		This local interpolation method seems to be resistant to this effect.
-	</caption>
-</figure>
-
-<figure>
-	<img src="working/convergence_kink.png" width="100%"/>
-	<caption>
-		<b>Fig 7.</b> Convergence for the piecewise smooth function 
-		$f(x) = \cos(x) \left| x - \frac{1}{3} \right|$.
-		Here, we see that the order of accuracy is limited by the smoothness of the function
-		as is typical for interpolation based methods.
-	</caption>
-</figure>
-
-<h1>Advantages</h1>
-
-<p>
-The principle advantage to this method is flexibility.
-One can easily change the location of the nodes and derive quadrature weights.
-Additionally, one can easily change the choice of basis functions.
-Indeed, I discovered this method when working on Local Radial Basis Function Interpolation,
-which has the advantage of working well in arbitrary dimensions.
-</p>
-
-<p>
-Notably, one could enforce more constraints and increase the degree of polynomial.
-One can enforce smoothness conditions to get splines with higher order convergence.
-One can enforce Hermite interpolation conditions (possibly only at the boundary) to 
-reduce the number of end corrections. I suspect that something like this can be used
-to reproduce the Gregory weights.
-</p>
 
 
-<h1>Future Directions</h1>
-<p>
-It would be interesting to see if this could be the foundation of an adaptive
-quadrature method.
-Since the weights are determined by the location of only a few nearby nodes,
-selectively adapting the weights could allow for minimal function evaluation
-for a high-order adaptive method.
-</p>
+<!--********************************************************************-->
+<h1>Point Generation In the Unit Square</h1>
 
-<p>
-Perhaps there is potential for maintaining high-order convergence for piecewise smooth
-functions if the locations of the knots are known in advance by enforcing that only
-a certain number of stencil nodes are allowed to cross these boundaries.
-For example, if you enforce that no nodes may cross the boundary, this is
-simply domain decomposition and of course will work for piecewise continuous functions.
-</p>
-
-<p>
-In the table above, we see that some of the weights become negative for orders 10 and above.
-Perhaps there is a way to avoid this by clustering nodes near the boundary.
-This would increase the number of end corrections since the stencil-translation argument
-wouldn't hold until far away from the non-equally spaced nodes,
-but perhaps it could avoid Runge's phenomenon, which I assume is the underling cause.
-</p>
-
-<p>
-It would be interesting to apply this to infinite domains with appropriate weight kernels,
-as in Gauss-Hermite or Gauss-Legendre interpolation.
-One could potentially get more accuracy by adding more points without sacrificing
-stability.
-</p>
-
-<h1>Code</h1>
-The code used to generate interpolants, quadrature weights, the trapezoidal end
-corrections, and convergence plots is publicly available at
-<a href="https://github.com/shawsa/ppqf">github.com/shawsa/ppqf</a>.
 
 <!--***************************************************************************
 *******************************************************************************
