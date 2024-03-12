@@ -147,7 +147,10 @@
 %%%%%%%%%%%%%%%%%%%
 %%% Column 1 
 %%%%%%%%%%%%%%%%%%%
-\headerbox{RBF-QF}{name = rbfqf, column = 1}{
+\headerbox{$\begin{array}{l}
+\text{Radial Basis Function}\\ \text{Quadrature Formuale}
+\end{array}$
+}{name = rbfqf, column = 1, boxheaderheight=1.3cm}{
 	% Itemize Example:
 	\begin{itemize}
 		\setlength\itemsep{-.2em}
@@ -182,13 +185,24 @@
 		\item $m$ moment conditions
 	\end{itemize}
 	\includegraphics[width=\linewidth, trim={0cm, 3cm, 0cm, 2cm}, clip=true]{images/weights}
+	\vspace{-.3cm}
 }
 
 %%%%%%%%%%%%%%%%%%%
 %%% Column 2
 %%%%%%%%%%%%%%%%%%%
 \headerbox{Quadrature Convergence}{name = quad_convergence, column = 2}{
-	\includegraphics[width=\linewidth]{images/cheb_convergence}
+	\begin{itemize}
+		\setlength\itemsep{-.2em}
+		\item No proven convergence rate.
+		\item We expect at least $\mathcal{O}(d+1)$, where $d$ is the degree of polynomial basis. (Think trapezoidal rule.)
+		\item We test this on a product of Chebyshev polynomials.
+	\end{itemize}
+	\includegraphics[width=0.95\linewidth]{images/quad_convergence}
+	\begin{itemize}
+		\setlength\itemsep{-.2em}
+		\item Rates better than expected.
+	\end{itemize}
 }
 
 \headerbox{Projection Method}{name = quad, column = 2, below=quad_convergence}{
@@ -245,3 +259,4 @@ This work was supported by NSF DMS-2207700.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{poster}
 \end{document}
+
