@@ -7,6 +7,8 @@
 \usepackage{multicol}
 	\setlength{\columnseprule}{1pt}
 	\def\columnseprulecolor{\color{black}}
+
+\usepackage{enumitem}
 	
 \newcommand{\headshotsize}{0.95in}
 % \newcommand{\headshotsize}{1.0in}
@@ -112,7 +114,7 @@
 	\textbf{Goal:} To create and test a neural field solver using radial basis function quadrature.
 	The method should be
 	\vspace{-1em}
-	\begin{itemize}
+	\begin{itemize}[leftmargin=*]
 		\setlength\itemsep{-.5em}
 		\item High-order accurate
 		\item Stable
@@ -124,7 +126,7 @@
 }
 
 \headerbox{Neural Field Models}{name = neuralfield, column = 0, below=summary}{
-	\begin{itemize}
+	\begin{itemize}[leftmargin=*]
 		\setlength\itemsep{-.5em}
 		\item Tissue level models
 		\item Integro-differential equation(s)
@@ -135,7 +137,7 @@
 	\centerline{Image by Heather Cihak.} \\
 
 	$\partial_t u(t, \vecx) = -u + \iint_\Omega w(\vecx, \vecy) f[u(t, \vecy)] \ d\vecy$
-	\begin{itemize}
+	\begin{itemize}[leftmargin=*]
 		\setlength\itemsep{-.5em}
 		\item $u(t, \vecx)$ --- Neural activity
 		\item $w(\vecx, \vecy)$ --- Connectivity kernel
@@ -152,7 +154,7 @@
 \end{array}$
 }{name = rbfqf, column = 1, boxheaderheight=1.3cm}{
 	% Itemize Example:
-	\begin{itemize}
+	\begin{itemize}[leftmargin=*]
 		\setlength\itemsep{-.2em}
 		\item Place $N$ nodes in $\Omega$
 		\item Partition $\Omega$ into elements
@@ -176,7 +178,7 @@
 		s(\vecx) = \sum_{i=1}^k c_i \phi(\norm{\vecx - \vecx_i}) + \sum_{j=1}^m \gamma_i \pi_j(\vecx)
 	\]
 	\vspace{-2em}
-	\begin{itemize}
+	\begin{itemize}[leftmargin=*]
 		\setlength\itemsep{-.2em}
 		\item $\phi$ - radial basis function \\
 		(eg. $\phi(r) = r^3$)
@@ -192,68 +194,70 @@
 %%% Column 2
 %%%%%%%%%%%%%%%%%%%
 \headerbox{Quadrature Convergence}{name = quad_convergence, column = 2}{
-	\begin{itemize}
+	\begin{itemize}[leftmargin=*]
 		\setlength\itemsep{-.2em}
 		\item No proven convergence rate.
 		\item We expect at least $\mathcal{O}(d+1)$, where $d$ is the degree of polynomial basis. (Think trapezoidal rule.)
 		\item We test this on a product of Chebyshev polynomials.
 	\end{itemize}
 	\includegraphics[width=0.95\linewidth]{images/quad_convergence}
-	\begin{itemize}
-		\setlength\itemsep{-.2em}
-		\item Rates better than expected.
-	\end{itemize}
 }
 
-\headerbox{Projection Method}{name = quad, column = 2, below=quad_convergence}{
-	% Itemize Example:
-	\begin{itemize}
-		\setlength\itemsep{0pt}
-		\small{
-			\item \bf{Scientific Question}
-		}
+\headerbox{Spatial Analysis}{name = quad, column = 2, below=quad_convergence}{
+	\begin{itemize}[leftmargin=*]
+		\setlength\itemsep{-.2em}
+		\small
+		\item Gaussian test functions centered at $(x_0, y_0)$
+		\item Scattered Nodes vs Regular Hex Grid
+		\item Error is continuous w.r.t. $(x_0, y_0)$
+		\item Hex grid has spectral accuracy away from boundary
 	\end{itemize}
-	% Figure Example: 
-	\includegraphics[width=\linewidth]{images/neurons}
-	% Acknowledgements & References Example:
-	\small{This work is supported by GRANT INFORMATION\\
-		(1) AUTHORS (YEAR) \textit{JOURNAL}}
+	\includegraphics[width=\linewidth, trim={.5cm, .5cm, .5cm, 0cm}, clip=true]{images/poster_space_combined}
 }
 
 %%%%%%%%%%%%%%%%%%%
 %%% Column 3
 %%%%%%%%%%%%%%%%%%%
-\headerbox{Neural Field IVP}{name = ivp, column = 3}{
-	% Itemize Example:
-	\begin{itemize}
-		\setlength\itemsep{0pt}
-		\small{
-			\item \bf{Scientific Question}
-		}
+\headerbox{Next Steps}{name = ivp, column = 3}{
+	\textbf{Projection Method}
+	\begin{itemize}[leftmargin=*]
+		\setlength\itemsep{-.2em}
+		\small
+		\item D. Avitable (2023)
+		\item Framework for error analysis of neural field models
+		\item Separates error into projection error and quadrature error
+		\item We will unify these errors using RBF interpolation (projection) and RBF-QF.
 	\end{itemize}
-	% Figure Example: 
-	\includegraphics[width=\linewidth]{images/neurons}
-	% Acknowledgements & References Example:
-	\small{This work is supported by GRANT INFORMATION\\
-		(1) AUTHORS (YEAR) \textit{JOURNAL}}
+	\textbf{Curved 2D Manifolds}
+	\begin{itemize}[leftmargin=*]
+		\setlength\itemsep{-.2em}
+		\small
+		\item Reeger et al. (2016 \& 2018)
+		\item Extended RBF-QF to 2D manifolds
+		\item We will
+	\end{itemize}
+	\textbf{Corticol Spreading Depression}
+	\begin{itemize}[leftmargin=*]
+		\setlength\itemsep{-.2em}
+		\small
+		\item Reeger et al. (2016 \& 2018)
+		\item Extended RBF-QF to 2D manifolds
+		\item We will
+	\end{itemize}
 }
 
 \headerbox{References and Funding}{name = ref, column = 3, below=ivp}{
 	% Itemize Example:
-	\begin{itemize}
-		\setlength\itemsep{0pt}
+	\begin{itemize}[leftmargin=*]
+		\setlength\itemsep{-.4em}
 		\small{
-			\item Tsodyks, et al. (1998) Neural Computation
-			\item Kilpatrick \& Bressloff (2010) Physica D 
-			\item Kilpatrick \& Ermentrout (2012) Phys. Rev. E
-This work was supported by NSF DMS-2207700.
+			\item Avitable (2023) SIAM J. Numer. Anal. % projection paper
+			\item Regeer et al. (2016) Proc. Royal A % smooth surfaces without boundary
+			\item Reeger \& Fornberg (2018) J. Comp. Phys. % smooth surfaces with boundary
 		}
 	\end{itemize}
 	% Figure Example: 
-	\includegraphics[width=\linewidth]{images/neurons}
-	% Acknowledgements & References Example:
-	\small{This work is supported by GRANT INFORMATION\\
-		(1) AUTHORS (YEAR) \textit{JOURNAL}}
+	\small{This work is supported by\\ NSF DMS-2207700 \\ NIH BRAIN 1R01EB029847-01}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
