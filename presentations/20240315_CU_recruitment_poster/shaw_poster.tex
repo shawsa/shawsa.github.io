@@ -11,6 +11,7 @@
 \usepackage{enumitem}
 	
 \newcommand{\headshotsize}{0.95in}
+\newcommand{\logosize}{0.75in}
 % \newcommand{\headshotsize}{1.0in}
 %%% Color Definitions %%%
 
@@ -84,9 +85,12 @@
 	linewidth = 2pt
 }
 {
-\includegraphics[height=\headshotsize, trim={0.5cm, 1cm, 16.4cm, 0.7cm}, clip=true]{cu_logo}
-\hspace{.5cm}
-\includegraphics[height=\headshotsize]{NSF_logo.eps}
+\includegraphics[height=\logosize, trim={0.5cm, 1cm, 16.4cm, 0.7cm}, clip=true]{cu_logo}
+\hspace{.3cm}
+\includegraphics[height=\logosize]{NSF_logo.eps}
+\hspace{.3cm}
+\includegraphics[height=\logosize]{qrcode.png}
+\hspace{.3cm}
 }
 {\sf\bf
 	\color{cuGold}
@@ -94,7 +98,7 @@
 }
 {
 	\color{cuGold}
-	Sage B. Shaw$^{1}$, Zack P. Kilpatrick$^1$, and Daniele Avitable$^2$\\
+	Sage B. Shaw$^{1}$, Zachary P. Kilpatrick$^1$, and Daniele Avitable$^2$\\
 	\small{1: University of Colorado Boulder}
 	\small{2: Vrije Universiteit Amsterdam}
 }
@@ -125,7 +129,7 @@
 	In the future, we will extend this to realistic curved 2D spatial domains.
 }
 
-\headerbox{Neural Field Models}{name = neuralfield, column = 0, below=summary}{
+\headerbox{Neural Field Models (NF)}{name = neuralfield, column = 0, below=summary}{
 	\begin{itemize}[leftmargin=*]
 		\setlength\itemsep{-.5em}
 		\item Tissue level models
@@ -155,7 +159,8 @@
 }{name = rbfqf, column = 1, boxheaderheight=1.3cm}{
 	% Itemize Example:
 	\begin{itemize}[leftmargin=*]
-		\setlength\itemsep{-.2em}
+		\setlength\itemsep{-.4em}
+		\item Abreviated \textbf{RBF-QF}
 		\item Place $N$ nodes in $\Omega$
 		\item Partition $\Omega$ into elements
 		\item For each element
@@ -179,7 +184,7 @@
 	\]
 	\vspace{-2em}
 	\begin{itemize}[leftmargin=*]
-		\setlength\itemsep{-.2em}
+		\setlength\itemsep{-.4em}
 		\item $\phi$ - radial basis function \\
 		(eg. $\phi(r) = r^3$)
 		\item $\{\pi_{j}\}_{j=1}^m$ - polynomial basis
@@ -219,43 +224,58 @@
 %%% Column 3
 %%%%%%%%%%%%%%%%%%%
 \headerbox{Next Steps}{name = ivp, column = 3}{
-	\textbf{Projection Method}
+	\vspace{-.4em}
+	\textbf{Projection Method}[1] % Avitable
+	\vspace{-.8em}
 	\begin{itemize}[leftmargin=*]
-		\setlength\itemsep{-.2em}
+		\setlength\itemsep{-.4em}
 		\small
-		\item D. Avitable (2023)
-		\item Framework for error analysis of neural field models
-		\item Separates error into projection error and quadrature error
+		\item Framework for error analysis of NF
+		\item error = projection error + QF error
 		\item We will unify these errors using RBF interpolation (projection) and RBF-QF.
 	\end{itemize}
+	\vspace{-.8em}
 	\textbf{Curved 2D Manifolds}
+	\vspace{-.8em}
 	\begin{itemize}[leftmargin=*]
 		\setlength\itemsep{-.2em}
 		\small
-		\item Reeger et al. (2016 \& 2018)
-		\item Extended RBF-QF to 2D manifolds
-		\item We will
+		\item {[2,3]} Extended RBF-QF to 2D manifolds % Reeger
+		\item {[4]} Used FitzHugh–Nagumo (toy model) on torrus (toy surface) to study effects of corticol curvature.
+		\item We will use RBF-QF on realistic corticol surfaces
+			 to study the effects of coticol curvature on \textit{corticol spreading depression} (CSD).
 	\end{itemize}
+	\vspace{-.8em}
 	\textbf{Corticol Spreading Depression}
+	\vspace{-.8em}
 	\begin{itemize}[leftmargin=*]
-		\setlength\itemsep{-.2em}
+		\setlength\itemsep{-.4em}
 		\small
-		\item Reeger et al. (2016 \& 2018)
-		\item Extended RBF-QF to 2D manifolds
-		\item We will
+		\item Slow moving chemical wave
+		\item Causes depressed neural activity
+		\item Causes \textit{scintilating scotomas}
 	\end{itemize}
+	\includegraphics[width=0.9\linewidth, trim={0cm, .5cm, 0cm, 0cm}, clip=true]{images/csd}
+	\begin{center} \small Cartoon of CSD wave[5]\end{center} % Dahlam
+	\includegraphics[width=\linewidth, trim={0cm, 0cm, 0cm, 0cm}, clip]{images/scotoma}
+	\vspace{-2.2em}
+	\begin{center} \small Artistic Rendering of Scotomas (see QR code)\end{center}
 }
 
 \headerbox{References and Funding}{name = ref, column = 3, below=ivp}{
 	% Itemize Example:
-	\begin{itemize}[leftmargin=*]
+	\begin{enumerate}[leftmargin=*]
 		\setlength\itemsep{-.4em}
 		\small{
-			\item Avitable (2023) SIAM J. Numer. Anal. % projection paper
+			\item D. Avitable (2023) SIAM J. Numer. Anal. % projection paper
 			\item Regeer et al. (2016) Proc. Royal A % smooth surfaces without boundary
 			\item Reeger \& Fornberg (2018) J. Comp. Phys. % smooth surfaces with boundary
+			\item Kneer et al. (2014) New Journal of Physics.
+			\item M. Dahlam (2013) Chaos.
 		}
-	\end{itemize}
+	\end{enumerate}
+	\vspace{-1em}
+	\texttt{shawsa.github.io/presentations}
 	% Figure Example: 
 	\small{This work is supported by\\ NSF DMS-2207700 \\ NIH BRAIN 1R01EB029847-01}
 }
