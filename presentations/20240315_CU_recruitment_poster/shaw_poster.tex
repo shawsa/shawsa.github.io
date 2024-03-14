@@ -117,7 +117,7 @@
 \headerbox{Summary}{name = summary, column = 0}{
 	\textbf{Goal:} To create and test a neural field solver using radial basis function quadrature.
 	The method should be
-	\vspace{-1em}
+	\vspace{-.5em}
 	\begin{itemize}[leftmargin=*]
 		\setlength\itemsep{-.5em}
 		\item High-order accurate
@@ -125,7 +125,7 @@
 		\item Geometrically flexible
 		\item Fast (low complexity)
 	\end{itemize}
-
+	\vspace{-.5em}
 	In the future, we will extend this to realistic curved 2D spatial domains.
 }
 
@@ -150,7 +150,7 @@
 	\end{itemize}
 	\vspace{-1.5em}
 	\begin{center}
-		\includegraphics[width=.9\linewidth, trim={0cm, 0cm, 0cm, 0cm}, clip=true]{images/kernels}
+		\includegraphics[width=.9\linewidth, trim={0cm, .13cm, 0cm, 0cm}, clip=true]{images/kernels}
 	\end{center}
 }
 
@@ -171,13 +171,13 @@
 		\vspace{-1em}
 		\begin{itemize}
 			\setlength\itemsep{-.2em}
-			\item select the $k$ nearest nodes \\(the stencil),
-			\item interpolate Lagrange functions,
-			\item integrate over the element,
-			\item sum over interpolants
+			\item Select the $k$ nearest nodes \\(the stencil),
+			\item Interpolate Lagrange functions,
+			\item Integrate over the element,
+			\item Sum over interpolants
 		\end{itemize}
 		\setlength\itemsep{-1em}
-		\item sum over elements
+		\item Sum over elements
 	\end{itemize}
 	\vspace{-0.5em}
 	\includegraphics[width=\linewidth, trim={0cm, 1.1cm, 0cm, 1.4cm}, clip=true]{images/triangulation}
@@ -236,13 +236,14 @@
 		\item Error is continuous w.r.t. $(x_0, y_0)$
 		\item Hex grid has spectral accuracy away from boundary \\ (like trapezoidal rule)
 	\end{itemize}
+	\vspace{-.31cm}
 }
 
 %%%%%%%%%%%%%%%%%%%
 %%% Column 3
 %%%%%%%%%%%%%%%%%%%
 \headerbox{Next Steps}{name = ivp, column = 3}{
-	\vspace{-.4em}
+	\vspace{-.2em}
 	\textbf{Projection Method}[1] % Avitable
 	\vspace{-.8em}
 	\begin{itemize}[leftmargin=*]
@@ -252,7 +253,7 @@
 		\item error = projection error + QF error
 		\item We will unify these errors using RBF interpolation (projection) and RBF-QF.
 	\end{itemize}
-	\vspace{-.8em}
+	\vspace{-.2em}
 	\textbf{Curved 2D Manifolds}
 	\vspace{-.8em}
 	\begin{itemize}[leftmargin=*]
@@ -263,7 +264,7 @@
 		\item We will use RBF-QF on realistic corticol surfaces
 			 to study the effects of coticol curvature on \textit{corticol spreading depression} (CSD).
 	\end{itemize}
-	\vspace{-.8em}
+	\vspace{-.2em}
 	\textbf{Corticol Spreading Depression}
 	\vspace{-.8em}
 	\begin{itemize}[leftmargin=*]
@@ -293,10 +294,12 @@
 			\item M. Dahlam (2013) Chaos.
 		}
 	\end{enumerate}
-	\vspace{-1em}
+	\vspace{-.75em}
 	\texttt{shawsa.github.io/presentations} \\
-	\small{This work is supported by\\ NSF DMS-2207700 \\ NIH BRAIN 1R01EB029847-01}
-	\vspace{0.1em}
+	\small{This work is supported by} \\
+	\small{NSF DMS-2207700} \\
+	\small{NIH BRAIN 1R01EB029847-01}
+	\vspace{.2em}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
