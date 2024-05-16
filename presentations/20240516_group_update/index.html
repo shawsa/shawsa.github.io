@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Python in Scientific Computing</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+<!--##################################################-->
+$\newcommand{vecx}{\vec{x}}$
+$\newcommand{vecy}{\vec{y}}$
+<section>
+	<section>
+		<h2>Group Update</h2>
+		<p>Sage Shaw - May 16<sup>th</sup>, 2024</p>
+		<p>Kilpatrick Lab</p>
+
+		<h3>Radial Basis Function Quadrature for Neural Field Equations</p>
+
+		<aside class="notes">
+			<ul>
+				<li>Collaborator - Daniele Avitable at Vrije Universiteit Amsterdam</li>
+				<li>Neural Field Equations</li>
+				<li>Skip RBFs, just quadrature</li>
+				<li>Some results / demos</li>
+				<li>Next Steps</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h2>Neural Fields</h2>
+		<p>$\partial_t \color{blue}{u}(t, \vecx)_t = -\color{blue}{u} + \int_{\Omega} \color{green}{w}(\vecx, \vecy) \color{red}{f}[\color{blue}{u}(\vecy)] d \vecy$</p>
+		<div>
+			<div style="float: left; width: 40%;pad: 0px:">
+				<img src="images/snowflake4.gif" width=100%/>
+			</div>
+			<div style="float: right; width: 55%;">
+				<ul>
+					<li>$\color{blue}{u}(t, \vecx)$ - Activity</li>
+					<li>$\color{green}{w}(\vecx, \vecy)$ - Connectivity kernel</li>
+					<li>$\color{red}{f}[\color{blue}{u}]$ - non-linear firingrate function</li>
+				</ul>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>activity / average membrain potential</li>
+				<li>natural decay term</li>
+				<li>integral / convolution term</li>
+				<li>example - laterally inhibitory kernel, sigmoid firing</li>
+				<li>Common to couple excitatory/inhibitory</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h2>Numerical Solutions</h2>
+		<ul>
+			<li>Collocation method (rather than Galerkin)</li>
+			<li>Use AB5 for time integration</li>
+			<li>Use RBF quadrature for integral</li>
+		</ul>
+		<aside class="notes">
+			<ul>
+				<li>Collocation - think FD or quadrature</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h2>RBF Quadrature - just the geometry</h2>
+		<div>
+			<div style="float: left; width: 45%;pad: 0px:">
+				<p></p>
+				<img src="images/triangulation.jpeg" width=100%/>
+			</div>
+			<div style="float: right; width: 55%;">
+				<img src="images/weights.jpeg" width=100%/>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>Collocation - think FD or quadrature</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h2>Testing manufactured solution</h2>
+		<div>
+			<img src="images/anim_cartesian_manufactured2.gif" height="100%"/>
+		</div>
+		<aside>
+		</aside>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h2>Convergence Plot</h2>
+		<div>
+			<img src="images/convergence.png" height="100%"/>
+		</div>
+		<aside>
+		</aside>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h2>Next Steps</h2>
+		<ul>
+			<li>Adapt to surfaces.</li>
+			<li>Adapt to arbitrary smooth boundaries.</li>
+			<li>Adaptive node placement/refinement.</li>
+		</ul>
+		<aside>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Questions?</h3>
+	</section>
+</section>
+<!--##################################################-->
+<!--##################################################-->
+<!--##################################################-->
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+        <script src="plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ]
+			});
+		</script>
+	</body>
+</html>
