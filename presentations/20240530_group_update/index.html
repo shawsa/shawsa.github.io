@@ -53,6 +53,190 @@ $\newcommand{vecy}{\vec{y}}$
 </section>
 <!--##################################################-->
 <section>
+	<section>
+		<h1>Motivating Research</h1>
+		<aside class="notes">
+			<ul>
+				<li>Interested in modeling other kinds of traveling waves</li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Spreading Depression</h3>
+		<img class="r-stretch" src="media/Zandt_CSD.png"/>
+		<br>
+		<a href="https://www.degruyter.com/document/doi/10.1515/revneuro-2014-0069/html" target=blank>Zandt, Haken, van Putten, and Markus (2015)</a>
+		<aside class="notes">
+			<ul>
+				<li>Slow moving chemical wave.</li>
+				<li>Believed to cause migraines.</li>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Retinotopic Map</h3>
+		<img class="r-stretch" src="media/Zandt_retinotopic_map.png"/>
+		<br>
+		<a href="https://www.degruyter.com/document/doi/10.1515/revneuro-2014-0069/html" target=blank>Zandt, Haken, van Putten, and Markus (2015)</a>
+		<aside class="notes">
+			<ul>
+				<li>Slow moving waves in cortex are perceived</li>
+				<li>Left: visual field</li>
+				<li>Right: cortex</li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Scintillating Scotoma</h3>
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<img src="media/scotoma_anon.jpeg" height="200em"/>
+				<img src="media/scotoma_weed_2017.jpeg" height="300em"/>
+			</div>
+			<div style="float: right; width: 50%">
+				<img src="media/scotoma_airy_1870.png"/>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>Blind spots</li>
+				<li>Slowly moves for a few hours.</li>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<div style="width: 100%">
+			<h3>Reaction Diffusion Model</h3>
+			<div style="float: left; width: 60%">
+				<p style="font-size:80%;">
+				$$\begin{align*}
+				u_t &= \underbrace{u - \frac{1}{3}u^3}_{\text{excitable}} - \underbrace{v}_{\text{recovery}} + \underbrace{D\nabla^2 u}_{\text{Diffusion}} \\
+				\frac{1}{\varepsilon} v_t &= u + \beta + \underbrace{K\int H(u) d \Omega}_{\substack{\text{neurovascular}\\\text{feedback}}}
+				\end{align*}$$
+				</p>
+			</div>
+			<div style="float: right; width: 40%">
+				<a href="https://mathematical-neuroscience.springeropen.com/articles/10.1186/2190-8567-3-7#MOESM4" target=blank">
+				<img src="media/Dahlem_transient.png"/>
+				</a>
+			</div>
+			<p>
+			<a href="https://aip.scitation.org/doi/full/10.1063/1.4813815" target=blank>Markus A. Dahlem (2013)</a>
+			</p>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>Excitable medium, with recovery and diffusion</li>
+				<li>Integral term represents vascular feedback</li>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<div style="width: 100%">
+			<h3>Reaction Diffusion on surfaces</h3>
+			<div style="float: left; width: 50%">
+				<p style="font-size: .7em">
+				$$\begin{align*}
+					u_t &= 3u - u^3 - v + D \Delta_{\mathcal{M}}u \\ 
+					\frac{1}{\varepsilon} v_t &= u + \beta + K \int_{\mathcal{M}} H(u) \ d \mu_{\mathcal{M}}
+				\end{align*}$$
+				<ul>
+					<li>Surface operators: $\Delta_{\mathcal{M}}, \int_{\mathcal{M}} \cdot d \mu_{\mathcal{M}}$</li>
+					<li>Affects speed and stability of waves</li>
+				</ul>
+				</p>
+			</div>
+			<div style="float: right; width: 50%">
+				<video controls loop muted autoplay>
+					<source src="media/Kneer_torus.ogg" type="video/ogg">
+					Your browser does not support the video tag.
+				</video>
+				Kneer, Scholl, Dahlem (2014)
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>Same model as before</li>
+				<li>Diffusion is Laplace-Beltrami</li>
+				<li>Integral is with respect to a measure that incorporates the curvature.</li>
+				<li>Curvature affects speed and stability.</li>
+				<li>I've worked with surface PDEs before.</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Coupled neural field and diffusion equation</h3>
+		$$\begin{align*}
+			v_t &= -v + w \ast s_p(v, k) + g_v \\
+			k_t &= \delta k_{xx} + g_k(s, s_p, a, b) + I
+		\end{align*}$$
+		<ul>
+			<li>Neural field model</li>
+			<li>Coupled potassium concentration</li> 
+			<li>Models both ignition and propagation of CSD</li>
+		</ul>
+		<p><a href="https://hal.science/hal-04008117/document" target=blank>Baspinar et al. (2023)</a></p>
+		<aside class="notes">
+			<ul>
+				<li>Neural field model and potassium</li>
+				<li>Apply our analysis to understand control.</li>
+				<li>Ultimately, find a way to disrupt CSD</li>
+				<li>Another area I'm interested in is understanding the role of curvature.</li>
+				<li>Brain is wrinkly</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<div style="width: 100%">
+			<h3>A Turing Reaction Diffusion System using RBFs</h3>
+			$$\begin{align*}
+				u_t &= \delta_u \Delta_{\mathcal{M}} u + \alpha(1-\tau_1 v^2) + v(1-\tau_2 u)\\
+				v_t &= \delta_v \Delta_{\mathcal{M}} v + \beta(1-\frac{\alpha\tau_1}{\beta} uv) + u(\gamma-\tau_2 v)\\
+			\end{align*}$$
+			<div style="float: left; width: 50%">
+				<video controls loop muted >
+					<source src="media/bunny_spots.ogg" type="video/ogg">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+			<div style="float: right; width: 50%">
+				<video controls loop muted >
+					<source src="media/bunny_stripes.ogg" type="video/ogg">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>Reaction diffusion system.</li>
+				<li>Parameters control spots or stripes</li>
+				<li>RBF interpolation: high order, any dimension, no mesh</li>
+				<li>I compared 3 ways of using RBFs for making FD approximations to LB</li>
+				<li>No need for curvilinear coordinates.</li>
+				<li>Closed surface, LB transpose nullspace gives quadrature weights.</li>
+			</ul>
+		</aside>
+	</section>
+</section>
+<!--##################################################-->
+<section>
 	<!--###########-->
 	<section data-auto-animate>
 		<h2>Neural Field Model</h2>
@@ -62,7 +246,8 @@ $\newcommand{vecy}{\vec{y}}$
 		<p>$\partial_t \color{blue}{u}(t, \vecx) = -\color{blue}{u} + \int_{\Omega} \color{green}{w}(\vecx, \vecy) \color{red}{f}[\color{blue}{u}(\vecy)] d \vecy$</p>
 		<div>
 			<div style="float: left; width: 40%;pad: 0px:">
-				<img src="images/snowflake4.gif" width="100%"/>
+				<img src="media/snowflake4.gif" width="100%"/>
+				<p>Recreation of <a href="https://mathematical-neuroscience.springeropen.com/articles/10.1186/2190-8567-2-9" target=blank>Coombes et al.</a> (2012)</p>
 			</div>
 			<div style="float: right; width: 55%;">
 				<ul>
@@ -130,12 +315,12 @@ $\newcommand{vecy}{\vec{y}}$
 		<h3>RBF-QF Algorithm</h3>
 		<div>
 			<div class="r-stack" style="float: left; width: 45%;pad: 0px:">
-				<img class="fragment" data-fragment-index="0" src="images/step0_domain.png" width="100%"/>
-				<img class="fragment" data-fragment-index="1" src="images/step1_points.png" width="100%"/>
-				<img class="fragment" data-fragment-index="2" src="images/step2_mesh.png" width="100%/">
-				<img class="fragment" data-fragment-index="3" src="images/step3_stencil.png" width="100%"/>
-				<img class="fragment" data-fragment-index="4" src="images/step4_interp.png" width="100%"/>
-				<img class="fragment" data-fragment-index="5" src="images/step5_weights.png" width="100%"/>
+				<img class="fragment" data-fragment-index="0" src="media/step0_domain.png" width="100%"/>
+				<img class="fragment" data-fragment-index="1" src="media/step1_points.png" width="100%"/>
+				<img class="fragment" data-fragment-index="2" src="media/step2_mesh.png" width="100%/">
+				<img class="fragment" data-fragment-index="3" src="media/step3_stencil.png" width="100%"/>
+				<img class="fragment" data-fragment-index="4" src="media/step4_interp.png" width="100%"/>
+				<img class="fragment" data-fragment-index="5" src="media/step5_weights.png" width="100%"/>
 			</div>
 			<div style="float: right; width: 55%;">
 				<ul>
@@ -167,23 +352,23 @@ $\newcommand{vecy}{\vec{y}}$
 	<!--###########-->
 	<section data-auto-animate>
 		<h3>Gaussian Test Functions</h3>
-		<img src="images/spatial_error_scattered.png" width="100%"/>
+		<img src="media/spatial_error_scattered.png" width="100%"/>
 	</section>
 	<!--###########-->
 	<section data-auto-animate>
 		<h3>Gaussian Test Functions</h3>
-		<img src="images/spatial_error_hex.png" width="100%"/>
+		<img src="media/spatial_error_hex.png" width="100%"/>
 	</section>
 	<!--###########-->
 	<section>
 		<h3>Quadrature Convergence</h3>
-		<img class="r-stretch" src="images/quad_convergence.png"/>
+		<img class="r-stretch" src="media/quad_convergence.png"/>
 	</section>
 	<!--###########-->
 	<section data-auto-animate>
 		<h2>Testing manufactured solution</h2>
 		<div>
-			<img src="images/anim_cartesian_manufactured2.gif" height="100%"/>
+			<img src="media/anim_cartesian_manufactured2.gif" height="100%"/>
 		</div>
 		<aside>
 		</aside>
@@ -192,7 +377,7 @@ $\newcommand{vecy}{\vec{y}}$
 	<section data-auto-animate>
 		<h2>Convergence</h2>
 		<div>
-			<img src="images/convergence.png" height="100%"/>
+			<img src="media/convergence.png" height="100%"/>
 		</div>
 		<aside>
 		</aside>
@@ -208,6 +393,10 @@ $\newcommand{vecy}{\vec{y}}$
 			<li>Incorporate cortical spreading depression (CSD).</li>
 			<li>Study the effects of realistic cortical curvature on CSD wave generation and propagation.</li>
 		</ul>
+	</section>
+	<section>
+		<h3>Thank you!</h3>
+		<h3>Questions?</h3>
 	</section>
 </section>
 <!--##################################################-->
