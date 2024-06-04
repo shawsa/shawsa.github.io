@@ -1,0 +1,235 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Python in Scientific Computing</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
+		<link rel="stylesheet" href="./style.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+<!--##################################################-->
+$\newcommand{vecx}{\vec{x}}$
+$\newcommand{vecy}{\vec{y}}$
+<section>
+	<section>
+		<h2>Group Update</h2>
+		<p>Sage Shaw - May 30<sup>th</sup>, 2024</p>
+		<p>Kilpatrick Lab</p>
+
+		<h3>Radial Basis Function Quadrature for Neural Field Equations</p>
+
+		<aside class="notes">
+			<ul>
+				<li>Presenting at ICMNS</li>
+				<li>Aiming for 25 min + questions</li>
+				<li>Collaborator - Daniele Avitabile at Vrije Universiteit Amsterdam</li>
+			</ul>
+		</aside>
+	</section>
+	<section>
+		<ul>
+			<li>Neural Field Model</li>
+			<li>Radial Basis Function Quadrature Formulae <br/>(RBF-QF)</li>
+			<li>Experimental Results</li>
+			<li>Next Steps</li>
+		</ul>
+		<aside class="notes">
+			<ul>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+</section>
+<!--##################################################-->
+<section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h2>Neural Field Model</h2>
+	</section>
+	<section data-auto-animate>
+		<h2>Neural Field Model</h2>
+		<p>$\partial_t \color{blue}{u}(t, \vecx) = -\color{blue}{u} + \int_{\Omega} \color{green}{w}(\vecx, \vecy) \color{red}{f}[\color{blue}{u}(\vecy)] d \vecy$</p>
+		<div>
+			<div style="float: left; width: 40%;pad: 0px:">
+				<img src="media/snowflake4.gif" width="100%"/>
+			</div>
+			<div style="float: right; width: 55%;">
+				<ul>
+					<li>$\color{blue}{u}(t, \vecx)$ - Activity</li>
+					<li>$\color{green}{w}(\vecx, \vecy)$ - Connectivity kernel</li>
+					<li>$\color{red}{f}[\color{blue}{u}]$ - non-linear firing rate function</li>
+				</ul>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>activity / average membrain potential</li>
+				<li>natural decay term</li>
+				<li>integral / convolution term</li>
+				<li>example - laterally inhibitory kernel, sigmoid firing</li>
+				<li>Common to couple excitatory/inhibitory</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Projection Method (Avitabile 2023)</h3>
+		<table>
+			<tr class="fragment">
+				<td align="right"> scalar: </td>
+				<td>
+					$\partial_t u(t, \vecx) = -u + \int_\Omega w(\vecx, \vecy) f[u(t, \vecy)] \ d\vecy$
+				</td>
+			</tr>
+			<tr class="fragment">
+				<td align="right"> Banach: </td>
+				<td>$\dot{U}(t) = -U + W(f[U])$</td>
+			</tr>
+			<tr class="fragment">
+				<td align="right">projected:</td>
+				<td>$\dot{U}_n(t) = -U_n + W_n(f[U_n])$</td>
+			</tr>
+			<tr class="fragment">
+				<td align="right">quadrature:</td>
+				<td>$\dot{\tilde{U}}_n(t) = -\tilde{U}_n + Q(f[\tilde{U}_n])$</td>
+			</tr>
+		</table>
+		<p class="fragment">
+		Error = projection error + quadrature error
+		</p>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<!--###########-->
+	<section>
+		<h2>Radial Basis Function Quadrature Formulae</h2>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>RBF-QF Goal:</h3>
+		<ul>
+			<li class="fragment">Given a set of points $\{\vecx_i\} \subset \Omega$</li>
+			<li class="fragment">find weights $\{w_i\}$</li>
+			<li class="fragment">such that $\int_\Omega f \approx \sum w_i \  f(\vecx_i)$</li>
+		</ul>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>RBF-QF Algorithm</h3>
+		<div>
+			<div class="r-stack" style="float: left; width: 45%;pad: 0px:">
+				<img class="fragment" data-fragment-index="0" src="media/step0_domain.png" width="100%"/>
+				<img class="fragment" data-fragment-index="1" src="media/step1_points.png" width="100%"/>
+				<img class="fragment" data-fragment-index="2" src="media/step2_mesh.png" width="100%/">
+				<img class="fragment" data-fragment-index="3" src="media/step3_stencil.png" width="100%"/>
+				<img class="fragment" data-fragment-index="4" src="media/step4_interp.png" width="100%"/>
+				<img class="fragment" data-fragment-index="5" src="media/step5_weights.png" width="100%"/>
+			</div>
+			<div style="float: right; width: 55%;">
+				<ul>
+					<li class="fragment" data-fragment-index="1">choose quadrature nodes</li>
+					<li class="fragment" data-fragment-index="2">partition domain</li>
+					<li class="fragment" data-fragment-index="3">choose stencils</li>
+					<li class="fragment" data-fragment-index="4">integrate RBF interpolant</li>
+					<li class="fragment" data-fragment-index="5">sum over stencil and elements</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>RBF Interpolation Properties</h3>
+		<ul>
+			<li class="fragment" data-framgment-index="0">scattered nodes in any number of dimensions<sup>*</sup></li>
+			<li class="fragment" data-framgment-index="1">mesh-free<sup>*</sup></li>
+			<li class="fragment" data-framgment-index="2">arbitrary order of accuracy<sup>*</sup></li>
+		</ul>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<!--###########-->
+	<section>
+		<h2>Experimental Results</h2>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h3>Gaussian Test Functions</h3>
+		<img src="media/spatial_error_scattered.png" width="100%"/>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h3>Gaussian Test Functions</h3>
+		<img src="media/spatial_error_hex.png" width="100%"/>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Quadrature Convergence</h3>
+		<img class="r-stretch" src="media/quad_convergence.png"/>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h2>Testing manufactured solution</h2>
+		<div>
+			<img src="media/anim_cartesian_manufactured2.gif" height="100%"/>
+		</div>
+		<aside>
+		</aside>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h2>Convergence</h2>
+		<div>
+			<img src="media/convergence.png" height="100%"/>
+		</div>
+		<aside>
+		</aside>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<!--###########-->
+	<section>
+		<h2>Next Steps</h2>
+		<ul>
+			<li>Adapt to surfaces.</li>
+			<li>Incorporate cortical spreading depression (CSD).</li>
+			<li>Study the effects of realistic cortical curvature on CSD wave generation and propagation.</li>
+		</ul>
+	</section>
+</section>
+<!--##################################################-->
+<!--##################################################-->
+<!--##################################################-->
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+        <script src="plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ]
+			});
+		</script>
+	</body>
+</html>
