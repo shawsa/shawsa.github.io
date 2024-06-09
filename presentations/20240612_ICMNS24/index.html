@@ -2,17 +2,6 @@
 <!--
 NOTES:
 
-Wrap up slide
-
-Motivating research
-    Better CSD - curvature
-
-Cut Dahlem flat slide
-
-Proj + quad -> interp animate (cite current work)
-
-~ N^o/2
-
 Auxiliary slides
     complexity
     spatial error hex -> move to aux
@@ -49,9 +38,17 @@ Auxiliary slides
 				height: calc(var(--slide-height)*.5);
 				margin: 0%;
 			}
+			img.custom {
+				height: calc(var(--slide-height)*.5);
+				margin: 0%;
+				padding: 0%;
+			}
 			p.headshot {
 				font-size: .7em;
 				margin: 0%;
+			}
+			li.faded {
+				color: rgba(0, 0, 0, .5);
 			}
 		</style>
 	</head>
@@ -64,7 +61,7 @@ $\newcommand{vecy}{\vec{y}}$
 <section>
 	<section>
 		<h2>Radial Basis Function Methods for Neural Field Models</h2>
-		<p>Sage Shaw - CU Boulder</p>
+		<p>Sage Shaw - University of Colorado Boulder, USA</p>
 		<p>June 12<sup>th</sup>, 2024</p>
 
 		<aside class="notes">
@@ -74,7 +71,6 @@ $\newcommand{vecy}{\vec{y}}$
 			</ul>
 		</aside>
 	</section>
-	<!--###########-->
 	<!--###########-->
 	<section>
 		<h3>Collaborators</h3>
@@ -122,7 +118,7 @@ $\newcommand{vecy}{\vec{y}}$
 <!--##################################################-->
 <section>
 	<section>
-		<h1>Motivating Research</h1>
+		<h2>Motivating Research</h2>
 		<aside class="notes">
 			<ul>
 				<li></li>
@@ -413,7 +409,19 @@ $\newcommand{vecy}{\vec{y}}$
 	<!--###########-->
 	<section data-auto-animate>
 		<h3>Gaussian Test Functions</h3>
-		<img src="media/spatial_error_scattered.png" width="100%"/>
+		<img class="r-stretch" src="media/spatial_error_scattered.jpg"/>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h3>Gaussian Test Functions</h3>
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<img class="custom" src="media/spatial_error_scattered.jpg"/>
+			</div>
+			<div style="float: right; width: 50%">
+				<img class="custom" src="media/spatial_error_scattered_log.jpg"/>
+			</div>
+		</div>
 	</section>
 	<!--###########-->
 	<section data-auto-animate>
@@ -456,9 +464,34 @@ $\newcommand{vecy}{\vec{y}}$
 		</ul>
 	</section>
 	<!--###########-->
-	<section>
-		<h3>Thank you!</h3>
-		<h3>Questions?</h3>
+	<section
+		data-background="media/qr.svg"
+		data-background-position="top 5% right 5%"
+		data-background-size="10%">
+		<h3>Our Contributions</h3>
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<ul>
+					<li>Neural Field Solver</li>
+					<ul>
+						<li>High Order Accurate</li>
+						<li>Flexible Geometry</li>
+					</ul>
+					<li>Simplifed Error Analysis</li>
+					<li class="faded">Adapt to Surfaces</li>
+					<li class="faded">Couple with CSD</li>
+				</ul>
+			</div>
+			<div style="float: right; width: 50%">
+				<img src="media/presentation_projection_convergence_0.gif">
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>Recap contributions</li>
+				<li>Code will be made public soon - email me.</li>
+			</ul>
+		</aside>
 	</section>
 </section>
 <!--##################################################-->
@@ -466,6 +499,12 @@ $\newcommand{vecy}{\vec{y}}$
 	<!--###########-->
 	<section>
 		<h2>Auxiliary Slides</h2>
+	</section>
+	<!--###########-->
+	<section>
+		<img class="r-stretch" src="media/qr.svg">
+		<p><a href="shawsa.github.io" target=blank>shawsa.github.io</a></p>
+		<p><a href="mailto:sage.shaw@colorad.edu">sage.shaw@colorado.edu</a></p>
 	</section>
 	<!--###########-->
 	<section>
