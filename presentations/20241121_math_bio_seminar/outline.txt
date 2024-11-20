@@ -1,0 +1,28 @@
+Who is this talk for?
+Disclaimers
+	Remedial material?
+		
+What makes Python different?
+
+What are loops?
+	History - structured programming
+	goto considered harmful
+	while loops
+	for loops?
+What are generators?
+Generators are the natural data structure for sequences.
+Generators are on demand. (comprehensions?)
+How to make generators.
+
+How to use generators.
+Example with Markov chain.
+Example of PDE simulation.
+
+Itertools
+Batching data for ANNs.
+Reading from inhomogeneous files.
+
+When not to use generators.
+
+Resources
+Call to action!
