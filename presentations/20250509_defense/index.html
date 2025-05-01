@@ -86,9 +86,17 @@ $\newcommand{vecy}{\vec{y}}$
 		<h2>Outline</h2>
 		<ul>
 			<li>Neural Field Models</li>
-			<li>Stimulus response</li>
-			<li>Entrainment</li>
-			<li>Capturing Curvature</li>
+			<li>One Dimension</li>
+			<ul>
+				<li>Stimulus response</li>
+				<li>Entrainment</li>
+			</ul>
+			<li>Two Dimension</li>
+			<ul>
+				<li>Numerical Analysis: the Projection Method</li>
+				<li>RBF-QF method-of-lines solver for neural fields</li>
+				<li>Curvature showcase</li>
+			</ul>
 			<li>Future Work</li>
 		</ul>
 		<aside class="notes">
@@ -103,7 +111,7 @@ $\newcommand{vecy}{\vec{y}}$
 <!--##################################################-->
 <section>
 	<section>
-		<h2>Neural Field Models</h2>
+		<h1>Neural Field Models</h1>
 		<aside class="notes">
 			<ul>
 				<li>firing</li>
@@ -129,6 +137,41 @@ $\newcommand{vecy}{\vec{y}}$
 	</section>
 	<!--###########-->
 	<section>
+		<h3>Neural Field Models</h3>
+		<ul>
+			<li>Organize neural populations on a line</li>
+			<li>Connectivity is determined by distance</li>
+			<li>Extend to a continuum limit</li>
+		</ul>
+		<img src="media/network_diagram.png" />
+		<aside class="notes">
+			<ul>
+				<li>connections for a single neuron</li>
+				<li>strength decays with distance</li>
+				<li>continuum limit</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Model</h3>
+		<p data-id="models">
+        \begin{align*}
+		\tau_u \frac{\partial}{\partial t}\underbrace{u(x,t)}_{\text{Activity}} &=
+		-u + \underbrace{\overbrace{w}^{\substack{\text{network}\\\text{connectivity}\\\text{kernel}}} \ast \big( f[u] \big)}_{\substack{\text{network}\\\text{stimulation}}} \\
+        \end{align*}
+		</p>
+		<aside class="notes">
+			<ul>
+				<li>activity and efficacy, are normalized</li>
+				<li>Sum over inputs becomes integral</li>
+				<li>Note that $\tau_q > \tau_u$</li>
+				<li>firing-rate and weight kernel next slide</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
 		<h3>Synaptic Depression</h3>
 		<p>Rapid firing depletes pre-synaptic resources.</p>
 		<img src="media/depression.png" width="70%"/>
@@ -137,6 +180,66 @@ $\newcommand{vecy}{\vec{y}}$
 				<li>Firing releases neurotransmitters</li>
 				<li>Rapid firing depletes the pre-synaptic resources.</li>
 				<li>incorporate this into our neural field model.
+			</ul>
+		</aside>
+	</section>
+	<section>
+		<h3>Model with Synaptic Depression</h3>
+		<p data-id="models">
+        \begin{align*}
+		\tau_u \frac{\partial}{\partial t} u(x,t) &=
+		-u + w \ast \big( q f[u] \big)\\
+			\tau_q \frac{\partial}{\partial t}\underbrace{q(x,t)}_{\substack{\text{Synaptic}\\\text{Efficacy}}} &=
+			1 - q - \underbrace{\beta}_{\substack{\text{rate of}\\\text{depletion}}} q \underbrace{f(u)}_{\substack{\text{firing-rate}\\\text{function}}}
+        \end{align*}
+		</p>
+		<aside class="notes">
+			<ul>
+				<li>activity and efficacy, are normalized</li>
+				<li>Sum over inputs becomes integral</li>
+				<li>Note that $\tau_q > \tau_u$</li>
+				<li>firing-rate and weight kernel next slide</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<!--###########-->
+	<section>
+		<h3>Model</h3>
+		<ul>
+			<li>$f[u] = H(u - \theta)$ - All or nothing firing-rate function.</li>
+			<li>$w(|x-y|) = \frac{1}{2}e^{-|x-y|}$ - network connectivity kernel</li>
+			<li>$\gamma = \frac{1}{1+\beta} \in (0, 1]$</li>
+		</ul>
+		<aside class="notes">
+			<ul>
+				<li>activity and efficacy, are normalized</li>
+				<li>Sum over inputs becomes integral</li>
+				<li>Note that $\tau_q > \tau_u$</li>
+				<li>Explain $\gamma$?</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>1D Neural Fields</h3>
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<img src="media/progressive_front_gen.gif"/>
+				<img src="media/regressive.gif"/>
+			</div>
+			<div style="float: right; width: 50%">
+				<ul>
+					<li><span style="color: green;">Progressive fronts</span></li>
+					<li><span style="color: magenta;">Regressive fronts</span></li>
+					<li><span style="color: blue">Pulses</span></li>
+				</ul>
+				<img src="media/pulse_generation.gif"/>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li></li>
 			</ul>
 		</aside>
 	</section>
@@ -302,7 +405,8 @@ $\newcommand{vecy}{\vec{y}}$
 <!--##################################################-->
 <section>
 	<section>
-		<h2>Projection Method</h2>
+		<h1>Numerical Analysis</h1>
+		<h3>The Projection method</h3>
 		<aside class="notes">
 			<ul>
 				<li></li>
@@ -451,7 +555,7 @@ $\newcommand{vecy}{\vec{y}}$
 <!--##################################################-->
 <section>
 	<section>
-		<h2>Curvature Showcase</h2>
+		<h1>Curvature Showcase</h1>
 		<aside class="notes">
 			<ul>
 				<li></li>
@@ -538,7 +642,20 @@ $\newcommand{vecy}{\vec{y}}$
 <!--##################################################-->
 <section>
 	<section>
-		<h2>Motivating Research</h2>
+		<h2>Thanks</h2>
+		<p>Funding, references, QR code, etc. </p>
+		<aside class="notes">
+			<ul>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h2>Auxiliary Slides</h2>
 		<aside class="notes">
 			<ul>
 				<li></li>
