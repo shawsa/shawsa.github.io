@@ -1,0 +1,923 @@
+<!doctype html>
+<!--
+NOTES:
+
+Auxiliary slides
+    complexity
+    spatial error hex -> move to aux
+-->
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Shaw Defense</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
+		<link rel="stylesheet" href="./style.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<style>
+			.grid-container {
+				display: grid;
+				grid-template-columns: 30% 30% 30%;
+				grid-template-rows: calc(var(--slide-height) * 0.4) calc(var(--slide-height) * 0.4);
+			}
+			.grid-item {
+				padding: 0;
+				margin: 0;
+			}
+			img.headshot {
+				height: 70%;
+				margin: 0%;
+			}
+			img.headshot2 {
+				height: calc(var(--slide-height)*.5);
+				margin: 0%;
+			}
+			img.custom {
+				height: calc(var(--slide-height)*.5);
+				margin: 0%;
+				padding: 0%;
+			}
+			p.headshot {
+				font-size: .7em;
+				margin: 0%;
+			}
+			li.faded {
+				color: rgba(0, 0, 0, .5);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+<!--##################################################-->
+$\newcommand{vecx}{\vec{x}}$
+$\newcommand{vecy}{\vec{y}}$
+<section>
+	<section>
+		<h2>Approximating the effect of inputs and cortical geometry on wave propagation in neural fields</h2>
+		<p>Sage Shaw - University of Colorado Boulder, USA</p>
+		<p>May 9<sup>th</sup>, 2025</p>
+
+		<aside class="notes">
+			<ul>
+				<li>6th year PhD in APPM at Boulder</li>
+				<li>Numerical method for solving integro-differential equations</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<p>Slide on neural encoding</p>
+		<aside class="notes">
+			<ul>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h2>Outline</h2>
+		<ul>
+			<li>Neural Field Models</li>
+			<li>Stimulus response</li>
+			<li>Entrainment</li>
+			<li>Capturing Curvature</li>
+			<li>Future Work</li>
+		</ul>
+		<aside class="notes">
+			<ul>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h2>Neural Field Models</h2>
+		<aside class="notes">
+			<ul>
+				<li>firing</li>
+				<li>synapse</li>
+				<li>population firing rates</li>
+				<li>Sensory information has spatial organization</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Biological Neural Networks</h3>
+		<img class="r-stretch" src="media/neuron.png" width="70%"/>
+        <p>Image courtesy of Heather Cihak.</p>
+		<aside class="notes">
+			<ul>
+				<li>firing</li>
+				<li>synapse</li>
+				<li>population firing rates</li>
+				<li>Sensory information has spatial organization</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Synaptic Depression</h3>
+		<p>Rapid firing depletes pre-synaptic resources.</p>
+		<img src="media/depression.png" width="70%"/>
+		<aside class="notes">
+			<ul>
+				<li>Firing releases neurotransmitters</li>
+				<li>Rapid firing depletes the pre-synaptic resources.</li>
+				<li>incorporate this into our neural field model.
+			</ul>
+		</aside>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h1>Stimulus Response</h1>
+		<aside class="notes">
+			<ul>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Correcting Position</h3>
+		<video controls loop muted autoplay muted>
+			<source src="media/bun_tracking.mp4" type="video/mp4">
+			Your browser does not support the video tag.
+		</video>
+		<ul>
+			<li>Position encoded as a pulse</li>
+			<li>Must be corrected</li>
+		</ul>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Spatially localized perturbation</h3>
+		<video controls loop muted autoplay muted>
+			<source src="media/square_space_delta_time_u.mp4" type="video/mp4">
+			Your browser does not support the video tag.
+		</video>
+	</section>
+	<!--###########-->
+	<section>
+		<p>
+		<h3>Asymptotic Approximation</h3>
+		add stimulus terms
+		$$
+		\begin{align*}
+			\tau_u u_t &= -u + w * (q f[u]) + \varepsilon I_u(x, t) \label{eqn:forced_u} \\
+			\tau_q q_t &= 1 - q - \beta q f[u] + \varepsilon I_q(x, t) \label{eqn:forced_q}
+		\end{align*}
+		$$
+		</p>
+		<p>
+		substitute with the expansion
+		$$
+			\begin{align*}
+				u(\xi, t) &= U\big( \xi - \varepsilon \nu(t) \big) + \varepsilon \phi\big(\xi - \varepsilon \nu(t), t\big) + \mathcal{O}(\varepsilon^2) \\
+				q(\xi, t) &= Q\big( \xi - \varepsilon \nu(t) \big) + \varepsilon \psi\big(\xi - \varepsilon \nu(t), t\big) + \mathcal{O}(\varepsilon^2)
+			\end{align*}
+		$$
+		</p>
+	</section>
+	<!--###########-->
+	<!-- section>
+		<p>Collect the $\mathcal{O}(\varepsilon)$ terms</p>
+		$$\begin{align*}
+		\underbrace{\begin{bmatrix}\tau_u & 0 \\ 0 & \tau_q\end{bmatrix}}_{T} \begin{bmatrix}\phi \\ \psi \end{bmatrix}_t + \mathcal{L}\begin{bmatrix}\phi \\ \psi \end{bmatrix}
+        &=
+        \begin{bmatrix} I_u + \tau_u U' \nu' \\ I_q + \tau_q Q' \nu ' \end{bmatrix}
+		\end{align*}$$
+
+		$$
+		\mathcal{L}(\vec{v}) = \vec{v} - cT \vec{v} +
+        \begin{bmatrix}
+            -w Q f'(U) * \cdot  & -w f(U) * \cdot \\
+            \beta Q f'(U) & \beta f(U)
+        \end{bmatrix}
+		\vec{v}
+		$$
+
+	</section-->
+	<!--###########-->
+	<!-- section>
+		<p>
+		Bounded solutions exist if the inhomogeneity is orthogonal to $\mathcal{N}\{\mathcal{L^*}\}$. For $(v_1, v_2) \in \mathcal{N}\{\mathcal{L^*}\}$
+		$$\begin{align*}
+    	-c \tau_u v_1' &= v_1 - Qf'(U) \int w(y,\xi) v_1(y) \ dy + \beta Qf'(U) v_2 \\
+    	-c \tau_q v_2' &= v_2 - f(U) \int w(y, \xi) v_1(y) \ dy + \beta f(U) v_2.
+		\end{align*}$$
+		</p>
+	</section -->
+	<!--###########-->
+	<section>
+		<h3>Stimulus Response Function</h3>
+		$$
+		\frac{\partial}{\partial t}\nu = \frac{ \langle v_1 ,I_u(\xi + \color{blue}{\varepsilon \nu}, t)\rangle + \langle v_2, I_q(\xi +\color{blue}{\varepsilon \nu}, t)\rangle }{\underbrace{-\tau_u \langle v_1, U' \rangle - \tau_q \langle v_2, Q' \rangle}_{K}}
+		$$
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Stimulus Response</h3>
+		<img src="media/spatially_localized.png" width=100%/>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h1>Entrainment</h1>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Tracking a moving stimulus</h3>
+		<video controls loop muted autoplay muted>
+			<source src="media/smooth_dot.mp4" type="video/mp4">
+			Your browser does not support the video tag.
+		</video>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Tracking a moving stimulus</h3>
+		<video class="r-stretch" controls loop muted autoplay muted>
+			<source src="media/entrainment.mp4" type="video/mp4">
+			Your browser does not support the video tag.
+		</video>
+	</section>
+	<!--###########-->
+	<!--section>
+		<h3>Entrainment to a moving Square wave</h3>
+		<img class="r-stretch" src="media/entrainment_square_profile.png"/>
+	</section-->
+	<!--###########-->
+	<section>
+		<h3>Entraining to a moving stimulus</h3>
+		<div style="width: 100%">
+			<div style="float: left; width: 70%">
+				<img class="r-stretch" src="media/entrainment_square_contour.png"/>
+			</div>
+			<div style="float: right; width: 30%">
+				<p>Asymptotic threshold<p>
+				$$ \Delta_c \lt \varepsilon \frac{c\tau_u}{K}$$
+			</div>
+		</div>
+	</section>
+	<!--###########-->
+	<section>
+		<video class="r-stretch"controls loop muted autoplay muted>
+			<source class="r-stretch" src="media/apparent_motion_demo.mp4" type="video/mp4">
+			Your browser does not support the video tag.
+		</video>
+	</section>
+	<!--###########-->
+	<section>
+		<img class="r-stretch" src="media/apparent_motion_entrainment_demo.gif" width=100%/>
+		<video controls loop muted autoplay muted>
+			<source src="media/apparent_motion_entrainment_demo.mp4" type="video/mp4">
+			Your browser does not support the video tag.
+		</video>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Asymptotic Entrainment Threshold</h3>
+		$$
+		\Delta_c < \varepsilon \frac{c\tau_u}{K} \frac{T_\text{on}}{T}
+		$$
+		<img class="r-stretch" src="media/fig6_hi_res.png"/>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h2>Projection Method</h2>
+		<aside class="notes">
+			<ul>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h2>Neural Field Model</h2>
+		<p>$\partial_t \color{blue}{u}(t, \vecx) = -\color{blue}{u} + \int_{\Omega} \color{green}{w}(\vecx, \vecy) \color{red}{f}[\color{blue}{u}(\vecy)] d \vecy$</p>
+		<div>
+			<div style="float: left; width: 40%;pad: 0px:">
+				<video controls loop muted autoplay muted>
+					<source src="media/snowflake4.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				<p>Recreation of <a href="https://mathematical-neuroscience.springeropen.com/articles/10.1186/2190-8567-2-9" target=blank>Coombes et al.</a> (2012)</p>
+			</div>
+			<div style="float: right; width: 55%;">
+				<ul>
+					<li>$\color{blue}{u}(t, \vecx)$ - Activity</li>
+					<li>$\color{green}{w}(\vecx, \vecy)$ - Connectivity kernel</li>
+					<li>$\color{red}{f}[\color{blue}{u}]$ - non-linear firing rate function</li>
+				</ul>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>activity / average membrane potential</li>
+				<li>natural decay term</li>
+				<li>integral / convolution term</li>
+				<li>example - laterally inhibitory kernel, sigmoid firing</li>
+				<li>Common to couple excitatory/inhibitory</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Projection Method (<a href="https://epubs.siam.org/doi/10.1137/21M1463768" target="blank">Avitabile 2023</a>)</h3>
+		<div>
+			<div class="r-stack" style="float: left; width: 40%;pad: 0px:">
+				<img class="fragment" data-fragment-index="0" src="media/presentation_projection_full.gif" width="100%"/>
+				<img class="fragment" data-fragment-index="1" src="media/presentation_projection_points.gif" width="100%"/>
+				<img class="fragment" data-fragment-index="2" src="media/presentation_projection_interp.gif" width="100%"/>
+				<img class="fragment" data-fragment-index="5" src="media/presentation_projection_convergence_0.gif" width="100%"/>
+				<img class="fragment" data-fragment-index="6" src="media/presentation_projection_convergence_1.gif" width="100%"/>
+				<img class="fragment" data-fragment-index="7" src="media/presentation_projection_convergence_2.gif" width="100%"/>
+			</div>
+			<div style="float: right; width: 55%;">
+				<ul>
+					<li class="fragment" data-fragment-index="0" >True Solution</li>
+					<li class="fragment" data-fragment-index="1" >Collocation</li>
+					<li class="fragment" data-fragment-index="2" >Projection</li>
+					<li class="fragment" data-fragment-index="3" >Error</li>
+					<ul class="fragment" data-fragment-index="3">
+						<li class="fragemnt" data-fragment-index="3">Projection</li>
+						<li class="fragemnt" data-fragment-index="3">Quadrature</li>
+						<li class="fragemnt" data-fragment-index="3">Time Integration</li>
+					</ul>
+					<li class="fragment" data-fragment-index="4">$\text{Error} \sim \mathcal{O}(n^{-\text{order}/\text{dim}})$</li>
+				</ul>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>n=100, 150, 200</li>
+			</ul>
+		</aside>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h2>RBF-QF method-of-lines neural field solver</h2>
+		<aside class="notes">
+			<ul>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Radial Basis Function Quadrature Formulae (RBF-QF)</h3>
+		<ul>
+			<li class="fragment">Given a set of points $\{\vecx_i\} \subset \Omega$</li>
+			<li class="fragment">find weights $\{w_i\}$</li>
+			<li class="fragment">such that $\int_\Omega f \approx \sum w_i \  f(\vecx_i)$</li>
+		</ul>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>RBF-QF Algorithm</h3>
+		<div>
+			<div class="r-stack" style="float: left; width: 45%;pad: 0px:">
+				<img class="fragment" data-fragment-index="0" src="media/step0_domain.png" width="100%"/>
+				<img class="fragment" data-fragment-index="1" src="media/step1_points.png" width="100%"/>
+				<img class="fragment" data-fragment-index="2" src="media/step2_mesh.png" width="100%/">
+				<img class="fragment" data-fragment-index="3" src="media/step3_stencil.png" width="100%"/>
+				<img class="fragment" data-fragment-index="4" src="media/step4_interp.png" width="100%"/>
+				<img class="fragment" data-fragment-index="5" src="media/step5_weights.png" width="100%"/>
+			</div>
+			<div style="float: right; width: 55%;">
+				<ul>
+					<li class="fragment" data-fragment-index="1">choose quadrature nodes</li>
+					<li class="fragment" data-fragment-index="2">partition domain</li>
+					<li class="fragment" data-fragment-index="3">choose stencils</li>
+					<li class="fragment" data-fragment-index="4">integrate RBF interpolant</li>
+					<li class="fragment" data-fragment-index="5">sum over stencil and elements</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h3>Extending to Manifolds</h3>
+		<img class="r-stretch" src="media/torus_partition_0.png" height="100%"/>
+		<p><a href="https://royalsocietypublishing.org/doi/full/10.1098/rspa.2016.0401">Reeger and Fornberg (2016)</a></p>
+	</section>
+	<section data-auto-animate>
+		<h3>Extending to Manifolds</h3>
+		<img class="r-stretch" src="media/torus_partition_1.png" height="100%"/>
+		<p><a href="https://royalsocietypublishing.org/doi/full/10.1098/rspa.2016.0401">Reeger and Fornberg (2016)</a></p>
+	</section>
+	<section data-auto-animate>
+		<h3>Extending to Manifolds</h3>
+		<img class="r-stretch" src="media/torus_partition_2.png" height="100%"/>
+		<p><a href="https://royalsocietypublishing.org/doi/full/10.1098/rspa.2016.0401">Reeger and Fornberg (2016)</a></p>
+	</section>
+	<section data-auto-animate>
+		<h3>Extending to Manifolds</h3>
+		<img class="r-stretch" src="media/torus_partition_3.png" height="100%"/>
+		<p><a href="https://royalsocietypublishing.org/doi/full/10.1098/rspa.2016.0401">Reeger and Fornberg (2016)</a></p>
+	</section>
+	<section data-auto-animate>
+		<h3>Extending to Manifolds</h3>
+		<img class="r-stretch" src="media/torus_partition_4.png" height="100%"/>
+		<p><a href="https://royalsocietypublishing.org/doi/full/10.1098/rspa.2016.0401">Reeger and Fornberg (2016)</a></p>
+	</section>
+	<section>
+		<h3>Manufactured Solution</h3>
+		<img class="r-stretch" src="media/torus_convergence.png" height="100%"/>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h2>Curvature Showcase</h2>
+		<aside class="notes">
+			<ul>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<p>Curvature affects the trajectory</p>
+		<video class="r-stretch" controls loop muted autoplay muted onloadstart="this.playbackRate = 5;">
+			<source class="r-stretch" src="media/synaptic_depression.mp4" type="video/mp4">
+			Your browser does not support the video tag.
+		</video>
+		<aside class="notes">
+			<ul>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<video class="r-stretch" controls loop muted autoplay muted onloadstart="this.playbackRate = 50;">
+			<source class="r-stretch" src="media/snowflake4.mp4" type="video/mp4">
+			Your browser does not support the video tag.
+		</video>
+	</section>
+	<!--###########-->
+	<section>
+		<video class="r-stretch" controls loop muted autoplay muted onloadstart="this.playbackRate = 2;">
+			<source class="r-stretch" src="media/labyrinth_sphere.mp4" type="video/mp4">
+			Your browser does not support the video tag.
+		</video>
+	</section>
+	<!--###########-->
+	<section>
+		<video class="r-stretch" controls loop muted autoplay muted onloadstart="this.playbackRate = 2;">
+			<source class="r-stretch" src="media/labyrinth_blood_cell.mp4" type="video/mp4">
+			Your browser does not support the video tag.
+		</video>
+	</section>
+	<!--###########-->
+	<section>
+		<video class="r-stretch" controls loop muted autoplay muted onloadstart="this.playbackRate = 2;">
+			<source class="r-stretch" src="media/cortex_labyrinth_1.mp4" type="video/mp4">
+			Your browser does not support the video tag.
+		</video>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h2>Future Work</h2>
+		<aside class="notes">
+			<ul>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Scintillating Scotoma</h3>
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<img src="media/scotoma_anon.jpeg" height="200em"/>
+				<img src="media/scotoma_weed_2017.jpeg" height="300em"/>
+			</div>
+			<div style="float: right; width: 50%">
+				<img src="media/scotoma_airy_1870.png"/>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>Blind spots</li>
+				<li>Slowly moves for a few hours.</li>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<section>
+		<h2>Motivating Research</h2>
+		<aside class="notes">
+			<ul>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Spreading Depression</h3>
+		<img class="r-stretch" src="media/Zandt_CSD_cropped.png"/>
+		<br>
+		<a href="https://www.degruyter.com/document/doi/10.1515/revneuro-2014-0069/html" target=blank>Zandt, Haken, van Putten, and Dahlem (2015)</a>
+		<aside class="notes">
+			<ul>
+				<li>Slow moving chemical wave.</li>
+				<li>Hyperactivity at the front of the wave</li>
+				<li>Believed to cause migraines.</li>
+				<li>Invisual cortex these cause blindspots</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Retinotopic Map</h3>
+		<div style="width: 100%">
+			<img src="media/Dougherty_2003.jpeg" width="70%"/>
+			<p><a href="https://jov.arvojournals.org/article.aspx?articleid=2192509" target=blank>Dougherty et al. (2003)</a></p>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>Expanding annulus</li>
+				<li>rotating wedge</li>
+				<li>colors are continuous</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Retinotopic Map</h3>
+		<img class="r-stretch" src="media/Zandt_retinotopic_map.png"/>
+		<br>
+		<a href="https://www.degruyter.com/document/doi/10.1515/revneuro-2014-0069/html" target=blank>Zandt, Haken, van Putten, and Dahlem (2015)</a>
+		<aside class="notes">
+			<ul>
+				<li>Slow moving waves in cortex are perceived</li>
+				<li>Left: visual field</li>
+				<li>Right: cortex</li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<div style="width: 100%">
+			<h3>Reaction Diffusion on surfaces</h3>
+			<div style="float: left; width: 50%">
+				<p style="font-size: .7em">
+				$$\begin{align*}
+				u_t &= \underbrace{3u - u^3}_{\text{excitable}} - \underbrace{v}_{\text{recovery}} + \underbrace{D \Delta_{\mathcal{M}}u}_{\text{diffusion}} \\ 
+					\frac{1}{\varepsilon} v_t &= u + \beta + K \underbrace{\int_{\mathcal{M}} H(u) \ d \mu_{\mathcal{M}}}_{\text{neurovascular}}
+				\end{align*}$$
+				<ul>
+					<li>Surface operators: $\Delta_{\mathcal{M}}, \int_{\mathcal{M}} \cdot d \mu_{\mathcal{M}}$</li>
+					<li>Curvature affects speed and stability of waves</li>
+				</ul>
+				</p>
+			</div>
+			<div style="float: right; width: 50%">
+				<video controls loop muted autoplay muted>
+					<source src="media/Kneer_torus.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+				Kneer, Scholl, Dahlem (2014)
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>Spatially extended FitzHugh-Nagumo - generic excitable medium</li>
+				<li>Diffusion is Laplace-Beltrami</li>
+				<li>Integral is with respect to a measure that incorporates the curvature.</li>
+				<li>Curvature affects speed and stability.</li>
+				<li>must be addapted on a surface by surface basis</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Coupled neural field and diffusion equation</h3>
+		$$\begin{align*}
+			v_t &= -v + w \ast s_p(v, k) + g_v \\
+			k_t &= \delta k_{xx} + g_k(s, s_p, a, b) + I
+		\end{align*}$$
+		<ul>
+			<li>Neural field model</li>
+			<li>Coupled potassium concentration</li> 
+			<li>Models both ignition and propagation of CSD</li>
+		</ul>
+		<p><a href="https://hal.science/hal-04008117/document" target=blank>Baspinar et al. (2023)</a></p>
+		<aside class="notes">
+			<ul>
+				<li>Neural field model and potassium</li>
+				<li>Apply our analysis to understand control.</li>
+				<li>Ultimately, find a way to disrupt CSD</li>
+				<li>Another area I'm interested in is understanding the role of curvature.</li>
+				<li>Brain is wrinkly</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<div style="width: 100%">
+			<h3>A Turing Reaction Diffusion System</h3>
+			$$\begin{align*}
+				u_t &= \delta_u \Delta_{\mathcal{M}} u + \alpha(1-\tau_1 v^2) + v(1-\tau_2 u)\\
+				v_t &= \delta_v \Delta_{\mathcal{M}} v + \beta(1-\frac{\alpha\tau_1}{\beta} uv) + u(\gamma-\tau_2 v)\\
+			\end{align*}$$
+			<div style="float: left; width: 50%">
+				<video controls loop autoplay muted onloadstart="this.playbackRate = 5.0;">
+					<source src="media/bunny_spots.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+			<div style="float: right; width: 50%">
+				<video controls loop autoplay muted onloadstart="this.playbackRate = 5.0;">
+					<source src="media/bunny_stripes.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>Reaction diffusion system.</li>
+				<li>Parameters control spots or stripes</li>
+				<li>RBF interpolation: high order, any dimension, no mesh</li>
+				<li>I compared 3 ways of using RBFs for making FD approximations to LB</li>
+				<li>No need for curvilinear coordinates.</li>
+				<li>Closed surface, LB transpose nullspace gives quadrature weights.</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Radial Basis Funtion Interpolation</h3>
+		<div>
+			<div class="r-stack" style="float: left; width: 40%;pad: 0px:">
+				<img class="fragment" data-fragment-index="0" src="media/presentation_interp_func.png" width="100%"/>
+				<img class="fragment" data-fragment-index="1" src="media/presentation_interp_points.png" width="100%"/>
+				<img class="fragment" data-fragment-index="2" src="media/presentation_interp_basis_0.png" width="100%"/>
+				<img class="fragment" data-fragment-index="3" src="media/presentation_interp_basis_1.png" width="100%"/>
+				<img class="fragment" data-fragment-index="4" src="media/presentation_interp_basis_2.png" width="100%"/>
+				<img class="fragment" data-fragment-index="5" src="media/presentation_interp_basis_3.png" width="100%"/>
+				<img class="fragment" data-fragment-index="6" src="media/presentation_interp_interp.png" width="100%"/>
+				<img class="fragment" data-fragment-index="7" src="media/presentation_interp_error.png" width="100%"/>
+			</div>
+			<div style="float: right; width: 55%;">
+				<ul>
+					<li class="fragment" data-fragment-index="0" >Function to approximate</li>
+					<li class="fragment" data-fragment-index="1" >Sample at scatterd nodes</li>
+					<li class="fragment" data-fragment-index="2" >$\phi_j(\vecx) = \Phi(||\vecx - \vecx_j||)$</li>
+					<li class="fragment" data-fragment-index="6" >$f(\vecx) \approx s(\vecx) = \sum_j c_j \phi_j(\vecx)$</li>
+					<li class="fragment" data-fragment-index="7" >$\text{Error} \to 0$ as $n \to \infty$</li>
+				</ul>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>RBF Interpolation Properties</h3>
+		<ul>
+			<li class="fragment">scattered nodes in any number of dimensions<sup>*</sup></li>
+			<li class="fragment">mesh-free<sup>*</sup></li>
+			<li class="fragment">arbitrary order of accuracy<sup>*</sup></li>
+			<li class="fragment">can be used to find</li>
+			<ul class="fragment">
+				<li class="fragment">finite difference formulae</li>
+				<li class="fragment">quadrature formulae</li>
+			</ul>
+		</ul>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<!--###########-->
+</section>
+<!--##################################################-->
+<section>
+	<!--###########-->
+	<section>
+		<h2>Radial Basis Function Quadrature Formulae</h2>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<!--###########-->
+	<section>
+		<h2>Experimental Results</h2>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h3>Gaussian Test Functions</h3>
+		<img class="r-stretch" src="media/spatial_error_scattered.jpg"/>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h3>Gaussian Test Functions</h3>
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<img class="custom" src="media/spatial_error_scattered.jpg"/>
+			</div>
+			<div style="float: right; width: 50%">
+				<img class="custom" src="media/spatial_error_scattered_log.jpg"/>
+			</div>
+		</div>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h3>Gaussian Test Functions</h3>
+		<img src="media/spatial_error_hex.png" width="100%"/>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Quadrature Convergence</h3>
+		<img class="r-stretch" src="media/quad_convergence.png"/>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h2>Testing manufactured solution</h2>
+		<div>
+			<img src="media/anim_cartesian_manufactured2.gif" height="100%"/>
+		</div>
+		<aside>
+		</aside>
+	</section>
+	<!--###########-->
+	<section data-auto-animate>
+		<h2>Convergence</h2>
+		<div>
+			<img src="media/convergence.png" height="100%"/>
+		</div>
+		<aside>
+		</aside>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<!--###########-->
+	<section>
+		<h2>Next Steps</h2>
+		<ul>
+			<li>Adapt to surfaces.</li>
+			<li>Incorporate cortical spreading depression (CSD).</li>
+			<li>Study the effects of realistic cortical curvature on CSD wave generation and propagation.</li>
+		</ul>
+	</section>
+	<!--###########-->
+	<section
+		data-background="media/qr.svg"
+		data-background-position="top 5% right 5%"
+		data-background-size="10%">
+		<h3>Our Contributions</h3>
+		<div style="width: 100%">
+			<div style="float: left; width: 50%">
+				<ul>
+					<li>Neural Field Solver</li>
+					<ul>
+						<li>High Order Accurate</li>
+						<li>Flexible Geometry</li>
+					</ul>
+					<li>Simplifed Error Analysis</li>
+					<li class="faded">Adapt to Surfaces</li>
+					<li class="faded">Couple with CSD</li>
+				</ul>
+			</div>
+			<div style="float: right; width: 50%">
+				<img src="media/presentation_projection_convergence_0.gif">
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>Recap contributions</li>
+				<li>Code will be made public soon - email me.</li>
+			</ul>
+		</aside>
+	</section>
+</section>
+<!--##################################################-->
+<section>
+	<!--###########-->
+	<section>
+		<h2>Auxiliary Slides</h2>
+	</section>
+	<!--###########-->
+	<section>
+		<img class="r-stretch" src="media/qr.svg">
+		<p><a href="shawsa.github.io" target=blank>shawsa.github.io</a></p>
+		<p><a href="mailto:sage.shaw@colorad.edu">sage.shaw@colorado.edu</a></p>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>The Kilpatrick Lab</h3>
+		<div class="grid-container">
+		    <div class="grid-item">
+				<img class="headshot" src="media/headshot_zack.jpg"/>
+				<p class="headshot">Prof. Zack Kilpatrick</p>
+			</div>
+		    <div class="grid-item">
+				<img class="headshot" src="media/headshot_tahra.jpg"/>
+				<p class="headshot">Dr. Tahra Eissa</p>
+			</div>
+		    <div class="grid-item">
+				<img class="headshot" src="media/headshot_sage.jpg"/>
+				<p class="headshot">Sage Shaw</p>
+			</div>
+		    <div class="grid-item">
+				<img class="headshot" src="media/headshot_noah.jpg"/>
+				<p class="headshot">Noah Parks</p>
+			</div>
+		    <div class="grid-item">
+				<img class="headshot" src="media/headshot_will.jpg"/>
+				<p class="headshot">Will Magrogan</p>
+			</div>
+		</div>
+	</section>
+	<!--###########-->
+	<section>
+		<div style="width: 100%">
+			<h3>Reaction Diffusion Model</h3>
+			<div style="float: left; width: 60%">
+				<p style="font-size:80%;">
+				$$\begin{align*}
+				u_t &= \underbrace{u - \frac{1}{3}u^3}_{\text{excitable}} - \underbrace{v}_{\text{recovery}} + \underbrace{D\nabla^2 u}_{\text{Diffusion}} \\
+				\frac{1}{\varepsilon} v_t &= u + \beta + \underbrace{K\int H(u) d \Omega}_{\substack{\text{neurovascular}\\\text{feedback}}}
+				\end{align*}$$
+				</p>
+			</div>
+			<div style="float: right; width: 40%">
+				<a href="https://mathematical-neuroscience.springeropen.com/articles/10.1186/2190-8567-3-7#MOESM4" target=blank">
+				<img src="media/Dahlem_transient.png"/>
+				</a>
+			</div>
+			<p>
+			<a href="https://aip.scitation.org/doi/full/10.1063/1.4813815" target=blank>Markus A. Dahlem (2013)</a>
+			</p>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>Excitable medium, with recovery and diffusion</li>
+				<li>Integral term represents vascular feedback</li>
+				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+</section>
+<!--##################################################-->
+<!--##################################################-->
+<!--##################################################-->
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+        <script src="plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ]
+			});
+		</script>
+	</body>
+</html>
