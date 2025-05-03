@@ -157,10 +157,11 @@ $\newcommand{vecy}{\vec{y}}$
 		<h3>Model</h3>
 		<p data-id="models">
         \begin{align*}
-		\tau_u \frac{\partial}{\partial t}\underbrace{u(x,t)}_{\text{Activity}} &=
-		-u + \underbrace{\overbrace{w}^{\substack{\text{network}\\\text{connectivity}\\\text{kernel}}} \ast \big( f[u] \big)}_{\substack{\text{network}\\\text{stimulation}}} \\
+		\tau_u \frac{\partial}{\partial t}\underbrace{u(t, x)}_{\text{Activity}} &=
+		-u + \underbrace{ \int_\Omega \color{green}{w}(x, y) \quad \color{red}{f}[u(t, y)] \  d y}_{\substack{\text{network}\\\text{stimulation}}} \\
         \end{align*}
 		</p>
+		<img class="r-strech" src="media/function_params.png"/>
 		<aside class="notes">
 			<ul>
 				<li>activity and efficacy, are normalized</li>
@@ -187,9 +188,9 @@ $\newcommand{vecy}{\vec{y}}$
 		<h3>Model with Synaptic Depression</h3>
 		<p data-id="models">
         \begin{align*}
-		\tau_u \frac{\partial}{\partial t} u(x,t) &=
-		-u + w \ast \big( q f[u] \big)\\
-			\tau_q \frac{\partial}{\partial t}\underbrace{q(x,t)}_{\substack{\text{Synaptic}\\\text{Efficacy}}} &=
+		\tau_u \frac{\partial}{\partial t} u(t, x) &=
+		-u + \int_\Omega w(x, y) \quad \color{blue}{q}(y) \quad f[u(t, y)] \  d y \\
+		\underbrace{\tau_q}_{\text{slow}} \frac{\partial}{\partial t}\underbrace{q(x,t)}_{\substack{\text{Synaptic}\\\text{Efficacy}}} &=
 			1 - q - \underbrace{\beta}_{\substack{\text{rate of}\\\text{depletion}}} q \underbrace{f(u)}_{\substack{\text{firing-rate}\\\text{function}}}
         \end{align*}
 		</p>
@@ -203,39 +204,16 @@ $\newcommand{vecy}{\vec{y}}$
 		</aside>
 	</section>
 	<!--###########-->
-	<!--###########-->
-	<section>
-		<h3>Model</h3>
-		<ul>
-			<li>$f[u] = H(u - \theta)$ - All or nothing firing-rate function.</li>
-			<li>$w(|x-y|) = \frac{1}{2}e^{-|x-y|}$ - network connectivity kernel</li>
-			<li>$\gamma = \frac{1}{1+\beta} \in (0, 1]$</li>
-		</ul>
-		<aside class="notes">
-			<ul>
-				<li>activity and efficacy, are normalized</li>
-				<li>Sum over inputs becomes integral</li>
-				<li>Note that $\tau_q > \tau_u$</li>
-				<li>Explain $\gamma$?</li>
-			</ul>
-		</aside>
-	</section>
-	<!--###########-->
 	<section>
 		<h3>1D Neural Fields</h3>
-		<div style="width: 100%">
-			<div style="float: left; width: 50%">
-				<img src="media/progressive_front_gen.gif"/>
-				<img src="media/regressive.gif"/>
-			</div>
-			<div style="float: right; width: 50%">
-				<ul>
-					<li><span style="color: green;">Progressive fronts</span></li>
-					<li><span style="color: magenta;">Regressive fronts</span></li>
-					<li><span style="color: blue">Pulses</span></li>
-				</ul>
-				<img src="media/pulse_generation.gif"/>
-			</div>
+		<div style="float: left; width: 45%">
+			<img class="r-stretch" src="media/pulse_generation.gif"/>
+		</div>
+		<div style="float: right; width: 45%">
+			<p>
+				Pulse solutions if
+			</p>
+			$\frac{1}{1+ \beta} < \theta$
 		</div>
 		<aside class="notes">
 			<ul>
@@ -269,9 +247,9 @@ $\newcommand{vecy}{\vec{y}}$
 	</section>
 	<!--###########-->
 	<section>
-		<h3>Spatially localized perturbation</h3>
-		<video controls loop muted autoplay muted>
-			<source src="media/square_space_delta_time_u.mp4" type="video/mp4">
+		<h3>Localized Pulse Stimulus</h3>
+		<video controls loop muted>
+			<source src="media/perturbation_demo.mp4" type="video/mp4">
 			Your browser does not support the video tag.
 		</video>
 	</section>
@@ -356,7 +334,7 @@ $\newcommand{vecy}{\vec{y}}$
 	<section>
 		<h3>Tracking a moving stimulus</h3>
 		<video class="r-stretch" controls loop muted autoplay muted>
-			<source src="media/entrainment.mp4" type="video/mp4">
+			<source src="media/entrainment_demo.mp4" type="video/mp4">
 			Your browser does not support the video tag.
 		</video>
 	</section>
@@ -387,18 +365,25 @@ $\newcommand{vecy}{\vec{y}}$
 	</section>
 	<!--###########-->
 	<section>
-		<img class="r-stretch" src="media/apparent_motion_entrainment_demo.gif" width=100%/>
-		<video controls loop muted autoplay muted>
-			<source src="media/apparent_motion_entrainment_demo.mp4" type="video/mp4">
-			Your browser does not support the video tag.
-		</video>
+		<h3>Asymptotic Entrainment Threshold</h3>
+		<div style="width: 100%">
+			<div style="float: left; width: 70%">
+				<video controls loop muted autoplay muted onloadstart="this.playbackRate = 4;">
+					<source src="media/apparent_motion_entrainment_demo.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+			<div style="float: right; width: 30%">
+				<p>&nbsp;</p>
+				<p>&nbsp;</p>
+				<p>
+				$ \Delta_c < \varepsilon \frac{c\tau_u}{K} \color{green}{\frac{T_\text{on}}{T_\text{on} + T_\text{off}}} $
+				</p>
+			</div>
+		</div>
 	</section>
 	<!--###########-->
 	<section>
-		<h3>Asymptotic Entrainment Threshold</h3>
-		$$
-		\Delta_c < \varepsilon \frac{c\tau_u}{K} \frac{T_\text{on}}{T}
-		$$
 		<img class="r-stretch" src="media/fig6_hi_res.png"/>
 	</section>
 </section>
