@@ -50,6 +50,13 @@ Auxiliary slides
 			li.faded {
 				color: rgba(0, 0, 0, .5);
 			}
+			img.proj-demo{
+				height: 70%;
+			}
+			div.proj-demo{
+				overflow: hidden;
+				margin-top: -10%;
+			}
 		</style>
 	</head>
 	<body>
@@ -73,7 +80,23 @@ $\newcommand{vecy}{\vec{y}}$
 	</section>
 	<!--###########-->
 	<section>
-		<p>Slide on neural encoding</p>
+		<p>
+			Mathematical Models of Neural Encodings
+		</p>
+		<div class="r-stack">
+			<video class="fragment" data-fragement-index="0" controls loop muted autoplay>
+				<source src="media/encoding_demo_1.mp4" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+			<video class="fragment" data-fragement-index="1" controls loop muted autoplay>
+				<source src="media/encoding_demo_2.mp4" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+			<video class="fragment" data-fragement-index="2" controls loop muted autoplay>
+				<source src="media/encoding_demo_3.mp4" type="video/mp4">
+				Your browser does not support the video tag.
+			</video>
+		</div>
 		<aside class="notes">
 			<ul>
 				<li></li>
@@ -236,7 +259,7 @@ $\newcommand{vecy}{\vec{y}}$
 	<!--###########-->
 	<section>
 		<h3>Correcting Position</h3>
-		<video controls loop muted autoplay muted>
+		<video controls loop muted>
 			<source src="media/bun_tracking.mp4" type="video/mp4">
 			Your browser does not support the video tag.
 		</video>
@@ -325,7 +348,7 @@ $\newcommand{vecy}{\vec{y}}$
 	<!--###########-->
 	<section>
 		<h3>Tracking a moving stimulus</h3>
-		<video controls loop muted autoplay muted>
+		<video controls loop muted autoplay>
 			<source src="media/smooth_dot.mp4" type="video/mp4">
 			Your browser does not support the video tag.
 		</video>
@@ -333,7 +356,7 @@ $\newcommand{vecy}{\vec{y}}$
 	<!--###########-->
 	<section>
 		<h3>Tracking a moving stimulus</h3>
-		<video class="r-stretch" controls loop muted autoplay muted>
+		<video class="r-stretch" controls loop muted>
 			<source src="media/entrainment_demo.mp4" type="video/mp4">
 			Your browser does not support the video tag.
 		</video>
@@ -368,7 +391,7 @@ $\newcommand{vecy}{\vec{y}}$
 		<h3>Asymptotic Entrainment Threshold</h3>
 		<div style="width: 100%">
 			<div style="float: left; width: 70%">
-				<video controls loop muted autoplay muted onloadstart="this.playbackRate = 4;">
+				<video controls loop muted onloadstart="this.playbackRate = 4;">
 					<source src="media/apparent_motion_entrainment_demo.mp4" type="video/mp4">
 					Your browser does not support the video tag.
 				</video>
@@ -383,9 +406,6 @@ $\newcommand{vecy}{\vec{y}}$
 		</div>
 	</section>
 	<!--###########-->
-	<section>
-		<img class="r-stretch" src="media/fig6_hi_res.png"/>
-	</section>
 </section>
 <!--##################################################-->
 <section>
@@ -405,7 +425,7 @@ $\newcommand{vecy}{\vec{y}}$
 		<p>$\partial_t \color{blue}{u}(t, \vecx) = -\color{blue}{u} + \int_{\Omega} \color{green}{w}(\vecx, \vecy) \color{red}{f}[\color{blue}{u}(\vecy)] d \vecy$</p>
 		<div>
 			<div style="float: left; width: 40%;pad: 0px:">
-				<video controls loop muted autoplay muted>
+				<video controls loop muted autoplay onloadstart="this.playbackRate = 10;">
 					<source src="media/snowflake4.mp4" type="video/mp4">
 					Your browser does not support the video tag.
 				</video>
@@ -507,35 +527,32 @@ $\newcommand{vecy}{\vec{y}}$
 		</div>
 	</section>
 	<!--###########-->
-	<section data-auto-animate>
-		<h3>Extending to Manifolds</h3>
-		<img class="r-stretch" src="media/torus_partition_0.png" height="100%"/>
-		<p><a href="https://royalsocietypublishing.org/doi/full/10.1098/rspa.2016.0401">Reeger and Fornberg (2016)</a></p>
-	</section>
-	<section data-auto-animate>
-		<h3>Extending to Manifolds</h3>
-		<img class="r-stretch" src="media/torus_partition_1.png" height="100%"/>
-		<p><a href="https://royalsocietypublishing.org/doi/full/10.1098/rspa.2016.0401">Reeger and Fornberg (2016)</a></p>
-	</section>
-	<section data-auto-animate>
-		<h3>Extending to Manifolds</h3>
-		<img class="r-stretch" src="media/torus_partition_2.png" height="100%"/>
-		<p><a href="https://royalsocietypublishing.org/doi/full/10.1098/rspa.2016.0401">Reeger and Fornberg (2016)</a></p>
-	</section>
-	<section data-auto-animate>
-		<h3>Extending to Manifolds</h3>
-		<img class="r-stretch" src="media/torus_partition_3.png" height="100%"/>
-		<p><a href="https://royalsocietypublishing.org/doi/full/10.1098/rspa.2016.0401">Reeger and Fornberg (2016)</a></p>
-	</section>
-	<section data-auto-animate>
-		<h3>Extending to Manifolds</h3>
-		<img class="r-stretch" src="media/torus_partition_4.png" height="100%"/>
-		<p><a href="https://royalsocietypublishing.org/doi/full/10.1098/rspa.2016.0401">Reeger and Fornberg (2016)</a></p>
-	</section>
 	<section>
-		<h3>Manufactured Solution</h3>
-		<img class="r-stretch" src="media/torus_convergence.png" height="100%"/>
+		<h3>The brain is not flat!</h3>
+		<!-- div class="r-stack" style="float: left; width: 50%;pad: 0px:">
+			<img src="media/step0_domain.png" width="100%"/>
+		</div>
+		<div class="r-stack" style="float: right; width: 50%;">
+			<img src="media/wrinkly_brain.png" width="100%"/>
+		</div -->
+		<img class="r-stretch" src="media/wrinkly_brain.png" width="100%"/>
 	</section>
+	<!--###########-->
+	<section>
+		<h3>Extending to Manifolds</h3>
+		<p><a href="https://royalsocietypublishing.org/doi/full/10.1098/rspa.2016.0401">Reeger and Fornberg (2016)</a></p>
+		<div class="r-stack proj-demo">
+			<img class="fragment proj-demo" data-fragment-index="0" src="media/projection_demo_torus_full.png"/>
+			<img class="fragment proj-demo" data-fragment-index="1" src="media/projection_demo_torus_full_points.png"/>
+			<img class="fragment proj-demo" data-fragment-index="2" src="media/projection_demo_torus_full_triangles.png"/>
+			<img class="fragment proj-demo" data-fragment-index="3" src="media/projection_demo_torus_full_partition.png"/>
+			<img class="fragment proj-demo" data-fragment-index="4" src="media/projection_demo_torus_element.png"/>
+			<img class="fragment proj-demo" data-fragment-index="5" src="media/projection_demo_stencil.png"/>
+			<img class="fragment proj-demo" data-fragment-index="6" src="media/projection_demo_projection.png"/>
+			<img class="fragment proj-demo" data-fragment-index="7" src="media/projection_demo_planar_stencil.png"/>
+		</div>
+	</section>
+	<!--###########-->
 </section>
 <!--##################################################-->
 <section>
@@ -551,7 +568,7 @@ $\newcommand{vecy}{\vec{y}}$
 	<!--###########-->
 	<section>
 		<p>Curvature affects the trajectory</p>
-		<video class="r-stretch" controls loop muted autoplay muted onloadstart="this.playbackRate = 5;">
+		<video class="r-stretch" controls loop muted onloadstart="this.playbackRate = 5;">
 			<source class="r-stretch" src="media/synaptic_depression.mp4" type="video/mp4">
 			Your browser does not support the video tag.
 		</video>
@@ -564,28 +581,28 @@ $\newcommand{vecy}{\vec{y}}$
 	</section>
 	<!--###########-->
 	<section>
-		<video class="r-stretch" controls loop muted autoplay muted onloadstart="this.playbackRate = 50;">
+		<video class="r-stretch" controls loop muted onloadstart="this.playbackRate = 50;">
 			<source class="r-stretch" src="media/snowflake4.mp4" type="video/mp4">
 			Your browser does not support the video tag.
 		</video>
 	</section>
 	<!--###########-->
 	<section>
-		<video class="r-stretch" controls loop muted autoplay muted onloadstart="this.playbackRate = 2;">
+		<video class="r-stretch" controls loop muted onloadstart="this.playbackRate = 2;">
 			<source class="r-stretch" src="media/labyrinth_sphere.mp4" type="video/mp4">
 			Your browser does not support the video tag.
 		</video>
 	</section>
 	<!--###########-->
 	<section>
-		<video class="r-stretch" controls loop muted autoplay muted onloadstart="this.playbackRate = 2;">
+		<video class="r-stretch" controls loop muted onloadstart="this.playbackRate = 2;">
 			<source class="r-stretch" src="media/labyrinth_blood_cell.mp4" type="video/mp4">
 			Your browser does not support the video tag.
 		</video>
 	</section>
 	<!--###########-->
 	<section>
-		<video class="r-stretch" controls loop muted autoplay muted onloadstart="this.playbackRate = 2;">
+		<video class="r-stretch" controls loop muted onloadstart="this.playbackRate = 2;">
 			<source class="r-stretch" src="media/cortex_labyrinth_1.mp4" type="video/mp4">
 			Your browser does not support the video tag.
 		</video>
@@ -598,6 +615,36 @@ $\newcommand{vecy}{\vec{y}}$
 		<aside class="notes">
 			<ul>
 				<li></li>
+				<li></li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Spreading Depression</h3>
+		<img class="r-stretch" src="media/Zandt_CSD_cropped.png"/>
+		<br>
+		<a href="https://www.degruyter.com/document/doi/10.1515/revneuro-2014-0069/html" target=blank>Zandt, Haken, van Putten, and Dahlem (2015)</a>
+		<aside class="notes">
+			<ul>
+				<li>Slow moving chemical wave.</li>
+				<li>Hyperactivity at the front of the wave</li>
+				<li>Believed to cause migraines.</li>
+				<li>Invisual cortex these cause blindspots</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<h3>Retinotopic Map</h3>
+		<img class="r-stretch" src="media/Zandt_retinotopic_map.png"/>
+		<br>
+		<a href="https://www.degruyter.com/document/doi/10.1515/revneuro-2014-0069/html" target=blank>Zandt, Haken, van Putten, and Dahlem (2015)</a>
+		<aside class="notes">
+			<ul>
+				<li>Slow moving waves in cortex are perceived</li>
+				<li>Left: visual field</li>
+				<li>Right: cortex</li>
 				<li></li>
 			</ul>
 		</aside>
@@ -623,12 +670,82 @@ $\newcommand{vecy}{\vec{y}}$
 			</ul>
 		</aside>
 	</section>
+	<!--###########-->
+	<section>
+		<h3>Coupled neural field and diffusion equation</h3>
+		$$\begin{align*}
+			v_t &= -v + w \ast s_p(v, k) + g_v \\
+			k_t &= \delta k_{xx} + g_k(s, s_p, a, b) + I
+		\end{align*}$$
+		<ul>
+			<li>Neural field model</li>
+			<li>Coupled potassium concentration</li> 
+			<li>Models both ignition and propagation of CSD</li>
+		</ul>
+		<p><a href="https://hal.science/hal-04008117/document" target=blank>Baspinar et al. (2023)</a></p>
+		<aside class="notes">
+			<ul>
+				<li>Neural field model and potassium</li>
+				<li>Apply our analysis to understand control.</li>
+				<li>Ultimately, find a way to disrupt CSD</li>
+				<li>Another area I'm interested in is understanding the role of curvature.</li>
+				<li>Brain is wrinkly</li>
+			</ul>
+		</aside>
+	</section>
+	<!--###########-->
+	<section>
+		<div style="width: 100%">
+			<h3>A Turing Reaction Diffusion System</h3>
+			$$\begin{align*}
+				u_t &= \delta_u \Delta_{\mathcal{M}} u + \alpha(1-\tau_1 v^2) + v(1-\tau_2 u)\\
+				v_t &= \delta_v \Delta_{\mathcal{M}} v + \beta(1-\frac{\alpha\tau_1}{\beta} uv) + u(\gamma-\tau_2 v)\\
+			\end{align*}$$
+			<div style="float: left; width: 50%">
+				<video controls loop autoplay muted onloadstart="this.playbackRate = 15.0;">
+					<source src="media/bunny_spots.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+			<div style="float: right; width: 50%">
+				<video controls loop autoplay muted onloadstart="this.playbackRate = 15.0;">
+					<source src="media/bunny_stripes.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+				</video>
+			</div>
+		</div>
+		<aside class="notes">
+			<ul>
+				<li>Reaction diffusion system.</li>
+				<li>Parameters control spots or stripes</li>
+				<li>RBF interpolation: high order, any dimension, no mesh</li>
+				<li>I compared 3 ways of using RBFs for making FD approximations to LB</li>
+				<li>No need for curvilinear coordinates.</li>
+				<li>Closed surface, LB transpose nullspace gives quadrature weights.</li>
+			</ul>
+		</aside>
+	</section>
 </section>
 <!--##################################################-->
 <section>
 	<section>
 		<h2>Thanks</h2>
-		<p>Funding, references, QR code, etc. </p>
+		<div style="float: left; width: 50%">
+			<ul style="list-style-type: none">
+				<li>References</li>
+				<ul>
+					<li><a href="https://royalsocietypublishing.org/doi/full/10.1098/rspa.2016.0401">Reeger and Fornberg (2016)</a></li>
+					<li><a href="https://epubs.siam.org/doi/10.1137/21M1463768" target="blank">Avitabile (2023)</a></li>
+				</ul>
+				<li>Funding</li>
+				<ul>
+					<li>NIH BRAIN 1R01EB029847</li>
+					<li>NSF DMS-2207700</li>
+				</ul>
+			</ul>
+		</div>
+		<div style="float: right; width: 50%">
+		</div>
 		<aside class="notes">
 			<ul>
 				<li></li>
@@ -649,21 +766,6 @@ $\newcommand{vecy}{\vec{y}}$
 	</section>
 	<!--###########-->
 	<section>
-		<h3>Spreading Depression</h3>
-		<img class="r-stretch" src="media/Zandt_CSD_cropped.png"/>
-		<br>
-		<a href="https://www.degruyter.com/document/doi/10.1515/revneuro-2014-0069/html" target=blank>Zandt, Haken, van Putten, and Dahlem (2015)</a>
-		<aside class="notes">
-			<ul>
-				<li>Slow moving chemical wave.</li>
-				<li>Hyperactivity at the front of the wave</li>
-				<li>Believed to cause migraines.</li>
-				<li>Invisual cortex these cause blindspots</li>
-			</ul>
-		</aside>
-	</section>
-	<!--###########-->
-	<section>
 		<h3>Retinotopic Map</h3>
 		<div style="width: 100%">
 			<img src="media/Dougherty_2003.jpeg" width="70%"/>
@@ -674,21 +776,6 @@ $\newcommand{vecy}{\vec{y}}$
 				<li>Expanding annulus</li>
 				<li>rotating wedge</li>
 				<li>colors are continuous</li>
-			</ul>
-		</aside>
-	</section>
-	<!--###########-->
-	<section>
-		<h3>Retinotopic Map</h3>
-		<img class="r-stretch" src="media/Zandt_retinotopic_map.png"/>
-		<br>
-		<a href="https://www.degruyter.com/document/doi/10.1515/revneuro-2014-0069/html" target=blank>Zandt, Haken, van Putten, and Dahlem (2015)</a>
-		<aside class="notes">
-			<ul>
-				<li>Slow moving waves in cortex are perceived</li>
-				<li>Left: visual field</li>
-				<li>Right: cortex</li>
-				<li></li>
 			</ul>
 		</aside>
 	</section>
@@ -709,7 +796,7 @@ $\newcommand{vecy}{\vec{y}}$
 				</p>
 			</div>
 			<div style="float: right; width: 50%">
-				<video controls loop muted autoplay muted>
+				<video controls loop muted>
 					<source src="media/Kneer_torus.mp4" type="video/mp4">
 					Your browser does not support the video tag.
 				</video>

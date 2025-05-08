@@ -1,0 +1,167 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="../main.css">
+    
+    <!-- Mathjax scripts -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <!-- Mathjax commands -->
+    $
+    \newcommand{\RR}{\mathbb{R}}
+    \newcommand{\NN}{\mathbb{N}}
+    \newcommand{\OO}{\mathcal{O}}
+    \newcommand{\mathcow}{\OO}
+    \newcommand{\QQ}{\mathbb{Q}}
+    \newcommand{\ZZ}{\mathbb{Z}}
+    \newcommand{\CC}{\mathbb{C}}
+    \newcommand{\KK}{\mathbb{K}}
+    \newcommand{\PP}{\mathcal{P}}
+    \newcommand{\TT}{\mathcal{T}}
+    \newcommand{\BB}{\mathcal{B}}
+    \newcommand{\LL}{\mathcal{L}}
+    \renewcommand{\Re}{\operatorname{Re}}
+    \renewcommand{\Im}{\operatorname{Im}}
+
+    \newcommand{\veca}{\vec{a}}
+    \newcommand{\vecb}{\vec{b}}
+    \newcommand{\vecd}{\vec{d}}
+    \newcommand{\vece}{\vec{e}}
+    \newcommand{\vecf}{\vec{f}}
+    \newcommand{\vecn}{\vec{n}}
+    \newcommand{\vecp}{\vec{p}}
+    \newcommand{\vecr}{\vec{r}}
+    \newcommand{\vecu}{\vec{u}}
+    \newcommand{\vecv}{\vec{v}}
+    \newcommand{\vecw}{\vec{w}}
+    \newcommand{\vecx}{\vec{x}}
+    \newcommand{\vecy}{\vec{y}}
+    \newcommand{\vecz}{\vec{z}}
+
+    \renewcommand{\vec}[1]{\mathbf{#1}}
+    $
+
+    <!-- Plotly code for interactive plots -->
+    <script src="../plotly-2.0.0-rc.2.min.js"></script>
+    
+    <!--Prisim for code highlighting -->
+    <script src="../prism.js"></script>    
+    <link rel="stylesheet" href="../prism.css">
+
+
+
+    
+<!--************************************************************************-->
+<title>Shaw Research Notes</title>
+</head>
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<body>
+
+<div class="top-bar">
+    <a href="../index.html"><img src="../frame/boulder-logo.png"></a>
+</div>
+
+<div id="side-bar" class="side-bar">
+    <p><a href="../reports/reports.html" target="_top">Reports</a></p>
+    <p><a href="../presentations/presentations.html" target="_top">Presentations</a></p>
+    <p><a href="../todo/todo.html" target="_top">To Do List</a></p>
+    <p><a href="../about/about.html" target="_top">About</a></p>
+    <hr>
+    <p><a href="../old-rbf/index.html" target="_top">Old Site</a></p>
+</div>
+
+<div class="page-content">
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+
+<h1 id="Title">May 9<sup>th</sup>, 2025 - PhD Dissertation Defense</h1>
+<h2>
+Approximating the effect of inputs and cortical geometry on wave propagation in neural fields
+</h2>
+<h3 id="">Links:</h3>
+<p>
+	<a href="./20250509_defense/index.html" target="blank">Slides</a>
+</p>
+<p>
+	Publications:
+	<ul>
+		<li> <a href="https://link.springer.com/article/10.1007/s10827-024-00869-z" target="blank">Representing stimulus motion with waves in adaptive neural fields</a> </li>
+		<li> <a href="https://arxiv.org/abs/2504.13379" target="blank">Radial Basis Function Techniques for Neural Field Models on Surfaces</a></li>
+	</ul>
+</p>
+<p id="summary">
+<b>Abstract:</b> 
+Neural field models are systems of integrodifferential equations that model the dynamics of large-scale biological neural networks. We consider a neural field system incorporating a biologically realistic form of negative feedback called synaptic depression which gives rise to spatially localized traveling pulse (or bump) solutions capable of encoding the position of moving of objects in an animal's environment. Our asymptotic analysis characterizes the response of these marginally stable solutions to transient stimuli by quantifying the amount by which the stimuli shift the solution. We apply this analysis to a stimulus meant to model the <i>apparent motion illusion</i> - a phenomenon where a subject perceives a series of still objects presented in succession as a single object moving through space. Our analysis yields testable predictions of the perception of motion as a function of effective stimulus speed and stimulus amplitude. To assess the effects of cortical curvature on traveling wave solutions we develop a novel high-order neural field solver. Our solver is a method-of-lines collocation scheme using radial basis function interpolation and radial basis function quadrature formula. We establish theoretical convergence rates using the recently developed <i>Projection Method</i> framework for neural field solvers and present numerical evidence of convergence as well. Finally, we present a series of experiments on non-trivial cortical geometries, including a realistic cortical mesh, demonstrating the power and flexibility of this method.
+Neural field models are non-linear systems of integrodifferential equations intended to model large-scale neural activity. There is growing interest in identifying efficient and accurate schemes for simulating neural field models as they can capture activity dynamics that spread across wide swathes of tissues and that reflect highly complex neural architecture. Recently, a framework has been put forth for analyzing neural field solvers (Avitabile 2023) that separates the error due to the numerical representation of the solution (projection) and the error due to approximating the integral operator (quadrature). In this talk, we will discuss using Radial Basis Function (RBF) interpolation and quadrature methods to combine and simplify this error analysis and to create efficient, robust, and high-order-accurate neural field solvers. We will demonstrate their utility in solving neural fields over 2D manifolds and discuss their application to modeling cortical spreading depression.
+</p>
+<!--********************************************************************-->
+
+<!--***************************************************************************
+*******************************************************************************
+****************************************************************************-->
+</div>
+
+<!-- Accordion script -->
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+
+var expand_all_accordions = false;
+
+if (expand_all_accordions){
+    for (i = 0; i < acc.length; i++) {
+      acc[i].nextElementSibling.style.display = "block";
+    }
+}
+
+}
+</script>
+
+<!-- Tabs script -->
+<script>
+function openTab(evt, tabId) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(tabId).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
+
+</body>
+    
+</html>
