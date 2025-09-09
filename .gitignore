@@ -10,3 +10,6 @@ papers
 manuscript
 
 *.swp
+
+/.quarto/
+**/*.quarto_ipynb

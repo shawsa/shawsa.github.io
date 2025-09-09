@@ -1,0 +1,31 @@
+project:
+    type: website
+
+website:
+    title: "Sage Shaw"
+    open-graph: true
+    navbar:
+        left:
+            - href: index.qmd
+              text: Home
+            - href: about.qmd
+              text: About
+            - href: publications.qmd
+              text: Publications
+            - href: software.qmd
+              text: Software
+        tools:
+            - icon: envelope
+              href: mailto:sage.b.shaw@gmail.com
+              target: blank
+            - icon: github
+              href: https://www.github.com/shawsa
+            - icon: linkedin
+              href: https://www.linkedin.com/in/sage-shaw-a0919577/
+
+format:
+    html:
+        theme:
+            - minty
+        css: styles.css
+        toc: true

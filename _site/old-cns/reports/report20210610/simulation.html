@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>simulation – Sage Shaw</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-9a60b6f365114c3b1e59731f49b17c37.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Sage Shaw</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#traveling-pulse" id="toc-traveling-pulse" class="nav-link active" data-scroll-target="#traveling-pulse">Traveling Pulse</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+<div id="cell-0" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.animation <span class="im">as</span> animation</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> HTML</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy.linalg <span class="im">as</span> la</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> RK45</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sympy <span class="im">as</span> sym</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> table_maker <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> functools <span class="im">import</span> partial</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> ceil</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pickle</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cos_bell(x, center<span class="op">=</span><span class="dv">0</span>, width<span class="op">=</span><span class="dv">2</span><span class="op">*</span>np.pi, height<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (np.cos((x<span class="op">-</span>center)<span class="op">/</span>width<span class="op">*</span><span class="dv">2</span><span class="op">*</span>np.pi)<span class="op">+</span><span class="dv">1</span>)<span class="op">/</span><span class="dv">2</span><span class="op">*</span>height <span class="op">*</span> np.heaviside(x<span class="op">-</span>center<span class="op">+</span>width<span class="op">/</span><span class="dv">2</span>,<span class="dv">0</span>) <span class="op">*</span> np.heaviside(<span class="op">-</span>x<span class="op">+</span>center<span class="op">+</span>width<span class="op">/</span><span class="dv">2</span>,<span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-1" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>matplotlib.rcParams.update({<span class="st">'font.size'</span>: <span class="dv">24</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>From <a href="https://doi.org/10.1016/j.physd.2009.06.003">Kilpatrick and Bressloff 2010</a> <span class="math display">\[\begin{align*}
+    \mu u_t &amp;= -u + \int_{-\infty}^\infty w(x,x^\prime) q(x^\prime,t) f( u(x^\prime,t) - a(x^\prime,t)) \ dx^\prime \\
+    q_t &amp;= \frac{1 - q}{\alpha} - \beta q f(u - a) \\
+    \epsilon a_t &amp;= -a + \gamma f(u - a)
+\end{align*}\]</span></p>
+<p>Modified version - remove synaptic depression <span class="math inline">\(q\)</span> <span class="math display">\[\begin{align*}
+    \mu u_t &amp;= -u + \int_{-\infty}^\infty w(x,x^\prime) f( u(x^\prime,t) - a(x^\prime,t)) \ dx^\prime \\
+    \alpha a_t &amp;= -a + \gamma f(u - a)
+\end{align*}\]</span> (note that parameters have been relabeled)</p>
+<section id="traveling-pulse" class="level1">
+<h1>Traveling Pulse</h1>
+<div id="cell-5" class="cell" data-execution_count="107">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">###############################################</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Parameters ##################################</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'params00.pickle'</span>, <span class="st">'rb'</span>) <span class="im">as</span> f:</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    param_dict <span class="op">=</span> pickle.load(f)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>θ <span class="op">=</span> param_dict[<span class="st">'θ'</span>]</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>α <span class="op">=</span> param_dict[<span class="st">'α'</span>]</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>γ <span class="op">=</span> param_dict[<span class="st">'γ'</span>]</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>μ <span class="op">=</span> param_dict[<span class="st">'μ'</span>]</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> param_dict[<span class="st">'c'</span>]</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>Δ <span class="op">=</span> param_dict[<span class="st">'Δ'</span>]</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> firing_rate(u):</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.heaviside(u<span class="op">-</span>θ, <span class="fl">.5</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> w(x,y):</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fl">.5</span><span class="op">*</span>np.exp( <span class="op">-</span> np.<span class="bu">abs</span>( np.subtract.outer(x, y) ) )</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">###############################################</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulation parameters #######################</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co"># space</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>a, b <span class="op">=</span> <span class="op">-</span><span class="dv">50</span>, <span class="dv">150</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">10</span><span class="op">**</span><span class="dv">3</span> <span class="op">*</span> <span class="dv">10</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>xs <span class="op">=</span> np.linspace(a,b,n)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co"># time</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>t_final <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="fl">1e-3</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="co"># initial conditions</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="co"># u0 = np.zeros((2,n))</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="co"># u0[0] = cos_bell(xs, center=0, width=50)</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="co"># with open('profile.pickle', 'rb') as f:</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="co">#     _, _, _, param_list = pickle.load(f)</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="co">#     param_keys = ['μ', 'α',  'γ',  'θ', 'Δ', 'c']</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="co">#     param_dict = {key:val for key,val in zip(param_keys, param_list)}</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="co"># with open('params01.pickle', 'rb') as f:</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="co">#     param_dict = pickle.load(f)</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="co">#     α = param_dict['α']</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="co">#     γ = param_dict['γ']</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="co">#     μ = param_dict['μ']</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="co">#     c = param_dict['c']</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="co">#     Δ = param_dict['Δ']</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> Unum(ξ, μ, α, γ, θ, Δ, c):</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (<span class="fl">1.0</span><span class="op">/</span><span class="fl">2.0</span>)<span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span> np.exp(<span class="op">-</span>Δ))<span class="op">*</span>np.exp(<span class="op">-</span>ξ)<span class="op">*</span>(<span class="kw">lambda</span> <span class="bu">input</span>: np.heaviside(<span class="bu">input</span>,<span class="fl">0.5</span>))(ξ)<span class="op">/</span>(μ<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> ((<span class="fl">1.0</span><span class="op">/</span><span class="fl">2.0</span>)<span class="op">*</span>(<span class="op">-</span>np.exp(Δ)<span class="op">/</span>(μ<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>) <span class="op">+</span> <span class="fl">1.0</span><span class="op">/</span>(μ<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>))<span class="op">*</span>np.exp(ξ) <span class="op">+</span> (( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(μ, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(c, <span class="dv">2</span>)<span class="op">*</span>np.exp(Δ<span class="op">/</span>(μ<span class="op">*</span>c)) <span class="op">-</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(μ, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(c, <span class="dv">2</span>) <span class="op">-</span> <span class="fl">1.0</span><span class="op">/</span><span class="fl">2.0</span><span class="op">*</span>μ<span class="op">*</span>c <span class="op">+</span> θ<span class="op">*</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(μ, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(c, <span class="dv">2</span>) <span class="op">-</span> <span class="dv">1</span>) <span class="op">+</span> (<span class="fl">1.0</span><span class="op">/</span><span class="fl">2.0</span>)<span class="op">*</span>(μ<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>)<span class="op">*</span>np.exp(<span class="op">-</span>Δ) <span class="op">+</span> <span class="fl">1.0</span><span class="op">/</span><span class="fl">2.0</span>)<span class="op">*</span>np.exp(ξ<span class="op">/</span>(μ<span class="op">*</span>c))<span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(μ, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(c, <span class="dv">2</span>) <span class="op">-</span> <span class="dv">1</span>))<span class="op">*</span>(<span class="kw">lambda</span> <span class="bu">input</span>: np.heaviside(<span class="bu">input</span>,<span class="fl">0.5</span>))(<span class="op">-</span>Δ <span class="op">-</span> ξ) <span class="op">+</span> ((θ <span class="op">+</span> (<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(μ, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(c, <span class="dv">2</span>) <span class="op">-</span> <span class="fl">1.0</span><span class="op">/</span><span class="fl">2.0</span><span class="op">*</span>μ<span class="op">*</span>c <span class="op">+</span> ((<span class="fl">1.0</span><span class="op">/</span><span class="fl">2.0</span>)<span class="op">*</span>μ<span class="op">*</span>c <span class="op">-</span> <span class="fl">1.0</span><span class="op">/</span><span class="fl">2.0</span>)<span class="op">*</span>np.exp(<span class="op">-</span>Δ) <span class="op">+</span> <span class="fl">1.0</span><span class="op">/</span><span class="fl">2.0</span>)<span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(μ, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(c, <span class="dv">2</span>) <span class="op">-</span> <span class="dv">1</span>))<span class="op">*</span>np.exp(ξ<span class="op">/</span>(μ<span class="op">*</span>c)) <span class="op">+</span> <span class="dv">1</span> <span class="op">-</span> <span class="fl">1.0</span><span class="op">/</span><span class="fl">2.0</span><span class="op">*</span>np.exp(<span class="op">-</span>Δ)<span class="op">*</span>np.exp(<span class="op">-</span>ξ)<span class="op">/</span>(μ<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> (<span class="fl">1.0</span><span class="op">/</span><span class="fl">2.0</span>)<span class="op">*</span>np.exp(ξ)<span class="op">/</span>(μ<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>))<span class="op">*</span>(<span class="kw">lambda</span> <span class="bu">input</span>: np.heaviside(<span class="bu">input</span>,<span class="fl">0.5</span>))(<span class="op">-</span>ξ)<span class="op">*</span>(<span class="kw">lambda</span> <span class="bu">input</span>: np.heaviside(<span class="bu">input</span>,<span class="fl">0.5</span>))(Δ <span class="op">+</span> ξ)</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> Anum(ξ, μ, α, γ, θ, Δ, c):</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> γ<span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span> np.exp(ξ<span class="op">/</span>(α<span class="op">*</span>c)))<span class="op">*</span>(<span class="kw">lambda</span> <span class="bu">input</span>: np.heaviside(<span class="bu">input</span>,<span class="fl">0.5</span>))(<span class="op">-</span>ξ)<span class="op">*</span>(<span class="kw">lambda</span> <span class="bu">input</span>: np.heaviside(<span class="bu">input</span>,<span class="fl">0.5</span>))(Δ <span class="op">+</span> ξ) <span class="op">+</span> γ<span class="op">*</span>(np.exp(Δ<span class="op">/</span>(α<span class="op">*</span>c)) <span class="op">-</span> <span class="dv">1</span>)<span class="op">*</span>np.exp(ξ<span class="op">/</span>(α<span class="op">*</span>c))<span class="op">*</span>(<span class="kw">lambda</span> <span class="bu">input</span>: np.heaviside(<span class="bu">input</span>,<span class="fl">0.5</span>))(<span class="op">-</span>Δ <span class="op">-</span> ξ)</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>u0 <span class="op">=</span> np.zeros((<span class="dv">2</span>,n))</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>u0[<span class="dv">0</span>] <span class="op">=</span> Unum(xs, <span class="op">**</span>param_dict)</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>u0[<span class="dv">1</span>] <span class="op">=</span> Anum(xs, <span class="op">**</span>param_dict)</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a><span class="co">############################################### DO NOT EDIT BELOW ###############################################</span></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a><span class="co"># Time integrator</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> RK4_step(F, t, u, dt):</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>    k1 <span class="op">=</span> F(t,u)</span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>    k2 <span class="op">=</span> F(t<span class="op">+</span>dt<span class="op">/</span><span class="dv">2</span>, u <span class="op">+</span> dt<span class="op">/</span><span class="dv">2</span><span class="op">*</span>k1)</span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>    k3 <span class="op">=</span> F(t<span class="op">+</span>dt<span class="op">/</span><span class="dv">2</span>, u <span class="op">+</span> dt<span class="op">/</span><span class="dv">2</span><span class="op">*</span>k2)</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>    k4 <span class="op">=</span> F(t<span class="op">+</span>dt, u <span class="op">+</span> dt<span class="op">*</span>k3)</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> u <span class="op">+</span> dt<span class="op">/</span><span class="dv">6</span><span class="op">*</span>(k1<span class="op">+</span><span class="dv">2</span><span class="op">*</span>k2<span class="op">+</span><span class="dv">2</span><span class="op">*</span>k3<span class="op">+</span>k4)</span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> F(t,u, μ, α, γ, θ, c, Δ):</span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>    temp <span class="op">=</span> firing_rate(u[<span class="dv">0</span>] <span class="op">-</span> u[<span class="dv">1</span>])</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>    ret <span class="op">=</span> np.array([</span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>        <span class="dv">1</span><span class="op">/</span>μ <span class="op">*</span> (<span class="op">-</span>u[<span class="dv">0</span>] <span class="op">+</span> M<span class="op">@</span>(temp)),</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>        (<span class="op">-</span>u[<span class="dv">1</span>] <span class="op">+</span> γ<span class="op">*</span>temp)<span class="op">/</span>α</span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ret</span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>F <span class="op">=</span> partial(F, <span class="op">**</span>param_dict)</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a><span class="co"># Root finding</span></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_root(x_slice, j_slice):</span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>    A <span class="op">=</span> np.array([ x_slice<span class="op">**</span>i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>)]).T</span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>    coeffs <span class="op">=</span> la.solve(A, j_slice)</span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>    d_coeffs <span class="op">=</span> [i<span class="op">*</span>coeff <span class="cf">for</span> i,coeff <span class="kw">in</span> <span class="bu">enumerate</span>(coeffs)][<span class="dv">1</span>:]</span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>    my_f <span class="op">=</span> <span class="kw">lambda</span> x: <span class="bu">sum</span>(x<span class="op">**</span>i <span class="op">*</span> coeff <span class="cf">for</span> i,coeff <span class="kw">in</span> <span class="bu">enumerate</span>(coeffs))</span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>    my_df <span class="op">=</span> <span class="kw">lambda</span> x: <span class="bu">sum</span>(x<span class="op">**</span>i <span class="op">*</span> coeff <span class="cf">for</span> i,coeff <span class="kw">in</span> <span class="bu">enumerate</span>(d_coeffs))</span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>    root <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>        root <span class="op">-=</span> my_f(root)<span class="op">/</span>my_df(root)</span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> root</span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_fronts(xs, js, θ<span class="op">=</span><span class="fl">0.1</span>):</span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>    indices <span class="op">=</span> np.argsort(np.<span class="bu">abs</span>(js <span class="op">-</span> θ))</span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>    index1 <span class="op">=</span> indices[<span class="dv">0</span>]</span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> index <span class="kw">in</span> indices:</span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">abs</span>(index <span class="op">-</span> index1)<span class="op">&gt;</span><span class="dv">10</span>: <span class="co">#the crossings are sufficiently far apart</span></span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>            index2 <span class="op">=</span> index</span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>    index_back, index_front <span class="op">=</span> <span class="bu">sorted</span>([index1, index2])</span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>    my_slice <span class="op">=</span> <span class="kw">lambda</span> index: <span class="bu">slice</span>(index<span class="op">-</span><span class="dv">2</span>, index<span class="op">+</span><span class="dv">2</span><span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>    root_back, root_front <span class="op">=</span> [ get_root(xs[my_slice(index)]<span class="op">-</span>xs[index], js[my_slice(index)]<span class="op">-</span>θ) <span class="op">+</span> xs[index] <span class="cf">for</span> index <span class="kw">in</span> [index_back, index_front]]</span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> root_back, root_front</span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a><span class="co">###############################################</span></span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulation ##################################</span></span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> xs[<span class="dv">1</span>]<span class="op">-</span>xs[<span class="dv">0</span>]</span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a>M <span class="op">=</span> w(xs, xs) <span class="op">*</span> h</span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a><span class="co">########################</span></span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a>steps <span class="op">=</span> <span class="bu">int</span>(np.ceil( (t_final <span class="op">-</span> t0)<span class="op">/</span>k ))</span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> (t_final <span class="op">-</span> t0)<span class="op">/</span>steps</span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a>us <span class="op">=</span> [u0]</span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> [t0]</span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a>js <span class="op">=</span> [u0[<span class="dv">0</span>] <span class="op">-</span> u0[<span class="dv">1</span>]]</span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a>fronts <span class="op">=</span> [get_fronts(xs, js[<span class="dv">0</span>], θ<span class="op">=</span>θ)]</span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a>stimulus <span class="op">=</span> np.ones((<span class="dv">2</span>,n)) <span class="op">*</span><span class="dv">0</span><span class="co">#* 0.05 / μ</span></span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a>stimulus[<span class="dv">1</span>]<span class="op">*=</span> <span class="dv">0</span></span>
+<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a>t_stim <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> step <span class="kw">in</span> <span class="bu">range</span>(steps):</span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a>    ts <span class="op">+=</span> [ts[<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span> k]</span>
+<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a>    us <span class="op">+=</span> [ RK4_step(F, ts[<span class="op">-</span><span class="dv">1</span>], us[<span class="op">-</span><span class="dv">1</span>], k) ]</span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a>    js <span class="op">+=</span> [us[<span class="op">-</span><span class="dv">1</span>][<span class="dv">0</span>] <span class="op">-</span> us[<span class="op">-</span><span class="dv">1</span>][<span class="dv">1</span>]]</span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a>    fronts <span class="op">+=</span> [get_fronts(xs, js[<span class="op">-</span><span class="dv">1</span>], θ<span class="op">=</span>θ)]</span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">abs</span>(ts[<span class="op">-</span><span class="dv">1</span>] <span class="op">-</span> t_stim) <span class="op">&lt;</span> k<span class="op">/</span><span class="dv">2</span>:</span>
+<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a>        us[<span class="op">-</span><span class="dv">1</span>] <span class="op">+=</span> stimulus</span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'step </span><span class="sc">%d</span><span class="st">/</span><span class="sc">%d</span><span class="st">'</span> <span class="op">%</span> (step,steps), end<span class="op">=</span><span class="st">'</span><span class="ch">\r</span><span class="st">'</span>)</span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a>js <span class="op">=</span> [ us[i][<span class="dv">0</span>]<span class="op">-</span>us[i][<span class="dv">1</span>] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(steps<span class="op">+</span><span class="dv">1</span>) ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>step 4999/5000</code></pre>
+</div>
+</div>
+<div id="cell-6" class="cell" data-execution_count="38">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">###############################################</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Animation ###################################</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>stride <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">12</span>))</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>line_u, <span class="op">=</span> axes[<span class="dv">0</span>].plot(xs, us[<span class="dv">0</span>][<span class="dv">0</span>], <span class="st">'b-'</span>, label<span class="op">=</span><span class="st">"$u$"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>line_a, <span class="op">=</span> axes[<span class="dv">0</span>].plot(xs, us[<span class="dv">0</span>][<span class="dv">1</span>], <span class="st">'m-'</span>, label<span class="op">=</span><span class="st">"$a$"</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>line_j, <span class="op">=</span> axes[<span class="dv">1</span>].plot(xs, js[<span class="dv">0</span>], <span class="st">'g-'</span>, label<span class="op">=</span><span class="st">"$j=u-a$"</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>line_fronts, <span class="op">=</span> axes[<span class="dv">1</span>].plot(fronts[<span class="dv">0</span>], [θ]<span class="op">*</span><span class="bu">len</span>(fronts[<span class="dv">0</span>]), <span class="st">'go'</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(xs, param_dict[<span class="st">'θ'</span>] <span class="op">+</span> <span class="dv">0</span><span class="op">*</span>xs, <span class="st">'k--'</span>, label<span class="op">=</span><span class="st">'$</span><span class="ch">\\</span><span class="st">theta$'</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>y_min <span class="op">=</span> np.<span class="bu">min</span>(us)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>y_max <span class="op">=</span> np.<span class="bu">max</span>(us)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>y_min <span class="op">-=</span> <span class="fl">.05</span><span class="op">*</span>np.<span class="bu">abs</span>(y_max <span class="op">-</span> y_min)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>y_max <span class="op">+=</span> <span class="fl">.05</span><span class="op">*</span>np.<span class="bu">abs</span>(y_max <span class="op">-</span> y_min)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>window <span class="op">=</span> y_min, y_max</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylim(<span class="op">*</span>window)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>y_min <span class="op">=</span> np.<span class="bu">min</span>(js)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>y_max <span class="op">=</span> np.<span class="bu">max</span>(js)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>y_min <span class="op">-=</span> <span class="fl">.05</span><span class="op">*</span>np.<span class="bu">abs</span>(y_max <span class="op">-</span> y_min)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>y_max <span class="op">+=</span> <span class="fl">.05</span><span class="op">*</span>np.<span class="bu">abs</span>(y_max <span class="op">-</span> y_min)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>window <span class="op">=</span> y_min, y_max</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylim(<span class="op">*</span>window)</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax <span class="kw">in</span> axes:</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    ax.legend(loc<span class="op">=</span><span class="st">'right'</span>)</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="co">#     ax.set_xlim(-50, b)</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    ax.set_xlim(a,b)</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Δ = -np.log(1 - 4*θ)</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.plot([150, 150+Δ], [θ]*2, 'k--')</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> animate(i):</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'step </span><span class="sc">%d</span><span class="st">/</span><span class="sc">%d</span><span class="st">'</span> <span class="op">%</span> (i,<span class="bu">len</span>(ts)), end<span class="op">=</span><span class="st">'</span><span class="ch">\r</span><span class="st">'</span>)</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    line_u.set_ydata(us[i][<span class="dv">0</span>])</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    line_a.set_ydata(us[i][<span class="dv">1</span>])</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    line_fronts.set_xdata(fronts[i])</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    line_j.set_ydata(js[i])</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> line_u,</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Init only required for blitting to give a clean slate.</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> init():</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>    line_u.set_ydata(us[<span class="dv">0</span>])</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> line_u,</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>anim <span class="op">=</span> animation.FuncAnimation(fig, animate, np.arange(<span class="dv">0</span>,<span class="bu">len</span>(ts),stride), init_func<span class="op">=</span>init,</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>                              interval<span class="op">=</span><span class="dv">1</span><span class="op">/</span><span class="dv">24</span><span class="op">*</span><span class="dv">1000</span>, blit<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>HTML(anim.to_html5_video())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>step 500/501</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="38">
+<video width="864" height="864" controls="" autoplay="" loop="">
+  <source type="video/mp4" src="data:video/mp4;base64,AAAAHGZ0eXBNNFYgAAACAGlzb21pc28yYXZjMQAAAAhmcmVlAACVIG1kYXQAAAKvBgX//6vcRem9
+5tlIt5Ys2CDZI+7veDI2NCAtIGNvcmUgMTUyIHIyODU0IGU5YTU5MDMgLSBILjI2NC9NUEVHLTQg
+QVZDIGNvZGVjIC0gQ29weWxlZnQgMjAwMy0yMDE3IC0gaHR0cDovL3d3dy52aWRlb2xhbi5vcmcv
+eDI2NC5odG1sIC0gb3B0aW9uczogY2FiYWM9MSByZWY9MyBkZWJsb2NrPTE6MDowIGFuYWx5c2U9
+MHgzOjB4MTEzIG1lPWhleCBzdWJtZT03IHBzeT0xIHBzeV9yZD0xLjAwOjAuMDAgbWl4ZWRfcmVm
+PTEgbWVfcmFuZ2U9MTYgY2hyb21hX21lPTEgdHJlbGxpcz0xIDh4OGRjdD0xIGNxbT0wIGRlYWR6
+b25lPTIxLDExIGZhc3RfcHNraXA9MSBjaHJvbWFfcXBfb2Zmc2V0PS0yIHRocmVhZHM9MTIgbG9v
+a2FoZWFkX3RocmVhZHM9MiBzbGljZWRfdGhyZWFkcz0wIG5yPTAgZGVjaW1hdGU9MSBpbnRlcmxh
+Y2VkPTAgYmx1cmF5X2NvbXBhdD0wIGNvbnN0cmFpbmVkX2ludHJhPTAgYmZyYW1lcz0zIGJfcHly
+YW1pZD0yIGJfYWRhcHQ9MSBiX2JpYXM9MCBkaXJlY3Q9MSB3ZWlnaHRiPTEgb3Blbl9nb3A9MCB3
+ZWlnaHRwPTIga2V5aW50PTI1MCBrZXlpbnRfbWluPTI0IHNjZW5lY3V0PTQwIGludHJhX3JlZnJl
+c2g9MCByY19sb29rYWhlYWQ9NDAgcmM9Y3JmIG1idHJlZT0xIGNyZj0yMy4wIHFjb21wPTAuNjAg
+cXBtaW49MCBxcG1heD02OSBxcHN0ZXA9NCBpcF9yYXRpbz0xLjQwIGFxPTE6MS4wMACAAABFdWWI
+hAA3//728P4FNjuY0JcRzeidMx+/Fbi6NDe9zgAAAwAAAwAAAwAANJjQfjN3asOGIAAAAwAmAAYI
+A2ADMASU7+cR1BxAJeJXfTgQAWlnkmr7OEvNZb4eemcQaRwDH67ZHiEvkCd4xUrIzbQgEyY2T95S
+aO4Grxbyhpg8CtJAJ5xOcMcSURMQuekRTzA0Eau5y2t0yLcsfwAAjA+7x4sKBQ8cRu4T0GOnXKb7
+DAORYLDaQ3nugUXrlz3AElKqnUwzG5PVff+XizOr9hot/qAjktTXQtIfYErtLK+CkzQOiAQY/yNf
+b7vwabVhYXLXu+lGPdrIdsOgSjZhyVk7nngksclEXHmqGD4d4p4Lsz7B2c6IywGjot9xmn/MhgSD
+DdOfL49tr06Ju4FEH38z5cNXVeMMGo2WuzAyQdmpNNjb+OF5iOyaPYHNli7AtNjO7e9EcmkvZBzH
+AJQKtgMm8ldCaRL93cKENuoNbXTnKIiylS3wB/BWI5g5ZK/H0TLPCqxpeukRh1SxhYF5z7is5zpu
+jbg5DFNPx6quqLwn5UrjJCqWf3w3X0mTJ6gqRXocS9CKsvjWc6pU+HH3Vm8KIlk1VT+JCh3Fj/NJ
+1+pmf8QAkmmmci9S7oauxIu4icK1HRUtiZmCsvtkAFMoJNqBfg7YN2e16tWmcTMYOszVvhnlaDOI
+iUx5XERsk3FKffpuOWyKNjSUxHO9pHtplgH1/X6Co9Y41Znz6tVfwGX8Ql5jjTM6ooGQMpdYH3KK
+5ZX+kTGikDkNS8KbxAgX4yjuXO3zr/cc663ciUR2RAAAHDslvP3fjiuRBBqWHux6DPmexgNj6U0U
+vOr3QHgvIGTwnv7RR3gK8f30TPHzOE8C+ilWn/vvaZDPsng/htf4GhYlT1Q+rzt882YjcPOsVMcT
+W/nLXDQUo747xfUqjqrOv2Gfdi51mvYhDMKs+PWK+bR3z3ZpDE5afyLauoKOtG9UGgS6HOu5pRN+
+fy4QY8V8hSoYBwyt+7kPgTq25/leJbvCrZWLQAAl0vnatgid7qVw5NJEkiCw+6epJMjLBfHuKNIi
+effKc7PfNVL96iGfkqzxOTTD/J8JQbs0JVYWjhZ0rsikjtcoTdzDnjOaS7+40yrgay6b2pHVl6xB
+zMl9Db0qoiIuo/aLRLX9e9IEt7noUcXc/hr7eKkJI0BolP60h6th8rqK5X8361qJJJ1VRImPsDeU
+sU+eEgosMFoIjF3l9rBx4u2ckasPQPfb9RPi4FbIrIfTqis+nWIVOjjpXNAlI4GfMNcTixzKTHnw
+6sS5xseIQdb5V4yVdTcX7AwqfrpJqwxibF8MB8bROz3YEj2IkoouIGXoEFVMr3QouZN04GXCwT2w
+KiTWonkLD4tSD1KrVO9BIBrgb7WCRjUQ8g1Tri5OekVGksXE/1P2XcILHikWC9rAFh1RcDpBRUrV
+u5VwfH+KyUjNRlHgcrtUW+ZSXokUgzJ7iMR3FKOD6msJ4c57C4kp7+mA1QFF8YQGD+3ByJukzzZO
+ouzyKoP4ofS/g/xO63PN7lhOuO4wU5LuqoZItcTa1gnAqhxm46am0Dqv9apqKnAy+Wl92p/176eJ
+8xF5y/p4EUITV5svLIE9qcqq6iEnG4mrlkTBZScpgfEbLVeYXI2OZNoNlGl7A2cA7i7+s3Z6liv5
+lFp3v7ZqMFKftACH2B8yYFW4BZdC4To39Vd2DY0V4b9qtscEZJGDO1SheBnH4CWfcxG6BkHOCugZ
+p2dMQFASIaDY7NCIKlhVuU051AeFkHt2UJ2PaW+VCv+6ySrprHDCfHZibtvFCN6envcFdbMN3tBO
+ue7dRFB/bAuOiW1g6mnPnpM/TvtMcA08DckWpqEUBMobYSvFmNISDtlC5cEaX5Bgh+iRMmdyqgP4
+anw09ue0KgU8nsGVDJhwm8g1J+EcR0hHhbLOgjoyrlAbWQfm3SYUZWnEhdwLFrFsLz1ZGJzuDQHT
+Y4uQsvb4t2HwQJRho9kNEj5U5XCZndxRMPlOWxXL3P2gdD86ZolUN0DhXnGEp/2Pz+fp+d8wSwfO
+dtlqT9Bk7oPiY1HDH8p/xQkxjEhKj+1E38lOa8JMCFAl6VsLrRxKEHU3ULFoIUZ1gNwzDuzi4WwW
+u7G7KvfHFALn3XAXYyEAAVGJpKM7XUwWICgTMMs93UXQcQnh8jCwbBkgjZzrTGC5GXVOG5+rYUb0
+EZIc9OaBy9g3PmEI7Ri1+KbS+qNcInZRY5CbeSGpgpq84Yv7NDWuAV+1q/kXxXy1LaIB1WinxwFh
+UKUr6GAedmQf/7pW+DJZgx4wwO/AfpCeVExTQ7hsuaaf5h4UoclhHTjDtaGvuUMW8LWk/3kOjKAM
+I/mecffGpXpvx1GzTWJG6V5Na6wYsfwl78VLmV9Rb703VOPssJk/ra8o0q4vjHWhHAOuvw2YV8Bg
+FcFuDFbVwTwx/08XtUhsllPcgNciYljG+K+zIpyz9qmAGO4itr135JC+3GxA6ZxPZZEl7ONgCYXR
+454psXkk/3VIR0d5eLYAeAQ8kOJPNuuRcj+zrcr4nAfQunLd9C5K23rXO/Uvc3Q2Di8xwMN2S6nb
+E7UOifD6MUH2nohlvSh2f89HnkTXfHts0XRKsURRS//Nq+f5NMS1MczFCg3b6XCGj01f7BCV2tNS
+bt0ssGrHCZeYkCL7ZTTypUY1dxOWYy6Pgsho+R0TxudEW5KaTQF2GLT2fHdWW8xm2FlSaqxDL7Qy
+7pQ6tA76PTQyyeRU7NBIZy8+EvFWKDojVutUUdWNnfVpVpQIRUpWMzG9sNUJj93L448kweftMA1+
+vuOE7daYdm+2IYvrLZ5+hTr395M+etgjC4X0of9vx3qXSzlQnIBBRZpUqFKMRVkHqwoIZurYrAmJ
+Oqf39a7Xnz1ZQe9QECRTIckAxXwd4eWVdPs1vFSn7qAk/zij1QVQ+i+XWyzIMLw0sicYVpXkEF4/
+YZ1oG3Kf746Rv5Ljvr7qWwW25c+SCVCsrfAdBBv/qbvA0dS3Wg4Q9XvbF5c/6/ZKZ2CXOylTHoqQ
+lj3mH4s41OsN2scQpD3x+OOgynNlInm6HSR9aFODXSm9XfbWuYe49tkUCulhyH4N3irxflmmp3Fz
+vB9nLIdbnBYMIMq3UaS9nY8hSdKghhHLJFzYielYidXEFsIxmcZHyXePmokfjqw0PPUr3+OXQEQ7
+hkdlKnW5Ns72PgcJxSFAlme9chb+0Rsw8nryU3a7XBge1jqOdfUud8w1fk1deGGcIyoYNv9MgH4D
+dRKiG2nADrOHbj8GWLJk5jROfwlj6uAqfSAeTadAVYRFyEdPYQlITarJC2W2WXh4RwIcQX2fkIeY
+nJbPX5yh82Hh1sH//zzAPabsSvHGGGDDVJ+9UStQVphVyP2unjkr8StO8tKd/1DDu9V7Qw2T0Lf3
+Be9y39y/p9Ggwa2JEX0f+Qe/m8YfE7oWtNUIddWO6KRJEf68EyPxDe8ERlfhKHAEn40jVS1Z1L1P
+wZRodmIuishWJBMEjHsarMe6/UpnXiEdVkDwkKfMJFAICrEoVvyOF2RQSFyEAJmMca3TqAH5e2pt
+6P2DURuEj3PUDLrvtfwKY213Dn+Mp6JgItlvh5kHQpNN2FTwOjUwaQJl+1Z3ZP91m5d94l9eqfg5
+D6q5RXujLwsXtG/Qg3XU8+jgDFg549y/GXALrc96bnijiteHuue852gkAr8GDNzoJ4crFV2Z4ZwK
+qEiOE1LTigadtD2CczZhUMW9ec7upW3UJ72ip4Bs3nfvE72DJBD93ohYD+Jf8ya7W9B1b9elh5rp
+dUSwTcyeQ8rYk0sRWxYVcg2FlNVECLL2v5COAeaOdSXpnjSWHkB8BXW8RjLhbdRD3N55bti8FE28
+hk9/TTYrjAY1TOWKZTnfvnVfvbq/Ghg7T8QR60fEWKvYixjENMGtKEseUCbIgdRXTfPrswVBgLm1
+E4Jqoshzqh5jTgsToBRJsQQut/K+h3lNVzzUiuUuoOK2vG+X113DJUQ+Pktg6UFUL3NG/1zc4Avn
+K8TeqKydemHBjF+Z1WfjBPRHBwGZFf9P0E1Mm2yRjupAZ3ga3uIs/HbWgjmvOvUnUw5DKZlNRx4T
+DQo7Q1joGku53+EJKiVHpCbEy6o8AZ7s/SWXvwUS193gBD7ft3s3W6hf78pfK4hxAwKcThI/wknt
+7XAMCTriJMzlOE9EXuQy907daqpdobFBzrccpTcpH2QHYey0c0OIuNMMtDyy8iXHFrXjA2Pv5n4k
++RcOSRj2lgVpyq5ifYWLfsibBVi7gpEryfVYYMab/hX+AWTFMQStzWxmsnVRW1aThRp7Le15aOUF
+DmqK8q/6Km4ToBCPthNEUGxs4Am5PNeZmSLiL/1680ZriFzJ9g2vZrFGRlyrSWiayLiVtWUdow6F
+gMAI0cPtv0uN3ibaYo2JWQCxxNBydc3/eglRTOeqsblwHbwP15neW0nC5pPvUD+LPRkaahYMDtur
+XY7OWyQ3l597ZJZkDpH/QaBax4CS+n/4a4bBqdaN8wwOwQ1w9aGXJqSYpqYmGRkcS2CwvLBxLSGt
+FFvXrARQDQbvu+2hHFVZAMirTtkMA4+2tjEJvIYl8eX1o5sUhuaRxchnno3cb/V0rOSY7Isz9k30
+vt0i+m6/Spe+SodtSMSPW3aXg2VCDAuX2TDvubNlhz8piVAuf0NIzmyt5hxKNNe6ddizW5OeiDmg
+69g6paiQAOa2wHEV16G0iQEY64hVk93tYzeki2u9c5C3A0WCs1PXtwOiBYnC3QT5h6KiDrZhW/s/
+bij74vTcIsVdNhKPyw41ZtVhSLsGWpu3uP64bpJnNe2OBingMira/MYP3d18Rv6UTsxQNQltjVh7
+lBZYXg0Zp2Zp1VSpzr0WfbsbECmvw6fEGy2ST4QGYDhTrIujExINmt28Bdcyerrc9rzQ2diaOmU3
+JaQF5LOj1r2bi/X00LmrquF6z3wOkl9DjQhp/PVxcg1+LluUcwATMOJ4PmyC3oUIU+OKfOqIYbKc
+xBtlPi1eFzpkAhcVCWcuLVc0Ulo4bRQGboCpeI0MYs45mC0g1QsGDdiDD5PlhX4ywvWJZQre4BSC
+dLSn57fKJemjLMVrN6nItixPYNJNcLx/f+LxIcjLALTAeQhGgmsXwMY8H3GqcnJ/hv8NHcKUrtiV
+2fZL0/ndYQPhtu+ehMWDN8sIvVslYW+t97INTGa2N/i0m4bMAYUBLwUrje4YvWVD0gQGVg662PN9
+sQDq4iAGblfY5FMSZhGizLJ3VvFragQhpzQYdO7DuV35V1mLrqSa7cUh8PtEi6xFlwxHXGi787t+
+hL91mhq9KVRpaLnt3/KQ4I0QwPC6109XFtTQ9MQsQAqXxCs1yoDhC4i2AYwKsrrtXkNXJx4BpmCH
+3FBMQyCQGo4AVXXmmEqlGb7OPhd23E+yMA4j9pYGWv2MLk80jJdm1Ueo3pkKFuwV7C2KVVxvaLqj
+fXq1Zz0KQ2EurjjA3bn49kmY/iUF4C+4gIlfeFAErJxe5pi8YLdD/bP8efJJ9xTttIlnEmN27O53
+k2DFke0LzKyVf+T+sfwS5g+3vwKYcQdZpMpwExP971tNseJLc3jS9RMDueT70krYy2rQ/gPmVvWc
++tghMgcVm2rUKEPgJSj1jNnXyluY7XsQi6jFHjNRYG3H4fUAlKeQvQPGzs+O9Y5I95K2upme18nO
+UDrVIYIu2ST4C/7UXBUlEjmMBiuogZRl/EiZfWT17JVcsHgsCWUPAeM32Js23f1K2PV48JpFu7UM
+NCa7bvLdMFZYztDsFBYTO8ARm09ZmrugSpGBNZGB/tBJMm2gmybBbpoUtGfdOS1g9ohplZZRbl1F
+7O8VzbRvxX+OKYkVlbH2D4MKIo6Qle6aQvYqQbI5nbdgAuiS2OeS+50ezcqfjR69KpzqSIpRp8gQ
+IHOx5jgPp7MYDuH4Pz2wj6CNKAj9swlsBY1uVg8++MaILlWj3YKFC36jO/Oq4TaBzoKxpToogb26
+56TJ/9eKpoLomwCU1iEJD2uKVKKqM1c/rTMoVzncVzwW5yOGB5cgmYe4+TKnraM0yxc97qW8NoUL
+SdMfpzgzanHdYmjuhjCdo5zWXgEumRK2sC+Ypmvj1FzroAGdOfQwDwGCuRT739//yxROnnwg5GDw
+1FlYaknuA1FYzz0h1lJQSdDwsS6bkWPeRQsYHkgpGukEEyfzkuwBD8zyb+211wvQV84vWV46VGId
+cTy03SGUsicoQ9GwGFNvRvE3NQEngbiG/X47ZlJ1amIwOYIBT4nUnGwH0RTsRoY0yDOcfFQZsW6M
+HRt8fA9JSqY+fU/mpbFpU71joFFjfnfccE/LqJKG1PlaFzbmH0jHaGMUXAm6m/83Pzt4QOkUzPkn
+HAZnF8Yc7doh142T1OxkbFoiN20l/SNg6Da4/TuM5EPHeYF3Ap04zR6ibMr9/N3V8627g/9DJguc
+P+8lpxIlyYbpRuQ/k6iXcV/u3F1m3M/8PcGxNtiJ/NGXovWtp4xeQ8u7ZSQbf90stqpL+AS7+gmM
+36mdl2ZGTkSVb3H9dFWVLpCCmx9zEALYfgivfcF5EwKJOKACAGYbAy5pkHwQnwyh0sx2+J8ivS8N
+yNl5vMknqz61F2lB37ctB0I1f+7x+TDMBHOlEBsI1My3RmRR3ONW8bw1pX+UshNlJUfQ7uhYUNaU
+Sdxvo9V03MO0mnYFVfsnhmqYsyMIL/t++8D/HaXz5KNp/9nzuxIKD3DNUJUJAWB9IHcJDlJNZ6KV
+929IBgGbIvtFtPo7QlhwJi94r6ZtQ/Zh971GbVk8yS1SEALAiIfsIPt6h2vk8AiAG8tEZqEKgttU
+nxS1H/4Lgkmrk2kSDTHmEYbc2mKrhQfQLMVLjhmbc006mtXWSEY6wTqW9w03fYpjYNjGoxmjLjWK
+p3G8XTwUviq5bYxc1Orf0vMZNI+SrknLL3faFtds1fhtOf5qQ2Ege4fZwDjzHCrNI5b07TSLZARf
+iwbwbWOnYsgA1ecgftqB1NiXeZkKrKdJMgDepSK+vugolh9X9y61/AjbW1tbJXhBXqLwsSaDr6SB
+VeZ8FkJudOJ27Hqp2HN2C/KR8poy8CDE17QrUBekmEsJfgxIKzF2SyMi+m/r945HAk6mD75JXdhY
+SSEEc9BMgD1AJnwzq1HSr9T7hmIA9gXXj0uzUKjU2ieEkn6Y0j0+4YB6FoBORhkseqFG5UFVrBoB
+d50/nDBnwgAAAwP2Bxy//nwWjuHWSsRsJivlwXa5A2OvFT6n5+SEs1qm4wFUPffYP/GL8Kfw2t3y
+hCHq9zM6w6GRpYrK/67DFFb8gOB29mDv8aAEOpSFtHpMMdDWAE+NwuFjab4FLNjdbLbr2NMfe/ED
+eoeLAXLB5Q3Tl+WZB+vvYYvkrlz/AXbwFBtWFGbvBHS1N7jZfCjWX/aMRbS33e0prOI23S/VjiBd
+0OeqSeoHVfWHNHUq0a1TAJhEvhUUD34xthUnUZtbbaLz2GdvuBrnDrfpvTbuFIUy4YlV+uxbhBGR
+Cxmplt6tvr7t3n77K7aZiPkC2adUtphWLf0ipxOxG67Og65gEzXDeOKOjRFABH65QDWsBJ1FQHLT
+INk6Ffu49a54r1RU5HoI5iOApWcJOCDf1QycF9bDLB79cAWIfJ1R988C3A+z6KSI9WxSqdm3TBvQ
+JCR96w2ohSjqU2XT7QM6T2sCvL/C+ezBpgBC0wakh9zyx6luVGrL3TD/3YYV0c5fttpMYm8zjDgA
+AAMAAHNNaSn+sd09Hg3ttLeAYndK+RbjbRpI6wSYisPPiWvTXOJCgidSMjgbrJyqUzb+9QCvrrvB
+ZvJ7zXOFG7d3Jg536GDKv/S3Q7HeNhoC8IPgFoBuGBwYBQFVhI5NEH0anCJPZNbGTHDEnWW05Pc0
+sMGFeFGZ+AOfp1CRx620oYQ3nS/xc0qRviO5nFuVVAu1Llq57w9zgjpc2+V6xtRHLKnYnz96e6UD
+r0b6QYb7mhOFvdD+5kHnAanxHeS3qwMU7WYUTwGeHFH3o///V6vRmBRM42whr3ZD4yZ1ZgZIKN37
+lN+Qbak8VS62FaQec2LO8eSlBQs5loDXOCWG3pfwVyIerfj+/tC7wP974PtfQB5NTlBW9z4XalM8
+O//9AyxtVLYSVPku6YUpftakAAA2mpC0UH9RhnJb9T7XHlHId8rgg40cRfNerGR+YvXl2zD86oE/
+JukRWRLYtFZMG5o9Iqxgs9AEVFet+x4GsRy1u4uib1aCFNU7AA+bNO3fieQuz8FJ3/0iPikpeifK
+VdM3te6gIWqUqR5UFlKnrqFuXe3yib8/rmqSg8Sd13M2DJtxkv5tOOk/wwWV7cqFLSwN1wN84v7E
+MQ+y7yhPDFmRSoB8KwBjW4WLQqwdB9ma4dyvKshyYrFQL11w3cQ6hQ93CouYAfz2bNEZM2AWjS9M
+lZpPHXqH8dh9rRqWL+d6/C64huyLBpUPByAaKbXv3Gdzb7WxgpX/ceQTdSz9R/24jTy4K15ro6TV
+gnHi8iiGqVtItJSaG7kW7sFh70ENY3d3hkjELCOlYITvXcOgTivzT4tsa8o5U2GQ14H5GI/OPqyC
+qGp/+vgtv53aMnWy5w9bD9f5kzlFnoWNd4iLkZXMHssWOftY/6cIyqAV/pSW6i5BpSqQ9ct6Mohi
+l1iTy5LKvmPwqJ0Z9s1pD5mRkbmIonW3bFXAYyS7J14m5D1uAQcwqaExgK/Ne7Rdzj5MuYxD3+Af
+J/cX00mrzdP7JkKhM/ef79CREvenlij4/uhLVeoqYkN9bsZ8/HldUJmPM4hemmFeaIdIudTW2yUC
+akBXkz7u7VoiaVWNKBrfE0C6DznGEArW7ZW7DkV0N/bkl0Ah4qC6FTEgeNQwKR1dbvVsQKpuiWXY
+AJjMBl1xWXu2vLZ7NPUP27wwaGb2HS4qp3VG6SAb+EsIyFpSv8LL+R7oEtKFPFLxtYAwu8QmZ/WL
+/bnt8Ef+kERZAwIoYmxG+euhrYO2/nHRhv1tC5Fgpw3Y6FzAa/yGuBwGoCSOGrmI5n4VYQm7+Noc
+MfSiahSwChPRE+pWuPj5EYatW+IZG7QFgER2uNq57flnHqsucM0LGAetvSHzWRImaxcVOGvuKepQ
+RpfCE7fm3/bNYCyh4HH+ieg8TZwzipdF4ec1UVj4VZ01TaL8V5IZoj9XfA1CsdoIn9MGR+VOaoJf
+TXu68EzZ1/vH7jGTj5En48ilRlZwQOX8zOZ/tMb4W3aDBqWO9R+gDehu/+hMBbogcBWrH0mWGmaD
+/hvZhf96oAmya6Um64WS/bOL6Lxzi+hu+7VAtwl4fYVAFJh6OBYk6r6wtoSsEaOBO+SbHwxP8ok/
+dsc6g6wFmObklDL1o5/MFf1qaEBar0y4xxWnxtP0kzC2IOIjnhIASZXlRqPQ4AC4Tk6Em8uRdJNs
+CuUcv7W/OEg4D2VYDhOpQemkspZ0lf7/K85N5+ql0zOYWA3D0s1WYpFlkqUJsauMzj5zM3G5QliE
+QDa8BVJjwHIcpY6aW6Uz3UuA4O6Axxe8ziMkwcAkb8jUawrPoDXYVms9VNpHzCVhyFQXOm5BQQ9E
+RcQBwhin1sqllQQXn30ZEdC3LyeLoGToc3XFuoRkOgmg/vzT6PA+TGxA8x6rRj/CrSQ1N+UmEDkk
+iqBUu9VypQgcav030L3f15+QpfqjTYT7QF0k1GYyNnOKIX10daH3XPH7KLVntk1/XlODcAvNWBcW
+cUJDFzuOKRnzaKwCqnaxxD4vjBwDj30kLGYPJ+WargtajgFqaVKZfFqEySFg/o+tC5H6i5/mS14q
+WsorkuW2fWaAZv9aHV78LnkobJcrOIYt13e8hh1QNYY6uOGYNwBVd1NUU9PJ2tw6NFGnU1fyK6xc
+r7Ww6oHAoKOBWn685QRSO+rESq6w1KjvpCWE3eBxb1iqBJDh1eq+Y77Pc/e46WXni27DaC2n7ZIQ
+uOI8sZA9fcKFRM2yprCqlIryT8HKXC+G8Fk/1Bly+sjwxbvIN410aMZGjLrpCS5vZRyekR+qf+7E
+KIcd2aIHNKca6w5NuMn98M9RRuXK9ACrfdfgcm9LNqeMXbCmqFYlmGxqGR3IurXKBzFyrUNPk9O8
+QNagy+Fb6vfui6jg7P553erJE86jFf3UJ78xkgvXBN+jOrbfQYIZ4kngyZ4vTsJjGwym8VbqWiPv
+tc1W9k8IuZmKo6szQJKp+J22s6UNNB4odn0AuUS/YecVTgCJ5fwQhJ9QveVTF6Qg3P5RIfu+0tS2
+mjLWixboFQKVvllNg4pOWKjZd//oZCP6+55Uyv4YnNlgtsL8GlLIgJ9H/2vcyce8CNSekYJlukwX
+V1tgrZxRSZji7FxAo07CCqOxYa/x4hNN18l4ABweN/2XCPvr8yNvUwNhEyjnpA5wPn5YUtx35ujc
+84d6+GWc59xwWpxS+3qSc+a4Z2Fq3yUgthjskiq0Sy47pravvj2ifYqa37G+6UHkC+8UEetv/TGd
++8TI1OlFA9K4DGBN6nWma0UsSkuEe+k3gehnObvv43g5rN3iOZ1mpDPVXlDcrIXRnqU2EBFFdrGb
+Q07jhEJtqDDlNFi8Giu0lWFx3EBMXroqNj8EKgvyScF9lpipMUeYPIAClgOBfQPw9AZaTDU2Ckd7
+w6wlNpgLYOAe9MORr9Ubes3AXTNwx1pGVYqa9xN5509L4ldW/TovuSFHab7Om71R8W5O/DytgfjW
++vg8LQlzcr16mlO4IBavcHNnqftu/PWHvgbXBk1TtmLKpopK2k9vwjUgH0GDXaNDYcKItDwc/PSq
+oA62V2So7CCqFPxHcmRt2PcQrpsNVeSoY4mVkI9nlQyhMZgaHAAlEJsdxBCC/fCZKVyuPBLrsS4a
+b0hkJyySkTFnQg5EoWeqNh2YtEqu3LnGQm62EEpbdr2r1zAKHQ7E+7OkAj2r6KEII/9scMMQnKzJ
+uONX66DQ/4Fr991d8FWXyEAGirF3a+rDaclgsb3BjX466Dy6ynfR7N0kBL+sGu3iFkV4vR2YMjub
+QculWE1KkoWoJ+bttOPw+J+6mq19OwKvWuB7pPfFsgWI3l38+m8dYYnGzPCgMicd7yufVhwHZwZv
+hA56/ifdTQkceehuCX/EPRay8iQg3cxI4oNzExTv2PSHzGb1Z3rsudwhw5AEZIxa0Pcof60IfYIR
+4Sun90v59k0XZVE4VKhRDtg+Sx87cQlZmxdDIRm1ad1OeSjgiDEE+q135i1nqXWjF3cMzxkVDw+A
+Rk9zvtEEFZ6XQpUudkcgeqt32gIl+XKsmsAx6M2CDexJ/10Z9WDvt6kHgZaWbVSNLuSuR3tMBJ1D
++9pHlR3jks3w6gYU2rlaUf0JE9XaOIBeFv15vxSkTdU0+XpJycw1RkGoyZFhyPX/SqQQvAzcC645
+zoU5y/L1IiamrOU8FPuY18f22bEz8UpF7cHmohRQ27NlH+vLGYk8++a+d9BIXyyyjImoOCB+we3F
+SuZ3UnZO04trbHDMDFUpPEZIt3dCNgwwMYkym9Qe0CaPmKyN3Ad+0sPiqQmw1vUTFPSHhGGQn8vr
+QZRwi2TEJAmUy5glSESvUvHqR0mcI22AkYCvNe6a+h6o5KrcAPidT7X7M4APWMMQCTRMbcZf1XLV
+0DZQ3LtYF0m+ERVTpKZX3oPSsWNaYBIAAAlleTFsMrYAAB3P+dN+8gTkA0O0jMfnT89u2IZIhZFp
+6btlAADBL2alPHk9HHot04M1fBpoGcGILL1YgBJxfIm+3zR4GOyf0qGenxLPS4wOhHX9wkLeM3eL
+pZhIWujQYdwm8qKAJYp4mUXNprjTHQsY5L0NAmo/c0kBMDfA858QBE0nDQ7TOlDmTMmrpNrFSw5M
+Dj3YTFBHED0Px5gBMuPw/Bn7LKmvajMBN8AABZw+lReXfqsHrFCL6JPB/ZzIaDJvlhWNP6mAEEFd
+Hdzuf73SOv9edaCX9Bn/3NFelax8QFaTO9ZtKj+x12UCVVh89n4HlPP7q3FxaisxtrhYwMOV3mJH
+A1s7lhgxTw2xyHN8y1sJKxKA3MSNwcEgEcrStNQpCSVuCjc/tWi8M3tNSJ6H3WXkpdYdiXWNDqVd
+XkNZqaRB/5MKoNJbAzP0aMAAAx9nBYI88HTp8Wftf7D9c/gy2Lcv4n0ZeCtkFcpkoUGRrUtXcREV
+Ln+5Dgk2LQ9u9mrFryZsqvPx/UNjfRdg5iDGQWkP6AaxW0zaWBjq4sCpY6pBPnfmc+pjaJfjIOiV
++GbCvDO8RzM2Sip7F/chHKSviAQZppNnL96LcuwDjpErHVF+egbzD3sOl2K19xsoxYDnRSXWrLXC
+vnC6h2RLJxvDdnFNztYbvnjNWnurw1RzIoVwsIfuuiiG1Y1+0j6UHZtWe/vBtfifcb777v+HMkKA
+VFn2NbkVWDQtIqLbnnUi8+ta1c6svEWEyT8rGMydyPmZxcVTjTdcHymeNFHQUs5t/70ftvgNutOM
+7k/Bcrx6v5cTnRSb6wiQsK7qBBXij5ICQlTyaG7CW0kS74AAAAMDpv+NEZkQvFC8SWRZDHrAB/q8
+m+jyHQ4NPm9qyRTETwj0wKEqjb2A6Ke/K/5r5jBA3Cp0pJNbC8GbVizIyPZs7A/vHcB+Xz9qaYom
+znZSjPH7vWKr/mxBF3bR0z5pD4ahSjAk+UixWb0TfOq86ueqiknW6uQ+6pOC0eOOAO9CQJzToX9F
+owEQdQ/31QsYpLoK3TgvZ0k+RPsTG5IjwvJ0wKQwww3/q9v1efqKGLjoGj9uy0eORgog3vvJFQ9+
+ixt0APXFXrRctasISArKdAO5YV3Os+NZeQ5i/tklR/4XdC3Ro5ZoMCcbrlv6v4IH+B37wr9tlFwH
+RYDlrj9TYyMD+u4zHYQqCiQlrgAPxu1hazl+9iRQ0L6F7dNgk5qPZVFDwnI7tbmOzbFijek9ayj4
+Wuu7lTIEpvUwvMf+CxqKjCmPGm6dMlSUt514OEHwp0DJ1eEFZ5MA+Soc+3DD7Sd1PnF3uG0CnGNV
+ck9Y+i6y20wblA8X27OxGM0t1SyTBJ9nA/WDVzWQlwy0XjCavM//XmAAFQFP7g+3VXjw9Xw9MYWh
+ZsHGr8gVoZQY6rViyPXswC7qKAgaWysKK58BZYv+rOlQi9FeEHqNxa9BvlToTynPSgLH1QpA3jMp
+fs68xIodKr4vfpQNpD4i5qxrOndHcnRtgajqaw5iB8z9+GT2kP8JCH7nP6GOCYWR1av1DhoXJOPO
+zN/0HSCmqNcbwsxdxbcZGLdmVx87IFqn03IWGWkAIzpjrvUQa4qWAlcoMoM5gtOGOAUcFTcDB14e
++9HFYHfLUovH6EI/uKnUflIuaqxXIWiKwj0UKwpizH+CKOKDfMUPybf+D+nmdE8p2EwnD+ptgP+A
+AjhPFShaSUIlpMJVmz1Xz+tD3mjvmVerQ7D+yVATMbKxQGL4V02fxu2TesYMRXIXt1x/T4D+yWPx
+aDDi60XiL3CcDZ6AjvEyjZQdZBtpLJfMyOHoshcW29x/Rd/2fLdTkPEPanovKlu/Gka7fCIoFKlz
+F/7+spqfhBCVBehzzCeS6TMvaekrqRZet4Ia084CeFLyl7g+HWq1vbzmC56vqulp6AD2301lToDj
+4AH5Hk9qZJCOVn/3ROMvO27MvZDIVN51GibPQYHirZ+QgLxht8j1qgfe0cx5podj71Q99EaxYhyz
+Yt6JG1zx56uVE52jj0IogiU8dOjcLYZEsI9fJKHYSFnWLaJXbvLWSFTxCuBLCeeSJ6JDcs/fYtsQ
+Ta3+QioAlMrEC+eRiUYiOUhP1oRmJiJNQHT3//9C/O8qaQ5rwqzXUwuoQrE9TFpLfPe4zYuGyxjU
+WF85ZsQy0sNEl1GtXobFIGAmcIjaHXkfiZZw3v3GGUMOL9OXqBkZCHJQ3AhIff3JiHmuKyckJXZC
+9RiN4RO5N0g00rBbkdPhkQp3B4l4s56Edo5iT0m9cS6srVm45UhwuSHIMwro5CyHG72a+AEQp169
+gYGE0Y8wI1iN5FctSjU3EELWhu/IAPYXXF2njHtKny00bGU9O58W1BAlwf18+fvE6s88ZRSFoi5D
+0AFAbUr9mPhOEpyiS6Gt6B/twQ2pZfB/0q7a3NAFLKktYs0gy4lTx3CvPwC6BSAPKSZe6CkJrhLS
+UjhImdXokWl2dzCtFFTJ4CH5NIUi1wXq4e0UqSBRboa9VCq2anBJQkYIpNBDCXISj2Ng9AsUhD3M
+f1U58nMCPrkBz7pnPqQNC0RDC6d2C8f55m7/dS68WpvB1Q1ZbU6JXVoWpGVMFIJGyJeh87GVfCTu
+aEF5dYRWIvo6TPRZ+1Sho7V6JRWgXL6W8gA7QOHXRRsZ4Qt/UT/aN+Jo1yRd/sY1kGJOQXrDxWGr
+LUyXL24gmLkk0oU9hvdgGieSW3Y8sZfbzMCZr8KuuUtLtGCnarSFNXLXcj+XjBsgThCY5vkafRli
+BMTYOsUN0XNZ8E1b5ps7okmUgZKy0y5nPMXJ/LeUQD3XlEwfJUShUi/OfbSKq5oFwkDMa3Dy991k
+bv4FGdtQROOmf6J1AAAI680yQXohYXFOR78harM/P9aVzGrlioYrKL5zpYSl2Ptp8Y9QhU4YPYG9
+eSZMg/IGCUAFZmG4xHImmaCHtC7A8Jshv2HzBwMp3xyrSFfcG092D95Gx/SctSz9QYnuyvJ+9Z3s
+aE8BEsvg3vdKCse2QoQ1qqIFTrKThBiAtIEAY4Bywl9nglzqn2R3nZhboujMBZt2SsxbFwAb5Hk3
+I1pwt4FMoRBWy17sstuq4PyzlsYtaeaaiI8XZ1iLa4h7bZEPIccM2JtIZZrjJu1fJZ8SQZms50rg
+yTW0MiDweMZopTXxvXPndxjR+vAGXWnvcOqC/CUGNJgPYsEW0kGwC3KuWWuQ3P1pEF2lraObOpJN
+ZOJlTpbl9v+oUBFxtYuenB4hao84h0KcXeCcmuo4i0NeLtmpodOREBBBOtmTGbDXes01o/4umaR4
+mswMqTkmbgr+0gnpJHIaFvIsAmkgAgYQrYuGMjlU5eIkgO80kksFESyMRwSEA4P1MYsDdDMfLZWq
+yAJpnE6KCvz4CMVyBuvEzscZ7RZshRVk/Zo0A7mu3IpVN6l/YK9TV0aTHKZ3eGJ7Ja1APrqdNkHK
+ICDxex4pE+ij+k2PGiGA/Cbh7PO6ZGjOq2MmB+E3EbTWYycnyjrTQOQUhzwaGq4s0rv6ewbLwUfB
+XOoPDrwhnJQYb25wqZXn3Oy85LYp4BQeOkii2qhpor8Wcxx3DglVeGKYCWFPcxyYLBWiyH5/DJ4v
+xCGTrAX/xWA+Lx5Itxh85yHE3Y4zQXpq0QybWvfU0Pw4lc33aJDvgqbA8IqeiwSArvrPM6oX/edW
+ZvagWih3PuMOU3IZ0/y0rfewd8s9tpSvOTZ61NMnzMqWZJNXXjYNYbK94mz9dfXkhhpk0wQ9eCCV
+XAitDg4hlLOFgLpNBbwkCvJ4cBox2sUTcZY448K69q/mPYkKKXs9lwZJRSmB7Zp+SXHSkNvoyepo
+nVwklgHhROM0EKNBGbwpApxW0yaBOQ5irDHaKUftzuwiJfHLH+GdcVcY12lJCWY+telnaoysmij9
+jiMLXA9XFTDhbv1h348fN0+QiR9/H1mxqQBfZCbw4zk1ifDkjk9g5GowgL3AuDuaatkSnx6BQSkO
+VT43vo7/vlhHVYl3s0v9SX54VfaVOEYxBRvzWW1iPYXB3dv2fowfmVYOL3xYbtKIKanEcm/iOrmX
+Dh5pssWJ/ty5RmfCx+VvwMmCkdqA6zdAXbjt++5iAhs98lTHIZUbgXPi1mSVuURyPpoV7gRfcQH0
+j8WDobOosfbu31/kcdWROcCeTJXBANznCvf3/owXepooQT8fcyM1JXM0qxkmhf3GQbWs+Gulex0I
+b9L8ETgSZ5ZaLLJFF96Pu61g990QMJcUZDdeCubjomU4bvxcSVIBdC7vPEu5XYL3w88HPaYXvFt+
++sTAF98z0PKZYnBLCvmE03oDOfcanYXi0ywws92dFLs23kD1Yc4w4bXjI1CxW5BZfIM2RyKrbNb+
+7S0kMhZ7dZ3l+RSa6a5+gZYf0cNtH++nJN6HZNn+3kbKPgLDqcT1P58vDuY3dgkwCHO3lHyrnpeQ
+DXBFGdSZKp/GBTCB6bjTayNjgs4/3OFhIuJ9ZPI+fa16zMF71wJPAWZ7THVb+Py4a5r9uD86S0tD
+S33QmJBmDv8sqwCx3slmMD5/cYsEVg3Fpgz/1gyfxnr6aKr4BaD0nZavArSufkOXQQC5ds684CNe
+aQIfZyqXxRRmICD7xLOx9DlfM2+noJUtUVtcN24QxL26YtqGGtzepk1+bMLhNozLStuc3vi4lLcD
+aFzcNZsiS8dPKlNw25Rz9x8BOE3gF0gv9OcL6R79ILIe5xWbUImNYuiz2dpWXJEWW4OPVJtp1wS0
+HIqq8fwPmnwNj+LQUdwBqK5fZfeTBiHUOCyODqttBLowQEZQkZeTHbyt4II9FUGDUWvdF7+/PagJ
+WyptEtCnmeK5WOouEbIHQUNhT1Z9Y1k6IguslsvonCI4/32488pNqnUfZQyjxJ6MUfNaTVkvbLQT
+SDQ43OlSUxaRfGl3bztxvDKSkKwxW+xL6enyfJ2a8eLkKMVFdHXt75jCC6aTFBnI/qmZaXDHm0Kb
+lz704udGgyeWaCtvZPNmrJURQzERBhLWzi+K1Fq4WU+Bo6OF1bBT5vOMhin6aYSBUVeOuUwN38Mp
+CA5ri0cnXFS+9JAm0+R7MmPLMcWStTMqMhs987fz7tZ/xUKRZMTHmhVdnR00lHnrBPeluHv4Y4eX
++GvPP4+Qs2LT6PRK1x1JdUnLOF73QQXGBy+CRFhiirj1UOeiv+q32r5UibDj5muDhXoPqq8hsv+7
+qwF2hGaAZHn3PPVALgSijdFAlqv0tOnSjwhhENhP7BuWfKrpmD6bHpKPm9/fCOEpQaBcVWEMz5I0
+qrHC5x2Rb2RWnM9SzfZGCJXvR9PIdmft8d94sI2CMUQlh/Ufy1DhttRZrDIFzOOQj3HN38p69OQ+
+6iXUUpGkcqXl5t9ZlADwePJxPvL6Q1ifa/c2BecbRyBy5ss/usoHrmE/9aAANWc1i1512JWv22tC
+vZ5jeNeaAGIYX3BObEcX+GDKXrLTrufRq/6wkg5LMH0ioQsaX0Dqp9S2tlaaAuopf8kjnOoDe0qN
+XqEP4UjQTyuAEuuVdDIpONUUFjGAfx89lWHY+cLoPLk00DVteDuTbRuhF/tNETFlBN4g+etX4pjF
+5RMk78t4b/G2BdeaNyLJOpMwx/XtAZptfFcEVgX4NH1xpxf7Nrv+5QXT43Fn3mEs5F79R+Gbv1m2
+cFvmneX8iRjUE47zgpcuQ31E+Cm7DNt1bIWgmQVielhyutVBCUgwTMphsi4/9Dk+zQ2cY1prYjLo
+mQeZMVVbhhn0ER7ZSKleiOkLQFYbTwaJPYrs7TEAk4meqgrJITNLhpwAC96HlyRryHaiR6aCJ4Zm
+L1CXMVxhZbcxg87fcyXfb9ra8ZoN4GNfFHASG7lynM2fLgzvTo135MEmjuHDpLj3ziFfKN6BFrtS
+lnACzwgoOllOhsU0W+1Mz/JTghqtGRdhmxoz7WGFbyFreMqF+Op7c8acEXiwsHyGJnknbKidP7N/
+YoeXkDS6EEHG1QMlJtrX5rOJXKgzgREgoIID8D0TRsvJ39s5sSnO8D2jIoZBEAN1cLIucdNswyR1
+8DeApBB0KOSeR/RY24RIKZ8zMSu69JpZvhMrbMKhSPwa8Em/hC1Z2vZk4j5daMTygDKy+QKZFrN2
+m1j8zZdt1tlKn8951InwBAQU7IKs6UTiSccugTCkZguk6AakqH50V2/Cs74vQX6UTzPGR0/WE5Vx
+ewTs13BPOu0kNMuMdMUDyJ7Nwl39L+I4C1Q31s2ssnxNs/YFNCOq5ivTy+rgLozzxi7wrsow+iuK
+CVOHhCK0IbpfnrAudN6u+m3hs1Rceo47odUIYR969etH7Uhr0Sdff6wKOGNlv2V7fEEMLq1Myz0n
+xouA2TihJW4UnMs5wa4szlxcZN+A35gj7NnRkKx9nkIjuvV0N+7gMtG+sq0TDMEf1reOjTwj50CC
+LSSBydekD+T/fBEf/TXJv5xZE7+0UT8UU2QfylTQeAlKfuFmuJh0xW6pOmJAAACpuhyhgvxzToDc
+uYujkG8q7cdGvFsnduxvkvbb7DcndAGjeHuBhM07CGf3zpmkPaDBeIQY3agKGb5tsSQ99ozZw8zf
+cYbGuBIAn2AcdJtsjkbST5sWW1PfZUEAEDifB/JGlpdifQEcl3gn6hCDMLW3EGUOiKIpm8rJVZYf
+u9ebb4bdUtHjig9KiLTe/LUdFbPVi+JvtghpV62TS1xMvBYcTrHmU5jgRQMjsIJrS4Prx5TH5hNo
++h3/wpkLA86pFWlDvKBGFNPpzqVq50k6YpNoJHLesNtQvZyfJdEoJJOR79PVTYP/Z5ww4YS8+QNx
+snrwEoyze/kjwkDFjGZNW3r65/xu0HRk7VBPnrOoOwm6qDYu7RvMuubz1c/F+AFvFjyl3dit/lm9
+9ra3fxS1/0cd/ii1FXQ+JkOD9SntcDdyRANDGbttfN/MFjQIqarJk54VSlErgOyaTF5mOUMBRmAd
+b46I7Wig9PUNtdIACVrCGb88esss7zw8sBJby7u40v/7LOReWmlNwt69CBuqEr8tqGJfhLW/rlQS
+9Rkmp1Eao7reQC8uUQ08mm/6Wbiin8uOiyKskXlm/IHXnEKqrgr/6CT26OuhpFpVISmVGqZjArH9
+WOm8QudwDLvtavPvrA5S2BAAAB9UAx2zAv4maBP9qwbstLRqEb71mtiK6GQxtAxbTK+eYD6aUe/a
+bTFjQ3J4E1/ha/9sonkhIEgil3ptN9DbOEjmWoEvIYa9wkhpiPtL6G+BkOgPvi6o3M0U4EIZzJwd
+HO2rm4pe9LZF+IfqxNv2XZFwegJE+VXe6I8qouceHsRvZTrM/1njtPgdIwyb1P2pzrJCwHnNPm+L
+YIRbT3WV9k8oh0WnQyAKRXueD3zdxUMsQr+0Fd+zPT9U5BaPP43mFghvdDWUwqm2uICCKriOy8DM
+i3XAQhm12VmZ+mWT0aCf8iS/bCiAZc3zTVatsO7ng4FCjgXQLUGypqe+RU06gr4W35XoPLyCLDiN
+RIUmYzY1hDMoSzmXFM2UVnkCjvEGVkBDiJYdh/E4GGyB+npr21FrQqUwOccVHc16lT6UHBz2DH7x
+xCRCuRuJTexLOfUROsoQ94fp/0MJkcZpye7+azhJGaksx34NfEWq4EWsA+6si3Ng9/wTMTXcAKmJ
+0kc0ZBGZCiYIMvGZwN+XsfCRjJHbdzd0JZYGokHOLvauMin/NVDoCuWo59GvfVCNYn0AaGNUTITp
+BGW/EqOhT98fnGichyskmzwJK3QQcdpU+nHE+cnBeRc7bYrTGvOMJIlduCoiMyJjLqA/vofX0msq
+l4a6H2vKlmt5B6Tg6Cy4AVjg/xogiYu1q0nVZuqz1Z68i8x+6Lv9WFkpytDHQQHw1fGoqC0hAkol
+GMo+yV6eDcZw1uH5+3zyBzL+csnwFt7RVJxWNauQ3wi1dc8oFaX+3jcInD/63mBzRtJjugQCulzf
+mfFuTnxBgivWeCdWRqGy9xAwtx09S/9/cZen9CO8r8Szpj+yGkl88Sq8A2cJjPTkSVusv29THutM
+qZ5sZhRhO+FxJM4+ODvZBF3hwEGOP0s+TngJXeE5TFNpdJX7J2gkGhwYdihWZ610aqiCSCcI951n
+cL1ng0gf9M8BFpvuqOIH8LhukgAAAwApG/3V6UOPViyB6CKHfNJ6xNMSl1aT8apEMF8CdMJ3qBQX
+m4hMWTEGXkM835Qf3kWWWfrAY/ec6tXFMPhv/ZdffJU3UUm04SM6cJwepwo7mn03If6azfuybWCI
+6RWF8tUymehERvRoauCSY8+RQf7zpLTo8Ssy8zeM0V7+fyoKV4nREYuHeohZtKy9DC17nV+VrSfl
+BG+CY3H60zUWQfZLsaPMF7mYEpUSV+hhyPwlTmHoja4aPRKY1kRfNdDV/Lgz7KXW+0nAK5l1t83v
+zdJMn0P492KoN2Ca70UPTxW9mTNn+JIog8al9kb+sRQH6UtdM4U4rAzn+Ac6G0HMeqfMNvM6swCB
+oYvlDZqosOU7QjJcBAxpFOGUBJ09hG76raFo8LcdYcMkGsW1RqU+oV1LzuwYidSMgUf/+W9RDown
+FW52wYVopU+pY19/YxJZ055zabCPY2Tf7LIkXhIDtLog0/Bxz140kYAAFqfmsKnNUTFOCccditU5
+SVOUBbReSjDHzHu+Tpe4rzRjbNTVfw2PACotyHUjO28MiVgvKzT3WdEIR+0z5Qs1SyRld5lEyXMQ
+NMACZcQXKNRpJv3GFFK6/Q8NcOl7p7t8CU8IjBH+Y6CHtmsdM6W4LpxfFVvoq3DujyQsknmmb/IK
+mWbBWK50arYGlqAm/PQNfuerWl6VZj5BahWZryBlO0RRgWei/VYAMkh1NfXpRa/OScVlMq87nb2S
+BVblcG5cSfRV/8LNbqPsTvmdOtxAH1ddxMh/NmPnLjkSCQwR+/TqHdHQ7wtlY+SXJYET8q5fCLda
+7YbJKscgR9cIKzzasWGsW8QadYQRl0Wup8UaKtGX/AYRpFKcWQY1oQj376jYI6NWEGAFm9PWTAqe
+i+VFp4ZVmGQGnMn+uPy9y6HoeXCuEMzmghAavVncdd6RIw5S6tFChmehMYwISv01PdLCi/pT/Qc8
+NH6cY1TANeUHc9T5EKcnm3XEhrS7kPHI59U81Hzc8DFQYxNXauGnPsAhN4n3Y2xL8GPK1rEMLCVl
+ptZHLOvi74jDcsOmU5m8VfQKvyr6sV1Afr5iwIKTIzh06LvSP5ziE0F3cw3WR9/Hrve9Ty0Qmjr7
+UHklTQFEkL1oJXhntBfJNxThEdOtGjP72LHMw5eB3GMOmmHfXNWxmUMB5JtfmcW91zSPEEad9JOo
+oRvI0n/LZyspEkinjEft1/aoBjTcJVaOT4qt7qdGlSUajgJv+wpDOG6UYZyfQktDP2fLv5xR40IR
+Cy2Z4f4eywvXpWW9+OlQfWYe7glvCDp+Xdu8U88YI2SW9u+cZy1dc9YJzHRnoSufnTB66tqqYPZB
+U/x1VLbFxM+stIsKcVBsjMkle0Q666NNDgYzQ+pSgdwdpQacjgP2PChv3wq2h3WzDQk0+VnncFK4
+r8QaC6iT6Wu06Z2gCKCwDHpG/XGFO/kGcIm2QuYIAgjAEBVD4NQDVTvQ+LXyI7yEqXhUrdCfuSXa
+UaAJ2Ns7wvb0eI49abuDP8ogGdvLRQiC2a9A07vjyh7osKCZ5lVsAf/i7tqCKYuMOHNpn0mAAZVz
+00VeAKJJ4H9k2Bz2VQ0dMlQW4+hnqDdByCL+y+YHaaLLpirSfdVA8csKskYhQQOHEVd2J0LPtFwh
+TZ7RuRCTDBUjxjMy1K2Ow82APxgf/kkklSW97TX1KbnZ9JFpF7iEiVHQt/IqHz94p1l4w7FVHECr
+q0Zy7xox61+1FUigt1RqTsWVbCZlU+ogN13H5TzTgw9iyGB/Ofy8wZBjeF+09oxU9o1T9uK+hrb6
+BsMn3N+sF/OQt+p0IBpfhHPFHIkwBeuGhGQTDr57eH6Xru8giJSybvEa0SqGSOhMiGdW9Qy8jyzO
+atLfMaqfu2y6KkAsHz0NhXd/hf+f5M6BQnzOsAOvm6QYyJ8dFlsbNKCgbgTr0PH583BQH1dwAYxD
+uFuoUmIBBxzUgtpkRDIxKXKDbAvln7rVRk+HPyOA3FpaVI9dkoJSXLCBatuKQcWVF49bHwLcDOUz
+1d2JGTLiMFndVFigSRMUu08dsYXEBU9tVgKVZNIMpnou/rpMUPupKYq87OuYa0SBU50OdLFkuAg+
+gx2IT6hCw8VeU4FIDHPzH/KGHDa+UYl33+Pf6ql9B9jVDUQ9vjzBZdXGFHRol7FVnONuEVp+lK7F
+wBeY0L/0xFI5W9aqfQ8Ma/bm8mfr/ZoLFd/Ooivbwk9TYOssP8qaYHW92Tynygv/46o7CZ3ianKv
+w7CuqGO8innAu7OeiksIf7YXqKRz0666BNr6jz2QLTChfmU2DAvf8+NAs2OVaJ92AwKM15VV8Ftn
+AyoNnEDJYgvnaWAmR7EAC42lAYUNQdQVCvNKuRXTMyljhofQdt31GBhgd+5F1o6d++WrdkMF7vz4
+k4qZOYQr7iwvmZ85p9C/vNJ+306cyIrAr3Lieh8oqhdKu4PHG72Hfqap7sCo3vayU0KTOQ0Cu9lQ
+mCoZ92kxT/mtMuqEUEGj4TUWdgH8aVxCnVlAZN14QDQCl5rHaVuYRTlom+9k7yzTq3LP11HtmOgr
+eHeBWgGFITTMzE2RK/VQJ77Yg/MgGfwwz2Piwkx/dptVx7YZ0Xs8+3cy2Oo/o/11IsH5iFLSwd1w
+mo0cPLVz/JtJ8HiPYHvFpn520hR09HlYaRuUIlrDzpXUjrS5vSffRHTkDC3/ugcxc7ngbx7hZWJF
+5+g2xE+2x+qDGZbCDKAr1hYug4fTd4qkKqVEALhY8WGHXgN1QNIleVGbRGRrV6ybuAFgnfu0QIUk
+Is4e4a67S1T+HKHutlkVPhZQ4UrFT1nq0DIRpf4ss/+W96YtMrGcCVvbqJvLqFkYedA/vVeuVemU
+d6tw8f2G5BHVCZwM7BadMscDTFSMJEsYu4q/qZh0Jvuv9SMDHmpx1txVshf0vKTwuYE8CiGQrrUz
+EKW/cHyIAQ04tDTW6DkqC1VG6IG8UY04LAMZ6fExIUjv7lRX48cYvgJUgLtMAslTQVIpHbIjch+4
+CcFtBy6uFevh4wGbRfFYfF+g5sqUYJOa6GeA/OnvG4utvgHwMKNaXhFsNmEVB5QZDvD8/x8av+ci
+musvK0qoMu0W+SDrJvRxqGn1cTpoeqPj7FYzw0puUBLh6zaCEdmjQsYBYaSF0/BaKA4vgmLcV8CQ
+AoFnye9907o2CjbCGMS1qK1F0aVE2SqCTYSacQFxBIzFpn/kKK/E46KA37JY+tEroapYx3aiGtYZ
+9/SjVBt32KRrLn1bHcybOIKv+Rf12zOCJlBz4iHiskGTi/r3XMGif5fLj4vYB2q25VUq3PmN+ydH
+iyhWwafc/DlEZ8WGZYfzBTzF7knA6du1SZAYLyre1ZHoalw75myHirCRB+f0SFgcaWHO/kOGdmxh
+9dKg2oh8o9lWxIqt5F7JO0Wo99YECueqiYiU0ibYP8sZlbmsTcSAXSbxVXcq4yHuc4PcSdI2dWD7
+PXalLaNRQqsYSmxAnIoGM+QeWQDBwbuhtf3VV4ZaHqa5LbUCdkcuhi97jfWMjPwivDrtheidMtT4
+tuaPofdMtSNGy4w/YnDxaY93N7eQ/p359735VkYi2iqwqxfrNnneihT5vS4FN4EAqVdMTjU8NXT8
+Dty8lUXdfsaQJRQDIIE4KZnkCY813tLkxcS/OYy6JRX/hZXX5XFssbRvg8A1FIpz18LbmlL6t08x
+kxc4ncAJ/AC384WSXk1E2uT8psCmmgDFotFRMLFnKLrA4Suq3YTzPrSK5YP5bZ/GDBIs9iLPmK9l
+whvUqFw6HLac0BWSDHglon0wMK5pdaG9olMIw5ocX8qz0YshjdmdIofEGl86ogKHclPxMTRI3tEP
+3b8qgdCpIBjYbmdUAAIDZ/6eobWweYoK/D/HwHnnOJdGCYU4AAADAAADAAADAAADAABowQAACB5B
+miJsQ3/+p4QAAGvvqJAJr7aIOu+CgGq+F2TBV/XRE6naXFawNihF1F/brpYtofO51mloIUqGSHZx
+ibg1dDFWKlqa/7I+T+nnnGeea6JYWgvuB1OKDKJGJWZrNbn8O/NwPVQUEbo7ZeR1CVMBtPzfVocs
+eB/3OkpR40SZLqNjqyASgXiBHrNLR/G+rpoWnh6N1l1pM92DP+g60/ufPDVVmGugWpe5CM3NU4u6
+r1NYo4F9P8QrWbmeaSCjcaQoj++RFbq68vQWKlE4BMzbaln/9b0orXaSefewno7eSZP4M9Le/6CQ
+0xUEuLoGNF5EImGGPWaCEid/PiC5pshANv+zsMgovl2mP3DKpgQYeZHOb9+D41MtWYL7OIZbAEkJ
+8fLrJcxLE4wJRYggCMu1isaDmFgONm4PgHE24VHX+SG74BX4SE83X8Ddki3rwtTR3Xc4bzNOUfnx
+JYnp6Db8wtuZzDnw1D0zQ9QszVM8o6MX6TehmWH4sEihpzcw4GtgoPKiv0iygNBhB0zyMTWRZBDm
+r4PJ4p2tH1tOArJ6ItapLphm+v/ICzQekO1flPZzRtrrGNiziinjrVF09CJaUrYnc+sBygYL3DcO
+OffbiJmPeB3dvhBUMmvPINydpZnCUBt03sT/6rfZCHWSUXtSFzC/75WB2F4iFn4BeFs8lRubyt+X
++inS8OCLfpJdzFSW9blpcKuJjAvWKjX9dm+YzPeoCiolLsYseyihWAJ3n545T4hBg+1m8MJfIxwr
+PxfNMIFyynDBQ86O2NoVOBYsP3x+gkD5Wg5WOboVRNxTW/08+jnBFuXlV08BXVjBNzv7DRIiYLyR
+r25i8F7phQelEo8z10G2PS4BEigWQHYS2l79/u3dnVcsKnLBw8gcEodea8IMfNaqMWf4ac88gq7B
+HLE+LlAH3UK6wMeo1Ly1rhCfYuHQs6ztFE+e5q9QhOmjOb4cygiX9/4Hd+D4fdkql8mAe6NT0Qxb
+1dofnFAOAckHY33pIZWWH2fpOZk5HHc/P1FEnvR+PgtI2cdN972bFKZw/sA73p4aPT9YOAQQNhmY
+Z9ZTsmxIY6hiLTsI/KQMgWUKULBDrkmk7Laf1oXgu6XTUeaqj/lmpf1ChSYTGuJl68RQy2Uq48Gm
+WBsOqk3i4o9oO4qohBi+21VWDycnoT2IPZgfh9NWgvIrlBskbmd0vQnobtv5JeIaTWb482Nmc8dS
+RjQdAzNURMBCoVVRgr8RLgTjdT1XwltFec/NbmxSOk5Nzwu16LRAPSyZ/wlpWBP23FsLydrCiLEp
+kqGF0cLWChPh80aoWDptA3OAWUQJDeyBVXMJlxrHm8T3xwbvw7JmoYp/G5zRldzKN47CmAEO4dyz
+it/m2qFN5161Nnm5nVD87fzF5icNCUIvBg3uMjQbANGzofYcb8H86VmfAYVBZKLC//QSOstwBr6Z
+GbEFmL3qS334NGotV4KgoTN5YcEpdmJNzCIDh1JyY5b6dZx6gA/DrV7EVu6Ua6T1CLOt85ETmrSe
+U+oEWiydSTZwjKB/zeZSNkEM5M3T62F1WLLV1hqbMPQQpRFfN2wSef3rf2Vz0mLE5tL1zKiXH0sm
+OkxKiPK3p++wcmRLaw8fqI5ys47tjrdMqWMWBkF/HLBWAAAO4B9bcu2KPuoFvM9VhXOBnGqDBppW
+Idx/XpI4t1t+6HeUs32miAMhcjp3pMHvJml+0/8okL+GOdK058YX16H+QZiKFzoC/6QDn/rHFf68
+QvvDU2xw08RhAX7n204wtk1QZLbofrTaN0k1NVuK4Q8PPQMQzuiGgIsMqoTb83lwKdb2/J56kaLk
+A7cik2/tTj5QLcwvRWcyyWRjUW+Z5JRJIsucIGn661/cC8OpoE4eKZ/vk3i70YswDp64khfe+07B
+U9j9KA8UlI45f9JEkxq3kx9Pcx5BnHpVVgmWniqjOm7zlfT0ffpBKyeBMjHjjx/N7YsCmKxVLcl3
+5gzUhcecgSnSFtqtlkS0QQJurAFpWs4lwllByiFMqcptqLpdOysQhx/y8BPn7IUviv7hnqhS/J+Q
+t63n91Hp7gpT7QbJFpeBobhJv9r5f4rEuInef3e047jpyfLvgHWtLIAY8heUDXRMMkK8F49YHeAk
+rC2LKgJUBcS2uw4Prs31oar+uBFF0sMByIL4X6WbVPdYor7YKUPVsTGkB60clXVT6rxDc5y7S82w
+Pm3mJHbWOsk0rv8JAz8b55Ub1PQILAEvA7Ue0lPBXkeN+zsi97oDU8hhLXRBuyWIeagPiBUjSY4o
+1e8ZlWL8d3JbTI1yMjc/J3r9Ry3KTg2TO1RYDhTDwvDKuGkk52pnKWQz3dhEdU4PEdvSvqh7om0v
+Ut3SRIGWvLyiJqlGQJ7LAAUZAS6Xy4yRXKqfM+Za/tnPcVVQz8HGKzsMVBdOaY0pF1+sKExIUnMk
+fgfPa3LVY047Bnx5u9/eAh8TJPafAobYDidOwp6T5oS6ofpJ1ihgT5Ie0gncGP9/Lq7IAKp2qRAi
+DhID/2ytqggpCI24m6Q+Z5B41ji4plPMo7UuacxxGwyW96x5GAcqeMnAp24BeOEbFQXavFHEMIHd
+RdT/CGYqqRw2W/mYP7QSfZjQEn1AmUHccss/qCtFghADidKf3AZx2x3kjIZpOT3iXq1HYNM7BhuL
+otfVD/Bmf7bC+f1AEwb2YZtfMk5sy0VAG0WJq1g20R+nwUKgtOyqmzKJFfbJIRht2DFAcP48xUk5
+VSTJR6SlolfjZzFb4CLmnoAH+vcecAAyoAAAAukBnkF5Cv8AAFiacn6ZDNa2ZgA8D/1mmeDXiDPF
+OJV0H2xRH7zkkofYYmw6ysy935eT1PyjNExF4tD6y539Ey3cGah6xtSuAbU0dMmF/Ghy+LcqZSNc
+37e+iEmKL64el9U5TvMtzUosbLje9dBL0eXYqqJq72kQL1sw/e6uK+iBhEhfANxB+8DNfjnymHWM
+y50M0I/PpbzsUakctLf4uhHn24mOca4d3csM3aJz2mdPwF5roSzXKK2ckyaV5IzDSDhKojQDPjZO
+jmUVHuPZsl69fqPQPeQtM8dBVZBYmEnxXi4I3jQH4PpAx2FkFqpR5hVHTTh8eMZXQHcMKedlQoCq
++jVnk/ORHTRhowTPoulZ/7CnRVF2RjPz9EIAMZXXqJyDTcRm0Q5+Vsy0E0WrwDD9THTLRdIfbfSp
+lIaRw0vb6ZGNsfVbPsfmy78RE05jneoLnW3lxTUMli6ma3K/8aFupb4aqiWUqpVR3JyQI7sFLSmw
+6bVMSb1P1NT4bOGE62tZv29pLZVtQY5nQvEFowdBIUk1OcivzLseAj8ycE3aiBfROzbTZMUmM7Jc
+GRv7Y4PiWFL47ocHkdAvpdJAUG9WrRL59oX9YxwzR4Bouje6pMhOpTmZugaP+2Qxx/UAC0z9+L/5
+cTiPQtqjde7rZcRs0dpyzE+HWJWa7mheRdxum0xOE4W+YQQrxSSybFA8k/q3pL2cFh+I7QgkxtAH
+1IY+KTCFDLIePjcmOH+oRgjTkOKgcBPr2+iGdUEzFFTbrnx+u7tDlu4v+Ed+edeTOBxnx2b9Podf
+Hq0tQV+ur+Q//uiRzG5Lz/vgKFgbbbyzTmXZueiVKWEkP7MxS4YstjpG/J55vtKInkrINX3qMvTS
+iQ5xQhcSGeyVYwSbkuyM8s2K/zsQwUcIrvyATNyZDO/B7F2jCIKuCHUB/o00NqbHwPxEbUNmxpKZ
+jXytpmdJ9hyVCI5xT2Pos/cK6zDLFRvxYbBVIJ5+lQTdAAAFh0GaRDwhkymEN//+p4QAABdfkIQQ
+kayk6shF5fPFBnxEJtRyM+gxahcdhBlyYvLfcrJH86+Zd+qWmz79YeUTplmtu4qpOLZsTYhk7rCw
+JVSNFZRS5PcPfj224IwcIfNjLkJlCnXYkBgZQ+wXvqGWpYH2R2wHVh8wOYuGBdsrD9Gfjigg8n0N
+XHce7d2VakVF1C3Ct7XdC8sAsPDJpgUzulM/ri+RQgp9kil9iDCZxWrgYlfvA10WH34jaBEpFYP+
+Ts4QIleIjYF89wl4urFZWUYBa/Y45vujdTs/GbZ+gPVAFMeeo/rX6C0wR/++Vxm63SICKi1Wr0qN
+cmLtGGID+tkjwv2SIXa386TKH6Hij6C8u74dIeunW/JNXd1e6yZ3Gnyzz+ZPM+ZHJTI7zqWm5GQz
+xGWvf+6//ZwzAw1WLfDIE6pcvGsY+P6h0WrOui+iiV7NbwAaPcLT/Ff2ddIgH1kT94h7riZbVutt
+CVrVA9dS5db8/lQ3LpGCJoLCGDYrIq1Sf91QapwI4cyUY1KPs4wxMTHfVsYYzI8hCBprsHkVwNB+
+ZTKoM1uza8ZJ9J2529fkNc8lt+fcw0/RnacSjHishIOLABpfzlgCFmHUhbd7kULKZXBdLLhYYwnz
+TKxE3OE5Fpkg12jC8HTvRnRaihkiCrTu7J2aXc4tLXaqn41Jhjlk+ttqAwQlcncQZang77/Rbg8o
+JnE+/lxTGStufyLK0XBOn57/0AlBRcnDhslZDKm/Bj8Xd7O7zQ3t2cBf7puXW3LR51wQzxCV4IiA
++3yL/tqXyEWpcmIZzpFyTEy2C8hSsO0VCs9UP05+ejlRkxSc+6Fs03HvPlKsDMPDdQctUNCCrmMA
+QQe0iP2ewGANe0aEmrQyRo9iTsnsbmNQuI0G6Ji06eB9qLLvyWK6lM1cns7bsWif+Of+nPflxB5n
+ro3If8jOlxkpcpSKjC3f1V2V9K8yznq1YkJceDS1sL+Y05fK0bDe4q8FM/PkPr/2ylH4ZjhyVAzv
+iDqv3VBG+syEbjWgZfS6VHCbvyPECIddv/dLEbcQfMXT2AWKu8d4ls5sv9SDgxyT3vplKeQLzdoZ
+h1fIuML88zD/ndgGoGBOfHgWlEJvcZv6fNajjExToAq+TBi0Jx+esNv5ohr8v18kmhauUzR3lNq1
+IesxldL1kDJ7XjZ0xY2NOonAAAA7SD4abXyaFWlpS9KujAQpjVO+mF275lD4LCbMm5/ng6oRON5X
+rSyWpSnWXU/HiTd7FOv8fTkQUDpAluUATsq2oPY8hQn6DYBM6oph5tIKVwOGiPLT8d6YvLdeKDam
+coMSYPCrzvGBuQ04HOdQyBcmerlIfVSejpcUBSA6FAdzhOh/9jyHmw6qMT3+0c10jKj3A+5fp6Rt
+mDmtOE3rGx3nUv0iKbtH4xFPAOK6DJwSC79dw0iUsdK4QFkdOGJQycBFW4dsiaBmRgdZeIiflNFM
+SG/G1+ZbaspIasMtN/IBL0vRV7BT2S/XUXwo/sWtATAwah1yxfJ5rdQAa7f04kgILqFe5uPnX1Ma
+pQ1ZP8bSFfuxhRzadwIlCWiG50ZOfPYSx1pMha0pHNrVWIUMBrQOJBtiK9CeZQ2B7/PrCVMNsOvV
+kgTmkQxLGfqWy3LNN0WbJcMFv+9pCfl5wb+m2u2zFkxebx448ezagJ7e69EL0FPuDo7MJeFtFIQN
+SfHS5lTT5CMeAGVkLGGrGToJ0xRSdXd4wpuo2qgjkGgsj4sbtKqP4GelfbxJoiSmLyiqH7dgl3R3
+u9gztp64hNx9BxFFLOjWROE/RQC0F1uroRgSjqzSXYFnk/XY+i9MRYSKlgxFr2mbL96yRm5gDv0P
+X2NQCd/ah9rN+0o8q5anbWAbCJa5LjuBQLuAAAACLwGeY2pCvwAAE+vJwXjO+UACAjZhXk6Dk+Tw
+yY7Jkoigo33uBHf7LqyqjfAkbPEU26VY2/q+NQVqXE+07jQd8T8Rv53qBd88/CUMq+993eJ2nzro
+Kq8EFThKYd1axmc6Drd5AfAaxzOePn7J5w5AmsNmMEtw7qc87qXrx+km7IWBbSWy4uZh49ozRcfz
+Gbq8x1Brz02s88vUgyuK4pKewV50Ms6ILvQouWC8AH3APKKNDArYvhMQp3dMfrivcUIldJYDtjnO
+nTgTuqlJp7i5JFEy516a9OI5KopJv1jo5IlgeEinG+0uIJIKObp10tSdz9q9u0ByPBL0RjP+tcG1
+RcbJXb1+KC1rTM6LLla0jjhAf51xpvPcGEyNwRtE1NunBVN4oo38gJnHqvc9kv/tHKFy0mEQ87D9
+zamV3uOC5eEDqg4eFA/Wl7NJgVP7lu16DXyJylnwhjjDj9NlLZgZhsAJCfyh+/6rNMM8Ufud+mUO
+w47Hpm/flcaGaF15J7n09rowLR//aGEN78gcoa+4O69TE6S3rtKytuyl5fjAoW8KbXPuTygjucTC
+FFp1eqDlZbllWVyzahZIEom2AwqS2Qj9HMAxjuzi8Pk+JF/ww1d+14wtMQ0yEkOl01oeNoOfImEV
+RlCA5zLcjU8QYH4UN9ovVFY6tp5XnScdmeZX49lzYmX+MmrU2LTmrsGwt2cAszd0cATpfPAAVs7w
+Fmfx6/61YxcP+WeKeak4aPYAxYEAAAShQZpmSeEPJlMFPDf//qeEAABc96TQFw4EHz8zoRaUCEym
+l4NW2ky5HTXP9V2k0Jx+NKH7MawU66zUNa/9C7a9neFNkVSoz6/XY0Io5wLHBesFeZoaX2YDCY9o
+ZU6+Q5FF4pWrPYu3QuRlHvoovZzn+jesBWwddJgi7HxkCKClSVurLUQ831f3tQbScftP48JyQyNP
++tywpqSWCwV95wcFbswkJ6S88M5Nbr0pQJM5a5DNjv453kz7B/msaB5xTtE4zhSpQtbD3T10wA8l
+txcY7c5EZz7HpHlvJYtif130tXgK8Az/IEtW9cURvQUwVxsbu41+6YNOLQyuhs80Oeac2cDsm2Jx
+vYHmbcXMG1H9/RU2UcCZDPCuPVumiAWeF+34aMulR2MKjFJrTQX7NB2Oq0PYJfsNcdWe8HLoQ904
+KMfznQA4wa+WXlkrTD3nJ6if8WVAZ+q2xJwA6P424PTSbGYrIKkLqmiNy2109aynD1EO3scN7mDB
+KSgI4eQi5PG3RWLgv+LOEsknbrOkLCyiuVL9vqpqoTQhpMJBhvqmv0G8k62WnVGII04ljDb0RAN8
+HoYemrG/NuSZGPXmjrhtn+9/hO7gerkBbuTrpXJHshOV9fSWhNgRGu+MyoJtYfsCNq9DlHyS/FCG
+TZhkO5x+GFVnqkrLCjQz8ohc5QvMWHUd7+5CXT+ifSDV+/V0bwYAVrFdrfUQIoOMHcN/8hegpJIU
+GSJDKNI7g/VFWZrQ+WIrbbGuDjshUYgAcvTB6htfCE8xV7k5foU17pkckS1iCM4MmhINe1Y2NwSy
+jciaUFkyUUiKA6oLKPlV9NDsyW8DT/9iP+UfmghzEBZ82B05OiNZM4l1QJmb8bXriMMVFkxuX4DM
+slJUS+PK2c79U2zQDk3ofoxofUNnxk8oHAA6WB/bkRjozmP0ttIsXBZEFF1PcWZh8qUaz1KSFYiU
+CVy5ebBlw/lqdvL9WqOjj198xjwlhBV5+IlEW/g3vL7KjtaM0y1FgS41VUHJ6i10VkIX9maOgfok
+fhWaLb26Tl5j18SGyO2iPCfjBDQMEwKq1yZ0NxTYQTbEQbmVnnCA7mlj+kHSOIs9JxFtECYRWHAR
+YVPeFczgjHKm3XRQSA9V626L7AVPGzOHC7sTaDKki+iuE3TvgNLaWA4YtPfGVPRaQUt/ZCkZJ9Tf
+lH/H0YY0z5ugVqSA83gp1JwMwvRyBL5et8/rAK91pDTz+f1J1FVp8UrXi6pKrEHVNYFiW3NYEXR4
+yLxfESdlFrcYJeybBYBprtGTeLDOcY8DYND1tnRWqg4ujhWvuoymZu1wKka+vPtLHJ7ymOe54N++
+Rs2y0P+bsSg8UK2XlwyEz89xywgGU6qrUQRiCMzzzoqnue9AsybBBPXagKShkqzPS7H1sOfErnU8
+mAjB7GB3R9AYeglSwaWwmUJq63hNq8tAGicgPqpr9Djcqhx0d7IyVkt1dsI31j/VmTYd1G3bFh2v
+BPyPpo8HNpccfiYNyRXDRl65I3qGmt5PE06fB5OzVz1dY2xe/PWvCzzjMiitMcPTuzaCYxsiP0y2
+uKxc2WsFA8ebAA3pAAACDAGehWpCvwAAE+vJxAYhfKABKbF8YhxNwZrxaYrQ7YlXJRCKxd38+kP6
+Iu0awl6qmyrZDlw23jWgLI523kCcH4lN29X+c/PuKjg3zEHgj34Vc+GS1X5AL8XuiIuWqRXtjqb8
+yx7CNaJkFum21PjMxuGpNKLNOGwORXZ8Rzyo8elu2u87Mw/gFBiQ5f7+x9q6czJKb2nX6FfcAnBu
+ta4aOxQAug08oSBRzPCNRyi0cDGlXZDZ1wn7VwqFtTaOKjTNw/YX9pQOyIFZKmg/b6Y5ZTcQBupP
+O3sTeSD9suNeE3AlBosMH8fEZdqhUuKp6Gloe7GSssSVqBw58ELD1G1i5AiQTDgy/HHJ2j+wBAtf
+QpjJzpQpoZkRkUg0w88ZRfmJc2z5wm6DecB+M6u5oIe1Nicit9O4LHaz27DzHFv1oJJTbHofsLfO
+nMIlISxl0t1WrQQOwbO6m6+PCASDDa7qcTI3CY+K9EQ25D+sfUfpxJQjLB4iaPiADX2q1G7eNdxY
+UIva93g/9TbUVzgAAkTHQEYQR8v8IgediG9M/m7F3yaaci7AkY9NrRTNU1KNOyDyCbd/Ta6NOxXn
+rjEbiB9Do2CBvf+DWFieRnHi0KiLw/yo8hCUGkDTJ7a0WGOWmt0XJ1RoRhQ7kOoYI4YLdoGr5fVC
+TWVVFzUsukAdDd0Sr6QrHAwgfciALYJ6gDuhAAAESUGaiEnhDyZTBTw7//6plgAAC26OmFy0ImTh
+6Wpp+5GwIEdMppAw1cnDpCmtR4WIDYZMOLY4o26Za9aLCzj0azyUzerji6vkYrsCO1DDW05MYT5z
+It8QNd5XOc/eM7HNuHWrMKU2A0CZViahc+05B5TB2bX45dsfIlUdiiHDrFD0wsc+7edyGoqo+qV+
+2TOlhEd87Um9jSFrBaqOgx6PGvmBpmiApl7dQYuxYfJpcnvKu+XfJ8w5Y9WuThxxaWZ3xsNCpD/T
+gpPGyE3hPRiUkg3TO+BJFO00pMPoWtAsNFNPN4uHmQkkzLJzRLECBvYtujIzSNK5dhkpwfA2kyv9
+1kK8KQKLR0en6Tlzkalm6P6RwIZB1K4sraCAYgqnN6iEDUUeftnAbPXbkSf6z1YgPVVCwYzW/+tm
+ZqVnhbLjBtrIDtg7VoFWfno47dY6qGd/PFkTjPknk3R8gcMdOf34LCVqxCHh+vPde7arL+cdQ9/3
+tdhPGmOWk6mJ/27QZbb5xlMyQ16HnNFMp403nolukBjWsjlFcK+oJw8XgfXlHtVO6NICygvZBRJ1
+jx+NtuYZcFj+Dj+FDLSRIC3abT7ErR3rF+iKGnv50v35V77ykrPJoHagj3NzmGnxC5aoK9DOyHlZ
+E/2pwQNLZ0MRc8LpbjaoF+9b9+rNEtyy3HHTLHYIjnwRqre1qFnDNPop9DR4Ec68hNnH4BP87cKO
+fZMrSZrmJae71LJdr1AFHGhJrn5m6NMdnJe/fRXfZrFCR806gw+cq3jyaK+QCJSjDkBlcw5uJHjd
+FLYCfpDcpqxtjwiGNuSL1g4SPOyPLrpb92lalk1Lt0yxQJNPHnP7SawxOAh2bHEZxqVP6OusDZdd
+LqEXnWgajoVgP9UE02Z5GprN92mklchg4PjdYA8tAJ8fdI/RtGVJFGGjTthFtybwT3DBGoUVI1pL
+5ggEFKg+QDVymvwn7UrFREj6QpxpDF5udkgEw016dvjLV80iavEP8meO37hUyCdhlJEqv3b/pvqT
+ikMxAwYdxINFS2PACwT/hfbMQAPTCShMzWlh4RDELV5XGILQnDeOqCFDjkNxqRDTv8c9fJt2Ifvg
+h02utBt8mBIJiyqwTu5v4V9G7GtOqH/cHfffgI0AzvMvk9lHQwbyehgHd/98+OkWYWRk6I+Ub+Bs
+emVGTOXaGbl9y2PSevnzi6dMaz9jBWWhSgGie+5wCT3LsGBakqW9x6pNxS/GMlh7HX6PWOA1RjOl
+hVAjRUoWVtxe5bIq88Uxhhm5qvRlOwYgJGnExBBTWToxtRYJN7Va85kU3AJu8Cy9csxzKTfddOoz
+NMQf0riePPqQ2eVohEw0DVM+PxUpoKCjRS9zIPjCwrBrXj4632Y4UcNAIC2CqC+el98HpKBr1hgg
+CTbcwK3BQ+c13JOE20N2TZybD247UFc9CBf42ZDdF/cesKIHKCTD4dZ8sAP9AAACFwGep2pCvwAA
+E+vJxcZeddH9X6NGUH4MGRdNP3Q2WFMPAAleaa2y1X2iCT25vFJ6soS8asghaXcUut45TS34zlpv
+02SkL/mhBbgtQ29Ogy0P2qwAP1sByNH/WBI3S/bTslBXAwWRkN9uCx52cMRfXgzfK873nhfrf1l7
+VgzVQ5EjMBugrHdh5jGI/20LeEX5u0a+XMiCYwrIGzOCWmMfa4f6EvhSr1DHggK0tgG3Z71JSNnv
+WEZQ67cVa2B8eFEFUNEJaJbXf6grvBgWNu8CyrPQaP/al17BBbA8TShZSC7nkx6wvXYbkuitTwkh
+ekvVwWVieGYNcgR1+950WaTGdhzdyks2V4UBMCtFVqjNkHHxdwcievZN5q+oDIveIFqClaf7urYo
+qDLf0SJ19Ngg5u621Dv31OEs+lLQtywWUtZZnQ18rR4Uw7CDCHmyNyBMvc8fIzuAcuOx3UXzXWLF
+VNO4h1emYGeKAg1zrLu199WRO+WoouL8NKe0qJp9vKeu0+Ll9jkJNb9R07Ot7fpUvXbUCGLXlGX3
+XRVb18Lrh3eooQP2HwJ6f5tiBpM151QHDlpX5WrhREV08sBXezbNOcwr5BOHvYBfKvE6TRu9ps7R
+H95Nq/J72t3WwRGtJjeCfMcG25vzMyvt9APeV/oRekazjUVE4md+QfWJUrE7Z6/RcWQ7UUaxAzcK
+ewBOf+LRkL+8zbOlgdMAAARHQZqrSeEPJlMCHf/+qZYAAAt/yitpncSAfrEcMYYBfCnsAVovOWNl
+zHWv9Zo8p+m4WhVxVZbhi9SPpp1//nV6DbcV1uVm1BYJ6xWzMBX+wUl8YOr8Ze7LhVfYOcfI9NR4
+rLdVpjjkc2FT6ZMZC4BaL+yanLsJVq+v1/I5iYwR0eMl6V8C0qgvtzdsg1/+YFqVcBntayg9jnLZ
+bEPkKJmfjWY2vuuiGmbk7sUOp6s3HfmcU85lIxtWCLxV2RDPov/9krJgRL3ds2VuurH/B0sCB11F
+unEjAmS0dAo0hFyvUXRrt1rMQLzhn46rZll3DWrzg8BjSKSTc+t5T5IMj49j+hbFCZwB6Ho3IoGO
+VRLSxe5gvbmCQZF4XqY/qOkBTM8RpJMPtpuxs1jRrJygj/tjmAwA3mjWxwlizLNwt6nbxr8RJKfT
+b6PBTKuZpUwp8EuZO9X8QZac5P/q+16xlnJ2x8pnVoSiFwNRqctseFqxaRmC7GHxOkMrIPY6+uTd
+I+QD9NOzvzrvVpaxEmQ8Fd7a7Bfls7TeCNfD4drEUm/k05BwQbGCuh042QcZ0szoAFyCLfyaLmxo
+YWGUNmjE+zhAIQyQDTelQogNu/k8Op0E/luIyOsIatqqFOVFy2yYFfH0yq5p5mpcQEBpn1EZlQIf
+/AFpBmw5NB8m3e+xmYrkpaS6GCRy6Lj94bQCPmiSbnCSMPr04t7CdG96VpfvJsCatvK1oC4yx7Pb
+L4Aq2N6BrypCbkOiuNypOsx1XHpCNvwD3yxAEIi4x8NBMlrEwMHvihW/a7CjqqYm/syaSKQkm+Nv
+VuEJ4gyTLceeccNApz6V78TZqct2+qa67Bgim5Wfpz8H2v5HJs43tPjiv90U9WLF8xZGzRb21H4y
+x3qsb98dCOZ7tsCK8BGWn/5eguId78Bat7UMdSBa8b1I1tjegLVhoHqSyE2xHC9Oq2s/mHHy+IlT
+lvEiawCK9bxde5TaY3nyM4ib+AnWjdGqsU/xzV89aRN9TZa6hPJJM2GN5XVUBcUTKbgP0AByvB6Z
+LFORsLPuNtYZ3IN6btnci/mPlyohFlILqCSv8uipAe+q6EV2gcrd7mJbah81PdUpeDLDV2sGVyqM
+qqv8cjjg/2g48Vkrkvfwfv9h7K1rYJUmSMZuH7P9Oz5fo/rd+2Fui4oaUE6bG3c+bNc5XqcxcP+Z
+TkaDT26WgOSW0XMBDqQ1EKtUpZVzNgyThEm3wl4OtajZGHYJL0G5mBMcxcAsUihqo5361iH8fvGd
+isFdxx89jNtc00xarpVGNeX1A/eedh7FIvCRPeLpBrQ5QBXtMg2NkgwM0meqM1RwPuaE7uNIIqJa
+uNfe+BDmm0+O50Jb7Kxm3z7csGneZg4Q5mr1SgTiJSgYtzEVN0Lh2QJiYAHxArZDxf/QrPlRuTOq
+VNx9mBsGNcL3gP5/Y6EyUqvUFyPFNoQcMrpUKG1AAAACBkGeyUURPCv/AAAT68mWjrQU3VYZWHAO
+tsnH6fJhEJ/q9UQAUEMYYOJxXIHBWozSTka+JCYgonim1iJWjQrloSArn//WFdk/W9+cdKrrrpkk
+oyfYj9y69fZvaoFiu0lPjG//rIr+hcQnMp5kZ5dVFC/lP7KWoeHJMOmL3pXXscKLjRuqcSUC1OVR
+92uZO4JsvdmXtfoTf54Urp3+/9Ee2B7/1zUdm9WPMAFkEAOXdV8w3N/g9Ao4p0muxurWCocu3Bvu
+daMbXm8sv2pW0s0psks2625U+kgmI8FwZAkgu4LMjwB7U1t/MLe18YOj5X62ya4ATlJR3N4MfSMN
+jXbcT9MMRp0w3ohDuyXm/9IKK8BPr2KLIZIaTQIf218hUgc3ERkE+XWnULqwKUCSUwEARh05Tl5p
+/2ZWm4YhTM/iDFDAuSAAiaaYO4UIPXtYgaF3mSTWr39609m7DI6jrc7FZ63aWf4hauk88rzN6TQx
+CAmCNYm+oHuyzNHtkEHtc7Mt+vvML41Ssm5XlZlUQhhBfO/C6xLL97DyP/xWsd61KF9UTHashXOK
+zjLfPp9vZnGEC1QMwQny0pWheA6PEMljCFYrnGzAPruIiwaAenpPNvBJmnIBDGi1uO5FtE6D76eL
+YIrnwWuynbUPWcTrBjT9jC/RpTA4N5BFoJrc5I6kqiwf9BvGRAi5AAAClAGe6mpCvwAAEddLgG8y
+uncAdYxGWjXJzgYgAS1J/IVkcNDujTyAIyJ2VDe6FuFeBsjxu02HPqER0zCgFKxZmDzHjwP79bNR
+WAkIgTHY0c6mpw+wZBvi7QyRvrgASu552SNilGl2VKdE2nhbszO9SltVqcw7YGnjrWd8kuYupENM
+bzuMmQtq+orFE7DCMT8Kcwr0Upd9jn4herKeMEP27WlWld90k2ju1x1Zx5VzRHLwqOWnUVfzUbDY
+f9beiWAgJsJAsKM4E72zo9iN3TNtn/HJqpLiPV/AYzBJfXIx1d3cuFJYPIiHmpxKWqJ+ZTv3eDxj
+0kJ972icJojr7Z6Y7Tk97gl9NejQI/ZsMt7An2fNQD6IzV9d3b+bEFU+uqpHBNBgfWOffhqSOv/Z
+CK+jeHTz/dQS/GN2QXjHlP0eM6zUWKLQpZOG2ML7RU7K9/q1iVEGNyr/RtDlceyWh9XHmn9j7B+0
+DPgvYKZx8QHr7e5LTn1w6uerIE6AUIfEveR28pDEWXSmTnMBt08asxO7FnB2kWo/ZF8Z1mBH/Umf
+GMPk8woFMI1iXjQHowFIpzxA5Tc3jiwS78ucWbPiQcGxolJa0AU8v/rtA1qp1QgYZ6Qi+WJ3TqVm
+WtcSkNU1CbFNG0Kgs8jbPAD424LIkGJTiUhGQfz1njwe20Kyi7St6at+fO39kD/TIJ79ujRI9Aq1
+BvHK08k3uHdtyx6WrsGkeQn+TmiVdOad8qID58ZefAVEcwPOdq0X4hCDvSa+C9/HGNf7waCzB8Z2
+rr53Tz0fjEAjvfKr6kObeaGc6tMkh4u4auDff/3YmBdPLY7zvTAnuNVORZOkyPvUOu3uzoqxo1/c
+nfXNL+aQt0wA07p1sSzIpvgPyAAABD1Bmu5JqEFomUwIb//+p4QAABY+RPdmrmysAAuWzpDcyRM2
+59ePuao/sQ6S6eSq47EK/eYoPK5KYmMfaosAqHpc3trM3FpCiukNnA0adE8qjiAOfQGF/JV4Gjga
+ikQWHreAsxoOXEXrqNWeikRu+bL26LDU1Lrf8JzWuFo8Ig972mS0JWqMMbEm3IF7L30zUwzEgb8q
+g2H2obC73elw77l4RYteV+WsJ2l0jMw71yXgFm/+pCCll62GWfrc7DWiMVqXsydeiQ/M/bD72EW8
+qoydM3yZlYA3OhQ6KJ5vF/Y0LmhET2Iu5PauGXgbOwEeqzsKIgKJlxIX9hjhXflXP5uGa980Q7aq
+rT1iNMsdEPCPiHySmzidmlVe8nGveG5WjRHapQHGG33D7dqhzyR95bDP8D3brH1Y8mConhNUWqdW
+rUGlOFTEjX2CneMIxYGbG1Nkz+gyHMSYkEgXrfYHKIvbf+kMkiQyYrFxU4vpuv0JjyWnnKe8VKg/
+h6mq2aCynKZLQnRWaGsyVpkwACgC5l0Zrndhnmmx8dRMzae04ARLKoAUelng13L9T8lFasNg/Uoa
+M/ZoZQFgpQp0jFhxDeHwo0HybsO0wbT6ZWlV2LMujUJ1qNkk+NAKZFPj7f/dkHiEMxt81jZN08R1
+ZrtEmIrCBIPFXKwePUimb6vtuyhQpu/aqSDpZtN73XwrHVHGJCr9dwTawJNgIgeZQryzvVAosXmh
+f81ncAY0jw4SuGwLT3iOvRrkkK73YYtZsh+xscGNgTBrbEFbn5JmJybAGY95UcpLvUfeRvfEedsg
+B6QbjvibSa89TAEftcO6NnLKYyl3Yra5F9v56XMHS/vFZolwuJb1b2dUKYbnXuB1ABZ/7uZripNp
+3VEv886T8PP7viwRnVKCM40qcRdj+2/419oG8jVL1Oup5JN1AqA+5XIW6kY4M14SPBL04XsLB246
+27d94KBLeRLZfK09GgYfT/cyWUmpaFQ1Xd+RyZjlDSf5uOVMgirwha1KrJ8xvFUhuO/9isG0H4y9
+mQIc8lyujGK0yh4gptnEwBWiX4K1h1sueJteKcOsCJA1EavKuOBN4x7o9YCOsbRhHaUK4CApCdRX
+Wzo35eewxlWzerDAfISyqFcIFDPdnKoibtFWT2bpaIYoSuV3B1B6xwHZcGIFlV7Br4KrXGUyM56w
+Tbtn+U4rbA+G/ga6UeC0ueP7fBKOnlSt6OeIVJgxN+ubAc1TRTfvHhfMycM+9TxkZAansaVyCO4N
+Tdp4jmNA09jXeACrNhewhvz8kVtkywOy3YmBNWLVCBs1cUXhZ5Pc6X9PGZmxJE74GIODqK8EZUED
++qw24LQJLfiUNScySVFw7Lo9MvGybj3giXeRVtRDyHeEiJNGGkd48hwsb1w1h29XXS5bIJBGbZAy
+oqN5ohlWR4WnFs3P3XBtsHMQbw49yxAm4AAAAg9BnwxFESwr/wAAE+5PlHFRMAKky8bG+NC5T0+M
+VhMStBFIpacBCZdNg9KUyuxcuxCXbDzuCYxuNay3jN9BUzY9zSOFYmFuRwz+bE7YTGcrqZTqIu/1
+ztrtB7ypzg/ArA//L8A4JRgHNObU3Yxvv6ZWRfsm6modOl9ROb7bxdzyI0od0m1ZDsRyyQdFOwmg
+HpN0I2QGSd9m+uQtar+hJFF2xRtViFYLAHix270GFxh8QdswFDnTN+U6Dn+6ojtHq7DMwjFtSJnS
+R+nJX5qhSHo7CfS3HSWYWXdYafM2v+tuIB5VplNHdtKAiF3KGZqlEpaAvrtoqmG8QkPsT9KGAf/g
+ABD6NN0o/Usu80AOLw+Tl4uZM+pnf1HiMtJ5noxj7HIbBor4Xl0WvAA2uIlD4Bh1oXgt+mENow4Z
+u2pqsc+6sPwHjIrQe//a2mHEqA7qN5Q5jA6ZMvkExynN3mzZ4nWdZm18RN6LYNcPNplrL+KXQJvH
+uR652QGvFlQygREunLsPPYX5stWf+7fYCqA4vi36rTBsDpBTMzT2+evCg/PfLYrFMaH7RdcJfbcG
+DzMh6FJo4kWHkWvgqS9+2TG6rfh8UsVKTegww5iphsjeqXoePZeiNl2dURPzShorYlz+w7Gggzws
+ZP0E2rOTnbBVFcmfFnmwjOsvxD3jWNIqKaIU0aK9bOLAh9pnjDkLhFAD/QAAApwBny1qQr8AABHX
+VRKeAEZoDaWYkrimItY+OzJf9SFSMOpnx06qUaPdLryuiFthqScqm2P40LDjbLG6nYmSC9SFv6ys
+q6PD7IQ/HvROak6ABZvnGjqeuF+yO5cgDhBzlc2JcW+v85c2HwkOJrR6EnLgPc23BMH/R/FEPgDZ
+kAGyhJduh8zszoRTuBJjeoFLCcAuLLpjr+0Wyyi6qltgiwgCIfLKCkzMKhmGhu2mWAmHjJSHB8hf
+1fs7IcGuu9rRHSJ1kX/NBhEy17Q9dCiCWoMWBf6WLBwR+kMhaIY2ZAC+VVrBdwcgZ1vVr1Fta5mG
+c7K84B3sI7tOcKFENwVl4MiNBB3XwmO0WAdfGkmeTY0bkROdjkJRF+r4EuTowBPEHRXOBELdx71a
++lvUp0KhpOsr2g3351mfAz0UenXmf5wnGoK07RfOKpwZqcDoILP2HBFuzqtO0xwHEp/YtTmGg4do
+kYrXMChVJHWWAxpSGdSrpCX3KGarOeAHQ+9ebQEOFyhIEMcSWD5bVl5eaCf6ZShU8UW2Jcvh6cyg
+MBsWsBb4zNVj/F7MGvIbG6nAU/eifJs0lvFstojiEFWYg2L7xrZE9L39xArLbzBx4/vavOwUQalw
+Yh/kU5qHOPUGQjtLJvzzGa35J4UcZGHCTvqAAAGcXEw9P03k38Zci6WIZeArEtcaN17sehARML8A
+G6dFVXQH2CzlU4dZB8MKIdHfTPZIAefOPLsP4TNHFdwuCPEWHrQArZNXHX1gtX74zrLVTC4RqyuL
+xAdMNbb2BVLxuE/2MhAIAxCl+skvG/DK62fuEATBi/V9L1widftDoOhNrJOvC+VYVtFBQ3fptEdF
+ZN3NpxtVjCUc3AW9/4V/p1iGS+D7LnQNc3DXMIA44QAAA4FBmzFJqEFsmUwIb//+p4QAAFj+P2K6
+wTkptgBaUMg3zDgnVSuUqTTgOG+/sI6S2+0ITi83/xIStqzIXJMDgCtDx1ffcwLf0hkxfScEUka4
+C3uHHqXzQXOjw8IoBor/tLDSmLK6aAgOMcnKVqnuUiPL2sudWp30h4EAPEMlI52M3iQHlwLdyaA6
+Ckl2WPYp9taVwv1LdgZq2ytVbDaqkrVr6o5oZQF9BZUUNyUTNL6lslMDYvkp2bOhXUG3j7FmKMaY
+5nmHVcCRG+XNi2UyY7j12PheYF8O2zj3n42NNGxOL2zRbVXu8hctynlv/fvOvBMcOGZGGYiIykok
+tikWxbbkO0gnDXTxCALLThvSLmHsRzS6ldYnjPaNN2g4vrJYiqH3f0g9GR9a7syct199sdnrGvrC
+JUFpaDg2AbwWXNEJ7cyO5atMN7Z+yLZTV6VOmufMPN8mVEGml2zs5MytGULxto+h88yshwxU+u5+
+v/VThmWpIZn5Kprvpmma7JKGQzD0dHnM8F0azTrwPSryzt2uuSwAGfKOCjEBh1jBgSDMuvkgOJk/
+UXF+R1XFc6NyevEuQCbua0Nn97x+1YVUphEkxXJ3jxAC6sHuIXOrKQFEyRGJGYXCJGErMmzQZDWn
+SQDiELwK1EGy2neRMCTzzCJQFsSwYA+z5SghPSheX+R8BFmT1/vXafAKWtoPpMadlSdSB7n6CRun
+pQXzS28Y+kmaG0P5YTdm+b0+wtPHsFGB/OZfBdHjsBOY2hjIbkS6CFynj9Lne7jePG6YXDSfIqaH
+IwfFNSR83cPhrGuAup/Btf/14XeZeBJ9pZREjdpJ66H0OsNTc9qdy1Wrz2y7Ec427Zhjpfrcf45p
+sR43IwvIm8k108uiQbcSLenuiN7M9ao4GSnnYV5c5VdUe1PEPHDK04T8LI3eChvYskWD2DgiUMe/
++HoMdA1YW2zFk7ehpxm94TC524UwsGVMKkPMq5QGb4bFVuLma4ni05rGIsGfsTXo76Ueh+0fpFK5
+C/XEOc0C3P9uUK8ihH7DMWlKlK8x7Zp+jm3vavBbwE09XXptvbjs1e6WgsQjoSuIVwCzdrmhGE14
+YpPH2vUJN7cXkLV9st3iKiM8+5wPncy5tM6chaBC8F6MHxiXle/snVaCV1TpKzOtfOSScHyZ9WJ4
+Fd3KFXqoTtPtP0PXtXQj1NPvb0kAAAI3QZ9PRRUsK/8AABPuT5GQU+CAgBJJS2Eeoz05wRqZlZfz
+0GRNgtqb6jDlmUgGCuU+PHu9Bez3XSS3Z30iHRggkFbIpohKYRcm5VZDkiikzkB4fpnxT6qpcuPV
+rCpb+JGVVHFqls2Ja7X5TBRzs0jtouAyMc9Yex+mXdzj+xxsFcZRlMr6p+Hmm3872+UFql8ih5t6
+DWTQ3nWnjYlc9cM17atiyGiZ97IC+Qk21HcyB5rRJMVbHeeLYu9n3Ur7soZPHYeXZAwptUK/6OVY
+2XBkrQrhewLNFz3akuu/MqZOxG2zxHRrxEVoCZlRPOFvTql1NJRoBK9d0FE1+Fb318DPeHfSzLpt
+WLQLbgpmngkUvq5BOJz8JFiLDckzmo+tcfAlwRRXIz9Z4N8sy1LGaGuZluaoZBaL2hT7DVLWAlGv
+GNpBGG0xi4hUWYKGZzzVUA/YEN9cL5rx5qtsT36lCYIKB1cFkFFuWxZY22ymFeRouMy+ztbPNS8U
+Gwltlcz5je+043d+qLaJnWe/zY/x3EuMcJlomN6YhqxRBt72n4J2N+Sjd3YCPyBa/Lyh7NmHQgK+
+jMdLGRS+fTdubjUYJhplSnNdRWap+RWNaYI29ItM98IbRlGwlVT5I4SR9dJK8HGW1UleuHvu7pyS
+faK9ZmKfpVNidlbEHDQLg4Gf+VijR+qQqbGMEZVnC+6BtbWTqVgzCMV/7/kQhsNRFGXcssxduMXl
+UtkjuLUViRm1+kFz2lCAuUVPvgGBAAADAwGfcGpCvwAAEVdL4IAEqy416aAPg6GTNHHiHsDLwwWr
+1MI9aOEYwNP81H1nJBKybdZBeC5BCGjm/7AcmZ0/86w2iNnkDm9kN62zCI49EUwGIA87f49NoYyo
+YLgwouw+uMH/i8FsUCESgwn4m+KNAKSfMOKy8RGZvOMPy4TdoFBlJ3/c03EI5ns/5C/I+NDiOlBn
+2nX408ektDwKcEEohCZVS1AIgaKQEhB397ULqOlM+VT1cDQxrSd/B6w7X8dlumhGT9e9LmDDvlko
+TmS1sfjd7UMzcc4yWgV55yJfdBUwm6sNvGF2I+5dwxK1MLChJVjZlBo1KnK3A62IQp6oQSPv/m8H
+TedWkbkLXl4f6fPqE3JD4VPYxrWvJv1/Ozhjuqu9128dhwuS+cSc1UNvJ+zy0mcSJhK5QcQzR2f9
+xnt1Ub6iXeiwTNHVsgR6LIjMiWaw6qYCyPiEEkvcIY7Yc/uNZCW78ae7QqOr7XlYlRiARIv9UUKr
+4xgoeVt1mjZYQhl6I9f/9ZQBMk9421F2ueLPnTUe5aIVZUZkXgmyouRVAnU7tVhOpsK0Tj2tpj9M
+hgewVijf4qvuRMnTohTCp3Vk5/mpyjitjCX7NKMfTj+2F91AaEaDBkqTx68UpI3na+xim6AXNjki
+A8GTjj5vWvOBJrwMeamntTsR3q4Ca60Zj4ZDVvJ6UDqeUte/xs1UNmG+O4uTa2cJHw+d79lypcPg
+x8CGx+eerKDSlpo0vP2X8YblACprha+oNMTbjZUrLo+abQpbnA/zdPJqSsnAHYcHjLbiKSisd5Ut
+hzws3XxaK4O5kW4uSf3l6S4so6T+te3Ao/bbHh6yuDtRzHGx3rK0yvKgh2e3cBID3UbKC1rb/TMv
+mX8o4GXZhBoEIC/bZu8MMBEZnwERtR6+lJgWkEvw0bs+HGI1UpC7v7b+qAQkFNjB/KfiheimOWi7
+G/ulbcJwSbV2nBVZuw9LB2bJaO6hNOVz6b4WMdXwd8XeB1PWvIBAmbN32ehu65L8hwoXPUA+YAAA
+Ay5Bm3RJqEFsmUwIb//+p4QAABWuXJlwJv+TNwAklWVyCPA3emD4+goWncnagaXd4j8PgqEWmfu4
+Lh8zlBc2P5gv5dW/6MZixVh1wZdasQEVLb+/395yfMEH7VrRzlACqtK1lnZLM1i9MiSh+E2c6xHK
+LZBo0EHzGDVxvlEdx3ma9CIJVezWjtS2DJErjiQheSoXU6kXBdkI5FYkQXdeBj6Pvq1spFPlWzoH
+YiNgXKToYM1A0goobPRW7DOuhpVHL6Jg7mqeEwCYKHqCHBNdHEGPhFbJOOSyvbHT/yGpEHs/FLhf
+7nxmA6V5Ip73VmDZTsJUYgFP5nH1rp68QQwDg02bIF28oAeM5hqc0aOOO8BCCWilvwYQKwMVvvVR
+LOING+rRjpDkmzq27nbEffa2SOJ9CD8rklPNLFLfI8wYzDclbJnnF5Rp/sCZQIOUkhNfxkWnVWNy
+7DVuIjSIUMYxuBFAl4xX1UBqBYzhlHfXApSAuEIcNIEXWwAdfwGCfydABosI4zlMZTDoNmx7qTve
+wv5NcMtV8m10Rqe2SvEsDkp4aY5Q4rcA14jCpGjpmp4yTbermMZRjrClW1JRpLAHEKuWlAv8o8MA
+8Gkjoeqp2UKqndHZlKn7fpTvrWt8qR2Jw3OOIZKFrP5CrTlxDdunRrS7hMMRIr1n8A1ylTKfrPhL
+KCE6o7A/ZcAgZgr2+2BovF7byqzu8pk1/Jvdk0pmrhrjtt1lP/dJx78kmrf9/Qm/E0suTwH8UxH+
+Oe2yKj5+eEQccapO6wvtlv5xi3y480hW/lkLC0jRIVqfY4rchcLhNmMcSAWgpTwW4saab4cY0mdE
+j4+ggJNN73DRNUDrrfcPRLVi7dttRZHMe2/viiDGTc+/r3tscnXSnW88V3tlHQdQ+S1+I0vxEHTn
+pj3V0Xd1hb2k7uqKD4JyidCDf2RSCdHXSU6pLW2uYCCnIVPkNUhMCVlePCEelT4E6XGqGzMnukpP
+UG+BiQqV0UPzzCfOoB/tzt29MTvKmcollQja4YBQzvBg6G5KzEE4wi/Nlebh3mZLVNYITYdfiiQM
+pRl7Tw93OHJUtJ3IXVhFNARtAAAB5UGfkkUVLCv/AAAT7k9XMhupVOmJybimM8fs6WoSs828To2p
+xfMigo0AH8ycoapqqesMKNfdpEzURHkUpHbmA+paR5bgyJwmGFJFTHDjP0lWDd2iokbv1/UQIg9R
+5neU22d9I5Vd7rvqMu7gCU2KqtlF7NNGV64FX2+b4alOQqZIli4lQwCM82WR3+DWHx0CMbsSrLPa
+LqmbWRgNXKT1AJTJzFk2XCa1b9mnX6T87DIbRqJXJNctH9SR4GxZItuqzamDm4xgzKXBbTiaUq6q
+Sfh1lzXcyi2R9GiHM+WwRuEzbT9aGb2Eoe5mIAGMsd9YEt8DymJ6xzoe7j6wM2EK9aX666PvOJxh
+dK537BtkOt0fcuQVnwusumy8EuQXcsuBmfm2qOMgNUW0yQwBYcyra74nkjgUnvSXzKdGHcxU6unP
+ktlFGeJXs7Hah59eNoxroI8/tgOPIG7SprxhLJGOdl8CPBUQgAJuIDWpAaM+xzABA/cldJsOaUmq
+7S4wadbUImNqaz0t520QmGlvUDmg7G3sCOOl44qHKIL/YD7Bd5hi0sDrVuAk+Xj8IlNKMCCmjHJC
+5XNXVQECY5TTwz4uSWrYiRyFNTvAfKIOr/zZXEYzlD+63aRVihCB7yqgKQuIaLscNgFbAAACpgGf
+s2pCvwAAEVy0l5kADRZONh3ElaZczZ44N5tJUwZ1oHq0B8fluJWNN5u3l9BRq6HdhNLkNTY8OLoT
+/34uFS9RwwDCeG/0KOt5tVeXCbIt2+TQJtIz95TPqAdZZ/MsxLJJ493E4EFa3o6Cx8h1kxvPcZ2s
+bKclJb7y0yHdox7tvLx0Ul5bz6DA5v5+SGYM6adtZToYFXN9BY5xGJuHX/sujgypqvos2TZQZ5A8
+SUbj+kPO6bIwHw9vckRH/MauEad5SSvgG62sPbbxmKWlYQ36URaUJXM1OC6gN1riCsni7MhZPyXi
+XztJfTzJYCKPvm4AXhok71QcuVpXF0YRCME1tTrxKXuBFXGPcPEjBrFm65byqzQBXnTbqPFHYGGy
+Bfz/nqDllhei6qsZX76YAkIbIQBjujQwrwfRAuAf1itEu6gzrySMlAjUVDFVEKsfTUoMZQ/+beyY
+vWlNXEMzK78ZBTEZRS4YfTV7hGVe1eCJ7K4uNewrhrvc3axSIBalG5ftXM9LASPaYtfGto9PYhmK
+ioz6VvBstSMACoEFHTWp2HmPzIWITiHjV6BfAYlR8W+ifh8BazRaQFIDBtBZadKzV5UHyjrtzU25
+Me4uk/YjfDuDKCUfRdtqsxFEiM/tkHmJDYENpEK8v0ykYcNcmyq4Kb0pMaZ9Lq4gd8zk3BgwOIrW
+YkxAsv/DOh6hKCLSoL96FX8dH1iPm8HpsE8YsWl3U472dA2SLMCkwHk/8+CAS858DvrYd4N41hpf
+ka/uV8o7xVNN2YyeJoadjfPhoYy/mlCYVa1i3vxIxtDX9aegm31aRTvO8JYtyPYkyw0hGIoQ5xS+
+G5e6c3ngBGERepEcqhP22C9Fb3h/aEy6SEkhxe+7LueshKAnD2g19ewChnGsr9wHHAAAAd5Bm7dJ
+qEFsmUwIZ//+nhAAAFGrtR6AATnUhXjF7OOQ9McVSSnPO0gNX7arPASG+FQdUP/K+4wh3ay7Rfew
+p0FWztN8xk67pJWJblotkdEdAr9EfxTZVqmApFufnXYDXr6E9k3SMu6TbrpU8u6rio7zGzySJpKq
+Zt3y262yYIwreuAxENPfxoqJLvFPZzgEEAP2ySpNbxrgz6tLHpGHFF7xEJGFoqVn7YB4OD1EiUr6
+odPZbRA4hzEzVpKpEEmOF9ZIpvWlpazaxhMg9YY1Eoh6WBw+8gNhX6bxQuVwhbuqOubudNBWpy4S
+nz4ECvnB91YgIccqTcjriEFVnXSqgMVYxmmYn3VLai35j710cukGFmVOPURdYaYB2j0rKY1QHL5i
+EPpECvJ/z9atXvbtBU/53gFZzWO1ljV5jXB7YnXfqjxI1ceovGB8AmXW5h5mBpPTloAm+zpHc2V9
+SQ/gb7F2H2ohRvv8bdxcy/js9bpwz9qfUNDYou7GGF6QxRQvopATNoHvWHoAf5bjzpl6qT2Qtqxg
+iUQiIzVhOsdRr6QzTI4r5yTq7SVk0zmPzoupGtp0Wd24gkzk+sl+PQ879i4AsQAna7j/FVPrJKDZ
+1oKlT+bIjRHRhtuYlBXck1h7AAABokGf1UUVLCv/AAAT7k9SGoIILG9GlrJMADhaDlQNaDwlSAAu
+kTJW7g9UCFtNf56gD+EKry/TpdY+1WMrhEUu0X1Ndbhzd7usGt0ZdNv7zVoEILRH0Lc/REELrRY8
+iIN8ItrdFozfQzDlBgjY6U9rsAF7KoiLEt6XJiUwG+531aYhX4FgQyNhu0W1bczjDHoXUli/3gLl
+g3VhK1SuD8plYGFaS7KOExsdoeZl5OVk/vuuP7422I1ifjGVZvy0JabNWBsDyuhC+JuM0qveroRJ
+2tE+jOCzisv1oeF9QdyD5M8+ohfZzHAFbeM2VnxvWkMzSrk9jh7DuAM9LnIpBhwEzQBDLbp/xk30
+iwelOmSNn6y9RnlUN2Hd8O6hy7f1Zpo8EkF9Q/ghKHkjKLOvIGdrt/tTYYMBGf6ILXa8YHIbiHLX
+l0jeaXU9VgSUmjkFcvCcH9zxATm0WinkH3RREo3O6+kydtoBXWZZEztW2qMDPy5Pu0cnTuLcJGwq
+SnOt5q/7tBWYQZDT77piznhi+L5h5qXIGYuUDNP7iYcGv2QrKTN4EbAAAALgAZ/2akK/AAAQ3LCe
+wAJVkp3Bw2w2vzXbph/eRkMAdIH07Fl8X9Ln3GePtfHtu8T9zoyJPr2r8XXly/o9w7Giayrf4Tlg
+cNbZ/kO/BQd/wWkkj9snnYYUnWT02nWWBlzlcmUCTeHisalT9oktalTl2jHxZwaMO21d36BCJuuK
+jtoYpOpgIj3m6JDN8MbtVsez/pXYuxkW3Lbh91LeBh6szjLJcZzzino/6GViqgxKvdqvu7MSzx9y
+2Ih+iOMkPDZl8jRFDgmxb3zoGaoGyFvCWzsulnYSi4MfOWB+5z0+MRrB+9EqrVjQPTLt6XGmzprw
+G91mvfcjJn9vElFaI/8FToJOCmN7s9uowDEusLzS4/d6IHnYpaw33XtfrpIWMa7xQX5YE1Xq819h
+TpKAT/R4HUIhCGUPMTwtkpwW/Ko1o2KNZjMUokLgigW+Sm6qFQmBkyX9zrREMF9sPKcjkEMPi2As
+/1baRBdf+QCh5JP6d+U0g9qKn8FdUKViqI3xGJcZmpqzVJ+MMTqaQbMy3alDb1CGifcFEsI/ebin
+KhSP4JxTa7Mg3CMJ/EhUysNCyVr7ubOUX+UMtclz9AIEckngIVDB3vjmq9S1llFM7KTYs7OxG7AV
+RwRzefAbcw+tnWEJ3vi4IYwh0dZ88OBXa5AHkx5MtBv97pYYPj4+QYwKd9RtUyRTMSNbbPD5w6Qf
+6jIfEWYfNz2+mbap/AnRYj8JtsmDs6bQ0Nvo+dRWGx1YUppC88WMlNAgg0kAhrzgN2lgDnf83htj
+W62MeozHqeeU97SRZ6RRz/wX1I9v8crV+DV8XTBKOYm2uYUe6Nw4/sGfPHpEydA73Cn/jFJCL71m
+3JLIzim6+Zi9L8OgvZgHfIwN+mnv78QGBy4oyjs/U3hf1cuJ4CA81qzzIJJFK/GWdxKv/ULn+zZx
+fmxeytmdaU2KvpBumRG5v4baBb6uyCae8TxbN+3aotPDR6AEelAccQAAAshBm/lJqEFsmUwUTCv/
+/jhAAAE9jC2SgAGiycbEDxda2snUn09e+RBnQtnOtYQh6UTJMK0vnPA7a+iUIlXd9E1Uhd87/Pkp
+1UFgVuWCxcfXW7+S+nHOu7VyeCKc208PO/+qdtqDd7xUqh7n/xv8fC9ATw0JGseIwmMYavvWNpW2
+OJXX3oVcZVXO1ZbOgiZ4ZLWKfeGGW68CZzZeMsbfebcuDPB+kD3uYlpY4b1c5v8cZpdNIH/TG1vY
+lIE+vOCN1KzKurLnmk8HCSdLwwce3NUS62kKa6MvTuPCbifXw6S9Pw3g9z11OSnF5FbBljVtSX+r
+FUlGPHHNmNMmNycDpnoLVlBianeecDnl9hXCDvSjsCa3Cz5sc3dNeITfdH6WmBvYfoYWCr+W3YT1
+RPI68k322+fHoDlkmV0y+gj4Vu8xx62IhITdzmKA04bmMsMr9w+8kFmlcaz/Pq/Bnb4An6gT4qvi
+yFSmDcoxI/KR2mGHSqM/hTG3EikRzpYX7oP4JcUROdqFHAgeZSiy1Y4PhtOJ9Oba2fJbQVuALaH9
+U/JUYaJvRKrwNcxmh//xb+M2wpIJjlmUqKv4kGlKwbmA0vqTgn8rEjIq74LwocPyGIVQtYorhBxr
+z+9jut3W1ywXq5IpbcTHocEvXtlJ4da4+rg3GyudTk9vgQ/yclknGlTLA+5b/sqOE9uv3c6eVpze
+mcY+Y6trzcyFmai00iFx68Ndjf+Gy+qcJZfBTh0pw/GEjgL9QefinjH8SwCHBjs2gMKXHko5BvoF
++GwCOjHZ6qL/Hf8UL/YvkJdV9BSu4K0CnAwfGsNf47/OkLpIfFNdaB59tuTPnwp6+4sAmvh19hPo
+G/v59xPLxWodP8UvPSvCf7FJ3jKLP4yuWFI7OL2a6gLiTZSNnIl2bQ7Xxq22twhnLWhmd+eqqoM+
+mhVo9x43G4edsImAAFJBAAABWQGeGGpCvwAAE+5PHVIHaCo8yZ0gJXaSRjBETUvQGCznFgWenepx
+DGAEnYqnSuw/B9fE+KebIomqFXJnVDfcnRN+v/6u4B/Pl//NR1x9OgFUzVkyWetF7o7wHaUb1L2n
+RKhM0r0b9pzh7VKVJPJyO5h/z9O5bEKSJqyzjjI85CpYCqqwg6Ub1S6kmrz9xxAZPudqhH2Tns4f
+TZFQL+K5wnSXOgqt6JxOY4Mop7WYgHwVYX+EUUsjugCee87DHLZZxNPrySXbQhFnlNyMNI9pOI7Z
+bF1TvKCg8X+/S64jDgX/HnLKeqEyKRLZufW92twuyBz6QBG+FjDe6xMjpThUhfevKWa938jXb1lw
+Pni1bGRdC9Le5MpmqKY/kSvIRJt4ju3eH/b2KuIBYveXgp3L4kbclONoPEcrZy61O7h+hokAT/Gk
+kluD8sws2RnJqCb8qsoZViH7REAd0AAABD5tb292AAAAbG12aGQAAAAAAAAAAAAAAAAAAAPoAAAE
+PAABAAABAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAEAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAADaHRyYWsAAABcdGtoZAAAAAMAAAAAAAAAAAAAAAEA
+AAAAAAAEPAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAEAA
+AAADYAAAA2AAAAAAACRlZHRzAAAAHGVsc3QAAAAAAAAAAQAABDwAAAQAAAEAAAAAAuBtZGlhAAAA
+IG1kaGQAAAAAAAAAAAAAAAAAADAAAAA0AFXEAAAAAAAtaGRscgAAAAAAAAAAdmlkZQAAAAAAAAAA
+AAAAAFZpZGVvSGFuZGxlcgAAAAKLbWluZgAAABR2bWhkAAAAAQAAAAAAAAAAAAAAJGRpbmYAAAAc
+ZHJlZgAAAAAAAAABAAAADHVybCAAAAABAAACS3N0YmwAAACzc3RzZAAAAAAAAAABAAAAo2F2YzEA
+AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAADYANgAEgAAABIAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAY//8AAAAxYXZjQwFkAB//4QAYZ2QAH6zZQNgbaEAAAAMAQAAADAPG
+DGWAAQAGaOvjyyLAAAAAHHV1aWRraEDyXyRPxbo5pRvPAyPzAAAAAAAAABhzdHRzAAAAAAAAAAEA
+AAAaAAACAAAAABRzdHNzAAAAAAAAAAEAAAABAAAAuGN0dHMAAAAAAAAAFQAAAAEAAAQAAAAAAQAA
+BgAAAAABAAACAAAAAAEAAAYAAAAAAQAAAgAAAAABAAAGAAAAAAEAAAIAAAAAAQAABgAAAAABAAAC
+AAAAAAEAAAgAAAAAAgAAAgAAAAABAAAIAAAAAAIAAAIAAAAAAQAACAAAAAACAAACAAAAAAEAAAgA
+AAAAAgAAAgAAAAABAAAIAAAAAAIAAAIAAAAAAQAABgAAAAABAAACAAAAABxzdHNjAAAAAAAAAAEA
+AAABAAAAGgAAAAEAAAB8c3RzegAAAAAAAAAAAAAAGgAASCwAAAgiAAAC7QAABYsAAAIzAAAEpQAA
+AhAAAARNAAACGwAABEsAAAIKAAACmAAABEEAAAITAAACoAAAA4UAAAI7AAADBwAAAzIAAAHpAAAC
+qgAAAeIAAAGmAAAC5AAAAswAAAFdAAAAFHN0Y28AAAAAAAAAAQAAACwAAABidWR0YQAAAFptZXRh
+AAAAAAAAACFoZGxyAAAAAAAAAABtZGlyYXBwbAAAAAAAAAAAAAAAAC1pbHN0AAAAJal0b28AAAAd
+ZGF0YQAAAAEAAAAATGF2ZjU3LjgzLjEwMA==
+">
+  Your browser does not support the video tag.
+</video>
+</div>
+</div>
+<div id="cell-7" class="cell" data-execution_count="180">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>index <span class="op">=</span> <span class="dv">4300</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">10</span>))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="dv">0</span>,<span class="dv">0</span>, <span class="st">'b-'</span>, label<span class="op">=</span><span class="st">'$u(x,t_i)-a(x,t_i)-</span><span class="ch">\\</span><span class="st">theta$'</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="dv">0</span>,<span class="dv">0</span>, <span class="st">'go'</span>, label<span class="op">=</span><span class="st">'roots'</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">50</span>, <span class="dv">1</span>):</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    plt.plot(xs, js[index<span class="op">+</span>i]<span class="op">-</span>θ, <span class="st">'b-'</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    plt.plot(fronts[index<span class="op">+</span>i][<span class="dv">1</span>], [<span class="dv">0</span>], <span class="st">'go'</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>plt.xlim(fronts[index][<span class="dv">1</span>], fronts[index<span class="op">+</span>i][<span class="dv">1</span>])</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="op">-</span><span class="fl">.01</span>, <span class="fl">0.01</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x'</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'../reports/report20210610/root_snapshots.png'</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'t = </span><span class="sc">%f</span><span class="st">'</span> <span class="op">%</span> ts[index])</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'k = </span><span class="sc">%f</span><span class="st">'</span> <span class="op">%</span> k)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'h = </span><span class="sc">%f</span><span class="st">'</span> <span class="op">%</span> h)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/usr/local/lib/python3.6/dist-packages/ipykernel_launcher.py:15: UserWarning: Creating legend with loc="best" can be slow with large amounts of data.
+  from ipykernel import kernelapp as app</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="simulation_files/figure-html/cell-6-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>t = 4.300000
+k = 0.001000
+h = 0.020002</code></pre>
+</div>
+</div>
+<div id="cell-8" class="cell" data-execution_count="210">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fronts[<span class="op">-</span><span class="dv">1</span>][<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="210">
+<pre><code>-11.906723493073951</code></pre>
+</div>
+</div>
+<div id="cell-9" class="cell" data-execution_count="211">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fronts[<span class="op">-</span><span class="dv">1</span>][<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="211">
+<pre><code>20.013341279382466</code></pre>
+</div>
+</div>
+<div id="cell-10" class="cell" data-execution_count="208">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>forefront <span class="op">=</span> np.array([front[<span class="dv">1</span>] <span class="cf">for</span> front <span class="kw">in</span> fronts])</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>aftfront <span class="op">=</span> np.array([front[<span class="dv">0</span>] <span class="cf">for</span> front <span class="kw">in</span> fronts])</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>index_separation <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>speeds_back <span class="op">=</span> [ (f2[<span class="dv">0</span>]<span class="op">-</span>f1[<span class="dv">0</span>])<span class="op">/</span>(t2<span class="op">-</span>t1) <span class="cf">for</span> f2, f1, t2, t1 <span class="kw">in</span> <span class="bu">zip</span>(fronts[index_separation:], fronts[:<span class="op">-</span>index_separation], ts[index_separation:], ts[:<span class="op">-</span>index_separation]) ]</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>speeds_front <span class="op">=</span> [ (f2[<span class="dv">1</span>]<span class="op">-</span>f1[<span class="dv">1</span>])<span class="op">/</span>(t2<span class="op">-</span>t1) <span class="cf">for</span> f2, f1, t2, t1 <span class="kw">in</span> <span class="bu">zip</span>(fronts[index_separation:], fronts[:<span class="op">-</span>index_separation], ts[index_separation:], ts[:<span class="op">-</span>index_separation]) ]</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">10</span>))</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>plt.plot(ts[index_separation:], speeds_back, <span class="st">'b-'</span>, label<span class="op">=</span><span class="st">"aft speed"</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>plt.plot(ts[index_separation:], speeds_front, <span class="st">'g-'</span>, label<span class="op">=</span><span class="st">"fore speed"</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'$t$'</span>)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.savefig('../reports/report20210610/front_speeds.png')</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'t = </span><span class="sc">%f</span><span class="st">'</span> <span class="op">%</span> ts[index])</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'k = </span><span class="sc">%f</span><span class="st">'</span> <span class="op">%</span> k)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'h = </span><span class="sc">%f</span><span class="st">'</span> <span class="op">%</span> h)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="simulation_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>t = 4.300000
+k = 0.001000
+h = 0.020002</code></pre>
+</div>
+</div>
+<div id="cell-11" class="cell" data-execution_count="209">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">6</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(ts, forefront<span class="op">-</span>aftfront, <span class="st">'k.'</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(ts[<span class="dv">4000</span>:], [front[<span class="dv">1</span>]<span class="op">-</span>front[<span class="dv">0</span>] <span class="cf">for</span> front <span class="kw">in</span> fronts[<span class="dv">4000</span>:]], <span class="st">'k.'</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax <span class="kw">in</span> axes:</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'$t$'</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">'Pulse Width'</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'../reports/report20210610/pulse_widthds.png'</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="simulation_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

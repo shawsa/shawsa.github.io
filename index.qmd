@@ -1,0 +1,27 @@
+---
+title: "Sage Shaw"
+---
+
+<img src="./media/headshot_sage.png" width="30%" hspace="20" align="left">
+
+Mathematician turned data scientist. 
+
+# Open to work!
+
+I want to do meaningful collaborative work that has a positive impact and leverages my
+background in mathematics and scientific computing. I love to code, I love to learn, and I
+love to teach. It’s important to me to continuously improve and to take the time to help others
+improve too.
+
+If you're interested in hiring me, send me an email!
+
+# [odeiter](https://shawsa.github.io/odeiter) now has documentation
+
+`odeiter` is a python package for solving systems of differential equations using
+generators. Generators decouple the iteration from the looping body.
+This allows you to loop over the solution directly, and separtes the
+solve code (handled by `odeiter`) from the code you write to do something
+productive with the solution.
+
+![Simultaneous Solves](https://raw.githubusercontent.com/shawsa/odeiter/refs/heads/main/examples/simultaneous_solves.gif)
+

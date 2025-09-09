@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>lateral_inhibition_pulse – Sage Shaw</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-9a60b6f365114c3b1e59731f49b17c37.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Sage Shaw</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+<div id="78778518-5b5b-493b-81fd-01ecfbb381ae" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sympy <span class="im">as</span> sym</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>sympy_modules <span class="op">=</span> [{<span class="st">'Heaviside'</span>: <span class="kw">lambda</span> x: np.heaviside(x, <span class="fl">0.5</span>)}, <span class="st">'numpy'</span>]</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> bisect</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> product</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> functools <span class="im">import</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="2d2ae075-bb41-4cec-87d4-bc15ff3a24d0" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>γ, c, α, μ, θ, Δ <span class="op">=</span> sym.symbols(<span class="vs">r'</span><span class="er">\</span><span class="vs">gamma c </span><span class="ch">\a</span><span class="vs">lpha </span><span class="dv">\m</span><span class="vs">u </span><span class="ch">\t</span><span class="vs">heta </span><span class="dv">\D</span><span class="vs">elta'</span>, real<span class="op">=</span><span class="va">True</span>, positive<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ξ, y, x <span class="op">=</span> sym.symbols(<span class="vs">r'</span><span class="er">\</span><span class="vs">xi y x'</span>, real<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="9ce84ee2-2b00-49be-a65d-1379983d4ba4" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> (<span class="dv">1</span> <span class="op">-</span> x)<span class="op">*</span>sym.exp(<span class="op">-</span>x)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> γ <span class="op">+</span> (<span class="dv">1</span><span class="op">-</span>γ)<span class="op">*</span>sym.exp(y<span class="op">/</span>c<span class="op">/</span>α<span class="op">/</span>γ)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="bc48c39c-e387-4a7f-a228-dc6daec605f6" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>forcing_right <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">/</span>c<span class="op">/</span>μ <span class="op">*</span> sym.integrate( w.subs(x, ξ<span class="op">-</span>y)<span class="op">*</span>Q, (y, <span class="op">-</span>Δ, <span class="dv">0</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>display(forcing_right)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><span class="math inline">\(\displaystyle - \frac{\frac{\Delta \alpha^{2} \gamma^{3} c^{2} e^{\frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\Delta \alpha^{2} \gamma^{3} c^{2}}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\Delta \alpha^{2} \gamma^{2} c^{2}}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{2 \Delta \alpha \gamma^{2} c e^{\frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\Delta \alpha \gamma^{2} c}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\Delta \alpha \gamma c}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\Delta \gamma e^{\frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\alpha^{2} \gamma^{3} \xi c^{2} e^{\frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha^{2} \gamma^{3} \xi c^{2}}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\alpha^{2} \gamma^{2} \xi c^{2}}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha^{2} \gamma^{2} \xi c^{2}}{\alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + e^{\xi}} + \frac{2 \alpha \gamma^{2} \xi c e^{\frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha \gamma^{2} \xi c}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha \gamma^{2} \xi c}{\alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + e^{\xi}} + \frac{\alpha \gamma^{2} c}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha \gamma^{2} c}{\alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + e^{\xi}} + \frac{\alpha \gamma \xi c}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha \gamma \xi c}{\alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + e^{\xi}} - \frac{\alpha \gamma c}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\alpha \gamma c}{\alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + e^{\xi}} + \frac{\gamma \xi e^{\frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\gamma \xi}{\alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + e^{\xi}}}{\mu c}\)</span></p>
+</div>
+</div>
+<div id="b3e5ed3e-31a7-4c40-ac73-602753710306" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>test <span class="op">=</span> forcing_right.collect(sym.exp(<span class="op">-</span>ξ)).collect(ξ)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>display(test)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><span class="math inline">\(\displaystyle - \frac{\left(\frac{\Delta \alpha^{2} \gamma^{3} c^{2} e^{\frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\Delta \alpha^{2} \gamma^{3} c^{2}}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\Delta \alpha^{2} \gamma^{2} c^{2}}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{2 \Delta \alpha \gamma^{2} c e^{\frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\Delta \alpha \gamma^{2} c}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\Delta \alpha \gamma c}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\Delta \gamma e^{\frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\alpha \gamma^{2} c}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha \gamma^{2} c}{\alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma c + 1} - \frac{\alpha \gamma c}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\alpha \gamma c}{\alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma c + 1} + \xi \left(\frac{\alpha^{2} \gamma^{3} c^{2} e^{\frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha^{2} \gamma^{3} c^{2}}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\alpha^{2} \gamma^{2} c^{2}}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha^{2} \gamma^{2} c^{2}}{\alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma c + 1} + \frac{2 \alpha \gamma^{2} c e^{\frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha \gamma^{2} c}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha \gamma^{2} c}{\alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma c + 1} + \frac{\alpha \gamma c}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha \gamma c}{\alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma c + 1} + \frac{\gamma e^{\frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\gamma}{\alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma c + 1}\right)\right) e^{- \xi}}{\mu c}\)</span></p>
+</div>
+</div>
+<div id="70aa0b24-8b51-4161-a071-7bfdc592f5a2" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>U_right <span class="op">=</span> sym.exp(ξ<span class="op">/</span>c<span class="op">/</span>μ)<span class="op">*</span> (θ <span class="op">+</span> sym.integrate(test<span class="op">*</span>sym.exp(<span class="op">-</span>ξ<span class="op">/</span>c<span class="op">/</span>μ), (ξ, <span class="dv">0</span>, ξ)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="fc9e142a-8fb0-4057-859c-7ecd415f2784" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>U_right <span class="op">=</span> U_right.expand().simplify()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="4d3f2945-4b1d-4f37-bb92-e50b9caeed7b" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>U_right</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="8">
+<p><span class="math inline">\(\displaystyle \frac{\left(\Delta \alpha^{2} \gamma^{3} \mu c^{3} e^{\frac{\Delta}{\alpha \gamma c}} + \Delta \alpha^{2} \gamma^{3} \mu c^{3} e^{\xi + \frac{\xi}{\mu c}} - \Delta \alpha^{2} \gamma^{3} \mu c^{3} e^{\frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} - \Delta \alpha^{2} \gamma^{3} \mu c^{3} + \Delta \alpha^{2} \gamma^{3} c^{2} e^{\frac{\Delta}{\alpha \gamma c}} + \Delta \alpha^{2} \gamma^{3} c^{2} e^{\xi + \frac{\xi}{\mu c}} - \Delta \alpha^{2} \gamma^{3} c^{2} e^{\frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} - \Delta \alpha^{2} \gamma^{3} c^{2} - \Delta \alpha^{2} \gamma^{2} \mu c^{3} e^{\xi + \frac{\xi}{\mu c}} + \Delta \alpha^{2} \gamma^{2} \mu c^{3} - \Delta \alpha^{2} \gamma^{2} c^{2} e^{\xi + \frac{\xi}{\mu c}} + \Delta \alpha^{2} \gamma^{2} c^{2} + 2 \Delta \alpha \gamma^{2} \mu c^{2} e^{\frac{\Delta}{\alpha \gamma c}} + \Delta \alpha \gamma^{2} \mu c^{2} e^{\xi + \frac{\xi}{\mu c}} - 2 \Delta \alpha \gamma^{2} \mu c^{2} e^{\frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} - \Delta \alpha \gamma^{2} \mu c^{2} + 2 \Delta \alpha \gamma^{2} c e^{\frac{\Delta}{\alpha \gamma c}} + \Delta \alpha \gamma^{2} c e^{\xi + \frac{\xi}{\mu c}} - 2 \Delta \alpha \gamma^{2} c e^{\frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} - \Delta \alpha \gamma^{2} c - \Delta \alpha \gamma \mu c^{2} e^{\xi + \frac{\xi}{\mu c}} + \Delta \alpha \gamma \mu c^{2} - \Delta \alpha \gamma c e^{\xi + \frac{\xi}{\mu c}} + \Delta \alpha \gamma c + \Delta \gamma \mu c e^{\frac{\Delta}{\alpha \gamma c}} - \Delta \gamma \mu c e^{\frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + \Delta \gamma e^{\frac{\Delta}{\alpha \gamma c}} - \Delta \gamma e^{\frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + \alpha^{2} \gamma^{3} \mu \xi c^{3} e^{\frac{\Delta}{\alpha \gamma c}} - \alpha^{2} \gamma^{3} \mu \xi c^{3} + \alpha^{2} \gamma^{3} \mu c^{3} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{3} \mu c^{3} e^{\xi + \frac{\xi}{\mu c}} - \alpha^{2} \gamma^{3} \mu c^{3} e^{\frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} - \alpha^{2} \gamma^{3} \mu c^{3} + \alpha^{2} \gamma^{3} \xi c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - \alpha^{2} \gamma^{3} \xi c^{2} + \alpha^{2} \gamma^{2} \mu^{2} \theta c^{4} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + 2 \alpha^{2} \gamma^{2} \mu \theta c^{3} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} - \alpha^{2} \gamma^{2} \mu \xi c^{3} e^{\Delta + \frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} \mu \xi c^{3} - \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta + \frac{\Delta}{\alpha \gamma c}} - \alpha^{2} \gamma^{2} \mu c^{3} e^{\xi + \frac{\xi}{\mu c}} + \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} \theta c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} - \alpha^{2} \gamma^{2} \xi c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} \xi c^{2} + 2 \alpha \gamma^{2} \mu \xi c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - \alpha \gamma^{2} \mu \xi c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c}} - \alpha \gamma^{2} \mu \xi c^{2} + 2 \alpha \gamma^{2} \mu c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha \gamma^{2} \mu c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c}} - 2 \alpha \gamma^{2} \mu c^{2} e^{\frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + 2 \alpha \gamma^{2} \mu c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + 2 \alpha \gamma^{2} \xi c e^{\frac{\Delta}{\alpha \gamma c}} - \alpha \gamma^{2} \xi c e^{\Delta + \frac{\Delta}{\alpha \gamma c}} - \alpha \gamma^{2} \xi c - \alpha \gamma^{2} c e^{\Delta + \frac{\Delta}{\alpha \gamma c}} - \alpha \gamma^{2} c e^{\xi + \frac{\xi}{\mu c}} + \alpha \gamma^{2} c e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + \alpha \gamma^{2} c + 2 \alpha \gamma \mu^{2} \theta c^{3} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + 4 \alpha \gamma \mu \theta c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} - \alpha \gamma \mu \xi c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c}} + \alpha \gamma \mu \xi c^{2} + 2 \alpha \gamma \theta c e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} - \alpha \gamma \xi c e^{\Delta + \frac{\Delta}{\alpha \gamma c}} + \alpha \gamma \xi c + \alpha \gamma c e^{\Delta + \frac{\Delta}{\alpha \gamma c}} + \alpha \gamma c e^{\xi + \frac{\xi}{\mu c}} - \alpha \gamma c e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} - \alpha \gamma c + \gamma \mu \xi c e^{\frac{\Delta}{\alpha \gamma c}} - \gamma \mu \xi c e^{\Delta + \frac{\Delta}{\alpha \gamma c}} + \gamma \mu c e^{\frac{\Delta}{\alpha \gamma c}} - \gamma \mu c e^{\Delta + \frac{\Delta}{\alpha \gamma c}} - \gamma \mu c e^{\frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + \gamma \mu c e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + \gamma \xi e^{\frac{\Delta}{\alpha \gamma c}} - \gamma \xi e^{\Delta + \frac{\Delta}{\alpha \gamma c}} + \mu^{2} \theta c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + 2 \mu \theta c e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + \theta e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}}\right) e^{- \Delta - \frac{\Delta}{\alpha \gamma c} - \xi}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1}\)</span></p>
+</div>
+</div>
+<div id="2fa41924-f290-42e7-8272-5589fe644313" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>U_right.expand().collect(sym.exp(ξ<span class="op">/</span>μ<span class="op">/</span>c))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="9">
+<p><span class="math inline">\(\displaystyle - \frac{\Delta \alpha^{2} \gamma^{3} \mu c^{3}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\Delta \alpha^{2} \gamma^{3} \mu c^{3}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma c e^{\Delta} e^{\xi} + \mu^{2} c^{2} e^{\Delta} e^{\xi} + 2 \mu c e^{\Delta} e^{\xi} + e^{\Delta} e^{\xi}} - \frac{\Delta \alpha^{2} \gamma^{3} c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\Delta \alpha^{2} \gamma^{3} c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma c e^{\Delta} e^{\xi} + \mu^{2} c^{2} e^{\Delta} e^{\xi} + 2 \mu c e^{\Delta} e^{\xi} + e^{\Delta} e^{\xi}} + \frac{\Delta \alpha^{2} \gamma^{2} \mu c^{3}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\Delta \alpha^{2} \gamma^{2} c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\Delta \alpha \gamma^{2} \mu c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{2 \Delta \alpha \gamma^{2} \mu c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma c e^{\Delta} e^{\xi} + \mu^{2} c^{2} e^{\Delta} e^{\xi} + 2 \mu c e^{\Delta} e^{\xi} + e^{\Delta} e^{\xi}} - \frac{\Delta \alpha \gamma^{2} c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{2 \Delta \alpha \gamma^{2} c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma c e^{\Delta} e^{\xi} + \mu^{2} c^{2} e^{\Delta} e^{\xi} + 2 \mu c e^{\Delta} e^{\xi} + e^{\Delta} e^{\xi}} + \frac{\Delta \alpha \gamma \mu c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\Delta \alpha \gamma c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\Delta \gamma \mu c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma c e^{\Delta} e^{\xi} + \mu^{2} c^{2} e^{\Delta} e^{\xi} + 2 \mu c e^{\Delta} e^{\xi} + e^{\Delta} e^{\xi}} + \frac{\Delta \gamma}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma c e^{\Delta} e^{\xi} + \mu^{2} c^{2} e^{\Delta} e^{\xi} + 2 \mu c e^{\Delta} e^{\xi} + e^{\Delta} e^{\xi}} - \frac{\alpha^{2} \gamma^{3} \mu \xi c^{3}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\alpha^{2} \gamma^{3} \mu \xi c^{3}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma c e^{\Delta} e^{\xi} + \mu^{2} c^{2} e^{\Delta} e^{\xi} + 2 \mu c e^{\Delta} e^{\xi} + e^{\Delta} e^{\xi}} - \frac{\alpha^{2} \gamma^{3} \mu c^{3}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\alpha^{2} \gamma^{3} \mu c^{3}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma c e^{\Delta} e^{\xi} + \mu^{2} c^{2} e^{\Delta} e^{\xi} + 2 \mu c e^{\Delta} e^{\xi} + e^{\Delta} e^{\xi}} - \frac{\alpha^{2} \gamma^{3} \xi c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\alpha^{2} \gamma^{3} \xi c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma c e^{\Delta} e^{\xi} + \mu^{2} c^{2} e^{\Delta} e^{\xi} + 2 \mu c e^{\Delta} e^{\xi} + e^{\Delta} e^{\xi}} + \frac{\alpha^{2} \gamma^{2} \mu \xi c^{3}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha^{2} \gamma^{2} \mu \xi c^{3}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + \mu^{2} c^{2} e^{\xi} + 2 \mu c e^{\xi} + e^{\xi}} + \frac{\alpha^{2} \gamma^{2} \mu c^{3}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha^{2} \gamma^{2} \mu c^{3}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + \mu^{2} c^{2} e^{\xi} + 2 \mu c e^{\xi} + e^{\xi}} + \frac{\alpha^{2} \gamma^{2} \xi c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha^{2} \gamma^{2} \xi c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + \mu^{2} c^{2} e^{\xi} + 2 \mu c e^{\xi} + e^{\xi}} - \frac{\alpha \gamma^{2} \mu \xi c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{2 \alpha \gamma^{2} \mu \xi c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma c e^{\Delta} e^{\xi} + \mu^{2} c^{2} e^{\Delta} e^{\xi} + 2 \mu c e^{\Delta} e^{\xi} + e^{\Delta} e^{\xi}} - \frac{\alpha \gamma^{2} \mu \xi c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + \mu^{2} c^{2} e^{\xi} + 2 \mu c e^{\xi} + e^{\xi}} + \frac{2 \alpha \gamma^{2} \mu c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma c e^{\Delta} e^{\xi} + \mu^{2} c^{2} e^{\Delta} e^{\xi} + 2 \mu c e^{\Delta} e^{\xi} + e^{\Delta} e^{\xi}} - \frac{2 \alpha \gamma^{2} \mu c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + \mu^{2} c^{2} e^{\xi} + 2 \mu c e^{\xi} + e^{\xi}} - \frac{\alpha \gamma^{2} \xi c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{2 \alpha \gamma^{2} \xi c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma c e^{\Delta} e^{\xi} + \mu^{2} c^{2} e^{\Delta} e^{\xi} + 2 \mu c e^{\Delta} e^{\xi} + e^{\Delta} e^{\xi}} - \frac{\alpha \gamma^{2} \xi c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + \mu^{2} c^{2} e^{\xi} + 2 \mu c e^{\xi} + e^{\xi}} + \frac{\alpha \gamma^{2} c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha \gamma^{2} c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + \mu^{2} c^{2} e^{\xi} + 2 \mu c e^{\xi} + e^{\xi}} + \frac{\alpha \gamma \mu \xi c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha \gamma \mu \xi c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + \mu^{2} c^{2} e^{\xi} + 2 \mu c e^{\xi} + e^{\xi}} + \frac{\alpha \gamma \xi c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha \gamma \xi c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + \mu^{2} c^{2} e^{\xi} + 2 \mu c e^{\xi} + e^{\xi}} - \frac{\alpha \gamma c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\alpha \gamma c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + \mu^{2} c^{2} e^{\xi} + 2 \mu c e^{\xi} + e^{\xi}} + \frac{\gamma \mu \xi c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma c e^{\Delta} e^{\xi} + \mu^{2} c^{2} e^{\Delta} e^{\xi} + 2 \mu c e^{\Delta} e^{\xi} + e^{\Delta} e^{\xi}} - \frac{\gamma \mu \xi c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + \mu^{2} c^{2} e^{\xi} + 2 \mu c e^{\xi} + e^{\xi}} + \frac{\gamma \mu c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma c e^{\Delta} e^{\xi} + \mu^{2} c^{2} e^{\Delta} e^{\xi} + 2 \mu c e^{\Delta} e^{\xi} + e^{\Delta} e^{\xi}} - \frac{\gamma \mu c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + \mu^{2} c^{2} e^{\xi} + 2 \mu c e^{\xi} + e^{\xi}} + \frac{\gamma \xi}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\xi} + 2 \alpha \gamma c e^{\Delta} e^{\xi} + \mu^{2} c^{2} e^{\Delta} e^{\xi} + 2 \mu c e^{\Delta} e^{\xi} + e^{\Delta} e^{\xi}} - \frac{\gamma \xi}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\xi} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\xi} + \alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma \mu^{2} c^{3} e^{\xi} + 4 \alpha \gamma \mu c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + \mu^{2} c^{2} e^{\xi} + 2 \mu c e^{\xi} + e^{\xi}} + \left(\frac{\Delta \alpha^{2} \gamma^{3} \mu c^{3}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\Delta \alpha^{2} \gamma^{3} \mu c^{3}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} + 4 \alpha \gamma \mu c^{2} e^{\Delta} + 2 \alpha \gamma c e^{\Delta} + \mu^{2} c^{2} e^{\Delta} + 2 \mu c e^{\Delta} + e^{\Delta}} + \frac{\Delta \alpha^{2} \gamma^{3} c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\Delta \alpha^{2} \gamma^{3} c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} + 4 \alpha \gamma \mu c^{2} e^{\Delta} + 2 \alpha \gamma c e^{\Delta} + \mu^{2} c^{2} e^{\Delta} + 2 \mu c e^{\Delta} + e^{\Delta}} - \frac{\Delta \alpha^{2} \gamma^{2} \mu c^{3}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\Delta \alpha^{2} \gamma^{2} c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\Delta \alpha \gamma^{2} \mu c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{2 \Delta \alpha \gamma^{2} \mu c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} + 4 \alpha \gamma \mu c^{2} e^{\Delta} + 2 \alpha \gamma c e^{\Delta} + \mu^{2} c^{2} e^{\Delta} + 2 \mu c e^{\Delta} + e^{\Delta}} + \frac{\Delta \alpha \gamma^{2} c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{2 \Delta \alpha \gamma^{2} c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} + 4 \alpha \gamma \mu c^{2} e^{\Delta} + 2 \alpha \gamma c e^{\Delta} + \mu^{2} c^{2} e^{\Delta} + 2 \mu c e^{\Delta} + e^{\Delta}} - \frac{\Delta \alpha \gamma \mu c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\Delta \alpha \gamma c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\Delta \gamma \mu c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} + 4 \alpha \gamma \mu c^{2} e^{\Delta} + 2 \alpha \gamma c e^{\Delta} + \mu^{2} c^{2} e^{\Delta} + 2 \mu c e^{\Delta} + e^{\Delta}} - \frac{\Delta \gamma}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} + 4 \alpha \gamma \mu c^{2} e^{\Delta} + 2 \alpha \gamma c e^{\Delta} + \mu^{2} c^{2} e^{\Delta} + 2 \mu c e^{\Delta} + e^{\Delta}} + \frac{\alpha^{2} \gamma^{3} \mu c^{3}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha^{2} \gamma^{3} \mu c^{3}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} + 4 \alpha \gamma \mu c^{2} e^{\Delta} + 2 \alpha \gamma c e^{\Delta} + \mu^{2} c^{2} e^{\Delta} + 2 \mu c e^{\Delta} + e^{\Delta}} + \frac{\alpha^{2} \gamma^{2} \mu^{2} \theta c^{4}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1} + \frac{2 \alpha^{2} \gamma^{2} \mu \theta c^{3}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1} - \frac{\alpha^{2} \gamma^{2} \mu c^{3}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\alpha^{2} \gamma^{2} \mu c^{3}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1} + \frac{\alpha^{2} \gamma^{2} \theta c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1} - \frac{2 \alpha \gamma^{2} \mu c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} + 4 \alpha \gamma \mu c^{2} e^{\Delta} + 2 \alpha \gamma c e^{\Delta} + \mu^{2} c^{2} e^{\Delta} + 2 \mu c e^{\Delta} + e^{\Delta}} + \frac{2 \alpha \gamma^{2} \mu c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1} - \frac{\alpha \gamma^{2} c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\alpha \gamma^{2} c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1} + \frac{2 \alpha \gamma \mu^{2} \theta c^{3}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1} + \frac{4 \alpha \gamma \mu \theta c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1} + \frac{2 \alpha \gamma \theta c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1} + \frac{\alpha \gamma c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 4 \alpha \gamma \mu c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha \gamma c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} c^{2} e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \mu c e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}} + e^{\Delta} e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha \gamma c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1} - \frac{\gamma \mu c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} e^{\Delta} + 2 \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} + \alpha^{2} \gamma^{2} c^{2} e^{\Delta} + 2 \alpha \gamma \mu^{2} c^{3} e^{\Delta} + 4 \alpha \gamma \mu c^{2} e^{\Delta} + 2 \alpha \gamma c e^{\Delta} + \mu^{2} c^{2} e^{\Delta} + 2 \mu c e^{\Delta} + e^{\Delta}} + \frac{\gamma \mu c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1} + \frac{\mu^{2} \theta c^{2}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1} + \frac{2 \mu \theta c}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1} + \frac{\theta}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1}\right) e^{\frac{\xi}{\mu c}}\)</span></p>
+</div>
+</div>
+<div id="07e2fa02-a853-4d83-b5f3-071ffd78ac25" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>U_right.expand().collect(sym.exp(ξ<span class="op">/</span>μ<span class="op">/</span>c)).coeff(sym.exp(ξ<span class="op">/</span>μ<span class="op">/</span>c)).free_symbols</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>{\Delta, \alpha, \gamma, \mu, \theta, c}</code></pre>
+</div>
+</div>
+<div id="5a61de54-b25e-444f-bc60-e62a858ea487" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>expr <span class="op">=</span> U_right.expand().collect(sym.exp(ξ<span class="op">/</span>μ<span class="op">/</span>c)).coeff(sym.exp(ξ<span class="op">/</span>μ<span class="op">/</span>c))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="32019998-0cd6-4aab-b3e1-e5c49912fbd2" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>expr.free_symbols</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>{\Delta, \alpha, \gamma, \mu, \theta, c}</code></pre>
+</div>
+</div>
+<div id="581f4b92-2c02-464b-aedc-ed2e440cea89" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>expr <span class="op">=</span> expr.expand().simplify()</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>display(expr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><span class="math inline">\(\displaystyle \frac{\left(\alpha \gamma c \left(\Delta \alpha \gamma^{2} \mu c^{2} + \Delta \alpha \gamma^{2} c - \Delta \alpha \gamma \mu c^{2} - \Delta \alpha \gamma c + \Delta \gamma \mu c + \Delta \gamma - \Delta \mu c - \Delta + \alpha \gamma^{2} \mu c^{2} - \alpha \gamma \mu c^{2} - \gamma + 1\right) e^{\Delta} - \gamma \left(\Delta \alpha^{2} \gamma^{2} \mu c^{3} + \Delta \alpha^{2} \gamma^{2} c^{2} + 2 \Delta \alpha \gamma \mu c^{2} + 2 \Delta \alpha \gamma c + \Delta \mu c + \Delta + \alpha^{2} \gamma^{2} \mu c^{3} + 2 \alpha \gamma \mu c^{2} + \mu c\right) e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} + \left(\alpha^{2} \gamma^{2} \mu^{2} \theta c^{4} + 2 \alpha^{2} \gamma^{2} \mu \theta c^{3} + \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} \theta c^{2} + 2 \alpha \gamma^{2} \mu c^{2} + \alpha \gamma^{2} c + 2 \alpha \gamma \mu^{2} \theta c^{3} + 4 \alpha \gamma \mu \theta c^{2} + 2 \alpha \gamma \theta c - \alpha \gamma c + \gamma \mu c + \mu^{2} \theta c^{2} + 2 \mu \theta c + \theta\right) e^{\Delta \left(1 + \frac{\alpha \gamma c + 1}{\alpha \gamma c}\right)}\right) e^{- \Delta \left(2 + \frac{1}{\alpha \gamma c}\right)}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1}\)</span></p>
+</div>
+</div>
+<div id="a07aaf0f-518e-4369-846d-ffe4bbb69fda" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>expr</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="14">
+<p><span class="math inline">\(\displaystyle \frac{\left(\alpha \gamma c \left(\Delta \alpha \gamma^{2} \mu c^{2} + \Delta \alpha \gamma^{2} c - \Delta \alpha \gamma \mu c^{2} - \Delta \alpha \gamma c + \Delta \gamma \mu c + \Delta \gamma - \Delta \mu c - \Delta + \alpha \gamma^{2} \mu c^{2} - \alpha \gamma \mu c^{2} - \gamma + 1\right) e^{\Delta} - \gamma \left(\Delta \alpha^{2} \gamma^{2} \mu c^{3} + \Delta \alpha^{2} \gamma^{2} c^{2} + 2 \Delta \alpha \gamma \mu c^{2} + 2 \Delta \alpha \gamma c + \Delta \mu c + \Delta + \alpha^{2} \gamma^{2} \mu c^{3} + 2 \alpha \gamma \mu c^{2} + \mu c\right) e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} + \left(\alpha^{2} \gamma^{2} \mu^{2} \theta c^{4} + 2 \alpha^{2} \gamma^{2} \mu \theta c^{3} + \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} \theta c^{2} + 2 \alpha \gamma^{2} \mu c^{2} + \alpha \gamma^{2} c + 2 \alpha \gamma \mu^{2} \theta c^{3} + 4 \alpha \gamma \mu \theta c^{2} + 2 \alpha \gamma \theta c - \alpha \gamma c + \gamma \mu c + \mu^{2} \theta c^{2} + 2 \mu \theta c + \theta\right) e^{\Delta \left(1 + \frac{\alpha \gamma c + 1}{\alpha \gamma c}\right)}\right) e^{- \Delta \left(2 + \frac{1}{\alpha \gamma c}\right)}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1}\)</span></p>
+</div>
+</div>
+<div id="b2904359-11a7-46be-a800-26a91ec8aba6" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>expr2 <span class="op">=</span> expr.args[<span class="dv">1</span>]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>display(expr2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><span class="math inline">\(\displaystyle \alpha \gamma c \left(\Delta \alpha \gamma^{2} \mu c^{2} + \Delta \alpha \gamma^{2} c - \Delta \alpha \gamma \mu c^{2} - \Delta \alpha \gamma c + \Delta \gamma \mu c + \Delta \gamma - \Delta \mu c - \Delta + \alpha \gamma^{2} \mu c^{2} - \alpha \gamma \mu c^{2} - \gamma + 1\right) e^{\Delta} - \gamma \left(\Delta \alpha^{2} \gamma^{2} \mu c^{3} + \Delta \alpha^{2} \gamma^{2} c^{2} + 2 \Delta \alpha \gamma \mu c^{2} + 2 \Delta \alpha \gamma c + \Delta \mu c + \Delta + \alpha^{2} \gamma^{2} \mu c^{3} + 2 \alpha \gamma \mu c^{2} + \mu c\right) e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} + \left(\alpha^{2} \gamma^{2} \mu^{2} \theta c^{4} + 2 \alpha^{2} \gamma^{2} \mu \theta c^{3} + \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} \theta c^{2} + 2 \alpha \gamma^{2} \mu c^{2} + \alpha \gamma^{2} c + 2 \alpha \gamma \mu^{2} \theta c^{3} + 4 \alpha \gamma \mu \theta c^{2} + 2 \alpha \gamma \theta c - \alpha \gamma c + \gamma \mu c + \mu^{2} \theta c^{2} + 2 \mu \theta c + \theta\right) e^{\Delta \left(1 + \frac{\alpha \gamma c + 1}{\alpha \gamma c}\right)}\)</span></p>
+</div>
+</div>
+<div id="6d786c81-39e1-46b7-b5dc-9b8896f0d2b4" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>(expr2<span class="op">*</span>sym.exp(<span class="op">-</span>Δ)).expand().simplify()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="16">
+<p><span class="math inline">\(\displaystyle - \Delta \alpha^{2} \gamma^{3} \mu c^{3} e^{\frac{\Delta}{\alpha \gamma c}} + \Delta \alpha^{2} \gamma^{3} \mu c^{3} - \Delta \alpha^{2} \gamma^{3} c^{2} e^{\frac{\Delta}{\alpha \gamma c}} + \Delta \alpha^{2} \gamma^{3} c^{2} - \Delta \alpha^{2} \gamma^{2} \mu c^{3} - \Delta \alpha^{2} \gamma^{2} c^{2} - 2 \Delta \alpha \gamma^{2} \mu c^{2} e^{\frac{\Delta}{\alpha \gamma c}} + \Delta \alpha \gamma^{2} \mu c^{2} - 2 \Delta \alpha \gamma^{2} c e^{\frac{\Delta}{\alpha \gamma c}} + \Delta \alpha \gamma^{2} c - \Delta \alpha \gamma \mu c^{2} - \Delta \alpha \gamma c - \Delta \gamma \mu c e^{\frac{\Delta}{\alpha \gamma c}} - \Delta \gamma e^{\frac{\Delta}{\alpha \gamma c}} - \alpha^{2} \gamma^{3} \mu c^{3} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{3} \mu c^{3} + \alpha^{2} \gamma^{2} \mu^{2} \theta c^{4} e^{\Delta \left(1 + \frac{1}{\alpha \gamma c}\right)} + 2 \alpha^{2} \gamma^{2} \mu \theta c^{3} e^{\Delta \left(1 + \frac{1}{\alpha \gamma c}\right)} + \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta \left(1 + \frac{1}{\alpha \gamma c}\right)} - \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} \theta c^{2} e^{\Delta \left(1 + \frac{1}{\alpha \gamma c}\right)} + 2 \alpha \gamma^{2} \mu c^{2} e^{\Delta \left(1 + \frac{1}{\alpha \gamma c}\right)} - 2 \alpha \gamma^{2} \mu c^{2} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha \gamma^{2} c e^{\Delta \left(1 + \frac{1}{\alpha \gamma c}\right)} - \alpha \gamma^{2} c + 2 \alpha \gamma \mu^{2} \theta c^{3} e^{\Delta \left(1 + \frac{1}{\alpha \gamma c}\right)} + 4 \alpha \gamma \mu \theta c^{2} e^{\Delta \left(1 + \frac{1}{\alpha \gamma c}\right)} + 2 \alpha \gamma \theta c e^{\Delta \left(1 + \frac{1}{\alpha \gamma c}\right)} - \alpha \gamma c e^{\Delta \left(1 + \frac{1}{\alpha \gamma c}\right)} + \alpha \gamma c + \gamma \mu c e^{\Delta \left(1 + \frac{1}{\alpha \gamma c}\right)} - \gamma \mu c e^{\frac{\Delta}{\alpha \gamma c}} + \mu^{2} \theta c^{2} e^{\Delta \left(1 + \frac{1}{\alpha \gamma c}\right)} + 2 \mu \theta c e^{\Delta \left(1 + \frac{1}{\alpha \gamma c}\right)} + \theta e^{\Delta \left(1 + \frac{1}{\alpha \gamma c}\right)}\)</span></p>
+</div>
+</div>
+<div id="4fc8be73-69d5-458f-abb0-5520dd9d7af3" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>expr</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="17">
+<p><span class="math inline">\(\displaystyle \frac{\left(\alpha \gamma c \left(\Delta \alpha \gamma^{2} \mu c^{2} + \Delta \alpha \gamma^{2} c - \Delta \alpha \gamma \mu c^{2} - \Delta \alpha \gamma c + \Delta \gamma \mu c + \Delta \gamma - \Delta \mu c - \Delta + \alpha \gamma^{2} \mu c^{2} - \alpha \gamma \mu c^{2} - \gamma + 1\right) e^{\Delta} - \gamma \left(\Delta \alpha^{2} \gamma^{2} \mu c^{3} + \Delta \alpha^{2} \gamma^{2} c^{2} + 2 \Delta \alpha \gamma \mu c^{2} + 2 \Delta \alpha \gamma c + \Delta \mu c + \Delta + \alpha^{2} \gamma^{2} \mu c^{3} + 2 \alpha \gamma \mu c^{2} + \mu c\right) e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} + \left(\alpha^{2} \gamma^{2} \mu^{2} \theta c^{4} + 2 \alpha^{2} \gamma^{2} \mu \theta c^{3} + \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} \theta c^{2} + 2 \alpha \gamma^{2} \mu c^{2} + \alpha \gamma^{2} c + 2 \alpha \gamma \mu^{2} \theta c^{3} + 4 \alpha \gamma \mu \theta c^{2} + 2 \alpha \gamma \theta c - \alpha \gamma c + \gamma \mu c + \mu^{2} \theta c^{2} + 2 \mu \theta c + \theta\right) e^{\Delta \left(1 + \frac{\alpha \gamma c + 1}{\alpha \gamma c}\right)}\right) e^{- \Delta \left(2 + \frac{1}{\alpha \gamma c}\right)}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1}\)</span></p>
+</div>
+</div>
+<div id="72a73757-3d87-4fb5-8829-7ed1c17577ba" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    θ: <span class="fl">0.2</span>,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    α: <span class="fl">1.1</span>,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'beta'</span>: <span class="fl">2.0</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    μ: <span class="fl">1.0</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>params[γ] <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>params[<span class="st">'beta'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="7f638600-d13d-4225-a385-ef95eaae7ad3" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>params[γ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>0.3333333333333333</code></pre>
+</div>
+</div>
+<div id="c3e802f9-a8a8-4f90-9275-f6c1b631656c" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>expr2.subs(params)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="20">
+<p><span class="math inline">\(\displaystyle 0.366666666666667 c \left(- 0.244444444444444 \Delta c^{2} - 0.911111111111111 \Delta c - 0.666666666666667 \Delta - 0.244444444444444 c^{2} + 0.666666666666667\right) e^{\Delta} + \left(0.0268888888888889 c^{4} + 0.334888888888889 c^{3} + 0.764666666666667 c^{2} + 0.635555555555556 c + 0.2\right) e^{\Delta \left(1 + \frac{2.72727272727273 \left(0.366666666666667 c + 1\right)}{c}\right)} - 0.333333333333333 \left(0.134444444444444 \Delta c^{3} + 0.867777777777778 \Delta c^{2} + 1.73333333333333 \Delta c + \Delta + 0.134444444444444 c^{3} + 0.733333333333333 c^{2} + 1.0 c\right) e^{\frac{2.72727272727273 \Delta \left(0.366666666666667 c + 1\right)}{c}}\)</span></p>
+</div>
+</div>
+<div id="12d5e412-31d8-40b1-b588-afd7bd92945b" class="cell" data-execution_count="36">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>func <span class="op">=</span> sym.lambdify((Δ, c), expr2.subs(params))</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>Delta_linspace <span class="op">=</span> np.linspace(<span class="fl">.1</span>, <span class="dv">100</span>, <span class="dv">21</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>c_linspace <span class="op">=</span> np.linspace(<span class="fl">.1</span>, <span class="dv">10</span>, <span class="dv">201</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> <span class="bu">reduce</span>(<span class="kw">lambda</span> n, lst: n<span class="op">*</span><span class="bu">len</span>(lst),</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>               (Delta_linspace, c_linspace),</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>               <span class="dv">1</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> Delta, c_num <span class="kw">in</span> tqdm(product(Delta_linspace, c_linspace), total<span class="op">=</span>(<span class="dv">2001</span><span class="op">**</span><span class="dv">2</span>)):</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> func(Delta, c_num) <span class="op">&lt;</span> <span class="dv">0</span>:</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(Delta, c_num)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>  0%|          | 0/4004001 [00:00&lt;?, ?it/s]&lt;string&gt;:2: RuntimeWarning: overflow encountered in exp
+&lt;string&gt;:2: RuntimeWarning: overflow encountered in double_scalars
+&lt;string&gt;:2: RuntimeWarning: invalid value encountered in double_scalars
+  0%|          | 4221/4004001 [00:00&lt;00:40, 97557.54it/s]</code></pre>
+</div>
+</div>
+<div id="7fabf04a-c86a-44bf-92da-9c367d7fe29e" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>?tqdm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">Init signature:</span> tqdm<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>_<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>__<span class="ansi-blue-fg">)</span>
+<span class="ansi-red-fg">Docstring:</span>     
+Decorate an iterable object, returning an iterator which acts exactly
+like the original iterable, but prints a dynamically updating
+progressbar every time a value is requested.
+<span class="ansi-red-fg">Init docstring:</span>
+Parameters
+----------
+iterable  : iterable, optional
+    Iterable to decorate with a progressbar.
+    Leave blank to manually manage the updates.
+desc  : str, optional
+    Prefix for the progressbar.
+total  : int or float, optional
+    The number of expected iterations. If unspecified,
+    len(iterable) is used if possible. If float("inf") or as a last
+    resort, only basic progress statistics are displayed
+    (no ETA, no progressbar).
+    If `gui` is True and this parameter needs subsequent updating,
+    specify an initial arbitrary large positive number,
+    e.g. 9e9.
+leave  : bool, optional
+    If [default: True], keeps all traces of the progressbar
+    upon termination of iteration.
+    If `None`, will leave only if `position` is `0`.
+file  : `io.TextIOWrapper` or `io.StringIO`, optional
+    Specifies where to output the progress messages
+    (default: sys.stderr). Uses `file.write(str)` and `file.flush()`
+    methods.  For encoding, see `write_bytes`.
+ncols  : int, optional
+    The width of the entire output message. If specified,
+    dynamically resizes the progressbar to stay within this bound.
+    If unspecified, attempts to use environment width. The
+    fallback is a meter width of 10 and no limit for the counter and
+    statistics. If 0, will not print any meter (only stats).
+mininterval  : float, optional
+    Minimum progress display update interval [default: 0.1] seconds.
+maxinterval  : float, optional
+    Maximum progress display update interval [default: 10] seconds.
+    Automatically adjusts `miniters` to correspond to `mininterval`
+    after long display update lag. Only works if `dynamic_miniters`
+    or monitor thread is enabled.
+miniters  : int or float, optional
+    Minimum progress display update interval, in iterations.
+    If 0 and `dynamic_miniters`, will automatically adjust to equal
+    `mininterval` (more CPU efficient, good for tight loops).
+    If &gt; 0, will skip display of specified number of iterations.
+    Tweak this and `mininterval` to get very efficient loops.
+    If your progress is erratic with both fast and slow iterations
+    (network, skipping items, etc) you should set miniters=1.
+ascii  : bool or str, optional
+    If unspecified or False, use unicode (smooth blocks) to fill
+    the meter. The fallback is to use ASCII characters " 123456789#".
+disable  : bool, optional
+    Whether to disable the entire progressbar wrapper
+    [default: False]. If set to None, disable on non-TTY.
+unit  : str, optional
+    String that will be used to define the unit of each iteration
+    [default: it].
+unit_scale  : bool or int or float, optional
+    If 1 or True, the number of iterations will be reduced/scaled
+    automatically and a metric prefix following the
+    International System of Units standard will be added
+    (kilo, mega, etc.) [default: False]. If any other non-zero
+    number, will scale `total` and `n`.
+dynamic_ncols  : bool, optional
+    If set, constantly alters `ncols` and `nrows` to the
+    environment (allowing for window resizes) [default: False].
+smoothing  : float, optional
+    Exponential moving average smoothing factor for speed estimates
+    (ignored in GUI mode). Ranges from 0 (average speed) to 1
+    (current/instantaneous speed) [default: 0.3].
+bar_format  : str, optional
+    Specify a custom bar string formatting. May impact performance.
+    [default: '{l_bar}{bar}{r_bar}'], where
+    l_bar='{desc}: {percentage:3.0f}%|' and
+    r_bar='| {n_fmt}/{total_fmt} [{elapsed}&lt;{remaining}, '
+      '{rate_fmt}{postfix}]'
+    Possible vars: l_bar, bar, r_bar, n, n_fmt, total, total_fmt,
+      percentage, elapsed, elapsed_s, ncols, nrows, desc, unit,
+      rate, rate_fmt, rate_noinv, rate_noinv_fmt,
+      rate_inv, rate_inv_fmt, postfix, unit_divisor,
+      remaining, remaining_s, eta.
+    Note that a trailing ": " is automatically removed after {desc}
+    if the latter is empty.
+initial  : int or float, optional
+    The initial counter value. Useful when restarting a progress
+    bar [default: 0]. If using float, consider specifying `{n:.3f}`
+    or similar in `bar_format`, or specifying `unit_scale`.
+position  : int, optional
+    Specify the line offset to print this bar (starting from 0)
+    Automatic if unspecified.
+    Useful to manage multiple bars at once (eg, from threads).
+postfix  : dict or *, optional
+    Specify additional stats to display at the end of the bar.
+    Calls `set_postfix(**postfix)` if possible (dict).
+unit_divisor  : float, optional
+    [default: 1000], ignored unless `unit_scale` is True.
+write_bytes  : bool, optional
+    If (default: None) and `file` is unspecified,
+    bytes will be written in Python 2. If `True` will also write
+    bytes. In all other cases will default to unicode.
+lock_args  : tuple, optional
+    Passed to `refresh` for intermediate output
+    (initialisation, iterating, and updating).
+nrows  : int, optional
+    The screen height. If specified, hides nested bars outside this
+    bound. If unspecified, attempts to use environment height.
+    The fallback is 20.
+colour  : str, optional
+    Bar colour (e.g. 'green', '#00ff00').
+delay  : float, optional
+    Don't display until [default: 0] seconds have elapsed.
+gui  : bool, optional
+    WARNING: internal parameter - do not use.
+    Use tqdm.gui.tqdm(...) instead. If set, will attempt to use
+    matplotlib animations for a graphical output [default: False].
+Returns
+-------
+out  : decorated iterator.
+<span class="ansi-red-fg">File:</span>           ~/.local/lib/python3.6/site-packages/tqdm/std.py
+<span class="ansi-red-fg">Type:</span>           type
+<span class="ansi-red-fg">Subclasses:</span>     tqdm_gui
+</pre>
+</div>
+</div>
+</div>
+<div id="52a700a1-d67e-489e-92cc-162c39d33422" class="cell" data-execution_count="28">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>forcing_left <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">/</span>c<span class="op">/</span>μ <span class="op">*</span> sym.integrate( w.subs(x, y<span class="op">-</span>ξ)<span class="op">*</span>Q, (y, <span class="op">-</span>Δ, <span class="dv">0</span>))</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>forcing_left <span class="op">=</span> sym.piecewise_fold(forcing_left).args[<span class="dv">0</span>].args[<span class="dv">0</span>]</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>display(forcing_left)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><span class="math inline">\(\displaystyle - \frac{\frac{\Delta \alpha^{2} \gamma^{3} c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha \gamma c e^{\frac{\Delta}{\alpha \gamma c}} + e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\Delta \alpha^{2} \gamma^{3} c^{2} e^{\Delta} e^{\xi}}{\alpha^{2} \gamma^{2} c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha \gamma c e^{\frac{\Delta}{\alpha \gamma c}} + e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\Delta \alpha^{2} \gamma^{2} c^{2} e^{\Delta} e^{\xi}}{\alpha^{2} \gamma^{2} c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha \gamma c e^{\frac{\Delta}{\alpha \gamma c}} + e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{2 \Delta \alpha \gamma^{2} c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha \gamma c e^{\frac{\Delta}{\alpha \gamma c}} + e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\Delta \alpha \gamma^{2} c e^{\Delta} e^{\xi}}{\alpha^{2} \gamma^{2} c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha \gamma c e^{\frac{\Delta}{\alpha \gamma c}} + e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\Delta \alpha \gamma c e^{\Delta} e^{\xi}}{\alpha^{2} \gamma^{2} c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha \gamma c e^{\frac{\Delta}{\alpha \gamma c}} + e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\Delta \gamma e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha \gamma c e^{\frac{\Delta}{\alpha \gamma c}} + e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\alpha^{2} \gamma^{3} \xi c^{2} e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha \gamma c e^{\frac{\Delta}{\alpha \gamma c}} + e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha^{2} \gamma^{3} \xi c^{2} e^{\Delta} e^{\xi}}{\alpha^{2} \gamma^{2} c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha \gamma c e^{\frac{\Delta}{\alpha \gamma c}} + e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\alpha^{2} \gamma^{2} \xi c^{2} e^{\Delta} e^{\xi}}{\alpha^{2} \gamma^{2} c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha \gamma c e^{\frac{\Delta}{\alpha \gamma c}} + e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha^{2} \gamma^{2} \xi c^{2} e^{\xi}}{\alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma c + 1} - \frac{2 \alpha \gamma^{2} \xi c e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha \gamma c e^{\frac{\Delta}{\alpha \gamma c}} + e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\alpha \gamma^{2} \xi c e^{\Delta} e^{\xi}}{\alpha^{2} \gamma^{2} c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha \gamma c e^{\frac{\Delta}{\alpha \gamma c}} + e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\alpha \gamma^{2} \xi c e^{\xi}}{\alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma c + 1} + \frac{\alpha \gamma^{2} c e^{\Delta} e^{\xi}}{\alpha^{2} \gamma^{2} c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha \gamma c e^{\frac{\Delta}{\alpha \gamma c}} + e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\alpha \gamma^{2} c e^{\xi}}{\alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma c + 1} - \frac{\alpha \gamma \xi c e^{\Delta} e^{\xi}}{\alpha^{2} \gamma^{2} c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha \gamma c e^{\frac{\Delta}{\alpha \gamma c}} + e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\alpha \gamma \xi c e^{\xi}}{\alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma c + 1} - \frac{\alpha \gamma c e^{\Delta} e^{\xi}}{\alpha^{2} \gamma^{2} c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha \gamma c e^{\frac{\Delta}{\alpha \gamma c}} + e^{\frac{\Delta}{\alpha \gamma c}}} + \frac{\alpha \gamma c e^{\xi}}{\alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma c + 1} + \frac{\gamma \xi e^{\Delta} e^{\xi} e^{\frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha \gamma c e^{\frac{\Delta}{\alpha \gamma c}} + e^{\frac{\Delta}{\alpha \gamma c}}} - \frac{\gamma \xi e^{\xi}}{\alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma c + 1}}{\mu c}\)</span></p>
+</div>
+</div>
+<div id="b38174f4-384b-4216-b1c4-3e164186ca76" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>forcing_mid <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">/</span>c<span class="op">/</span>μ <span class="op">*</span> (sym.integrate(w.subs(x, y<span class="op">-</span>ξ)<span class="op">*</span>Q, (y, <span class="op">-</span>Δ, ξ)) <span class="op">+</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                        sym.integrate(w.subs(x, ξ<span class="op">-</span>y)<span class="op">*</span>Q, (y, ξ, <span class="dv">0</span>)) )</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>forcing_mid <span class="op">=</span> sym.piecewise_fold(forcing_mid).args[<span class="dv">0</span>].args[<span class="dv">0</span>]</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>display(forcing_mid)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><span class="math inline">\(\displaystyle - \frac{\frac{\Delta \alpha^{2} \gamma^{3} c^{2} e^{\xi}}{\alpha^{2} \gamma^{2} c^{2} e^{- \Delta} - 2 \alpha \gamma c e^{- \Delta} + e^{- \Delta}} - \frac{\Delta \alpha^{2} \gamma^{3} c^{2} e^{\xi} e^{- \frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{- \Delta} - 2 \alpha \gamma c e^{- \Delta} + e^{- \Delta}} + \frac{\Delta \alpha^{2} \gamma^{2} c^{2} e^{\xi} e^{- \frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{- \Delta} - 2 \alpha \gamma c e^{- \Delta} + e^{- \Delta}} - \frac{2 \Delta \alpha \gamma^{2} c e^{\xi}}{\alpha^{2} \gamma^{2} c^{2} e^{- \Delta} - 2 \alpha \gamma c e^{- \Delta} + e^{- \Delta}} + \frac{\Delta \alpha \gamma^{2} c e^{\xi} e^{- \frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{- \Delta} - 2 \alpha \gamma c e^{- \Delta} + e^{- \Delta}} - \frac{\Delta \alpha \gamma c e^{\xi} e^{- \frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{- \Delta} - 2 \alpha \gamma c e^{- \Delta} + e^{- \Delta}} + \frac{\Delta \gamma e^{\xi}}{\alpha^{2} \gamma^{2} c^{2} e^{- \Delta} - 2 \alpha \gamma c e^{- \Delta} + e^{- \Delta}} + \frac{\alpha^{2} \gamma^{3} \xi c^{2} e^{\xi}}{\alpha^{2} \gamma^{2} c^{2} e^{- \Delta} - 2 \alpha \gamma c e^{- \Delta} + e^{- \Delta}} - \frac{\alpha^{2} \gamma^{3} \xi c^{2} e^{\xi} e^{- \frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{- \Delta} - 2 \alpha \gamma c e^{- \Delta} + e^{- \Delta}} - \frac{\alpha^{2} \gamma^{2} \xi c^{2}}{\alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + e^{\xi}} + \frac{\alpha^{2} \gamma^{2} \xi c^{2} e^{\xi} e^{- \frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{- \Delta} - 2 \alpha \gamma c e^{- \Delta} + e^{- \Delta}} - \frac{\alpha \gamma^{2} \xi c}{\alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + e^{\xi}} - \frac{2 \alpha \gamma^{2} \xi c e^{\xi}}{\alpha^{2} \gamma^{2} c^{2} e^{- \Delta} - 2 \alpha \gamma c e^{- \Delta} + e^{- \Delta}} + \frac{\alpha \gamma^{2} \xi c e^{\xi} e^{- \frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{- \Delta} - 2 \alpha \gamma c e^{- \Delta} + e^{- \Delta}} + \frac{\alpha \gamma^{2} c e^{\xi} e^{\frac{\xi}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + e^{\xi}} - \frac{\alpha \gamma^{2} c}{\alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + e^{\xi}} - \frac{\alpha \gamma^{2} c e^{\xi} e^{\frac{\xi}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{\xi} - 2 \alpha \gamma c e^{\xi} + e^{\xi}} + \frac{\alpha \gamma^{2} c e^{\xi} e^{- \frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{- \Delta} - 2 \alpha \gamma c e^{- \Delta} + e^{- \Delta}} - \frac{\alpha \gamma \xi c}{\alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + e^{\xi}} - \frac{\alpha \gamma \xi c e^{\xi} e^{- \frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{- \Delta} - 2 \alpha \gamma c e^{- \Delta} + e^{- \Delta}} - \frac{\alpha \gamma c e^{\xi} e^{\frac{\xi}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + e^{\xi}} + \frac{\alpha \gamma c}{\alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + e^{\xi}} + \frac{\alpha \gamma c e^{\xi} e^{\frac{\xi}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{\xi} - 2 \alpha \gamma c e^{\xi} + e^{\xi}} - \frac{\alpha \gamma c e^{\xi} e^{- \frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} c^{2} e^{- \Delta} - 2 \alpha \gamma c e^{- \Delta} + e^{- \Delta}} - \frac{\gamma \xi}{\alpha^{2} \gamma^{2} c^{2} e^{\xi} + 2 \alpha \gamma c e^{\xi} + e^{\xi}} + \frac{\gamma \xi e^{\xi}}{\alpha^{2} \gamma^{2} c^{2} e^{- \Delta} - 2 \alpha \gamma c e^{- \Delta} + e^{- \Delta}}}{\mu c}\)</span></p>
+</div>
+</div>
+<div id="da8583df-9045-4921-a3cf-7201f6ae37b4" class="cell" data-execution_count="30">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>U_right <span class="op">=</span> sym.exp(ξ<span class="op">/</span>c<span class="op">/</span>μ)<span class="op">*</span> (θ <span class="op">+</span> sym.integrate(forcing_right<span class="op">*</span>sym.exp(<span class="op">-</span>ξ<span class="op">/</span>c<span class="op">/</span>μ), (ξ, <span class="dv">0</span>, ξ)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="6bc500d1-abff-4358-9e98-c3621c24c21f" class="cell" data-execution_count="34">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>U_mid <span class="op">=</span> sym.exp(ξ<span class="op">/</span>c<span class="op">/</span>μ)<span class="op">*</span> (θ <span class="op">+</span> sym.integrate((forcing_mid<span class="op">*</span>sym.exp(<span class="op">-</span>ξ<span class="op">/</span>c<span class="op">/</span>μ)).expand(), (ξ, <span class="dv">0</span>, ξ)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="5ea0eecc-38b7-4603-81d4-979d71f539d4" class="cell" data-execution_count="64">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>U_left <span class="op">=</span> sym.exp(ξ<span class="op">/</span>c<span class="op">/</span>μ)<span class="op">*</span> (θ <span class="op">+</span> sym.integrate((forcing_left<span class="op">*</span>sym.exp(<span class="op">-</span>ξ<span class="op">/</span>c<span class="op">/</span>μ)).expand(), (ξ, <span class="dv">0</span>, ξ)))</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>U_left <span class="op">=</span> sym.piecewise_fold(U_left).args[<span class="dv">0</span>].args[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="0181943b-3d31-41b2-9652-fde02b0f5a22" class="cell" data-execution_count="38">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>U_right.expand().simplify()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="38">
+<p><span class="math inline">\(\displaystyle \frac{\left(\Delta \alpha^{2} \gamma^{3} \mu c^{3} e^{\frac{\Delta}{\alpha \gamma c}} + \Delta \alpha^{2} \gamma^{3} \mu c^{3} e^{\xi + \frac{\xi}{\mu c}} - \Delta \alpha^{2} \gamma^{3} \mu c^{3} e^{\frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} - \Delta \alpha^{2} \gamma^{3} \mu c^{3} + \Delta \alpha^{2} \gamma^{3} c^{2} e^{\frac{\Delta}{\alpha \gamma c}} + \Delta \alpha^{2} \gamma^{3} c^{2} e^{\xi + \frac{\xi}{\mu c}} - \Delta \alpha^{2} \gamma^{3} c^{2} e^{\frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} - \Delta \alpha^{2} \gamma^{3} c^{2} - \Delta \alpha^{2} \gamma^{2} \mu c^{3} e^{\xi + \frac{\xi}{\mu c}} + \Delta \alpha^{2} \gamma^{2} \mu c^{3} - \Delta \alpha^{2} \gamma^{2} c^{2} e^{\xi + \frac{\xi}{\mu c}} + \Delta \alpha^{2} \gamma^{2} c^{2} + 2 \Delta \alpha \gamma^{2} \mu c^{2} e^{\frac{\Delta}{\alpha \gamma c}} + \Delta \alpha \gamma^{2} \mu c^{2} e^{\xi + \frac{\xi}{\mu c}} - 2 \Delta \alpha \gamma^{2} \mu c^{2} e^{\frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} - \Delta \alpha \gamma^{2} \mu c^{2} + 2 \Delta \alpha \gamma^{2} c e^{\frac{\Delta}{\alpha \gamma c}} + \Delta \alpha \gamma^{2} c e^{\xi + \frac{\xi}{\mu c}} - 2 \Delta \alpha \gamma^{2} c e^{\frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} - \Delta \alpha \gamma^{2} c - \Delta \alpha \gamma \mu c^{2} e^{\xi + \frac{\xi}{\mu c}} + \Delta \alpha \gamma \mu c^{2} - \Delta \alpha \gamma c e^{\xi + \frac{\xi}{\mu c}} + \Delta \alpha \gamma c + \Delta \gamma \mu c e^{\frac{\Delta}{\alpha \gamma c}} - \Delta \gamma \mu c e^{\frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + \Delta \gamma e^{\frac{\Delta}{\alpha \gamma c}} - \Delta \gamma e^{\frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + \alpha^{2} \gamma^{3} \mu \xi c^{3} e^{\frac{\Delta}{\alpha \gamma c}} - \alpha^{2} \gamma^{3} \mu \xi c^{3} + \alpha^{2} \gamma^{3} \mu c^{3} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{3} \mu c^{3} e^{\xi + \frac{\xi}{\mu c}} - \alpha^{2} \gamma^{3} \mu c^{3} e^{\frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} - \alpha^{2} \gamma^{3} \mu c^{3} + \alpha^{2} \gamma^{3} \xi c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - \alpha^{2} \gamma^{3} \xi c^{2} + \alpha^{2} \gamma^{2} \mu^{2} \theta c^{4} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + 2 \alpha^{2} \gamma^{2} \mu \theta c^{3} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} - \alpha^{2} \gamma^{2} \mu \xi c^{3} e^{\Delta + \frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} \mu \xi c^{3} - \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta + \frac{\Delta}{\alpha \gamma c}} - \alpha^{2} \gamma^{2} \mu c^{3} e^{\xi + \frac{\xi}{\mu c}} + \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} \theta c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} - \alpha^{2} \gamma^{2} \xi c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} \xi c^{2} + 2 \alpha \gamma^{2} \mu \xi c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - \alpha \gamma^{2} \mu \xi c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c}} - \alpha \gamma^{2} \mu \xi c^{2} + 2 \alpha \gamma^{2} \mu c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha \gamma^{2} \mu c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c}} - 2 \alpha \gamma^{2} \mu c^{2} e^{\frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + 2 \alpha \gamma^{2} \mu c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + 2 \alpha \gamma^{2} \xi c e^{\frac{\Delta}{\alpha \gamma c}} - \alpha \gamma^{2} \xi c e^{\Delta + \frac{\Delta}{\alpha \gamma c}} - \alpha \gamma^{2} \xi c - \alpha \gamma^{2} c e^{\Delta + \frac{\Delta}{\alpha \gamma c}} - \alpha \gamma^{2} c e^{\xi + \frac{\xi}{\mu c}} + \alpha \gamma^{2} c e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + \alpha \gamma^{2} c + 2 \alpha \gamma \mu^{2} \theta c^{3} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + 4 \alpha \gamma \mu \theta c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} - \alpha \gamma \mu \xi c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c}} + \alpha \gamma \mu \xi c^{2} + 2 \alpha \gamma \theta c e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} - \alpha \gamma \xi c e^{\Delta + \frac{\Delta}{\alpha \gamma c}} + \alpha \gamma \xi c + \alpha \gamma c e^{\Delta + \frac{\Delta}{\alpha \gamma c}} + \alpha \gamma c e^{\xi + \frac{\xi}{\mu c}} - \alpha \gamma c e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} - \alpha \gamma c + \gamma \mu \xi c e^{\frac{\Delta}{\alpha \gamma c}} - \gamma \mu \xi c e^{\Delta + \frac{\Delta}{\alpha \gamma c}} + \gamma \mu c e^{\frac{\Delta}{\alpha \gamma c}} - \gamma \mu c e^{\Delta + \frac{\Delta}{\alpha \gamma c}} - \gamma \mu c e^{\frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + \gamma \mu c e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + \gamma \xi e^{\frac{\Delta}{\alpha \gamma c}} - \gamma \xi e^{\Delta + \frac{\Delta}{\alpha \gamma c}} + \mu^{2} \theta c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + 2 \mu \theta c e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}} + \theta e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi + \frac{\xi}{\mu c}}\right) e^{- \Delta - \frac{\Delta}{\alpha \gamma c} - \xi}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1}\)</span></p>
+</div>
+</div>
+<div id="92983615-b709-4eff-b52e-6d2d0ea0ce75" class="cell" data-execution_count="71">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>U_left.expand().simplify()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="71">
+<p><span class="math inline">\(\displaystyle \frac{\left(\Delta \alpha^{2} \gamma^{3} \mu c^{3} e^{\Delta + \xi} - \Delta \alpha^{2} \gamma^{3} \mu c^{3} e^{\Delta + \frac{\xi}{\mu c}} - \Delta \alpha^{2} \gamma^{3} \mu c^{3} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi} + \Delta \alpha^{2} \gamma^{3} \mu c^{3} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \frac{\xi}{\mu c}} - \Delta \alpha^{2} \gamma^{3} c^{2} e^{\Delta + \xi} + \Delta \alpha^{2} \gamma^{3} c^{2} e^{\Delta + \frac{\xi}{\mu c}} + \Delta \alpha^{2} \gamma^{3} c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi} - \Delta \alpha^{2} \gamma^{3} c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \frac{\xi}{\mu c}} - \Delta \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta + \xi} + \Delta \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta + \frac{\xi}{\mu c}} + \Delta \alpha^{2} \gamma^{2} c^{2} e^{\Delta + \xi} - \Delta \alpha^{2} \gamma^{2} c^{2} e^{\Delta + \frac{\xi}{\mu c}} - \Delta \alpha \gamma^{2} \mu c^{2} e^{\Delta + \xi} + \Delta \alpha \gamma^{2} \mu c^{2} e^{\Delta + \frac{\xi}{\mu c}} + 2 \Delta \alpha \gamma^{2} \mu c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi} - 2 \Delta \alpha \gamma^{2} \mu c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \frac{\xi}{\mu c}} + \Delta \alpha \gamma^{2} c e^{\Delta + \xi} - \Delta \alpha \gamma^{2} c e^{\Delta + \frac{\xi}{\mu c}} - 2 \Delta \alpha \gamma^{2} c e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi} + 2 \Delta \alpha \gamma^{2} c e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \frac{\xi}{\mu c}} + \Delta \alpha \gamma \mu c^{2} e^{\Delta + \xi} - \Delta \alpha \gamma \mu c^{2} e^{\Delta + \frac{\xi}{\mu c}} - \Delta \alpha \gamma c e^{\Delta + \xi} + \Delta \alpha \gamma c e^{\Delta + \frac{\xi}{\mu c}} - \Delta \gamma \mu c e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi} + \Delta \gamma \mu c e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \frac{\xi}{\mu c}} + \Delta \gamma e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi} - \Delta \gamma e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \frac{\xi}{\mu c}} + \alpha^{2} \gamma^{3} \mu \xi c^{3} e^{\Delta + \xi} - \alpha^{2} \gamma^{3} \mu \xi c^{3} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi} - \alpha^{2} \gamma^{3} \mu c^{3} e^{\Delta + \xi} + \alpha^{2} \gamma^{3} \mu c^{3} e^{\Delta + \frac{\xi}{\mu c}} + \alpha^{2} \gamma^{3} \mu c^{3} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi} - \alpha^{2} \gamma^{3} \mu c^{3} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \frac{\xi}{\mu c}} - \alpha^{2} \gamma^{3} \xi c^{2} e^{\Delta + \xi} + \alpha^{2} \gamma^{3} \xi c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi} + \alpha^{2} \gamma^{2} \mu^{2} \theta c^{4} e^{\frac{\frac{\Delta}{\alpha \gamma} + \frac{\xi}{\mu}}{c}} - 2 \alpha^{2} \gamma^{2} \mu \theta c^{3} e^{\frac{\frac{\Delta}{\alpha \gamma} + \frac{\xi}{\mu}}{c}} - \alpha^{2} \gamma^{2} \mu \xi c^{3} e^{\Delta + \xi} + \alpha^{2} \gamma^{2} \mu \xi c^{3} e^{\frac{\Delta}{\alpha \gamma c} + \xi} + \alpha^{2} \gamma^{2} \mu c^{3} e^{\frac{\frac{\Delta}{\alpha \gamma} + \frac{\xi}{\mu}}{c}} + \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta + \xi} - \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta + \frac{\xi}{\mu c}} - \alpha^{2} \gamma^{2} \mu c^{3} e^{\frac{\Delta}{\alpha \gamma c} + \xi} + \alpha^{2} \gamma^{2} \theta c^{2} e^{\frac{\frac{\Delta}{\alpha \gamma} + \frac{\xi}{\mu}}{c}} + \alpha^{2} \gamma^{2} \xi c^{2} e^{\Delta + \xi} - \alpha^{2} \gamma^{2} \xi c^{2} e^{\frac{\Delta}{\alpha \gamma c} + \xi} - \alpha \gamma^{2} \mu \xi c^{2} e^{\Delta + \xi} - \alpha \gamma^{2} \mu \xi c^{2} e^{\frac{\Delta}{\alpha \gamma c} + \xi} + 2 \alpha \gamma^{2} \mu \xi c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi} - 2 \alpha \gamma^{2} \mu c^{2} e^{\frac{\frac{\Delta}{\alpha \gamma} + \frac{\xi}{\mu}}{c}} + 2 \alpha \gamma^{2} \mu c^{2} e^{\frac{\Delta}{\alpha \gamma c} + \xi} - 2 \alpha \gamma^{2} \mu c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi} + 2 \alpha \gamma^{2} \mu c^{2} e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \frac{\xi}{\mu c}} + \alpha \gamma^{2} \xi c e^{\Delta + \xi} + \alpha \gamma^{2} \xi c e^{\frac{\Delta}{\alpha \gamma c} + \xi} - 2 \alpha \gamma^{2} \xi c e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi} + \alpha \gamma^{2} c e^{\frac{\frac{\Delta}{\alpha \gamma} + \frac{\xi}{\mu}}{c}} + \alpha \gamma^{2} c e^{\Delta + \xi} - \alpha \gamma^{2} c e^{\Delta + \frac{\xi}{\mu c}} - \alpha \gamma^{2} c e^{\frac{\Delta}{\alpha \gamma c} + \xi} - 2 \alpha \gamma \mu^{2} \theta c^{3} e^{\frac{\frac{\Delta}{\alpha \gamma} + \frac{\xi}{\mu}}{c}} + 4 \alpha \gamma \mu \theta c^{2} e^{\frac{\frac{\Delta}{\alpha \gamma} + \frac{\xi}{\mu}}{c}} + \alpha \gamma \mu \xi c^{2} e^{\Delta + \xi} - \alpha \gamma \mu \xi c^{2} e^{\frac{\Delta}{\alpha \gamma c} + \xi} - 2 \alpha \gamma \theta c e^{\frac{\frac{\Delta}{\alpha \gamma} + \frac{\xi}{\mu}}{c}} - \alpha \gamma \xi c e^{\Delta + \xi} + \alpha \gamma \xi c e^{\frac{\Delta}{\alpha \gamma c} + \xi} - \alpha \gamma c e^{\frac{\frac{\Delta}{\alpha \gamma} + \frac{\xi}{\mu}}{c}} - \alpha \gamma c e^{\Delta + \xi} + \alpha \gamma c e^{\Delta + \frac{\xi}{\mu c}} + \alpha \gamma c e^{\frac{\Delta}{\alpha \gamma c} + \xi} + \gamma \mu \xi c e^{\frac{\Delta}{\alpha \gamma c} + \xi} - \gamma \mu \xi c e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi} + \gamma \mu c e^{\frac{\frac{\Delta}{\alpha \gamma} + \frac{\xi}{\mu}}{c}} - \gamma \mu c e^{\frac{\Delta}{\alpha \gamma c} + \xi} + \gamma \mu c e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi} - \gamma \mu c e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \frac{\xi}{\mu c}} - \gamma \xi e^{\frac{\Delta}{\alpha \gamma c} + \xi} + \gamma \xi e^{\Delta + \frac{\Delta}{\alpha \gamma c} + \xi} + \mu^{2} \theta c^{2} e^{\frac{\frac{\Delta}{\alpha \gamma} + \frac{\xi}{\mu}}{c}} - 2 \mu \theta c e^{\frac{\frac{\Delta}{\alpha \gamma} + \frac{\xi}{\mu}}{c}} + \theta e^{\frac{\frac{\Delta}{\alpha \gamma} + \frac{\xi}{\mu}}{c}}\right) e^{- \frac{\Delta}{\alpha \gamma c}}}{\alpha^{2} \gamma^{2} \mu^{2} c^{4} - 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} - 2 \alpha \gamma c + \mu^{2} c^{2} - 2 \mu c + 1}\)</span></p>
+</div>
+</div>
+<div id="b7bd7d32-3c7a-4483-bf25-f4cbb12e4723" class="cell" data-execution_count="72">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>U_right.subs(ξ, <span class="dv">0</span>).expand().simplify()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="72">
+<p><span class="math inline">\(\displaystyle \theta\)</span></p>
+</div>
+</div>
+<div id="7783078f-5e2a-4bca-9beb-f645428fe761" class="cell" data-execution_count="73">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>U_mid.subs(ξ, <span class="dv">0</span>).expand().simplify()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="73">
+<p><span class="math inline">\(\displaystyle \theta\)</span></p>
+</div>
+</div>
+<div id="a082ef86-fd41-4076-9b5c-d78d55590bb8" class="cell" data-execution_count="74">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>U_mid.subs(ξ, <span class="op">-</span>Δ).expand().simplify()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="74">
+<p><span class="math inline">\(\displaystyle \begin{cases} \frac{\left(\gamma \left(- \alpha c \left(\gamma - 1\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1\right) e^{\Delta \left(1 + \frac{1}{\mu c}\right)} + \alpha c \left(\gamma - 1\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1\right) + \mu c \left(\alpha^{2} \gamma c^{2} + \alpha \gamma c + \alpha c + 1\right) \left(\alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c + 1\right) + \left(\alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c + 1\right) \left(\Delta \alpha^{2} \gamma \mu c^{3} + \Delta \alpha^{2} \gamma c^{2} + \Delta \alpha \gamma \mu c^{2} + \Delta \alpha \gamma c + \Delta \alpha \mu c^{2} + \Delta \alpha c + \Delta \mu c + \Delta - \alpha^{2} \gamma \mu c^{3} - \alpha \gamma \mu c^{2} - \alpha \mu c^{2} - \mu c\right) e^{\Delta \left(1 + \frac{1}{\mu c}\right)}\right) \left(\alpha^{5} \gamma^{5} \mu^{2} c^{6} - 2 \alpha^{5} \gamma^{5} \mu c^{5} + \alpha^{5} \gamma^{5} c^{4} - \alpha^{4} \gamma^{4} \mu^{3} c^{6} + 2 \alpha^{4} \gamma^{4} \mu^{2} c^{5} - \alpha^{4} \gamma^{4} \mu c^{4} - 2 \alpha^{3} \gamma^{3} \mu^{2} c^{4} + 4 \alpha^{3} \gamma^{3} \mu c^{3} - 2 \alpha^{3} \gamma^{3} c^{2} + 2 \alpha^{2} \gamma^{2} \mu^{3} c^{4} - 4 \alpha^{2} \gamma^{2} \mu^{2} c^{3} + 2 \alpha^{2} \gamma^{2} \mu c^{2} + \alpha \gamma \mu^{2} c^{2} - 2 \alpha \gamma \mu c + \alpha \gamma - \mu^{3} c^{2} + 2 \mu^{2} c - \mu\right) e^{\frac{\Delta}{\alpha \gamma c}} - \left(\gamma \left(\Delta \alpha^{5} \gamma^{5} \mu c^{5} e^{\Delta} - \Delta \alpha^{5} \gamma^{5} \mu c^{5} e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} - \Delta \alpha^{5} \gamma^{5} c^{4} e^{\Delta} + \Delta \alpha^{5} \gamma^{5} c^{4} e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} - \Delta \alpha^{5} \gamma^{4} \mu c^{5} e^{\Delta} + \Delta \alpha^{5} \gamma^{4} c^{4} e^{\Delta} - \Delta \alpha^{4} \gamma^{4} \mu^{2} c^{5} e^{\Delta} + \Delta \alpha^{4} \gamma^{4} \mu^{2} c^{5} e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} + 2 \Delta \alpha^{4} \gamma^{4} \mu c^{4} e^{\Delta} - \Delta \alpha^{4} \gamma^{4} \mu c^{4} e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} - \Delta \alpha^{4} \gamma^{4} c^{3} e^{\Delta} + \Delta \alpha^{4} \gamma^{3} \mu^{2} c^{5} e^{\Delta} - 2 \Delta \alpha^{4} \gamma^{3} \mu c^{4} e^{\Delta} + \Delta \alpha^{4} \gamma^{3} c^{3} e^{\Delta} - \Delta \alpha^{3} \gamma^{3} \mu^{2} c^{4} e^{\Delta} + 2 \Delta \alpha^{3} \gamma^{3} \mu c^{3} e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} + \Delta \alpha^{3} \gamma^{3} c^{2} e^{\Delta} - 2 \Delta \alpha^{3} \gamma^{3} c^{2} e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} + \Delta \alpha^{3} \gamma^{2} \mu^{2} c^{4} e^{\Delta} - \Delta \alpha^{3} \gamma^{2} c^{2} e^{\Delta} + \Delta \alpha^{2} \gamma^{2} \mu^{2} c^{3} e^{\Delta} - 2 \Delta \alpha^{2} \gamma^{2} \mu^{2} c^{3} e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} - 2 \Delta \alpha^{2} \gamma^{2} \mu c^{2} e^{\Delta} + 2 \Delta \alpha^{2} \gamma^{2} \mu c^{2} e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} + \Delta \alpha^{2} \gamma^{2} c e^{\Delta} - \Delta \alpha^{2} \gamma \mu^{2} c^{3} e^{\Delta} + 2 \Delta \alpha^{2} \gamma \mu c^{2} e^{\Delta} - \Delta \alpha^{2} \gamma c e^{\Delta} + \Delta \alpha \gamma \mu^{2} c^{2} e^{\Delta} - \Delta \alpha \gamma \mu c e^{\Delta} - \Delta \alpha \gamma \mu c e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} + \Delta \alpha \gamma e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} - \Delta \alpha \mu^{2} c^{2} e^{\Delta} + \Delta \alpha \mu c e^{\Delta} + \Delta \mu^{2} c e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} - \Delta \mu e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} - \alpha^{5} \gamma^{5} \mu c^{5} e^{\Delta} + \alpha^{5} \gamma^{5} \mu c^{5} e^{\frac{\Delta}{\mu c}} + \alpha^{5} \gamma^{5} \mu c^{5} e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} - \alpha^{5} \gamma^{5} \mu c^{5} e^{\frac{\Delta \left(\alpha \gamma + \mu\right)}{\alpha \gamma \mu c}} + \alpha^{5} \gamma^{4} \mu c^{5} e^{\Delta} - \alpha^{5} \gamma^{4} \mu c^{5} e^{\frac{\Delta}{\mu c}} + \alpha^{4} \gamma^{4} \mu^{2} c^{5} e^{\Delta} - \alpha^{4} \gamma^{4} \mu^{2} c^{5} e^{\frac{\Delta}{\mu c}} - \alpha^{4} \gamma^{4} \mu^{2} c^{5} e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} + \alpha^{4} \gamma^{4} \mu^{2} c^{5} e^{\frac{\Delta \left(\alpha \gamma + \mu\right)}{\alpha \gamma \mu c}} - 2 \alpha^{4} \gamma^{4} \mu c^{4} e^{\Delta} + 2 \alpha^{4} \gamma^{4} \mu c^{4} e^{\frac{\Delta}{\mu c}} + \alpha^{4} \gamma^{4} c^{3} e^{\Delta} - \alpha^{4} \gamma^{4} c^{3} e^{\frac{\Delta}{\mu c}} - \alpha^{4} \gamma^{3} \mu^{2} c^{5} e^{\Delta} + \alpha^{4} \gamma^{3} \mu^{2} c^{5} e^{\frac{\Delta}{\mu c}} + 2 \alpha^{4} \gamma^{3} \mu c^{4} e^{\Delta} - 2 \alpha^{4} \gamma^{3} \mu c^{4} e^{\frac{\Delta}{\mu c}} - \alpha^{4} \gamma^{3} c^{3} e^{\Delta} + \alpha^{4} \gamma^{3} c^{3} e^{\frac{\Delta}{\mu c}} + 2 \alpha^{3} \gamma^{3} \mu^{2} c^{4} e^{\Delta} + 2 \alpha^{3} \gamma^{3} \mu^{2} c^{4} e^{\frac{\Delta}{\mu c}} - 4 \alpha^{3} \gamma^{3} \mu^{2} c^{4} e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha^{3} \gamma^{3} \mu c^{3} e^{\Delta} - 6 \alpha^{3} \gamma^{3} \mu c^{3} e^{\frac{\Delta}{\mu c}} + 8 \alpha^{3} \gamma^{3} \mu c^{3} e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha^{3} \gamma^{3} \mu c^{3} e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} + 2 \alpha^{3} \gamma^{3} \mu c^{3} e^{\frac{\Delta \left(\alpha \gamma + \mu\right)}{\alpha \gamma \mu c}} + 2 \alpha^{3} \gamma^{3} c^{2} e^{\Delta} + 2 \alpha^{3} \gamma^{3} c^{2} e^{\frac{\Delta}{\mu c}} - 4 \alpha^{3} \gamma^{3} c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha^{3} \gamma^{2} \mu^{2} c^{4} e^{\Delta} - 2 \alpha^{3} \gamma^{2} \mu^{2} c^{4} e^{\frac{\Delta}{\mu c}} + 4 \alpha^{3} \gamma^{2} \mu^{2} c^{4} e^{\frac{\Delta}{\alpha \gamma c}} + 2 \alpha^{3} \gamma^{2} \mu c^{3} e^{\Delta} + 6 \alpha^{3} \gamma^{2} \mu c^{3} e^{\frac{\Delta}{\mu c}} - 8 \alpha^{3} \gamma^{2} \mu c^{3} e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha^{3} \gamma^{2} c^{2} e^{\Delta} - 2 \alpha^{3} \gamma^{2} c^{2} e^{\frac{\Delta}{\mu c}} + 4 \alpha^{3} \gamma^{2} c^{2} e^{\frac{\Delta}{\alpha \gamma c}} + \alpha^{2} \gamma^{2} \mu^{2} c^{3} e^{\Delta} - \alpha^{2} \gamma^{2} \mu^{2} c^{3} e^{\frac{\Delta}{\mu c}} + 2 \alpha^{2} \gamma^{2} \mu^{2} c^{3} e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} - 2 \alpha^{2} \gamma^{2} \mu^{2} c^{3} e^{\frac{\Delta \left(\alpha \gamma + \mu\right)}{\alpha \gamma \mu c}} - 2 \alpha^{2} \gamma^{2} \mu c^{2} e^{\Delta} + 2 \alpha^{2} \gamma^{2} \mu c^{2} e^{\frac{\Delta}{\mu c}} + \alpha^{2} \gamma^{2} c e^{\Delta} - \alpha^{2} \gamma^{2} c e^{\frac{\Delta}{\mu c}} - \alpha^{2} \gamma \mu^{2} c^{3} e^{\Delta} + \alpha^{2} \gamma \mu^{2} c^{3} e^{\frac{\Delta}{\mu c}} + 2 \alpha^{2} \gamma \mu c^{2} e^{\Delta} - 2 \alpha^{2} \gamma \mu c^{2} e^{\frac{\Delta}{\mu c}} - \alpha^{2} \gamma c e^{\Delta} + \alpha^{2} \gamma c e^{\frac{\Delta}{\mu c}} - \alpha \gamma \mu c e^{\Delta} + \alpha \gamma \mu c e^{\frac{\Delta}{\mu c}} + \alpha \gamma \mu c e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} - \alpha \gamma \mu c e^{\frac{\Delta \left(\alpha \gamma + \mu\right)}{\alpha \gamma \mu c}} + \alpha \mu c e^{\Delta} - \alpha \mu c e^{\frac{\Delta}{\mu c}} - \mu^{2} c e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} + \mu^{2} c e^{\frac{\Delta \left(\alpha \gamma + \mu\right)}{\alpha \gamma \mu c}}\right) - \theta \left(\alpha^{5} \gamma^{5} \mu^{2} c^{6} - 2 \alpha^{5} \gamma^{5} \mu c^{5} + \alpha^{5} \gamma^{5} c^{4} - \alpha^{4} \gamma^{4} \mu^{3} c^{6} + 2 \alpha^{4} \gamma^{4} \mu^{2} c^{5} - \alpha^{4} \gamma^{4} \mu c^{4} - 2 \alpha^{3} \gamma^{3} \mu^{2} c^{4} + 4 \alpha^{3} \gamma^{3} \mu c^{3} - 2 \alpha^{3} \gamma^{3} c^{2} + 2 \alpha^{2} \gamma^{2} \mu^{3} c^{4} - 4 \alpha^{2} \gamma^{2} \mu^{2} c^{3} + 2 \alpha^{2} \gamma^{2} \mu c^{2} + \alpha \gamma \mu^{2} c^{2} - 2 \alpha \gamma \mu c + \alpha \gamma - \mu^{3} c^{2} + 2 \mu^{2} c - \mu\right) e^{\frac{\Delta}{\alpha \gamma c}}\right) \left(\alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c + 1\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1\right)\right) e^{- \frac{\Delta \left(\frac{1}{\mu} + \frac{1}{\alpha \gamma}\right)}{c}}}{\left(\alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c + 1\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1\right) \left(\alpha^{5} \gamma^{5} \mu^{2} c^{6} - 2 \alpha^{5} \gamma^{5} \mu c^{5} + \alpha^{5} \gamma^{5} c^{4} - \alpha^{4} \gamma^{4} \mu^{3} c^{6} + 2 \alpha^{4} \gamma^{4} \mu^{2} c^{5} - \alpha^{4} \gamma^{4} \mu c^{4} - 2 \alpha^{3} \gamma^{3} \mu^{2} c^{4} + 4 \alpha^{3} \gamma^{3} \mu c^{3} - 2 \alpha^{3} \gamma^{3} c^{2} + 2 \alpha^{2} \gamma^{2} \mu^{3} c^{4} - 4 \alpha^{2} \gamma^{2} \mu^{2} c^{3} + 2 \alpha^{2} \gamma^{2} \mu c^{2} + \alpha \gamma \mu^{2} c^{2} - 2 \alpha \gamma \mu c + \alpha \gamma - \mu^{3} c^{2} + 2 \mu^{2} c - \mu\right)} &amp; \text{for}\: \alpha \neq \frac{\mu}{\gamma} \wedge \mu \neq \frac{1}{c} \\\frac{\left(\gamma \mu \left(\mu^{2} c^{2} - 2 \mu c + 1\right) \left(\mu^{2} c^{2} + 2 \mu c + 1\right) \left(- \alpha c \left(\gamma - 1\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1\right) e^{\Delta \left(1 + \frac{1}{\mu c}\right)} + \alpha c \left(\gamma - 1\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1\right) + \mu c \left(\alpha^{2} \gamma c^{2} + \alpha \gamma c + \alpha c + 1\right) \left(\alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c + 1\right) + \left(\alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c + 1\right) \left(\Delta \alpha^{2} \gamma \mu c^{3} + \Delta \alpha^{2} \gamma c^{2} + \Delta \alpha \gamma \mu c^{2} + \Delta \alpha \gamma c + \Delta \alpha \mu c^{2} + \Delta \alpha c + \Delta \mu c + \Delta - \alpha^{2} \gamma \mu c^{3} - \alpha \gamma \mu c^{2} - \alpha \mu c^{2} - \mu c\right) e^{\Delta \left(1 + \frac{1}{\mu c}\right)}\right) \left(\alpha^{2} \gamma^{2} \mu c^{3} - \alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c - 1\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} - 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} - 2 \alpha \gamma c + \mu^{2} c^{2} - 2 \mu c + 1\right) e^{\frac{\Delta}{\alpha \gamma c}} + \left(\gamma \left(\Delta \alpha \left(\gamma - 1\right) \left(\mu^{2} c^{2} - 2 \mu c + 1\right) \left(\alpha^{2} \gamma^{2} \mu c^{3} - \alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c - 1\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} - 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} - 2 \alpha \gamma c + \mu^{2} c^{2} - 2 \mu c + 1\right) e^{\frac{\Delta}{\alpha \gamma c}} - \Delta \alpha \left(\gamma - 1\right) \left(\mu^{2} c^{2} + 2 \mu c + 1\right) \left(\alpha^{2} \gamma^{2} \mu c^{3} - \alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c - 1\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} - 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} - 2 \alpha \gamma c + \mu^{2} c^{2} - 2 \mu c + 1\right) e^{\frac{\Delta}{\alpha \gamma c}} + \Delta \mu \left(\mu^{2} c^{2} - 2 \mu c + 1\right) \left(\mu^{2} c^{2} + 2 \mu c + 1\right) \left(\alpha^{2} \gamma^{2} c^{2} e^{\Delta} - \alpha^{2} \gamma^{2} c^{2} e^{\frac{\Delta}{\mu c}} - 2 \alpha \gamma c e^{\Delta} + 2 \alpha \gamma c e^{\frac{\Delta}{\mu c}} + e^{\Delta} - e^{\frac{\Delta}{\mu c}}\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} - 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} - 2 \alpha \gamma c + \mu^{2} c^{2} - 2 \mu c + 1\right) e^{\frac{\Delta}{\alpha \gamma c}} - \alpha \mu c \left(\mu^{2} c^{2} - 2 \mu c + 1\right) \left(\mu^{2} c^{2} + 2 \mu c + 1\right) \left(\alpha^{2} \gamma^{2} \mu c^{3} - \alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c - 1\right) \left(\Delta \alpha \gamma^{2} \mu c^{2} e^{\frac{\Delta}{\mu c}} - \Delta \alpha \gamma^{2} c e^{\frac{\Delta}{\mu c}} - \Delta \alpha \gamma \mu c^{2} e^{\frac{\Delta}{\mu c}} + \Delta \alpha \gamma c e^{\frac{\Delta}{\mu c}} - \Delta \gamma \mu c e^{\frac{\Delta}{\mu c}} + \Delta \gamma e^{\frac{\Delta}{\mu c}} + \Delta \mu c e^{\frac{\Delta}{\mu c}} - \Delta e^{\frac{\Delta}{\mu c}} - \alpha \gamma^{2} \mu c^{2} e^{\Delta} + \alpha \gamma^{2} \mu c^{2} e^{\frac{\Delta}{\mu c}} + \alpha \gamma \mu c^{2} e^{\Delta} - \alpha \gamma \mu c^{2} e^{\frac{\Delta}{\mu c}} + \gamma \mu c e^{\Delta} - \gamma \mu c e^{\frac{\Delta}{\mu c}} - \mu c e^{\Delta} + \mu c e^{\frac{\Delta}{\mu c}}\right) - \alpha \mu c \left(\mu^{2} c^{2} - 2 \mu c + 1\right) \left(\mu^{2} c^{2} + 2 \mu c + 1\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} - 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} - 2 \alpha \gamma c + \mu^{2} c^{2} - 2 \mu c + 1\right) \left(\Delta \alpha \gamma^{2} c e^{\Delta} - \Delta \alpha \gamma^{2} c e^{\frac{\Delta}{\mu c}} - \Delta \alpha \gamma c e^{\Delta} + \Delta \alpha \gamma c e^{\frac{\Delta}{\mu c}} - \Delta \gamma e^{\Delta} + \Delta \gamma e^{\frac{\Delta}{\mu c}} + \Delta e^{\Delta} - \Delta e^{\frac{\Delta}{\mu c}} - \gamma e^{\Delta} + \gamma e^{\frac{\Delta}{\mu c}} + e^{\Delta} - e^{\frac{\Delta}{\mu c}}\right) + \mu \left(\mu^{2} c^{2} - 2 \mu c + 1\right) \left(\mu^{2} c^{2} + 2 \mu c + 1\right) \left(\alpha^{2} \gamma^{2} \mu c^{3} - \alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c - 1\right) \left(\Delta \alpha^{2} \gamma^{2} \mu c^{3} e^{\frac{\Delta}{\mu c}} - \Delta \alpha^{2} \gamma^{2} c^{2} e^{\frac{\Delta}{\mu c}} - 2 \Delta \alpha \gamma \mu c^{2} e^{\frac{\Delta}{\mu c}} + 2 \Delta \alpha \gamma c e^{\frac{\Delta}{\mu c}} + \Delta \mu c e^{\frac{\Delta}{\mu c}} - \Delta e^{\frac{\Delta}{\mu c}} - \alpha^{2} \gamma^{2} \mu c^{3} e^{\Delta} + \alpha^{2} \gamma^{2} \mu c^{3} e^{\frac{\Delta}{\mu c}} + 2 \alpha \gamma \mu c^{2} e^{\Delta} - 2 \alpha \gamma \mu c^{2} e^{\frac{\Delta}{\mu c}} - \mu c e^{\Delta} + \mu c e^{\frac{\Delta}{\mu c}}\right) e^{\frac{\Delta}{\alpha \gamma c}}\right) + \mu \theta \left(\mu^{2} c^{2} - 2 \mu c + 1\right) \left(\mu^{2} c^{2} + 2 \mu c + 1\right) \left(\alpha^{2} \gamma^{2} \mu c^{3} - \alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c - 1\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} - 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} - 2 \alpha \gamma c + \mu^{2} c^{2} - 2 \mu c + 1\right) e^{\frac{\Delta}{\alpha \gamma c}}\right) \left(\alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c + 1\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1\right)\right) e^{- \frac{\Delta \left(\frac{1}{\mu} + \frac{1}{\alpha \gamma}\right)}{c}}}{\mu \left(\mu^{2} c^{2} - 2 \mu c + 1\right) \left(\mu^{2} c^{2} + 2 \mu c + 1\right) \left(\alpha^{2} \gamma^{2} \mu c^{3} - \alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c - 1\right) \left(\alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c + 1\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} - 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} - 2 \alpha \gamma c + \mu^{2} c^{2} - 2 \mu c + 1\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1\right)} &amp; \text{for}\: \mu \neq \frac{1}{c} \\\frac{\left(\gamma \left(- \alpha c \left(\gamma - 1\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1\right) e^{\Delta \left(1 + \frac{1}{\mu c}\right)} + \alpha c \left(\gamma - 1\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1\right) + \mu c \left(\alpha^{2} \gamma c^{2} + \alpha \gamma c + \alpha c + 1\right) \left(\alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c + 1\right) + \left(\alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c + 1\right) \left(\Delta \alpha^{2} \gamma \mu c^{3} + \Delta \alpha^{2} \gamma c^{2} + \Delta \alpha \gamma \mu c^{2} + \Delta \alpha \gamma c + \Delta \alpha \mu c^{2} + \Delta \alpha c + \Delta \mu c + \Delta - \alpha^{2} \gamma \mu c^{3} - \alpha \gamma \mu c^{2} - \alpha \mu c^{2} - \mu c\right) e^{\Delta \left(1 + \frac{1}{\mu c}\right)}\right) \left(\alpha^{5} \gamma^{5} c^{4} - \alpha^{4} \gamma^{4} \mu c^{4} - 2 \alpha^{3} \gamma^{3} c^{2} + 2 \alpha^{2} \gamma^{2} \mu c^{2} + \alpha \gamma - \mu\right) e^{\frac{\Delta}{\alpha \gamma c}} - \frac{\left(\gamma \left(\Delta^{2} \alpha^{5} \gamma^{5} c^{4} e^{\Delta} - \Delta^{2} \alpha^{5} \gamma^{5} c^{4} e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} - \Delta^{2} \alpha^{5} \gamma^{4} c^{4} e^{\Delta} - \Delta^{2} \alpha^{4} \gamma^{4} \mu c^{4} e^{\Delta} + \Delta^{2} \alpha^{4} \gamma^{4} \mu c^{4} e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} + \Delta^{2} \alpha^{4} \gamma^{4} c^{3} e^{\Delta} + \Delta^{2} \alpha^{4} \gamma^{3} \mu c^{4} e^{\Delta} - \Delta^{2} \alpha^{4} \gamma^{3} c^{3} e^{\Delta} - \Delta^{2} \alpha^{3} \gamma^{3} \mu c^{3} e^{\Delta} - \Delta^{2} \alpha^{3} \gamma^{3} c^{2} e^{\Delta} + 2 \Delta^{2} \alpha^{3} \gamma^{3} c^{2} e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} + \Delta^{2} \alpha^{3} \gamma^{2} \mu c^{3} e^{\Delta} + \Delta^{2} \alpha^{3} \gamma^{2} c^{2} e^{\Delta} + \Delta^{2} \alpha^{2} \gamma^{2} \mu c^{2} e^{\Delta} - 2 \Delta^{2} \alpha^{2} \gamma^{2} \mu c^{2} e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} - \Delta^{2} \alpha^{2} \gamma^{2} c e^{\Delta} - \Delta^{2} \alpha^{2} \gamma \mu c^{2} e^{\Delta} + \Delta^{2} \alpha^{2} \gamma c e^{\Delta} + \Delta^{2} \alpha \gamma \mu c e^{\Delta} - \Delta^{2} \alpha \gamma e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} - \Delta^{2} \alpha \mu c e^{\Delta} + \Delta^{2} \mu e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} - 2 \Delta \alpha^{4} \gamma^{4} c^{3} e^{\Delta} + 2 \Delta \alpha^{4} \gamma^{3} c^{3} e^{\Delta} + 2 \Delta \alpha^{3} \gamma^{3} \mu c^{3} e^{\Delta} - 4 \Delta \alpha^{3} \gamma^{3} c^{2} e^{\Delta} - 2 \Delta \alpha^{3} \gamma^{2} \mu c^{3} e^{\Delta} + 4 \Delta \alpha^{3} \gamma^{2} c^{2} e^{\Delta} + 4 \Delta \alpha^{2} \gamma^{2} \mu c^{2} e^{\Delta} - 2 \Delta \alpha^{2} \gamma^{2} c e^{\Delta} - 4 \Delta \alpha^{2} \gamma \mu c^{2} e^{\Delta} + 2 \Delta \alpha^{2} \gamma c e^{\Delta} + 2 \Delta \alpha \gamma \mu c e^{\Delta} - 2 \Delta \alpha \mu c e^{\Delta} + 8 \alpha^{3} \gamma^{3} c^{2} e^{\frac{\Delta}{\mu c}} - 8 \alpha^{3} \gamma^{3} c^{2} e^{\frac{\Delta}{\alpha \gamma c}} - 8 \alpha^{3} \gamma^{2} c^{2} e^{\frac{\Delta}{\mu c}} + 8 \alpha^{3} \gamma^{2} c^{2} e^{\frac{\Delta}{\alpha \gamma c}}\right) - 2 \theta \left(\alpha^{5} \gamma^{5} c^{4} - \alpha^{4} \gamma^{4} \mu c^{4} - 2 \alpha^{3} \gamma^{3} c^{2} + 2 \alpha^{2} \gamma^{2} \mu c^{2} + \alpha \gamma - \mu\right) e^{\frac{\Delta}{\alpha \gamma c}}\right) \left(\alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c + 1\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1\right)}{2}\right) e^{- \frac{\Delta \left(\frac{1}{\mu} + \frac{1}{\alpha \gamma}\right)}{c}}}{\left(\alpha^{5} \gamma^{5} c^{4} - \alpha^{4} \gamma^{4} \mu c^{4} - 2 \alpha^{3} \gamma^{3} c^{2} + 2 \alpha^{2} \gamma^{2} \mu c^{2} + \alpha \gamma - \mu\right) \left(\alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c + 1\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1\right)} &amp; \text{for}\: \alpha \neq \frac{\mu}{\gamma} \\\frac{\left(\gamma \mu \left(\mu^{2} c^{2} - 2 \mu c + 1\right) \left(\mu^{2} c^{2} + 2 \mu c + 1\right) \left(\alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma c + 1\right) \left(- \alpha c \left(\gamma - 1\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1\right) e^{\Delta \left(1 + \frac{1}{\mu c}\right)} + \alpha c \left(\gamma - 1\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1\right) + \mu c \left(\alpha^{2} \gamma c^{2} + \alpha \gamma c + \alpha c + 1\right) \left(\alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c + 1\right) + \left(\alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c + 1\right) \left(\Delta \alpha^{2} \gamma \mu c^{3} + \Delta \alpha^{2} \gamma c^{2} + \Delta \alpha \gamma \mu c^{2} + \Delta \alpha \gamma c + \Delta \alpha \mu c^{2} + \Delta \alpha c + \Delta \mu c + \Delta - \alpha^{2} \gamma \mu c^{3} - \alpha \gamma \mu c^{2} - \alpha \mu c^{2} - \mu c\right) e^{\Delta \left(1 + \frac{1}{\mu c}\right)}\right) e^{\frac{\Delta}{\alpha \gamma c}} + \frac{\left(\Delta \gamma \left(\Delta \alpha \mu c \left(\mu^{2} c^{2} - 2 \mu c + 1\right) \left(\mu^{2} c^{2} + 2 \mu c + 1\right) \left(\alpha \gamma^{2} c - \alpha \gamma c - \gamma + 1\right) e^{\Delta} + \Delta \mu \left(\mu^{2} c^{2} - 2 \mu c + 1\right) \left(\mu^{2} c^{2} + 2 \mu c + 1\right) \left(\alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma c + 1\right) e^{\frac{\Delta \left(\alpha \gamma c + 1\right)}{\alpha \gamma c}} - 2 \alpha \mu c \left(\mu^{2} c^{2} - 2 \mu c + 1\right) \left(\mu^{2} c^{2} + 2 \mu c + 1\right) \left(\Delta \alpha \gamma^{2} c - \Delta \alpha \gamma c - \Delta \gamma + \Delta - \gamma + 1\right) e^{\Delta} + 2 \alpha \left(\gamma - 1\right) \left(\mu^{2} c^{2} - 2 \mu c + 1\right) \left(\alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma c + 1\right) e^{\frac{\Delta}{\alpha \gamma c}} - 2 \alpha \left(\gamma - 1\right) \left(\mu^{2} c^{2} + 2 \mu c + 1\right) \left(\alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma c + 1\right) e^{\frac{\Delta}{\alpha \gamma c}}\right) + 2 \mu \theta \left(\mu^{2} c^{2} - 2 \mu c + 1\right) \left(\mu^{2} c^{2} + 2 \mu c + 1\right) \left(\alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma c + 1\right) e^{\frac{\Delta}{\alpha \gamma c}}\right) \left(\alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c + 1\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1\right)}{2}\right) e^{- \frac{\Delta \left(\frac{1}{\mu} + \frac{1}{\alpha \gamma}\right)}{c}}}{\mu \left(\mu^{2} c^{2} - 2 \mu c + 1\right) \left(\mu^{2} c^{2} + 2 \mu c + 1\right) \left(\alpha^{2} \gamma^{2} c^{2} - 2 \alpha \gamma c + 1\right) \left(\alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu c + 1\right) \left(\alpha^{2} \gamma^{2} \mu^{2} c^{4} + 2 \alpha^{2} \gamma^{2} \mu c^{3} + \alpha^{2} \gamma^{2} c^{2} + 2 \alpha \gamma \mu^{2} c^{3} + 4 \alpha \gamma \mu c^{2} + 2 \alpha \gamma c + \mu^{2} c^{2} + 2 \mu c + 1\right)} &amp; \text{otherwise} \end{cases}\)</span></p>
+</div>
+</div>
+<div id="c44589dd-af49-4489-afa0-3839495b78fb" class="cell" data-execution_count="63">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>U_left.subs(ξ, <span class="op">-</span>Δ).expand().simplify()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="63">
+<p><span class="math inline">\(\displaystyle \theta e^{- \frac{\Delta}{\mu c}}\)</span></p>
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

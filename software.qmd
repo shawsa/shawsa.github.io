@@ -1,0 +1,23 @@
+---
+title: "Software"
+---
+
+# [odeiter](https://shawsa.github.io/odeiter)
+
+A python package for solving systems of differential equations using
+generators. Generators decouple the iteration from the looping body.
+This allows you to loop over the solution directly, and separtes the
+solve code (handled by `odeiter`) from the code you write to do something
+productive with the solution.
+
+![Simultaneous Solves](https://raw.githubusercontent.com/shawsa/odeiter/refs/heads/main/examples/simultaneous_solves.gif)
+
+# [Neural Fields RBF](https://github.com/shawsa/neural-fields-rbf)
+
+A framework for solving neural field equations on realistic cortical surfaces.
+This is the implementation for the paper [Radial Basis Function Techniques
+for Neural Field Models on Surfaces](https://arxiv.org/abs/2504.13379).
+
+
+
+![Cortical Simulation](https://raw.githubusercontent.com/shawsa/neural-fields-rbf/main/readme_images/cortex_figure.png)

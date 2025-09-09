@@ -1,0 +1,83 @@
+# Publications
+
+### Approximating the effect of inputs and cortical geometry on wave propagation in neural fields - PhD Thesis (2025)
+
+![Cortical Simulation](https://raw.githubusercontent.com/shawsa/neural-fields-rbf/main/readme_images/cortex_figure.png)
+
+![Cortical Simulation](https://raw.githubusercontent.com/shawsa/neural-fields-rbf/main/readme_images/cortex_figure.png)
+
+### Radial Basis Function Techniques for Neural Field Models on Surfaces
+[ArXiv](https://arxiv.org/abs/2504.13379) (2025) (submitted to SISC)
+
+We present a numerical framework for solving neural field equations on surfaces
+using Radial Basis Function (RBF) interpolation and quadrature. Neural field
+models describe the evolution of macroscopic brain activity, but modeling studies
+often overlook the complex geometry of curved cortical domains. Traditional
+numerical methods, such as finite element or spectral methods, can be
+computationally expensive and challenging to implement on irregular domains.
+In contrast, RBF-based methods provide a flexible alternative by offering
+interpolation and quadrature schemes that efficiently handle arbitrary
+geometries with high-order accuracy. We first develop an RBF-based interpolatory
+projection framework for neural field models on general surfaces. Quadrature for
+both flat and curved domains are derived in detail, ensuring high-order accuracy
+and stability as they depend on RBF hyperparameters (basis functions, augmenting
+polynomials, and stencil size). Through numerical experiments, we demonstrate
+the convergence of our method, highlighting its advantages over traditional
+approaches in terms of flexibility and accuracy. We conclude with an exposition
+of numerical simulations of spatiotemporal activity on complex surfaces,
+illustrating the method's ability to capture complex wave propagation patterns.
+
+![Interpolatory Projector](https://raw.githubusercontent.com/shawsa/shawsa.github.io/refs/heads/master/presentations/20250509_defense/media/presentation_projection_interp.gif)
+
+## Representing stimulus motion with waves in adaptive neural fields
+[Journal of Computational Neuroscience](https://link.springer.com/article/10.1007/s10827-024-00869-z)(2024)
+
+Traveling waves of neural activity emerge in cortical networks both spontaneously
+and in response to stimuli. The spatiotemporal structure of waves can indicate
+the information they encode and the physiological processes that sustain them.
+Here, we investigate the stimulus-response relationships of traveling waves
+emerging in adaptive neural fields as a model of visual motion processing.
+Neural field equations model the activity of cortical tissue as a continuum
+excitable medium, and adaptive processes provide negative feedback, generating
+localized activity patterns. Synaptic connectivity in our model is described by
+an integral kernel that weakens dynamically due to activity-dependent synaptic
+depression, leading to marginally stable traveling fronts (with attenuated backs)
+or pulses of a fixed speed. Our analysis quantifies how weak stimuli shift the
+relative position of these waves over time, characterized by a wave response
+function we obtain perturbatively. Persistent and continuously visible stimuli
+model moving visual objects. Intermittent flashes that hop across visual space
+can produce the experience of smooth apparent visual motion. Entrainment of
+waves to both kinds of moving stimuli are well characterized by our theory and
+numerical simulations, providing a mechanistic description of the perception of
+visual motion.
+
+<video controls loop muted autoplay width="100%">
+	<source src="_old-cns/presentations/20250509_defense/media/entrainment_demo.mp4"
+	 type="video/mp4"/>
+</video>
+
+### Radial Basis Function Finite Difference Approximations of the Laplace-Beltrami Operator
+[MS Thesis(2019)](https://scholarworks.boisestate.edu/td/1587/)
+
+Partial differential equations (PDEs) are used throughout science and engineering
+for modeling various phenomena. Solutions to PDEs cannot generally be represented
+analytically, and therefore must be approximated using numerical techniques; this
+is especially true for geometrically complex domains. Radial basis function
+generated finite differences (RBF-FD) is a recently developed mesh-free method
+for numerically solving PDEs that is robust, accurate, computationally efficient,
+and geometrically flexible. In the past seven years, RBF-FD methods have been
+developed for solving PDEs on surfaces, which have applications in biology,
+chemistry, geophysics, and computer graphics. These methods are advantageous,
+as they are mesh-free, operate on arbitrary configurations of points, and do not
+introduce artificial singularities, as surface parameterizations are known to do.
+In this thesis, we develop a new RBF-FD method that uses projections on the
+tangent plane to approximate the Laplace-Beltrami operator (surface Laplacian).
+We then compare this method to two other previously developed RBF-FD methods:
+the Projected Gradient method and the Hermite RBF-FD method, on a set of benchmark
+problems posed on the sphere and torus. We also provide guidelines for choosing
+the various parameters involved in the methods.
+
+<video controls loop muted autoplay width="100%">
+	<source src="_old-cns/presentations/20250509_defense/media/bunny_spots.mp4"
+	 type="video/mp4"/>
+</video>

@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>MNIST – Sage Shaw</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-9a60b6f365114c3b1e59731f49b17c37.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Sage Shaw</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">MNIST</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="8aaecb3f" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> functools <span class="im">import</span> partial, <span class="bu">reduce</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> accumulate, repeat, chain, takewhile, tee, islice</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> more_itertools</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="1656a7f1" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> initialize_weights_and_biases(num_nodes, mode<span class="op">=</span>np.random.random):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.array([</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                  (mode((m,n))<span class="op">/</span>(n<span class="op">*</span>m), np.zeros(m))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                  <span class="cf">for</span> n, m <span class="kw">in</span> <span class="bu">zip</span>(num_nodes[:<span class="op">-</span><span class="dv">1</span>], num_nodes[<span class="dv">1</span>:])])</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> affine(weights_and_biases_pair, x):</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> weights_and_biases_pair[<span class="dv">0</span>]<span class="op">@</span>x <span class="op">+</span> weights_and_biases_pair[<span class="dv">1</span>]</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> network_eval(weights_and_biases, x, f<span class="op">=</span>np.tanh):</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(weights_and_biases) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        layer_output <span class="op">=</span> f(affine(weights_and_biases[<span class="dv">0</span>],x))</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> network_eval(weights_and_biases[<span class="dv">1</span>:], </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                            layer_output, f<span class="op">=</span>f)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> quadratic_cost_derivative(a, y):</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a<span class="op">-</span>y</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cross_entropy_cost_derivative(a, y):</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (a<span class="op">-</span>y)<span class="op">/</span>(a <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span>a))</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> nn_gradient_recursion(weights_and_biases, a, y, f, df, cost_derivative<span class="op">=</span>quadratic_cost_derivative):</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(weights_and_biases) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> cost_derivative(a,y), ()</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> affine(weights_and_biases[<span class="dv">0</span>], a)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    grad_a, grad_list <span class="op">=</span> nn_gradient_recursion(</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>                               weights_and_biases[<span class="dv">1</span>:], </span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>                               f(z), </span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>                               y, </span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>                               f<span class="op">=</span>f, </span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>                               df<span class="op">=</span>df)</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    delta <span class="op">=</span> grad_a <span class="op">*</span> df(z)</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    my_grad <span class="op">=</span> (np.outer(delta, a), delta)</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (weights_and_biases[<span class="dv">0</span>][<span class="dv">0</span>].T<span class="op">@</span>delta, (my_grad,) <span class="op">+</span> grad_list)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> nn_gradient_sample(weights_and_biases, a, y, f<span class="op">=</span>np.tanh, df<span class="op">=</span><span class="kw">lambda</span> x: <span class="dv">1</span><span class="op">/</span>np.cosh(x)<span class="op">**</span><span class="dv">2</span>, cost_derivative<span class="op">=</span>quadratic_cost_derivative):</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> nn_gradient_recursion(weights_and_biases, a, y, f<span class="op">=</span>f, df<span class="op">=</span>df, cost_derivative<span class="op">=</span>cost_derivative)[<span class="dv">1</span>]</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> nn_gradient(weights_and_biases, input_data, cost_derivative<span class="op">=</span>quadratic_cost_derivative):</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span>(np.array(nn_gradient_sample(weights_and_biases, <span class="op">*</span>data)) </span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>               <span class="cf">for</span> data <span class="kw">in</span> input_data)<span class="op">/</span><span class="bu">len</span>(input_data)</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> nn_gradient_descent_sequence(params0, data, learning_rate<span class="op">=</span><span class="fl">0.01</span>, cost_derivative<span class="op">=</span>quadratic_cost_derivative):</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> param_improve(params):</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> params <span class="op">-</span> learning_rate<span class="op">*</span>nn_gradient(params, data, cost_derivative<span class="op">=</span>cost_derivative)</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> iterate_seq(params0, param_improve)</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> error(weights, x, y):</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.<span class="bu">sum</span>( (network_eval(weights,x) <span class="op">-</span> y)<span class="op">**</span><span class="dv">2</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="88539f7f" class="cell" data-execution_count="120">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># def iterate_seq(x0, update):</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#     x = x0</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#     yield x</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#     while True:</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#         x = update(x)</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#         yield x</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> iterate_seq(x0, update):</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">apply</span> <span class="op">=</span> <span class="kw">lambda</span> x, f: f(x)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> accumulate(</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>            chain((x0,), repeat(update)),</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            <span class="bu">apply</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> newton_sequence(x0, f, df):</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> newton_improve(x):</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x <span class="op">-</span> f(x)<span class="op">/</span>df(x)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> iterate_seq(x0, newton_improve)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co"># def filter_cauchy_tol(difference_function = lambda x1, x2: abs(x1 - x2), tol=1e-10):</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#     def my_filter(iterable):</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#         x1 = next(iterable)</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#         yield x1</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#         x2 = next(iterable)</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co">#         while( difference_function(x1, x2) &gt; tol ):</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co">#             x1, x2 = x2, next(iterable)</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co">#             yield x2</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co">#     return my_filter</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> filter_cauchy_tol(difference_function <span class="op">=</span> <span class="kw">lambda</span> x1, x2: <span class="bu">abs</span>(x1 <span class="op">-</span> x2), tol<span class="op">=</span><span class="fl">1e-10</span>):</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    predicate <span class="op">=</span> <span class="kw">lambda</span> tup: difference_function(<span class="op">*</span>tup) <span class="op">&gt;</span> tol</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> my_filter(iterable):</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        copy1, copy2 <span class="op">=</span> tee(iterable)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>        x0 <span class="op">=</span> <span class="bu">next</span>(copy2)</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>        filtered_pairs <span class="op">=</span> takewhile(predicate, <span class="bu">zip</span>(copy1, copy2))</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>        filtered_vals <span class="op">=</span> <span class="bu">map</span>(<span class="kw">lambda</span> tup: tup[<span class="dv">1</span>], filtered_pairs)</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> chain((x0,), filtered_vals)</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> my_filter</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="co"># def filter_f_tol(f, tol=1e-10):</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="co">#     def my_filter(iterable):</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="co">#         x = next(iterable)</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="co">#         yield x</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="co">#         while f(x) &gt; tol:</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="co">#             x = next(iterable)</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="co">#             yield x</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="co">#     return my_filter</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> filter_f_tol(f, tol<span class="op">=</span><span class="fl">1e-10</span>):</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    predicate <span class="op">=</span> <span class="kw">lambda</span> x: <span class="bu">abs</span>(f(x) <span class="op">&gt;</span> tol)</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> partial(takewhile, predicate)</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> batch_error(weights, data):</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span>( error(weights, <span class="op">*</span>d) <span class="cf">for</span> d <span class="kw">in</span> data )<span class="op">/</span><span class="bu">len</span>(data)</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> filter_max_iter(max_iter<span class="op">=</span><span class="dv">10</span><span class="op">**</span><span class="dv">3</span>):</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>    my_filter <span class="op">=</span> <span class="kw">lambda</span> iterable: islice(iterable, <span class="dv">0</span>, max_iter)</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> my_filter</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pipeline_eval(x, <span class="op">*</span>func_list):</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="bu">apply</span>(x, f):</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> f(x)</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">reduce</span>(<span class="bu">apply</span>, func_list, x)</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> data_shuffler_generator(data):</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>        random.shuffle(data)</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>        <span class="cf">yield</span> <span class="cf">from</span> data</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> nn_stochastic_gradient_descent_sequence(params0, batch_stream, learning_rate<span class="op">=</span><span class="fl">0.01</span>, cost_derivative<span class="op">=</span>quadratic_cost_derivative):</span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> param_improve(params):</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>        batch <span class="op">=</span> <span class="bu">next</span>(batch_stream)</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> params <span class="op">-</span> learning_rate<span class="op">*</span>nn_gradient(params, batch, cost_derivative<span class="op">=</span>cost_derivative)</span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> iterate_seq(params0, param_improve)</span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> batch_error(data, weights):</span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span>( error(weights, <span class="op">*</span>d) <span class="cf">for</span> d <span class="kw">in</span> data )<span class="op">/</span><span class="bu">len</span>(data)</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>batch_generator <span class="op">=</span> more_itertools.chunked</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="a9a7fb04" class="cell" data-execution_count="142">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>W0_B0 <span class="op">=</span> initialize_weights_and_biases((<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">1</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data_xor <span class="op">=</span> (</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    (np.array([<span class="dv">0</span>, <span class="dv">0</span>]), np.array([<span class="dv">0</span>])),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    (np.array([<span class="dv">1</span>, <span class="dv">0</span>]), np.array([<span class="dv">1</span>])),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    (np.array([<span class="dv">0</span>, <span class="dv">1</span>]), np.array([<span class="dv">1</span>])),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    (np.array([<span class="dv">1</span>, <span class="dv">1</span>]), np.array([<span class="dv">0</span>]))</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="1feade96" class="cell" data-execution_count="143">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> W0_B0</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>learning_rate <span class="op">=</span> <span class="fl">0.3</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># learning_rate = .0000005</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="c6d9c25f" class="cell" data-execution_count="144">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>gd_sequence <span class="op">=</span> nn_gradient_descent_sequence(weights, data_xor, learning_rate <span class="op">=</span> learning_rate, cost_derivative<span class="op">=</span>cross_entropy_cost_derivative)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython <span class="im">import</span> display</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>stride <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>max_iter <span class="op">=</span> <span class="dv">2000</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>y_max <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, weights <span class="kw">in</span> <span class="bu">enumerate</span>(</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                    islice(</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                        gd_sequence,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>                        <span class="dv">0</span>, max_iter, stride)):</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    e <span class="op">=</span> batch_error(data_xor, weights)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        y_max <span class="op">=</span> e</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">#plt.clf()</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    plt.plot(i<span class="op">*</span>stride, e, <span class="st">'b.'</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    plt.xlim(<span class="dv">0</span>, max_iter)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    plt.ylim(<span class="dv">0</span>, y_max)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    display.display(plt.gcf())</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    display.clear_output(wait<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> <span class="bu">next</span>(gd_sequence)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="functional_NN_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="38ba1932" class="cell" data-execution_count="148">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>errors <span class="op">=</span> pipeline_eval(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    nn_gradient_descent_sequence(W0_B0, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                                 data_xor, </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                                 learning_rate <span class="op">=</span> learning_rate, </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                                 cost_derivative<span class="op">=</span>cross_entropy_cost_derivative),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    filter_max_iter(<span class="dv">2000</span>),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    partial(<span class="bu">map</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            partial(batch_error, data_xor)),</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="3034588a" class="cell" data-execution_count="154">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>matplotlib.rcParams.update({<span class="st">'font.size'</span>: <span class="dv">24</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="fcf9634a" class="cell" data-execution_count="163">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>plt.plot(errors, <span class="st">'b-'</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'error'</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'iteration'</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.xticks([i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="bu">len</span>(errors)<span class="op">+</span><span class="dv">1</span>, <span class="dv">500</span>)])</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'xor Neural Network Convergence'</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'xor_nn_convergence.svg'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="functional_NN_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="5b373860" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x, y <span class="kw">in</span> data_xor:</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    y_hat <span class="op">=</span> network_eval(weights, x)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'x = </span><span class="sc">{</span>x<span class="sc">}</span><span class="ch">\t</span><span class="ss"> y = </span><span class="sc">{</span>y<span class="sc">}</span><span class="ch">\t</span><span class="ss"> output=</span><span class="sc">{</span>y_hat<span class="sc">}</span><span class="ch">\t</span><span class="ss"> error=</span><span class="sc">{</span>y_hat<span class="op">-</span>y<span class="sc">}</span><span class="ss">'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>x = [0 0]    y = [0]     output=[0.00142572]     error=[0.00142572]
+x = [1 0]    y = [1]     output=[0.97030578]     error=[-0.02969422]
+x = [0 1]    y = [1]     output=[0.97035425]     error=[-0.02964575]
+x = [1 1]    y = [0]     output=[0.00242435]     error=[0.00242435]</code></pre>
+</div>
+</div>
+<div id="0013923c" class="cell" data-execution_count="37">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> struct</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pickle</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_MNIST_labels(file_path, max_records <span class="op">=</span> <span class="va">None</span>):</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(file_path, <span class="st">'rb'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        labels <span class="op">=</span> []</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        magic_word <span class="op">=</span> <span class="bu">file</span>.read(<span class="dv">4</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>        total_label_records <span class="op">=</span> struct.unpack(<span class="st">'&gt;i'</span>,<span class="bu">file</span>.read(<span class="dv">4</span>))[<span class="dv">0</span>]</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> max_records <span class="op">==</span> <span class="va">None</span>:</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>            total_label_records <span class="op">=</span> <span class="bu">min</span>(total_label_records,max_records[<span class="dv">0</span>])</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(total_label_records):</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>            labels.append(struct.unpack(<span class="st">'B'</span>,<span class="bu">file</span>.read(<span class="dv">1</span>))[<span class="dv">0</span>])</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> labels</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_MNIST_images(file_path, max_records <span class="op">=</span> <span class="va">None</span>):</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(file_path,<span class="st">'rb'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>        images <span class="op">=</span> []</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>        magic_word <span class="op">=</span> <span class="bu">file</span>.read(<span class="dv">4</span>)</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>        total_image_records <span class="op">=</span> struct.unpack(<span class="st">'&gt;i'</span>,<span class="bu">file</span>.read(<span class="dv">4</span>))[<span class="dv">0</span>]</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>        row_size <span class="op">=</span> struct.unpack(<span class="st">'&gt;i'</span>,<span class="bu">file</span>.read(<span class="dv">4</span>))[<span class="dv">0</span>]</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>        col_size <span class="op">=</span> struct.unpack(<span class="st">'&gt;i'</span>,<span class="bu">file</span>.read(<span class="dv">4</span>))[<span class="dv">0</span>]</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> max_records <span class="op">==</span> <span class="va">None</span>:</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>            total_image_records <span class="op">=</span> <span class="bu">min</span>(total_image_records,max_records[<span class="dv">0</span>])</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(total_image_records):</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>            image <span class="op">=</span> []</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(row_size<span class="op">*</span>col_size):</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>                image.append(struct.unpack(<span class="st">'B'</span>,<span class="bu">file</span>.read(<span class="dv">1</span>))[<span class="dv">0</span>] <span class="op">/</span> <span class="dv">255</span>)</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>            images.append(np.array(image))</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> images</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> format_labels(labels):</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>    expected <span class="op">=</span> []</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(labels)):</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>        l <span class="op">=</span> [<span class="dv">0</span>] <span class="op">*</span> <span class="dv">10</span></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>        l[labels[i]] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>        expected.append(l)</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> expected</span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_image(img):</span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> r <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">28</span>):</span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> c <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">28</span>):</span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>            <span class="bu">str</span> <span class="op">=</span> <span class="st">" "</span></span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> img[r<span class="op">*</span><span class="dv">28</span><span class="op">+</span>c] <span class="op">&gt;</span> <span class="dv">150</span>: <span class="bu">str</span> <span class="op">=</span> <span class="st">'x'</span></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="bu">str</span>,end<span class="op">=</span><span class="st">''</span>)</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">''</span>)</span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> one_hot_encode(label):</span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>    ret <span class="op">=</span> np.zeros(<span class="dv">10</span>)</span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>    ret[label] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ret</span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> one_hot_decode(label):</span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">int</span>(np.argmax(label))</span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>plot_image <span class="op">=</span> <span class="kw">lambda</span> img: plt.imshow(img.reshape(<span class="dv">28</span>, <span class="dv">28</span>) <span class="op">/</span> <span class="dv">255</span>, cmap <span class="op">=</span> <span class="st">'Greys'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="b59104c9" class="cell" data-execution_count="38">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>num_records <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>MNIST_data <span class="op">=</span> <span class="bu">list</span>(<span class="bu">zip</span>(</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    read_MNIST_images(<span class="st">'MNIST/train-images.idx3-ubyte'</span>, num_records),</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    [one_hot_encode(label) <span class="cf">for</span> label <span class="kw">in</span> read_MNIST_labels(<span class="st">'MNIST/train-labels.idx1-ubyte'</span>, num_records)]</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>MNIST_test_data <span class="op">=</span> <span class="bu">list</span>(<span class="bu">zip</span>(</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    read_MNIST_images(<span class="st">'MNIST/t10k-images.idx3-ubyte'</span>),</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    [one_hot_encode(label) <span class="cf">for</span> label <span class="kw">in</span> read_MNIST_labels(<span class="st">'MNIST/t10k-labels.idx1-ubyte'</span>)]</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> data_shuffler_generator(data):</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>        random.shuffle(data)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">yield</span> <span class="cf">from</span> data</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>MNIST_data_stream <span class="op">=</span> data_shuffler_generator(MNIST_data)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">4</span>, <span class="dv">5</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, (image, label) <span class="kw">in</span> <span class="bu">zip</span>(axes.flatten(), MNIST_data_stream):</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">#plot_image(image)</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    ax.imshow(image.reshape(<span class="dv">28</span>, <span class="dv">28</span>), cmap <span class="op">=</span> <span class="st">'Greys'</span>)</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    ax.set_title(one_hot_decode(label))</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    ax.set_xticks([])</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    ax.set_yticks([])</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="functional_NN_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="21995007" class="cell" data-execution_count="75">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> initialize_weights_and_biases((<span class="dv">28</span><span class="op">**</span><span class="dv">2</span>, <span class="dv">50</span>, <span class="dv">50</span>, <span class="dv">10</span>), np.zeros)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="84407bcb" class="cell" data-execution_count="76">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>learning_rate <span class="op">=</span> <span class="fl">.005</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>batch_size <span class="op">=</span> <span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cbb646e7" class="cell" data-execution_count="77">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>sgd_sequence <span class="op">=</span> nn_stochastic_gradient_descent_sequence(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                    weights,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                    batch_generator(MNIST_data_stream, batch_size),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                    learning_rate <span class="op">=</span> learning_rate,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                    cost_derivative <span class="op">=</span> cross_entropy_cost_derivative)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython <span class="im">import</span> display</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>stride <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>max_iter <span class="op">=</span> <span class="dv">10</span><span class="op">**</span><span class="dv">2</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>y_max <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, weights <span class="kw">in</span> <span class="bu">enumerate</span>(</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>                    islice(</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>                        sgd_sequence,</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>                        <span class="dv">0</span>, max_iter, stride)):</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    e <span class="op">=</span> batch_error(MNIST_test_data[:<span class="dv">100</span>], weights)</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>        y_max <span class="op">=</span> e</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">#plt.clf()</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    plt.plot(i<span class="op">*</span>stride, e, <span class="st">'b.'</span>)</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    plt.xlim(<span class="dv">0</span>, max_iter)</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">#plt.ylim(0, y_max)</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    plt.ylim(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>    display.display(plt.gcf())</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>    display.clear_output(wait<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a><span class="co">#weights = next(sgd_sequence)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">KeyboardInterrupt</span>                         Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-77-cb185dd898f8&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg ansi-bold">     24</span>     <span class="ansi-red-fg">#plt.ylim(0, y_max)</span>
+<span class="ansi-green-fg ansi-bold">     25</span>     plt<span class="ansi-blue-fg">.</span>ylim<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">---&gt; 26</span><span class="ansi-red-fg">     </span>display<span class="ansi-blue-fg">.</span>display<span class="ansi-blue-fg">(</span>plt<span class="ansi-blue-fg">.</span>gcf<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">     27</span>     display<span class="ansi-blue-fg">.</span>clear_output<span class="ansi-blue-fg">(</span>wait<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">     28</span> 
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/IPython/core/display.py</span> in <span class="ansi-cyan-fg">display</span><span class="ansi-blue-fg">(include, exclude, metadata, transient, display_id, *objs, **kwargs)</span>
+<span class="ansi-green-fg ansi-bold">    311</span>             publish_display_data<span class="ansi-blue-fg">(</span>data<span class="ansi-blue-fg">=</span>obj<span class="ansi-blue-fg">,</span> metadata<span class="ansi-blue-fg">=</span>metadata<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">    312</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 313</span><span class="ansi-red-fg">             </span>format_dict<span class="ansi-blue-fg">,</span> md_dict <span class="ansi-blue-fg">=</span> format<span class="ansi-blue-fg">(</span>obj<span class="ansi-blue-fg">,</span> include<span class="ansi-blue-fg">=</span>include<span class="ansi-blue-fg">,</span> exclude<span class="ansi-blue-fg">=</span>exclude<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">    314</span>             <span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> format_dict<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg ansi-bold">    315</span>                 <span class="ansi-red-fg"># nothing to display (e.g. _ipython_display_ took over)</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/IPython/core/formatters.py</span> in <span class="ansi-cyan-fg">format</span><span class="ansi-blue-fg">(self, obj, include, exclude)</span>
+<span class="ansi-green-fg ansi-bold">    178</span>             md <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">None</span>
+<span class="ansi-green-fg ansi-bold">    179</span>             <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 180</span><span class="ansi-red-fg">                 </span>data <span class="ansi-blue-fg">=</span> formatter<span class="ansi-blue-fg">(</span>obj<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">    181</span>             <span class="ansi-green-fg">except</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg ansi-bold">    182</span>                 <span class="ansi-red-fg"># FIXME: log the exception</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/decorator.py</span> in <span class="ansi-cyan-fg">fun</span><span class="ansi-blue-fg">(*args, **kw)</span>
+<span class="ansi-green-fg ansi-bold">    230</span>             <span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> kwsyntax<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg ansi-bold">    231</span>                 args<span class="ansi-blue-fg">,</span> kw <span class="ansi-blue-fg">=</span> fix<span class="ansi-blue-fg">(</span>args<span class="ansi-blue-fg">,</span> kw<span class="ansi-blue-fg">,</span> sig<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 232</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">return</span> caller<span class="ansi-blue-fg">(</span>func<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span><span class="ansi-blue-fg">(</span>extras <span class="ansi-blue-fg">+</span> args<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kw<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">    233</span>     fun<span class="ansi-blue-fg">.</span>__name__ <span class="ansi-blue-fg">=</span> func<span class="ansi-blue-fg">.</span>__name__
+<span class="ansi-green-fg ansi-bold">    234</span>     fun<span class="ansi-blue-fg">.</span>__doc__ <span class="ansi-blue-fg">=</span> func<span class="ansi-blue-fg">.</span>__doc__
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/IPython/core/formatters.py</span> in <span class="ansi-cyan-fg">catch_format_error</span><span class="ansi-blue-fg">(method, self, *args, **kwargs)</span>
+<span class="ansi-green-fg ansi-bold">    222</span>     <span class="ansi-blue-fg">"""show traceback on failed format call"""</span>
+<span class="ansi-green-fg ansi-bold">    223</span>     <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 224</span><span class="ansi-red-fg">         </span>r <span class="ansi-blue-fg">=</span> method<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">    225</span>     <span class="ansi-green-fg">except</span> NotImplementedError<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg ansi-bold">    226</span>         <span class="ansi-red-fg"># don't warn on NotImplementedErrors</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/IPython/core/formatters.py</span> in <span class="ansi-cyan-fg">__call__</span><span class="ansi-blue-fg">(self, obj)</span>
+<span class="ansi-green-fg ansi-bold">    339</span>                 <span class="ansi-green-fg">pass</span>
+<span class="ansi-green-fg ansi-bold">    340</span>             <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 341</span><span class="ansi-red-fg">                 </span><span class="ansi-green-fg">return</span> printer<span class="ansi-blue-fg">(</span>obj<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">    342</span>             <span class="ansi-red-fg"># Finally look for special method names</span>
+<span class="ansi-green-fg ansi-bold">    343</span>             method <span class="ansi-blue-fg">=</span> get_real_method<span class="ansi-blue-fg">(</span>obj<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>print_method<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/IPython/core/pylabtools.py</span> in <span class="ansi-cyan-fg">&lt;lambda&gt;</span><span class="ansi-blue-fg">(fig)</span>
+<span class="ansi-green-fg ansi-bold">    246</span> 
+<span class="ansi-green-fg ansi-bold">    247</span>     <span class="ansi-green-fg">if</span> <span class="ansi-blue-fg">'png'</span> <span class="ansi-green-fg">in</span> formats<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 248</span><span class="ansi-red-fg">         </span>png_formatter<span class="ansi-blue-fg">.</span>for_type<span class="ansi-blue-fg">(</span>Figure<span class="ansi-blue-fg">,</span> <span class="ansi-green-fg">lambda</span> fig<span class="ansi-blue-fg">:</span> print_figure<span class="ansi-blue-fg">(</span>fig<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">'png'</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">    249</span>     <span class="ansi-green-fg">if</span> <span class="ansi-blue-fg">'retina'</span> <span class="ansi-green-fg">in</span> formats <span class="ansi-green-fg">or</span> <span class="ansi-blue-fg">'png2x'</span> <span class="ansi-green-fg">in</span> formats<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg ansi-bold">    250</span>         png_formatter<span class="ansi-blue-fg">.</span>for_type<span class="ansi-blue-fg">(</span>Figure<span class="ansi-blue-fg">,</span> <span class="ansi-green-fg">lambda</span> fig<span class="ansi-blue-fg">:</span> retina_figure<span class="ansi-blue-fg">(</span>fig<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/IPython/core/pylabtools.py</span> in <span class="ansi-cyan-fg">print_figure</span><span class="ansi-blue-fg">(fig, fmt, bbox_inches, **kwargs)</span>
+<span class="ansi-green-fg ansi-bold">    130</span>         FigureCanvasBase<span class="ansi-blue-fg">(</span>fig<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">    131</span> 
+<span class="ansi-green-fg">--&gt; 132</span><span class="ansi-red-fg">     </span>fig<span class="ansi-blue-fg">.</span>canvas<span class="ansi-blue-fg">.</span>print_figure<span class="ansi-blue-fg">(</span>bytes_io<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kw<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">    133</span>     data <span class="ansi-blue-fg">=</span> bytes_io<span class="ansi-blue-fg">.</span>getvalue<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">    134</span>     <span class="ansi-green-fg">if</span> fmt <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">'svg'</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/matplotlib/backend_bases.py</span> in <span class="ansi-cyan-fg">print_figure</span><span class="ansi-blue-fg">(self, filename, dpi, facecolor, edgecolor, orientation, format, bbox_inches, **kwargs)</span>
+<span class="ansi-green-fg ansi-bold">   2058</span>                     bbox_artists <span class="ansi-blue-fg">=</span> kwargs<span class="ansi-blue-fg">.</span>pop<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">"bbox_extra_artists"</span><span class="ansi-blue-fg">,</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">   2059</span>                     bbox_inches = self.figure.get_tightbbox(renderer,
+<span class="ansi-green-fg">-&gt; 2060</span><span class="ansi-red-fg">                             bbox_extra_artists=bbox_artists)
+</span><span class="ansi-green-fg ansi-bold">   2061</span>                     pad <span class="ansi-blue-fg">=</span> kwargs<span class="ansi-blue-fg">.</span>pop<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">"pad_inches"</span><span class="ansi-blue-fg">,</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">   2062</span>                     <span class="ansi-green-fg">if</span> pad <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/matplotlib/figure.py</span> in <span class="ansi-cyan-fg">get_tightbbox</span><span class="ansi-blue-fg">(self, renderer, bbox_extra_artists)</span>
+<span class="ansi-green-fg ansi-bold">   2365</span> 
+<span class="ansi-green-fg ansi-bold">   2366</span>         <span class="ansi-green-fg">for</span> a <span class="ansi-green-fg">in</span> artists<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 2367</span><span class="ansi-red-fg">             </span>bbox <span class="ansi-blue-fg">=</span> a<span class="ansi-blue-fg">.</span>get_tightbbox<span class="ansi-blue-fg">(</span>renderer<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">   2368</span>             <span class="ansi-green-fg">if</span> bbox <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span> <span class="ansi-green-fg">and</span> <span class="ansi-blue-fg">(</span>bbox<span class="ansi-blue-fg">.</span>width <span class="ansi-blue-fg">!=</span> <span class="ansi-cyan-fg">0</span> <span class="ansi-green-fg">or</span> bbox<span class="ansi-blue-fg">.</span>height <span class="ansi-blue-fg">!=</span> <span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg ansi-bold">   2369</span>                 bb<span class="ansi-blue-fg">.</span>append<span class="ansi-blue-fg">(</span>bbox<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/matplotlib/axes/_base.py</span> in <span class="ansi-cyan-fg">get_tightbbox</span><span class="ansi-blue-fg">(self, renderer, call_axes_locator, bbox_extra_artists)</span>
+<span class="ansi-green-fg ansi-bold">   4353</span> 
+<span class="ansi-green-fg ansi-bold">   4354</span>         <span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>axison<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 4355</span><span class="ansi-red-fg">             </span>bb_xaxis <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>xaxis<span class="ansi-blue-fg">.</span>get_tightbbox<span class="ansi-blue-fg">(</span>renderer<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">   4356</span>             <span class="ansi-green-fg">if</span> bb_xaxis<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg ansi-bold">   4357</span>                 bb<span class="ansi-blue-fg">.</span>append<span class="ansi-blue-fg">(</span>bb_xaxis<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/matplotlib/axis.py</span> in <span class="ansi-cyan-fg">get_tightbbox</span><span class="ansi-blue-fg">(self, renderer)</span>
+<span class="ansi-green-fg ansi-bold">   1162</span>         ticks_to_draw <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_update_ticks<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">   1163</span> 
+<span class="ansi-green-fg">-&gt; 1164</span><span class="ansi-red-fg">         </span>self<span class="ansi-blue-fg">.</span>_update_label_position<span class="ansi-blue-fg">(</span>renderer<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">   1165</span> 
+<span class="ansi-green-fg ansi-bold">   1166</span>         <span class="ansi-red-fg"># go back to just this axis's tick labels</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/matplotlib/axis.py</span> in <span class="ansi-cyan-fg">_update_label_position</span><span class="ansi-blue-fg">(self, renderer)</span>
+<span class="ansi-green-fg ansi-bold">   2012</span>         <span class="ansi-red-fg"># get bounding boxes for this axis and any siblings</span>
+<span class="ansi-green-fg ansi-bold">   2013</span>         <span class="ansi-red-fg"># that have been set by `fig.align_xlabels()`</span>
+<span class="ansi-green-fg">-&gt; 2014</span><span class="ansi-red-fg">         </span>bboxes<span class="ansi-blue-fg">,</span> bboxes2 <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_get_tick_boxes_siblings<span class="ansi-blue-fg">(</span>renderer<span class="ansi-blue-fg">=</span>renderer<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">   2015</span> 
+<span class="ansi-green-fg ansi-bold">   2016</span>         x<span class="ansi-blue-fg">,</span> y <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>label<span class="ansi-blue-fg">.</span>get_position<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/matplotlib/axis.py</span> in <span class="ansi-cyan-fg">_get_tick_boxes_siblings</span><span class="ansi-blue-fg">(self, renderer)</span>
+<span class="ansi-green-fg ansi-bold">   1996</span>         <span class="ansi-red-fg"># if we want to align labels from other axes:</span>
+<span class="ansi-green-fg ansi-bold">   1997</span>         <span class="ansi-green-fg">for</span> nn<span class="ansi-blue-fg">,</span> axx <span class="ansi-green-fg">in</span> enumerate<span class="ansi-blue-fg">(</span>grp<span class="ansi-blue-fg">.</span>get_siblings<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>axes<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 1998</span><span class="ansi-red-fg">             </span>ticks_to_draw <span class="ansi-blue-fg">=</span> axx<span class="ansi-blue-fg">.</span>xaxis<span class="ansi-blue-fg">.</span>_update_ticks<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">   1999</span>             tlb<span class="ansi-blue-fg">,</span> tlb2 <span class="ansi-blue-fg">=</span> axx<span class="ansi-blue-fg">.</span>xaxis<span class="ansi-blue-fg">.</span>_get_tick_bboxes<span class="ansi-blue-fg">(</span>ticks_to_draw<span class="ansi-blue-fg">,</span> renderer<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">   2000</span>             bboxes<span class="ansi-blue-fg">.</span>extend<span class="ansi-blue-fg">(</span>tlb<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/matplotlib/axis.py</span> in <span class="ansi-cyan-fg">_update_ticks</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-fg ansi-bold">   1085</span>             tick<span class="ansi-blue-fg">.</span>set_label1<span class="ansi-blue-fg">(</span>label<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">   1086</span>             tick<span class="ansi-blue-fg">.</span>set_label2<span class="ansi-blue-fg">(</span>label<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">-&gt; 1087</span><span class="ansi-red-fg">         </span>minor_locs <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>get_minorticklocs<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">   1088</span>         minor_labels <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>minor<span class="ansi-blue-fg">.</span>formatter<span class="ansi-blue-fg">.</span>format_ticks<span class="ansi-blue-fg">(</span>minor_locs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">   1089</span>         minor_ticks <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>get_minor_ticks<span class="ansi-blue-fg">(</span>len<span class="ansi-blue-fg">(</span>minor_locs<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/matplotlib/axis.py</span> in <span class="ansi-cyan-fg">get_minorticklocs</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-fg ansi-bold">   1327</span>         <span class="ansi-blue-fg">"""Get the array of minor tick locations in data coordinates."""</span>
+<span class="ansi-green-fg ansi-bold">   1328</span>         <span class="ansi-red-fg"># Remove minor ticks duplicating major ticks.</span>
+<span class="ansi-green-fg">-&gt; 1329</span><span class="ansi-red-fg">         </span>major_locs <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>major<span class="ansi-blue-fg">.</span>locator<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">   1330</span>         minor_locs <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>minor<span class="ansi-blue-fg">.</span>locator<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">   1331</span>         transform <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_scale<span class="ansi-blue-fg">.</span>get_transform<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/matplotlib/ticker.py</span> in <span class="ansi-cyan-fg">__call__</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-fg ansi-bold">   2076</span>     <span class="ansi-green-fg">def</span> __call__<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg ansi-bold">   2077</span>         vmin<span class="ansi-blue-fg">,</span> vmax <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>axis<span class="ansi-blue-fg">.</span>get_view_interval<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">-&gt; 2078</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>tick_values<span class="ansi-blue-fg">(</span>vmin<span class="ansi-blue-fg">,</span> vmax<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">   2079</span> 
+<span class="ansi-green-fg ansi-bold">   2080</span>     <span class="ansi-green-fg">def</span> tick_values<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> vmin<span class="ansi-blue-fg">,</span> vmax<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/matplotlib/ticker.py</span> in <span class="ansi-cyan-fg">tick_values</span><span class="ansi-blue-fg">(self, vmin, vmax)</span>
+<span class="ansi-green-fg ansi-bold">   2084</span>         vmin, vmax = mtransforms.nonsingular(
+<span class="ansi-green-fg ansi-bold">   2085</span>             vmin, vmax, expander=1e-13, tiny=1e-14)
+<span class="ansi-green-fg">-&gt; 2086</span><span class="ansi-red-fg">         </span>locs <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_raw_ticks<span class="ansi-blue-fg">(</span>vmin<span class="ansi-blue-fg">,</span> vmax<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">   2087</span> 
+<span class="ansi-green-fg ansi-bold">   2088</span>         prune <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_prune
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/matplotlib/ticker.py</span> in <span class="ansi-cyan-fg">_raw_ticks</span><span class="ansi-blue-fg">(self, vmin, vmax)</span>
+<span class="ansi-green-fg ansi-bold">   2023</span>         <span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>_nbins <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">'auto'</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg ansi-bold">   2024</span>             <span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>axis <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 2025</span><span class="ansi-red-fg">                 nbins = np.clip(self.axis.get_tick_space(),
+</span><span class="ansi-green-fg ansi-bold">   2026</span>                                 max(1, self._min_n_ticks - 1), 9)
+<span class="ansi-green-fg ansi-bold">   2027</span>             <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/matplotlib/axis.py</span> in <span class="ansi-cyan-fg">get_tick_space</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-fg ansi-bold">   2180</span>         ends <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>axes<span class="ansi-blue-fg">.</span>transAxes<span class="ansi-blue-fg">.</span>transform<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">   2181</span>         length <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">(</span>ends<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span> <span class="ansi-blue-fg">-</span> ends<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">/</span> self<span class="ansi-blue-fg">.</span>axes<span class="ansi-blue-fg">.</span>figure<span class="ansi-blue-fg">.</span>dpi<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">*</span> <span class="ansi-cyan-fg">72</span>
+<span class="ansi-green-fg">-&gt; 2182</span><span class="ansi-red-fg">         </span>tick <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_get_tick<span class="ansi-blue-fg">(</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">   2183</span>         <span class="ansi-red-fg"># There is a heuristic here that the aspect ratio of tick text</span>
+<span class="ansi-green-fg ansi-bold">   2184</span>         <span class="ansi-red-fg"># is no more than 3:1</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/matplotlib/axis.py</span> in <span class="ansi-cyan-fg">_get_tick</span><span class="ansi-blue-fg">(self, major)</span>
+<span class="ansi-green-fg ansi-bold">   1931</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg ansi-bold">   1932</span>             tick_kw <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_minor_tick_kw
+<span class="ansi-green-fg">-&gt; 1933</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> XTick<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>axes<span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">''</span><span class="ansi-blue-fg">,</span> major<span class="ansi-blue-fg">=</span>major<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>tick_kw<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">   1934</span> 
+<span class="ansi-green-fg ansi-bold">   1935</span>     <span class="ansi-green-fg">def</span> _get_label<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/matplotlib/axis.py</span> in <span class="ansi-cyan-fg">__init__</span><span class="ansi-blue-fg">(self, axes, loc, label, size, width, color, tickdir, pad, labelsize, labelcolor, zorder, gridOn, tick1On, tick2On, label1On, label2On, major, labelrotation, grid_color, grid_linestyle, grid_linewidth, grid_alpha, **kw)</span>
+<span class="ansi-green-fg ansi-bold">    159</span>         self<span class="ansi-blue-fg">.</span>tick2line <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_get_tick2line<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">    160</span>         self<span class="ansi-blue-fg">.</span>gridline <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_get_gridline<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 161</span><span class="ansi-red-fg">         </span>self<span class="ansi-blue-fg">.</span>label1 <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_get_text1<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">    162</span>         self<span class="ansi-blue-fg">.</span>label2 <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_get_text2<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">    163</span> 
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/matplotlib/axis.py</span> in <span class="ansi-cyan-fg">_get_text1</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-fg ansi-bold">    434</span>             color<span class="ansi-blue-fg">=</span>self<span class="ansi-blue-fg">.</span>_labelcolor<span class="ansi-blue-fg">,</span>
+<span class="ansi-green-fg ansi-bold">    435</span>             verticalalignment<span class="ansi-blue-fg">=</span>vert<span class="ansi-blue-fg">,</span>
+<span class="ansi-green-fg">--&gt; 436</span><span class="ansi-red-fg">             </span>horizontalalignment<span class="ansi-blue-fg">=</span>horiz<span class="ansi-blue-fg">,</span>
+<span class="ansi-green-fg ansi-bold">    437</span>             )
+<span class="ansi-green-fg ansi-bold">    438</span>         t<span class="ansi-blue-fg">.</span>set_transform<span class="ansi-blue-fg">(</span>trans<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/matplotlib/text.py</span> in <span class="ansi-cyan-fg">__init__</span><span class="ansi-blue-fg">(self, x, y, text, color, verticalalignment, horizontalalignment, multialignment, fontproperties, rotation, linespacing, rotation_mode, usetex, wrap, **kwargs)</span>
+<span class="ansi-green-fg ansi-bold">    155</span>         self<span class="ansi-blue-fg">.</span>set_usetex<span class="ansi-blue-fg">(</span>usetex<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">    156</span>         self<span class="ansi-blue-fg">.</span>set_wrap<span class="ansi-blue-fg">(</span>wrap<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 157</span><span class="ansi-red-fg">         </span>self<span class="ansi-blue-fg">.</span>set_verticalalignment<span class="ansi-blue-fg">(</span>verticalalignment<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">    158</span>         self<span class="ansi-blue-fg">.</span>set_horizontalalignment<span class="ansi-blue-fg">(</span>horizontalalignment<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">    159</span>         self<span class="ansi-blue-fg">.</span>_multialignment <span class="ansi-blue-fg">=</span> multialignment
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/matplotlib/text.py</span> in <span class="ansi-cyan-fg">set_verticalalignment</span><span class="ansi-blue-fg">(self, align)</span>
+<span class="ansi-green-fg ansi-bold">   1132</span>             align=align)
+<span class="ansi-green-fg ansi-bold">   1133</span>         self<span class="ansi-blue-fg">.</span>_verticalalignment <span class="ansi-blue-fg">=</span> align
+<span class="ansi-green-fg">-&gt; 1134</span><span class="ansi-red-fg">         </span>self<span class="ansi-blue-fg">.</span>stale <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">True</span>
+<span class="ansi-green-fg ansi-bold">   1135</span> 
+<span class="ansi-green-fg ansi-bold">   1136</span>     <span class="ansi-green-fg">def</span> set_text<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> s<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/matplotlib/artist.py</span> in <span class="ansi-cyan-fg">stale</span><span class="ansi-blue-fg">(self, val)</span>
+<span class="ansi-green-fg ansi-bold">    217</span>         <span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_stale
+<span class="ansi-green-fg ansi-bold">    218</span> 
+<span class="ansi-green-fg">--&gt; 219</span><span class="ansi-red-fg">     </span><span class="ansi-blue-fg">@</span>stale<span class="ansi-blue-fg">.</span>setter
+<span class="ansi-green-fg ansi-bold">    220</span>     <span class="ansi-green-fg">def</span> stale<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> val<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg ansi-bold">    221</span>         self<span class="ansi-blue-fg">.</span>_stale <span class="ansi-blue-fg">=</span> val
+
+<span class="ansi-red-fg">KeyboardInterrupt</span>: </pre>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="functional_NN_files/figure-html/cell-17-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="a74a3659" class="cell" data-execution_count="73">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>batch_generator</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="73">
+<pre><code>&lt;function more_itertools.more.chunked(iterable, n, strict=False)&gt;</code></pre>
+</div>
+</div>
+<div id="9c22edf6" class="cell" data-execution_count="80">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>sgd_seq <span class="op">=</span> nn_stochastic_gradient_descent_sequence(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>        weights,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>        batch_generator(MNIST_data_stream, batch_size),</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>        learning_rate <span class="op">=</span> learning_rate,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        cost_derivative <span class="op">=</span> cross_entropy_cost_derivative)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>):</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(partial(batch_error, MNIST_test_data[:<span class="dv">100</span>])(<span class="bu">next</span>(sgd_seq)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.9646761305198625
+0.9640561064030005
+0.9634391262399656
+0.9627954629397156</code></pre>
+</div>
+</div>
+<div id="25dacca3" class="cell" data-execution_count="83">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>test <span class="op">=</span> filter_max_iter(<span class="dv">10</span>)(nn_stochastic_gradient_descent_sequence(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>        weights,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>        batch_generator(MNIST_data_stream, batch_size),</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>        learning_rate <span class="op">=</span> learning_rate,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        cost_derivative <span class="op">=</span> cross_entropy_cost_derivative))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="2323f3c8" class="cell" data-execution_count="84">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> test:</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(partial(batch_error, MNIST_test_data[:<span class="dv">100</span>])(t))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.9646761305198625
+0.9640840800438828
+0.9633833203290183
+0.9627094723824651
+0.9620405896704094
+0.9613351857604526
+0.9606665852347175
+0.9600971714746368
+0.959453353490375
+0.9588272546147433</code></pre>
+</div>
+</div>
+<div id="8e43edbb" class="cell" data-execution_count="68">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>test <span class="op">=</span> <span class="bu">list</span>(filter_max_iter(<span class="dv">10</span>)(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>            nn_stochastic_gradient_descent_sequence(</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                weights,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                batch_generator(MNIST_data_stream, batch_size),</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>                learning_rate <span class="op">=</span> learning_rate,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>                cost_derivative <span class="op">=</span> cross_entropy_cost_derivative)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="f1bd2d74" class="cell" data-execution_count="72">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>partial(batch_error, MNIST_test_data[:<span class="dv">100</span>])(test[<span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-72-74a0a6f95030&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>partial<span class="ansi-blue-fg">(</span>batch_error<span class="ansi-blue-fg">,</span> MNIST_test_data<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">:</span><span class="ansi-cyan-fg">100</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">(</span>test<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">&lt;ipython-input-57-b130867a9f2f&gt;</span> in <span class="ansi-cyan-fg">batch_error</span><span class="ansi-blue-fg">(weights, data)</span>
+<span class="ansi-green-fg ansi-bold">     52</span> 
+<span class="ansi-green-fg ansi-bold">     53</span> <span class="ansi-green-fg">def</span> batch_error<span class="ansi-blue-fg">(</span>weights<span class="ansi-blue-fg">,</span> data<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">---&gt; 54</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">return</span> sum<span class="ansi-blue-fg">(</span> error<span class="ansi-blue-fg">(</span>weights<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>d<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">for</span> d <span class="ansi-green-fg">in</span> data <span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">/</span>len<span class="ansi-blue-fg">(</span>data<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">     55</span> 
+<span class="ansi-green-fg ansi-bold">     56</span> <span class="ansi-green-fg">def</span> filter_max_iter<span class="ansi-blue-fg">(</span>max_iter<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">10</span><span class="ansi-blue-fg">**</span><span class="ansi-cyan-fg">3</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">&lt;ipython-input-57-b130867a9f2f&gt;</span> in <span class="ansi-cyan-fg">&lt;genexpr&gt;</span><span class="ansi-blue-fg">(.0)</span>
+<span class="ansi-green-fg ansi-bold">     52</span> 
+<span class="ansi-green-fg ansi-bold">     53</span> <span class="ansi-green-fg">def</span> batch_error<span class="ansi-blue-fg">(</span>weights<span class="ansi-blue-fg">,</span> data<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">---&gt; 54</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">return</span> sum<span class="ansi-blue-fg">(</span> error<span class="ansi-blue-fg">(</span>weights<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>d<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">for</span> d <span class="ansi-green-fg">in</span> data <span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">/</span>len<span class="ansi-blue-fg">(</span>data<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">     55</span> 
+<span class="ansi-green-fg ansi-bold">     56</span> <span class="ansi-green-fg">def</span> filter_max_iter<span class="ansi-blue-fg">(</span>max_iter<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">10</span><span class="ansi-blue-fg">**</span><span class="ansi-cyan-fg">3</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">&lt;ipython-input-9-2d369390d074&gt;</span> in <span class="ansi-cyan-fg">error</span><span class="ansi-blue-fg">(weights, x, y)</span>
+<span class="ansi-green-fg ansi-bold">     50</span> 
+<span class="ansi-green-fg ansi-bold">     51</span> <span class="ansi-green-fg">def</span> error<span class="ansi-blue-fg">(</span>weights<span class="ansi-blue-fg">,</span> x<span class="ansi-blue-fg">,</span> y<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">---&gt; 52</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">return</span> np<span class="ansi-blue-fg">.</span>sum<span class="ansi-blue-fg">(</span> <span class="ansi-blue-fg">(</span>network_eval<span class="ansi-blue-fg">(</span>weights<span class="ansi-blue-fg">,</span>x<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">-</span> y<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">**</span><span class="ansi-cyan-fg">2</span> <span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">&lt;ipython-input-9-2d369390d074&gt;</span> in <span class="ansi-cyan-fg">network_eval</span><span class="ansi-blue-fg">(weights_and_biases, x, f)</span>
+<span class="ansi-green-fg ansi-bold">     11</span>         <span class="ansi-green-fg">return</span> x
+<span class="ansi-green-fg ansi-bold">     12</span>     <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">---&gt; 13</span><span class="ansi-red-fg">         </span>layer_output <span class="ansi-blue-fg">=</span> f<span class="ansi-blue-fg">(</span>affine<span class="ansi-blue-fg">(</span>weights_and_biases<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">,</span>x<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">     14</span>         return network_eval(weights_and_biases[1:], 
+<span class="ansi-green-fg ansi-bold">     15</span>                             layer_output, f=f)
+
+<span class="ansi-green-fg">&lt;ipython-input-9-2d369390d074&gt;</span> in <span class="ansi-cyan-fg">affine</span><span class="ansi-blue-fg">(weights_and_biases_pair, x)</span>
+<span class="ansi-green-fg ansi-bold">      5</span> 
+<span class="ansi-green-fg ansi-bold">      6</span> <span class="ansi-green-fg">def</span> affine<span class="ansi-blue-fg">(</span>weights_and_biases_pair<span class="ansi-blue-fg">,</span> x<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">----&gt; 7</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">return</span> weights_and_biases_pair<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">@</span>x <span class="ansi-blue-fg">+</span> weights_and_biases_pair<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">]</span>
+<span class="ansi-green-fg ansi-bold">      8</span> 
+<span class="ansi-green-fg ansi-bold">      9</span> <span class="ansi-green-fg">def</span> network_eval<span class="ansi-blue-fg">(</span>weights_and_biases<span class="ansi-blue-fg">,</span> x<span class="ansi-blue-fg">,</span> f<span class="ansi-blue-fg">=</span>np<span class="ansi-blue-fg">.</span>tanh<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-red-fg">ValueError</span>: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)-&gt;(n?,m?) (size 50 is different from 784)</pre>
+</div>
+</div>
+</div>
+<div id="a2e67411" class="cell" data-execution_count="88">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>evaluate_vs_testing_data <span class="op">=</span> partial(batch_error, MNIST_test_data[:<span class="dv">100</span>])</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>errors <span class="op">=</span> pipeline_eval(</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    nn_stochastic_gradient_descent_sequence(</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        weights,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>        batch_generator(MNIST_data_stream, batch_size),</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>        learning_rate <span class="op">=</span> learning_rate,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>        cost_derivative <span class="op">=</span> cross_entropy_cost_derivative),</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    partial(<span class="bu">map</span>, evaluate_vs_testing_data),</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    filter_max_iter(<span class="dv">10</span><span class="op">**</span><span class="dv">2</span>),</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="458b53ae" class="cell" data-execution_count="89">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>errors[:<span class="dv">5</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="89">
+<pre><code>[0.9646761305198625,
+ 0.9640585930478918,
+ 0.9634055838164416,
+ 0.9627506025230287,
+ 0.9621594606878134]</code></pre>
+</div>
+</div>
+<div id="603f7650" class="cell" data-execution_count="113">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>batch_error(test, MNIST_test_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="113">
+<pre><code>0.9058550432440848</code></pre>
+</div>
+</div>
+<div id="c7913455" class="cell" data-execution_count="45">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>test_batch_generator <span class="op">=</span> batch_generator(MNIST_data_stream, <span class="dv">5</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>batch <span class="op">=</span> <span class="bu">next</span>(test_batch_generator)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="ac11354c" class="cell" data-execution_count="48">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>my_sgd <span class="op">=</span> nn_gradient_descent_sequence(</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>                        weights, </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                        batch, </span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>                        learning_rate <span class="op">=</span> learning_rate)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="d6a935dd" class="cell" data-execution_count="50">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="bu">next</span>(my_sgd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/usr/local/lib/python3.6/dist-packages/ipykernel_launcher.py:36: RuntimeWarning: overflow encountered in square
+/usr/local/lib/python3.6/dist-packages/ipykernel_launcher.py:36: RuntimeWarning: overflow encountered in cosh</code></pre>
+</div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-50-5280180777d8&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>next<span class="ansi-blue-fg">(</span>my_sgd<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">&lt;ipython-input-4-7d56bee9030b&gt;</span> in <span class="ansi-cyan-fg">&lt;lambda&gt;</span><span class="ansi-blue-fg">(x, f)</span>
+<span class="ansi-green-fg ansi-bold">      7</span> 
+<span class="ansi-green-fg ansi-bold">      8</span> <span class="ansi-green-fg">def</span> iterate_seq<span class="ansi-blue-fg">(</span>x0<span class="ansi-blue-fg">,</span> update<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">----&gt; 9</span><span class="ansi-red-fg">     </span>apply <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">lambda</span> x<span class="ansi-blue-fg">,</span> f<span class="ansi-blue-fg">:</span> f<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">     10</span>     return accumulate(
+<span class="ansi-green-fg ansi-bold">     11</span>             chain<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">(</span>x0<span class="ansi-blue-fg">,</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span> repeat<span class="ansi-blue-fg">(</span>update<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span>
+
+<span class="ansi-green-fg">&lt;ipython-input-36-7217e0f8c202&gt;</span> in <span class="ansi-cyan-fg">param_improve</span><span class="ansi-blue-fg">(params)</span>
+<span class="ansi-green-fg ansi-bold">     43</span> <span class="ansi-green-fg">def</span> nn_gradient_descent_sequence<span class="ansi-blue-fg">(</span>params0<span class="ansi-blue-fg">,</span> data<span class="ansi-blue-fg">,</span> learning_rate<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">0.01</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg ansi-bold">     44</span>     <span class="ansi-green-fg">def</span> param_improve<span class="ansi-blue-fg">(</span>params<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">---&gt; 45</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> params <span class="ansi-blue-fg">-</span> learning_rate<span class="ansi-blue-fg">*</span>nn_gradient<span class="ansi-blue-fg">(</span>params<span class="ansi-blue-fg">,</span> data<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">     46</span>     <span class="ansi-green-fg">return</span> iterate_seq<span class="ansi-blue-fg">(</span>params0<span class="ansi-blue-fg">,</span> param_improve<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">     47</span> 
+
+<span class="ansi-green-fg">&lt;ipython-input-36-7217e0f8c202&gt;</span> in <span class="ansi-cyan-fg">nn_gradient</span><span class="ansi-blue-fg">(weights_and_biases, input_data)</span>
+<span class="ansi-green-fg ansi-bold">     39</span> <span class="ansi-green-fg">def</span> nn_gradient<span class="ansi-blue-fg">(</span>weights_and_biases<span class="ansi-blue-fg">,</span> input_data<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg ansi-bold">     40</span>     return sum(np.array(nn_gradient_summand(weights_and_biases, *data)) 
+<span class="ansi-green-fg">---&gt; 41</span><span class="ansi-red-fg">                for data in input_data)/len(input_data)
+</span><span class="ansi-green-fg ansi-bold">     42</span> 
+<span class="ansi-green-fg ansi-bold">     43</span> <span class="ansi-green-fg">def</span> nn_gradient_descent_sequence<span class="ansi-blue-fg">(</span>params0<span class="ansi-blue-fg">,</span> data<span class="ansi-blue-fg">,</span> learning_rate<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">0.01</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-red-fg">TypeError</span>: object of type 'itertools.islice' has no len()</pre>
+</div>
+</div>
+</div>
+<div id="7358d7f6" class="cell" data-execution_count="40">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> <span class="bu">next</span>(sgd_sequence)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/usr/local/lib/python3.6/dist-packages/ipykernel_launcher.py:36: RuntimeWarning: overflow encountered in square
+/usr/local/lib/python3.6/dist-packages/ipykernel_launcher.py:36: RuntimeWarning: overflow encountered in cosh</code></pre>
+</div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/more_itertools/more.py</span> in <span class="ansi-cyan-fg">last</span><span class="ansi-blue-fg">(iterable, default)</span>
+<span class="ansi-green-fg ansi-bold">    205</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 206</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">return</span> deque<span class="ansi-blue-fg">(</span>iterable<span class="ansi-blue-fg">,</span> maxlen<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">-</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">]</span>
+<span class="ansi-green-fg ansi-bold">    207</span>     <span class="ansi-green-fg">except</span> <span class="ansi-blue-fg">(</span>IndexError<span class="ansi-blue-fg">,</span> TypeError<span class="ansi-blue-fg">,</span> StopIteration<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">&lt;ipython-input-4-7d56bee9030b&gt;</span> in <span class="ansi-cyan-fg">&lt;lambda&gt;</span><span class="ansi-blue-fg">(x, f)</span>
+<span class="ansi-green-fg ansi-bold">      8</span> <span class="ansi-green-fg">def</span> iterate_seq<span class="ansi-blue-fg">(</span>x0<span class="ansi-blue-fg">,</span> update<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">----&gt; 9</span><span class="ansi-red-fg">     </span>apply <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">lambda</span> x<span class="ansi-blue-fg">,</span> f<span class="ansi-blue-fg">:</span> f<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">     10</span>     return accumulate(
+
+<span class="ansi-green-fg">&lt;ipython-input-36-7217e0f8c202&gt;</span> in <span class="ansi-cyan-fg">param_improve</span><span class="ansi-blue-fg">(params)</span>
+<span class="ansi-green-fg ansi-bold">     44</span>     <span class="ansi-green-fg">def</span> param_improve<span class="ansi-blue-fg">(</span>params<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">---&gt; 45</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> params <span class="ansi-blue-fg">-</span> learning_rate<span class="ansi-blue-fg">*</span>nn_gradient<span class="ansi-blue-fg">(</span>params<span class="ansi-blue-fg">,</span> data<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg ansi-bold">     46</span>     <span class="ansi-green-fg">return</span> iterate_seq<span class="ansi-blue-fg">(</span>params0<span class="ansi-blue-fg">,</span> param_improve<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">&lt;ipython-input-36-7217e0f8c202&gt;</span> in <span class="ansi-cyan-fg">nn_gradient</span><span class="ansi-blue-fg">(weights_and_biases, input_data)</span>
+<span class="ansi-green-fg ansi-bold">     40</span>     return sum(np.array(nn_gradient_summand(weights_and_biases, *data)) 
+<span class="ansi-green-fg">---&gt; 41</span><span class="ansi-red-fg">                for data in input_data)/len(input_data)
+</span><span class="ansi-green-fg ansi-bold">     42</span> 
+
+<span class="ansi-red-fg">TypeError</span>: object of type 'itertools.islice' has no len()
+
+During handling of the above exception, another exception occurred:
+
+<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-40-927c5737b7a1&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>weights <span class="ansi-blue-fg">=</span> next<span class="ansi-blue-fg">(</span>sgd_sequence<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">&lt;ipython-input-39-217f32b75f30&gt;</span> in <span class="ansi-cyan-fg">&lt;genexpr&gt;</span><span class="ansi-blue-fg">(.0)</span>
+<span class="ansi-green-fg ansi-bold">      6</span>                         batch<span class="ansi-blue-fg">,</span>
+<span class="ansi-green-fg ansi-bold">      7</span>                         learning_rate = learning_rate))
+<span class="ansi-green-fg">----&gt; 8</span><span class="ansi-red-fg">                 </span><span class="ansi-green-fg">for</span> batch <span class="ansi-green-fg">in</span>
+<span class="ansi-green-fg ansi-bold">      9</span>                 batch_generator(MNIST_data_stream, batch_size))
+
+<span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/more_itertools/more.py</span> in <span class="ansi-cyan-fg">last</span><span class="ansi-blue-fg">(iterable, default)</span>
+<span class="ansi-green-fg ansi-bold">    208</span>         <span class="ansi-green-fg">if</span> default <span class="ansi-green-fg">is</span> _marker<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg ansi-bold">    209</span>             raise ValueError(
+<span class="ansi-green-fg">--&gt; 210</span><span class="ansi-red-fg">                 </span><span class="ansi-blue-fg">'last() was called on an empty iterable, and no default was '</span>
+<span class="ansi-green-fg ansi-bold">    211</span>                 <span class="ansi-blue-fg">'provided.'</span>
+<span class="ansi-green-fg ansi-bold">    212</span>             )
+
+<span class="ansi-red-fg">ValueError</span>: last() was called on an empty iterable, and no default was provided.</pre>
+</div>
+</div>
+</div>
+<div id="439ce356" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> sin</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="75e92d27" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>ϵ <span class="op">=</span> <span class="fl">1e-10</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> x <span class="op">-</span> ϵ</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="70ad96de" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>val1 <span class="op">=</span> sin(x) <span class="op">-</span> sin(y)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(val1)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>val2 <span class="op">=</span> sin(x)<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>sin(x)<span class="op">/</span>sin(y))</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(val2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>5.403022473871033e-11
+-5.403026672509223e-11</code></pre>
+</div>
+</div>
+<div id="c6da5cfc" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>val1 <span class="op">-</span> val2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>1.0806049146380257e-10</code></pre>
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
