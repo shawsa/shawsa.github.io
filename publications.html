@@ -95,16 +95,16 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./publications.html" aria-current="page"> 
 <span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./resume.html"> 
+<span class="menu-text">Resume</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./software.html"> 
@@ -151,12 +151,9 @@ ul.task-list li input[type="checkbox"] {
 <h1>Publications</h1>
 <section id="approximating-the-effect-of-inputs-and-cortical-geometry-on-wave-propagation-in-neural-fields---phd-thesis-2025" class="level3">
 <h3 class="anchored" data-anchor-id="approximating-the-effect-of-inputs-and-cortical-geometry-on-wave-propagation-in-neural-fields---phd-thesis-2025">Approximating the effect of inputs and cortical geometry on wave propagation in neural fields - PhD Thesis (2025)</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://raw.githubusercontent.com/shawsa/neural-fields-rbf/main/readme_images/cortex_figure.png" class="img-fluid figure-img"></p>
-<figcaption>Cortical Simulation</figcaption>
-</figure>
-</div>
+<p>My doctoral research focused on neural-field equations. These are integro-differential equations (similar to PDEs) that are useful for modeling neural activity at the tissue level. My dissertation is comprised of two parts.</p>
+<p>The first part explores the dynamics of a specific neural field model that incorporates synaptic depression. This enables the model to support traveling pulse solutions and we explore the possibility of using these traveling pulses to encode the position of moving stimuli. The model successfully captures the <em><a href="https://en.wikipedia.org/wiki/Illusory_motion">apparent motion illusion</a></em> - a phenomenon where a sequence of stationary stimuli is interpreted as a single moving object.</p>
+<p>In the second part I analyse an algorithm for approximating solutions to neural field equations on realistic cortical surfaces. The algorithm uses <a href="https://en.wikipedia.org/wiki/Radial_basis_function_interpolation">radial basis function</a> quadrature to approximate the spatial operator in the equations. Here is an example simulation on a realistic cortical surface.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://raw.githubusercontent.com/shawsa/neural-fields-rbf/main/readme_images/cortex_figure.png" class="img-fluid figure-img"></p>
@@ -167,10 +164,10 @@ ul.task-list li input[type="checkbox"] {
 <section id="radial-basis-function-techniques-for-neural-field-models-on-surfaces" class="level3">
 <h3 class="anchored" data-anchor-id="radial-basis-function-techniques-for-neural-field-models-on-surfaces">Radial Basis Function Techniques for Neural Field Models on Surfaces</h3>
 <p><a href="https://arxiv.org/abs/2504.13379">ArXiv</a> (2025) (submitted to SISC)</p>
-<p>We present a numerical framework for solving neural field equations on surfaces using Radial Basis Function (RBF) interpolation and quadrature. Neural field models describe the evolution of macroscopic brain activity, but modeling studies often overlook the complex geometry of curved cortical domains. Traditional numerical methods, such as finite element or spectral methods, can be computationally expensive and challenging to implement on irregular domains. In contrast, RBF-based methods provide a flexible alternative by offering interpolation and quadrature schemes that efficiently handle arbitrary geometries with high-order accuracy. We first develop an RBF-based interpolatory projection framework for neural field models on general surfaces. Quadrature for both flat and curved domains are derived in detail, ensuring high-order accuracy and stability as they depend on RBF hyperparameters (basis functions, augmenting polynomials, and stencil size). Through numerical experiments, we demonstrate the convergence of our method, highlighting its advantages over traditional approaches in terms of flexibility and accuracy. We conclude with an exposition of numerical simulations of spatiotemporal activity on complex surfaces, illustrating the method’s ability to capture complex wave propagation patterns.</p>
+<p>We present a numerical framework for solving neural field equations on surfaces using Radial Basis Function (RBF) interpolation and quadrature. Neural field models describe the evolution of macroscopic brain activity, but modeling studies often overlook the complex geometry of curved cortical domains. Traditional numerical methods, such as finite element or spectral methods, can be computationally expensive and challenging to implement on irregular domains. In contrast, RBF-based methods provide a flexible alternative by offering interpolation and quadrature schemes that efficiently handle arbitrary geometries with high-order accuracy. We first develop an RBF-based interpolatory projection framework for neural field models on general surfaces. Quadrature for both flat and curved domains are derived in detail, ensuring high-order accuracy and stability as they depend on RBF hyper-parameters (basis functions, augmenting polynomials, and stencil size). Through numerical experiments, we demonstrate the convergence of our method, highlighting its advantages over traditional approaches in terms of flexibility and accuracy. We conclude with an exposition of numerical simulations of spatiotemporal activity on complex surfaces, illustrating the method’s ability to capture complex wave propagation patterns.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://raw.githubusercontent.com/shawsa/shawsa.github.io/refs/heads/master/presentations/20250509_defense/media/presentation_projection_interp.gif" class="img-fluid figure-img"></p>
+<p><img src="https://raw.githubusercontent.com/shawsa/shawsa.github.io/refs/heads/master/_old-cns/presentations/20250509_defense/media/presentation_projection_interp.gif" class="img-fluid figure-img"></p>
 <figcaption>Interpolatory Projector</figcaption>
 </figure>
 </div>
@@ -178,7 +175,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="representing-stimulus-motion-with-waves-in-adaptive-neural-fields" class="level2">
 <h2 class="anchored" data-anchor-id="representing-stimulus-motion-with-waves-in-adaptive-neural-fields">Representing stimulus motion with waves in adaptive neural fields</h2>
 <p><a href="https://link.springer.com/article/10.1007/s10827-024-00869-z">Journal of Computational Neuroscience</a>(2024)</p>
-<p>Traveling waves of neural activity emerge in cortical networks both spontaneously and in response to stimuli. The spatiotemporal structure of waves can indicate the information they encode and the physiological processes that sustain them. Here, we investigate the stimulus-response relationships of traveling waves emerging in adaptive neural fields as a model of visual motion processing. Neural field equations model the activity of cortical tissue as a continuum excitable medium, and adaptive processes provide negative feedback, generating localized activity patterns. Synaptic connectivity in our model is described by an integral kernel that weakens dynamically due to activity-dependent synaptic depression, leading to marginally stable traveling fronts (with attenuated backs) or pulses of a fixed speed. Our analysis quantifies how weak stimuli shift the relative position of these waves over time, characterized by a wave response function we obtain perturbatively. Persistent and continuously visible stimuli model moving visual objects. Intermittent flashes that hop across visual space can produce the experience of smooth apparent visual motion. Entrainment of waves to both kinds of moving stimuli are well characterized by our theory and numerical simulations, providing a mechanistic description of the perception of visual motion.</p>
+<p>Traveling waves of neural activity emerge in cortical networks both spontaneously and in response to stimuli. The spatio-temporal structure of waves can indicate the information they encode and the physiological processes that sustain them. Here, we investigate the stimulus-response relationships of traveling waves emerging in adaptive neural fields as a model of visual motion processing. Neural field equations model the activity of cortical tissue as a continuum excitable medium, and adaptive processes provide negative feedback, generating localized activity patterns. Synaptic connectivity in our model is described by an integral kernel that weakens dynamically due to activity-dependent synaptic depression, leading to marginally stable traveling fronts (with attenuated backs) or pulses of a fixed speed. Our analysis quantifies how weak stimuli shift the relative position of these waves over time, characterized by a wave response function we obtain perturbatively. Persistent and continuously visible stimuli model moving visual objects. Intermittent flashes that hop across visual space can produce the experience of smooth apparent visual motion. Entrainment of waves to both kinds of moving stimuli are well characterized by our theory and numerical simulations, providing a mechanistic description of the perception of visual motion.</p>
 <video controls="" loop="" muted="" autoplay="" width="100%">
 <source src="_old-cns/presentations/20250509_defense/media/entrainment_demo.mp4" type="video/mp4">
 </video>

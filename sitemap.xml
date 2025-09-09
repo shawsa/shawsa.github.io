@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://shawsa.github.io/index.html</loc>
-    <lastmod>2025-09-09T01:16:25.391Z</lastmod>
-  </url>
-  <url>
-    <loc>https://shawsa.github.io/publications.html</loc>
-    <lastmod>2025-09-09T01:07:11.666Z</lastmod>
-  </url>
-  <url>
-    <loc>https://shawsa.github.io/software.html</loc>
-    <lastmod>2025-09-09T01:15:17.182Z</lastmod>
+    <loc>https://shawsa.github.io/resume.html</loc>
+    <lastmod>2025-09-09T20:16:41.869Z</lastmod>
   </url>
   <url>
     <loc>https://shawsa.github.io/about.html</loc>
-    <lastmod>2025-09-09T01:13:22.524Z</lastmod>
+    <lastmod>2025-09-09T05:49:06.412Z</lastmod>
+  </url>
+  <url>
+    <loc>https://shawsa.github.io/software.html</loc>
+    <lastmod>2025-09-09T03:17:09.412Z</lastmod>
+  </url>
+  <url>
+    <loc>https://shawsa.github.io/publications.html</loc>
+    <lastmod>2025-09-09T05:12:04.038Z</lastmod>
+  </url>
+  <url>
+    <loc>https://shawsa.github.io/index.html</loc>
+    <lastmod>2025-09-09T20:20:01.496Z</lastmod>
   </url>
 </urlset>
