@@ -1,0 +1,181 @@
+---
+title: "Sage Shaw - Mathematician / Data scientist"
+format:
+  html:
+    html-table-processing: none
+    css: resume_table.css
+---
+
+# My mission: Do good by writing software
+
+I want to do meaningful collaborative work that has a positive impact and
+leverages my background in mathematics and scientific computing. I love to code,
+I love to learn, and I love to teach. It’s important to me to continuously
+improve and to take the time to help others improve too.
+
+# Tools and Skills
+
+<table class="skills-table">
+	<tr>
+		<th colspan="2"> Python 3</th>
+		<th colspan="2"> Development Tools</th>
+		<th colspan="2"> Mathematics and Statistics</th>
+	</tr>
+	<tr>
+		<td> IPython </td><td> MatPlotLib </td>
+		<td> Linux </td><td> uv </td>
+		<td> Modeling </td><td> Bayesian Inference </td>
+	</tr>
+	<tr>
+		<td> NumPy </td><td> Multiprocessing </td>
+		<td> Bash </td><td> PyTest </td>
+		<td> PDEs </td><td> Hypothesis Testing </td>
+	</tr>
+	<tr>
+		<td> SciPy </td><td> OOP </td>
+		<td> Git </td><td> Black </td>
+		<td> Probability </td><td> Regression </td>
+	</tr>
+	<tr>
+		<td> SymPy </td><td> FP (functools)</td>
+		<td> Vim </td><td> GitHub </td>
+		<td> Data Cleaning </td><td> Numerical Analysis </td>
+	</tr>
+</table>
+
+<table style="
+	margin-left: auto;
+	margin-right: auto;
+">
+	<tr>
+		<td rowspan="2" style="
+			text-align: center;
+			padding-right: 1em;
+		">
+			<b>Others:</b>
+		</td>
+		<td>
+			Pandas &#8226;
+			SQL &#8226;
+			Make &#8226;
+			C &#8226;
+			Java &#8226;
+			HTML &#8226;
+			CSS &#8226;
+			JavaScript &#8226;
+			VimScript
+	</tr>
+	<tr>
+		<td>
+			Excel/VBA &#8226;
+			Neural Networks (MPLs) &#8226;
+			LaTeX &#8226;
+			Jupyter &#8226;
+			MATLAB
+		</td>
+	</tr>
+</table>
+
+# Education &amp; Certifications
+<table class="education-table">
+	<tr>
+		<td>
+			PhD - Applied Mathematics
+		</td>
+		<td>
+			University of Colorado at Boulder
+		</td>
+		<td>
+			2019 - 2025
+		</td>
+		<td>
+			GPA: 3.97
+		</td>
+	</tr>
+	<tr>
+		<td>
+			MS - Mathematics
+		</td>
+		<td>
+			Boise State University
+		</td>
+		<td>
+			2017 - 2019
+		</td>
+		<td>
+			GPA: 3.96
+		</td>
+	</tr>
+	<tr>
+		<td>
+			BS - Mathematics
+		</td>
+		<td>
+			Souther Oregon University
+		</td>
+		<td>
+			2008 - 2013
+		</td>
+		<td>
+			GPA: 3.62
+		</td>
+	</tr>
+	<tr>
+		<td>
+			Actuarial Exam P
+		</td>
+		<td>
+			<i>N/A</i>
+		</td>
+		<td>
+			2014
+		</td>
+		<td>
+			Passed
+		</td>
+	</tr>
+</table>
+
+# Experience
+
+## Research Assistant (2017 - 2025)
+ - CU Boulder (2019 - 2025)
+ - Boise State (2017 - 2019)
+
+As a graduate student I conducted scientific and mathematical research under
+the supervision of my advisors. By the end, I was initiating my own research
+projects and seeing them to completion, showing that I am now a self-sufficient
+researcher.
+
+See my [published research](publications.html).
+
+**Relevant Skills:** Through this collective experience, I have attained the following skills:
+
+ - I am fluent in the Python scientific stack (NumPy, SciPy, SymPy, matplotlib, etc.)
+ - I design and implement algorithms to solve novel problems efficiently and robustly
+ - I create models that capture relevant features of the underlying domain
+ - I architect object oriented frameworks to implement, analyze, and test my models
+ - I utilize efficient data structures and fast algorithms
+ - I create professional figures for scientific publication
+ - I have 8 years of teaching experience and pride myself on my pedagogy and ethics
+
+## Associate: Express Employment Professionals (2013 - 2017)
+In addition to my administrative duties, I would automate processes with
+Excel/VBA and other Microsoft products. Often my results would impress clients
+enough to extend my contracts indefinitely, and extend my duties to encompass
+automation.
+ 
+**Accomplishments:**
+
+ - Automated a weekly 2-hour Excel task estimated to save $50k annually
+ - Create a swarm of web-crawlers using Excel/VBA and VBScript to resolve
+   errors in the company’s web portal, saving approximately 4 man-hours per day
+ - Created a web crawler and simulated mouse input to automate data aggregation
+   on a web-based data platform and generate meta-statistics justifying its
+   use, saving approximately 8 man-hours per day (they called it `RoboSage` and it
+   replaced me when I left)
+ - Created an Excel/VBA application for identifying relevant construction bids,
+   reporting information to estimators, and when approved; automatically
+   creating a project directory, copping files, and creating a OneNote notebook
+   populated with project data.
+ - Wrote SQL queries to enable faster, more accessible reporting.

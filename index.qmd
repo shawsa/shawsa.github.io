@@ -1,27 +1,26 @@
 ---
-title: "Sage Shaw"
+title: "Sage Shaw - Mathematician / Data scientist"
 ---
 
-<img src="./media/headshot_sage.png" width="30%" hspace="20" align="left">
-
-Mathematician turned data scientist. 
+<img src="./media/headshot_sage.png" width="35%" hspace="20" align="right">
 
 # Open to work!
 
-I want to do meaningful collaborative work that has a positive impact and leverages my
-background in mathematics and scientific computing. I love to code, I love to learn, and I
-love to teach. It’s important to me to continuously improve and to take the time to help others
-improve too.
+I'm looking for a Data Scientist position.
+Take a look at [my resume](resume.qmd) to see if I would be a good fit
+for your company or organization.
+If you're interested in hiring me, [send me an email](mailto:sage.b.shaw@gmail.com)!
 
-If you're interested in hiring me, send me an email!
 
-# [odeiter](https://shawsa.github.io/odeiter) now has documentation
+
+# My package [odeiter](https://shawsa.github.io/odeiter) now has documentation
 
 `odeiter` is a python package for solving systems of differential equations using
 generators. Generators decouple the iteration from the looping body.
-This allows you to loop over the solution directly, and separtes the
+This allows you to loop over the solution directly, and separates the
 solve code (handled by `odeiter`) from the code you write to do something
 productive with the solution.
 
-![Simultaneous Solves](https://raw.githubusercontent.com/shawsa/odeiter/refs/heads/main/examples/simultaneous_solves.gif)
-
+![An animation of the solution and error of several simultaneous
+  solves using different time-integrators.
+](https://raw.githubusercontent.com/shawsa/odeiter/refs/heads/main/examples/simultaneous_solves.gif)

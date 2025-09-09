@@ -1,40 +1,10 @@
 ---
-title: "Sage Shaw"
+title: "Sage Shaw - Mathematician / Data Scientist"
 ---
 
-<img src="./media/headshot_sage.png" width="30%" hspace="20" align="left">
+<img src="./media/headshot_sage.png" width="50%" hspace="20" align="left">
 
 I am an applied mathematician turned data scientist with a strong background in
-mathematics and software development.
-
-I've spent the last eight years pursuing a career as an academic mathematician
-and am looking to begin my career as a data scientist. Why the change? I have
-always been strongly motivated by my ethics, and I believe that I can do more
-good for more people by working outside of the academy.
-
-As a mathematician, I am an expert in recognizing and understanding patterns and
-I have the knowledge and skill to do so effectively. Furthermore, my eight years
-of teaching experience enables me to convey my understanding to others
-empowering us as a team. For example, it is useful to be able to recognize
-Simpson's Paradox in a data set and to avoid concluding an erroneous correlation.
-It is even more useful to also teach a team that correlation of subsets does not
-always imply correlation of the whole, and to demonstrate this with a minimal
-data set and scatter plot. For another example, when designing a class in
-software it is useful to recognize when the monoid pattern is advantageous.
-It is even more useful to be able to demonstrate this advantage by showing an
-example of method chaining in Pandas and how it makes code more readable and
-more flexible. Catch someone a fish and you’ll feed them for a day.
-Teachsomeone to fish... you know the adage. We can achieve more together than
-we can individually, and sharing knowledge is essential.
-
-I have a passion for computer programming, both as a vocation and as a hobby,
-and I love to learn. In particular, for the last 70+ years, computer scientists
-have been trying to answer the question “how should we structure our code” and
-I have learned from their mistakes and their triumphs. I understand how and when
-to use the Object Oriented and Functional paradigms. I am an advocate of the
-SOLID principles (except Liskov substitution). I use state-of-the-art development
-tools: Git, GitHub, uv, IPython, etc. In short, I write good code that is correct,
-flexible, robust, and practical.
-
-I love to do math, I love to code, and I love to teach. It’s important to me
-that my work has an impact on the world and improves the lives of people.
+mathematics and a passion for computer programming.
+I like to teach, I love to learn, and I strive to improve the lives of the
+people around me.

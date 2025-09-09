@@ -6,7 +6,7 @@ title: "Software"
 
 A python package for solving systems of differential equations using
 generators. Generators decouple the iteration from the looping body.
-This allows you to loop over the solution directly, and separtes the
+This allows you to loop over the solution directly, and separates the
 solve code (handled by `odeiter`) from the code you write to do something
 productive with the solution.
 

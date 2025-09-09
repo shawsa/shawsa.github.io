@@ -6,12 +6,12 @@ website:
     open-graph: true
     navbar:
         left:
-            - href: index.qmd
-              text: Home
             - href: about.qmd
               text: About
             - href: publications.qmd
               text: Publications
+            - href: resume.qmd
+              text: Resume
             - href: software.qmd
               text: Software
         tools:

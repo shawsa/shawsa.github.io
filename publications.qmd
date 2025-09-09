@@ -2,7 +2,24 @@
 
 ### Approximating the effect of inputs and cortical geometry on wave propagation in neural fields - PhD Thesis (2025)
 
-![Cortical Simulation](https://raw.githubusercontent.com/shawsa/neural-fields-rbf/main/readme_images/cortex_figure.png)
+My doctoral research focused on neural-field equations. These are
+integro-differential equations (similar to PDEs) that are useful for modeling
+neural activity at the tissue level.
+My dissertation is comprised of two parts.
+
+The first part explores the dynamics of a specific neural field model
+that incorporates synaptic depression. This enables the model to support
+traveling pulse solutions and we explore the possibility of using these
+traveling pulses to encode the position of moving stimuli.
+The model successfully captures the *[apparent motion illusion](https://en.wikipedia.org/wiki/Illusory_motion)* - 
+a phenomenon where a sequence of stationary stimuli is interpreted
+as a single moving object.
+
+In the second part I analyse an algorithm for approximating solutions
+to neural field equations on realistic cortical surfaces.
+The algorithm uses [radial basis function](https://en.wikipedia.org/wiki/Radial_basis_function_interpolation) quadrature to approximate
+the spatial operator in the equations. Here is an example simulation
+on a realistic cortical surface.
 
 ![Cortical Simulation](https://raw.githubusercontent.com/shawsa/neural-fields-rbf/main/readme_images/cortex_figure.png)
 
@@ -20,20 +37,20 @@ interpolation and quadrature schemes that efficiently handle arbitrary
 geometries with high-order accuracy. We first develop an RBF-based interpolatory
 projection framework for neural field models on general surfaces. Quadrature for
 both flat and curved domains are derived in detail, ensuring high-order accuracy
-and stability as they depend on RBF hyperparameters (basis functions, augmenting
+and stability as they depend on RBF hyper-parameters (basis functions, augmenting
 polynomials, and stencil size). Through numerical experiments, we demonstrate
 the convergence of our method, highlighting its advantages over traditional
 approaches in terms of flexibility and accuracy. We conclude with an exposition
 of numerical simulations of spatiotemporal activity on complex surfaces,
 illustrating the method's ability to capture complex wave propagation patterns.
 
-![Interpolatory Projector](https://raw.githubusercontent.com/shawsa/shawsa.github.io/refs/heads/master/presentations/20250509_defense/media/presentation_projection_interp.gif)
+![Interpolatory Projector](https://raw.githubusercontent.com/shawsa/shawsa.github.io/refs/heads/master/_old-cns/presentations/20250509_defense/media/presentation_projection_interp.gif)
 
 ## Representing stimulus motion with waves in adaptive neural fields
 [Journal of Computational Neuroscience](https://link.springer.com/article/10.1007/s10827-024-00869-z)(2024)
 
 Traveling waves of neural activity emerge in cortical networks both spontaneously
-and in response to stimuli. The spatiotemporal structure of waves can indicate
+and in response to stimuli. The spatio-temporal structure of waves can indicate
 the information they encode and the physiological processes that sustain them.
 Here, we investigate the stimulus-response relationships of traveling waves
 emerging in adaptive neural fields as a model of visual motion processing.

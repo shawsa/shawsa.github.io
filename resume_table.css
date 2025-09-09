@@ -1,0 +1,26 @@
+.skills-table th {
+	text-align: center;
+}
+
+.skills-table td {
+	padding-top: 0em;
+	padding-bottom: 0em;
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+.skills-table td:nth-child(2) {
+	border-right: 1px solid black;
+}
+
+.skills-table td:nth-child(4) {
+	border-right: 1px solid black;
+}
+
+.education-table {
+	margin-left: auto;
+	margin-right: auto;
+}
+.education-table td {
+	padding-right: 1em;
+}
