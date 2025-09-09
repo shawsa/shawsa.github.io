@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Generate Nodes – Sage Shaw</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-9a60b6f365114c3b1e59731f49b17c37.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Sage Shaw</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#functions" id="toc-functions" class="nav-link active" data-scroll-target="#functions">Functions</a></li>
+  <li><a href="#calculate-weights" id="toc-calculate-weights" class="nav-link" data-scroll-target="#calculate-weights">Calculate Weights</a></li>
+  <li><a href="#extra-condition" id="toc-extra-condition" class="nav-link" data-scroll-target="#extra-condition">Extra Condition</a></li>
+  <li><a href="#solve" id="toc-solve" class="nav-link" data-scroll-target="#solve">Solve</a></li>
+  <li><a href="#plot-solution" id="toc-plot-solution" class="nav-link" data-scroll-target="#plot-solution">Plot Solution</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Generate Nodes</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="cell-1" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.linalg <span class="im">as</span> la</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mpl_toolkits.mplot3d</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.spatial <span class="im">import</span> cKDTree</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.sparse <span class="im">as</span> sp</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.sparse.linalg <span class="im">import</span> spsolve, lsqr</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpy.linalg <span class="im">import</span> cond</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-2" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>stencil_size <span class="op">=</span> <span class="dv">31</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-4" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>indices <span class="op">=</span> np.arange(<span class="dv">0</span>, n, dtype<span class="op">=</span><span class="bu">float</span>) <span class="op">+</span> <span class="fl">0.5</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>phi <span class="op">=</span> np.arccos(<span class="dv">1</span> <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>indices<span class="op">/</span>n)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> np.pi <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> <span class="dv">5</span><span class="op">**</span><span class="fl">0.5</span>) <span class="op">*</span> indices</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>xs, ys, zs <span class="op">=</span> np.cos(theta) <span class="op">*</span> np.sin(phi), np.sin(theta) <span class="op">*</span> np.sin(phi), np.cos(phi)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>nodes <span class="op">=</span> [(x,y,z) <span class="cf">for</span> x,y,z <span class="kw">in</span> <span class="bu">zip</span>(xs,ys,zs)]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>projectors <span class="op">=</span> [np.eye(<span class="dv">3</span>) <span class="op">-</span> np.outer(node, node) <span class="cf">for</span> node <span class="kw">in</span> nodes]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-5" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>projectors[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>array([[ 9.99737500e-01,  6.75152549e-04, -1.61856439e-02],
+       [ 6.75152549e-04,  9.98263500e-01,  4.16296641e-02],
+       [-1.61856439e-02,  4.16296641e-02,  1.99900000e-03]])</code></pre>
+</div>
+</div>
+<div id="cell-6" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot nodes</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">5</span>,<span class="dv">5</span>))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>ax.scatter(xs[<span class="dv">1</span>:], ys[<span class="dv">1</span>:], zs[<span class="dv">1</span>:], c<span class="op">=</span><span class="st">'b'</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>ax.scatter(xs[<span class="dv">0</span>], ys[<span class="dv">0</span>], zs[<span class="dv">0</span>], c<span class="op">=</span><span class="st">'r'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="rbf-fd_sphere_steady-state-PHS_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-7" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tree <span class="op">=</span> cKDTree(np.array(nodes))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>stencils <span class="op">=</span> [tree.query(node, stencil_size)[<span class="dv">1</span>] <span class="cf">for</span> node <span class="kw">in</span> nodes]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="functions" class="level1">
+<h1>Functions</h1>
+<div id="cell-9" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dist(node1, node2):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.sqrt( (node1[<span class="dv">0</span>]<span class="op">-</span>node2[<span class="dv">0</span>])<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> (node1[<span class="dv">1</span>]<span class="op">-</span>node2[<span class="dv">1</span>])<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> (node1[<span class="dv">2</span>]<span class="op">-</span>node2[<span class="dv">2</span>])<span class="op">**</span><span class="dv">2</span> )</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> rbf(node1, node2):</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> dist(node1, node2)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> r<span class="op">**</span><span class="dv">7</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> d_phi_dr_div_r(r):</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">7</span><span class="op">*</span>r<span class="op">**</span><span class="dv">5</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> grad_rbf(node, node_center):</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> dist(node, node_center)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> d_phi_dr_div_r(r) <span class="op">*</span> (np.array(node) <span class="op">-</span> np.array(node_center))</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-10" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(grad_rbf(nodes[<span class="dv">0</span>], nodes[<span class="dv">1</span>]))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(projectors[<span class="dv">1</span>]<span class="op">@</span>grad_rbf(nodes[<span class="dv">0</span>], nodes[<span class="dv">1</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[ 1.17656970e-05 -1.04333500e-05  2.74853783e-07]
+[ 1.17032275e-05 -1.04025277e-05  1.17213042e-06]</code></pre>
+</div>
+</div>
+</section>
+<section id="calculate-weights" class="level1">
+<h1>Calculate Weights</h1>
+<div id="cell-12" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> np.zeros((n, stencil_size))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>row_index <span class="op">=</span> [r <span class="cf">for</span> r <span class="kw">in</span> <span class="bu">range</span>(n) <span class="cf">for</span> c <span class="kw">in</span> <span class="bu">range</span>(stencil_size)]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>col_index <span class="op">=</span> np.zeros((n, stencil_size))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, stencil <span class="kw">in</span> <span class="bu">enumerate</span>(stencils):</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#if i==1: break</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    col_index[i] <span class="op">=</span> stencil</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    nn <span class="op">=</span> [nodes[i] <span class="cf">for</span> i <span class="kw">in</span> stencil]</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    nn_proj <span class="op">=</span> [projectors[i] <span class="cf">for</span> i <span class="kw">in</span> stencil]</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    center_x, center_y, center_z <span class="op">=</span> nn[<span class="dv">0</span>]</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    A <span class="op">=</span> np.array([[rbf(node, node_center) <span class="cf">for</span> node <span class="kw">in</span> nn] <span class="cf">for</span> node_center <span class="kw">in</span> nn])</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    P <span class="op">=</span> np.array([[<span class="dv">1</span>, x<span class="op">-</span>center_x, y<span class="op">-</span>center_y, z<span class="op">-</span>center_z] <span class="cf">for</span> x,y,z <span class="kw">in</span> nn])</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    AP <span class="op">=</span> np.block([[A,P],[P.T, np.zeros((<span class="dv">4</span>,<span class="dv">4</span>))]])</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    rhsAs <span class="op">=</span> np.array([ [ nn_proj[j]<span class="op">@</span>grad_rbf(node, node_center) <span class="cf">for</span> j, node <span class="kw">in</span> <span class="bu">enumerate</span>(nn) ] <span class="cf">for</span> node_center <span class="kw">in</span> nn] )</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    rhsA <span class="op">=</span> rhsAs[:,:,<span class="dv">0</span>] <span class="co"># only the x coordinates</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    rhs <span class="op">=</span> np.block([[rhsA],</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>                    [np.zeros(stencil_size)],</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>                    [<span class="dv">1</span><span class="op">-</span>node[<span class="dv">0</span>]<span class="op">**</span><span class="dv">2</span> <span class="cf">for</span> node <span class="kw">in</span> nn],</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>                    [<span class="op">-</span>node[<span class="dv">0</span>]<span class="op">*</span>node[<span class="dv">1</span>] <span class="cf">for</span> node <span class="kw">in</span> nn],</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>                    [<span class="op">-</span>node[<span class="dv">0</span>]<span class="op">*</span>node[<span class="dv">2</span>] <span class="cf">for</span> node <span class="kw">in</span> nn] ])</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    weights_grad <span class="op">=</span> la.solve(AP, rhs)[:stencil_size,:].T</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    weights[i] <span class="op">=</span> (weights_grad<span class="op">@</span>weights_grad)[<span class="dv">0</span>]</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    rhsA <span class="op">=</span> rhsAs[:,:,<span class="dv">1</span>] <span class="co"># only the y coordinates</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>    rhs <span class="op">=</span> np.block([[rhsA],</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>                    [np.zeros(stencil_size)],</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>                    [<span class="op">-</span>node[<span class="dv">0</span>]<span class="op">*</span>node[<span class="dv">1</span>] <span class="cf">for</span> node <span class="kw">in</span> nn],</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>                    [<span class="dv">1</span><span class="op">-</span>node[<span class="dv">1</span>]<span class="op">**</span><span class="dv">2</span> <span class="cf">for</span> node <span class="kw">in</span> nn],</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>                    [<span class="op">-</span>node[<span class="dv">1</span>]<span class="op">*</span>node[<span class="dv">2</span>] <span class="cf">for</span> node <span class="kw">in</span> nn] ])</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>    weights_grad <span class="op">=</span> la.solve(AP, rhs)[:stencil_size,:].T</span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>    weights[i] <span class="op">+=</span> (weights_grad<span class="op">@</span>weights_grad)[<span class="dv">0</span>]</span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>    rhsA <span class="op">=</span> rhsAs[:,:,<span class="dv">2</span>] <span class="co"># only the z coordinates</span></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>    rhs <span class="op">=</span> np.block([[rhsA],</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>                    [np.zeros(stencil_size)],</span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>                    [<span class="op">-</span>node[<span class="dv">0</span>]<span class="op">*</span>node[<span class="dv">2</span>] <span class="cf">for</span> node <span class="kw">in</span> nn],</span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>                    [<span class="op">-</span>node[<span class="dv">1</span>]<span class="op">*</span>node[<span class="dv">2</span>] <span class="cf">for</span> node <span class="kw">in</span> nn],</span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>                    [<span class="dv">1</span><span class="op">-</span>node[<span class="dv">2</span>]<span class="op">**</span><span class="dv">2</span> <span class="cf">for</span> node <span class="kw">in</span> nn] ])</span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>    weights_grad <span class="op">=</span> la.solve(AP, rhs)[:stencil_size,:].T</span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>    weights[i] <span class="op">+=</span> (weights_grad<span class="op">@</span>weights_grad)[<span class="dv">0</span>]</span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> sp.csc_matrix((weights.ravel(), (row_index, col_index.ravel())),shape<span class="op">=</span>(n,n))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-13" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cond(C.todense())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>3.4925602543735652e+16</code></pre>
+</div>
+</div>
+<div id="cell-14" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(projectors[<span class="dv">0</span>])</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(projectors[<span class="dv">0</span>]<span class="op">@</span>[[<span class="dv">0</span>],[<span class="dv">1</span>],[<span class="dv">0</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[ 9.99737500e-01  6.75152549e-04 -1.61856439e-02]
+ [ 6.75152549e-04  9.98263500e-01  4.16296641e-02]
+ [-1.61856439e-02  4.16296641e-02  1.99900000e-03]]
+[[6.75152549e-04]
+ [9.98263500e-01]
+ [4.16296641e-02]]</code></pre>
+</div>
+</div>
+<div id="cell-15" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>(projectors[<span class="dv">0</span>]<span class="op">@</span>grad_rbf(nodes[<span class="dv">0</span>], nodes[<span class="dv">1</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>array([ 1.17511158e-05, -1.03958468e-05, -6.24222807e-07])</code></pre>
+</div>
+</div>
+<div id="cell-16" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>nn[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>(0.007002049456068807, 0.04415847940559732, -0.9990000000000001)</code></pre>
+</div>
+</div>
+<div id="cell-17" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>nodes[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>(0.016201845770180603, -0.04167133539544039, 0.999)</code></pre>
+</div>
+</div>
+<div id="cell-18" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>rhsAs[:,:,<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>array([[ 0.00000000e+00, -5.50036145e-06,  8.57359020e-06,
+         1.17613913e-05, -9.23267534e-06, -1.77167547e-05,
+        -2.05847892e-04, -5.86164858e-06,  1.28466740e-04,
+         3.24190144e-04,  2.72816999e-04, -4.98007447e-04,
+        -5.43270586e-04, -5.47294607e-04,  1.20101721e-03,
+        -2.66398702e-06,  1.79150021e-03,  6.17407472e-04,
+        -2.10046842e-03, -3.54544795e-03,  2.20387680e-03,
+        -3.62235672e-03,  4.78719029e-03, -2.04597404e-03,
+        -1.10616012e-03,  3.78064765e-03,  1.98360520e-03,
+         8.47416289e-03, -6.12363560e-03, -1.13772398e-02,
+         1.04953673e-02],
+       [ 5.52258190e-06,  0.00000000e+00,  4.34797516e-04,
+         2.42167440e-04,  6.81070549e-06,  4.27202820e-06,
+        -1.95196919e-05,  4.18988384e-04,  4.79021589e-04,
+         3.19651613e-03,  3.06110651e-03, -1.28977369e-05,
+        -2.12737845e-05, -1.19058797e-04,  5.71790998e-03,
+         3.58597991e-04,  1.19833266e-02,  4.62445096e-03,
+        -6.24348501e-04, -4.61283456e-04,  5.92223931e-03,
+        -3.24102506e-04,  2.31820109e-02, -1.40117357e-04,
+         1.12039022e-03,  1.87737979e-02,  4.03125590e-03,
+         2.98911493e-02, -2.93949374e-03, -3.26988052e-03,
+         4.41502438e-02],
+       [-8.62924187e-06, -4.35716969e-04,  0.00000000e+00,
+        -3.76766974e-07, -1.38272753e-04, -6.16175566e-04,
+        -2.10395412e-03, -7.12094366e-05, -6.81909633e-05,
+         1.41766547e-05,  3.23469401e-06, -5.50199500e-03,
+        -5.60304098e-03, -1.52799072e-03,  2.95055313e-04,
+        -1.97270643e-03,  7.96865301e-05, -5.06442102e-05,
+        -8.31508882e-03, -1.91422103e-02,  1.01237784e-03,
+        -2.24021670e-02,  5.43468495e-04, -1.29176416e-02,
+        -2.28947693e-03,  3.45039991e-04, -8.78193303e-04,
+         2.14395170e-03, -1.42807006e-02, -3.82701131e-02,
+         1.27914147e-03],
+       [-1.18489801e-05, -2.42539118e-04,  1.57080551e-07,
+         0.00000000e+00, -6.29283161e-04, -7.11805141e-05,
+        -3.46567930e-03, -8.37445433e-04, -1.33842973e-06,
+         1.21894133e-05,  1.27290372e-04, -4.00577608e-03,
+        -1.68072959e-03, -6.21361851e-03,  3.25571024e-05,
+        -2.23284390e-04,  5.82860821e-04, -5.10658985e-04,
+        -1.65764073e-02, -2.01763550e-02,  1.05004817e-04,
+        -1.20701786e-02,  8.25786092e-04, -3.32988443e-03,
+        -1.01701762e-02,  2.38602493e-03, -9.68620107e-05,
+         9.56925008e-04, -3.48540920e-02, -5.42229724e-02,
+         5.34033049e-03],
+       [ 9.28089164e-06, -6.39425381e-06,  1.37809059e-04,
+         6.25501616e-04,  0.00000000e+00,  1.19101919e-04,
+        -8.59976865e-06,  6.03121678e-06,  2.44886022e-03,
+         2.87096212e-03,  5.22348735e-04, -2.47665342e-04,
+        -7.57096414e-04, -8.57649142e-06,  9.53881443e-03,
+         2.36415509e-03,  4.85534050e-03,  4.30013974e-04,
+        -1.34863310e-04, -9.55403598e-04,  1.58987100e-02,
+        -3.13864777e-03,  1.70046238e-02, -2.12156119e-03,
+         2.96406425e-05,  4.03521512e-03,  1.49788655e-02,
+         3.56361731e-02, -5.52839008e-04, -2.21017511e-03,
+         1.68995273e-02],
+       [ 1.78393991e-05, -4.21203546e-06,  6.08265285e-04,
+         7.08006404e-05, -1.07614282e-04,  0.00000000e+00,
+        -5.81128565e-04,  8.31306605e-04,  2.51545835e-05,
+         1.94576112e-03,  4.69531167e-03, -1.89421437e-04,
+        -8.50085357e-06, -2.25864844e-03,  1.83903432e-03,
+         7.43635920e-06,  1.23952313e-02,  8.21657320e-03,
+        -5.11647560e-03, -2.92239450e-03,  1.01866399e-03,
+        -5.54296580e-04,  1.64397355e-02, -5.94062936e-05,
+        -1.30621038e-03,  2.68679129e-02,  4.22933476e-04,
+         1.41758590e-02, -1.56068668e-02, -1.52006431e-02,
+         4.90906389e-02],
+       [ 2.08883271e-04,  2.00295701e-05,  2.12077404e-03,
+         3.50101203e-03,  8.70505579e-06,  6.06756226e-04,
+         0.00000000e+00,  3.63347900e-04,  7.26871865e-03,
+         1.51850906e-02,  5.91262084e-03, -4.47823914e-06,
+         1.68866216e-04,  4.38254165e-05,  3.16940179e-02,
+         6.15713706e-03,  2.73367519e-02,  4.46273596e-03,
+        -4.83373232e-06, -2.62337461e-05,  3.85950618e-02,
+        -3.27003339e-04,  6.52558046e-02,  1.95569824e-03,
+         9.92380067e-04,  2.35091183e-02,  3.04971556e-02,
+         1.03110891e-01, -1.04074904e-04, -1.72346518e-04,
+         7.13856053e-02],
+       [ 5.67388573e-06, -4.08076442e-04,  7.02545802e-05,
+         8.07136699e-04, -5.99960992e-06, -7.94865503e-04,
+        -3.56291817e-04,  0.00000000e+00,  3.17556484e-03,
+         1.92876099e-03,  5.09828495e-05, -3.13396659e-03,
+        -6.68004649e-03, -1.09797989e-05,  9.04011565e-03,
+         3.71617650e-04,  1.38406266e-03,  7.93851017e-06,
+        -7.62408013e-04, -6.54337994e-03,  1.83706133e-02,
+        -1.81010826e-02,  8.85254809e-03, -1.59495697e-02,
+        -1.81879807e-05,  4.35884618e-04,  1.59675613e-02,
+         2.73932610e-02, -8.29065660e-04, -8.09159689e-03,
+         4.28298637e-03],
+       [-1.31236371e-04, -4.79212144e-04,  5.02875687e-05,
+         1.24152688e-06, -2.46751576e-03, -2.52354490e-05,
+        -7.13844465e-03, -3.40702354e-03,  0.00000000e+00,
+         2.07307969e-04,  1.15197500e-03, -4.55412487e-03,
+        -7.00686014e-04, -1.67748514e-02,  5.89066305e-05,
+        -8.36987553e-06,  3.45741378e-03, -1.07508922e-03,
+        -3.13972762e-02, -2.52945662e-02,  1.09953655e-05,
+        -8.11785277e-03,  3.13029184e-03, -7.20746799e-04,
+        -2.59811070e-02,  9.77241236e-03,  7.23071202e-07,
+         1.52953738e-03, -6.83125844e-02, -7.76415527e-02,
+         1.85122119e-02],
+       [-3.30619299e-04, -3.24943038e-03, -1.44754106e-05,
+        -1.24237462e-05, -2.93108339e-03, -1.99366228e-03,
+        -1.52905241e-02, -2.00450658e-03, -2.17423637e-04,
+         0.00000000e+00, -5.70378113e-05, -2.31527732e-02,
+        -1.45519321e-02, -1.42455583e-02,  1.92371162e-06,
+        -3.29319176e-03,  1.13932323e-05, -1.65866613e-03,
+        -4.56688903e-02, -7.20189798e-02, -6.60934135e-05,
+        -5.85118344e-02,  1.51377780e-05, -2.25003565e-02,
+        -1.74029617e-02, -1.65571544e-04, -2.71541794e-03,
+         7.65230120e-05, -7.04976881e-02, -1.39700259e-01,
+         4.83390072e-04],
+       [-2.78838498e-04, -3.09555408e-03, -3.34279778e-06,
+        -1.46230210e-04, -5.26804988e-04, -4.85645012e-03,
+        -5.89205626e-03, -5.15057543e-05, -1.43390198e-03,
+         5.24239253e-05,  0.00000000e+00, -1.85479581e-02,
+        -2.36404383e-02, -1.56006850e-03,  7.63931325e-04,
+        -1.14321939e-02,  8.57297694e-06, -1.06188712e-05,
+        -1.31916646e-02, -4.23609844e-02,  1.39899101e-03,
+        -6.45942556e-02,  4.12915830e-04, -4.72824919e-02,
+        -1.19526879e-03,  9.29336319e-06, -9.15897532e-03,
+         3.16131272e-03, -1.45997195e-02, -6.03293721e-02,
+         1.42315992e-04],
+       [ 5.07986331e-04,  1.30978704e-05,  5.58690801e-03,
+         4.06139227e-03,  2.56970756e-04,  1.93849103e-04,
+         4.83543180e-06,  3.27774414e-03,  4.63629103e-03,
+         2.31295798e-02,  1.87744830e-02,  0.00000000e+00,
+         2.05445879e-05,  1.03964790e-03,  3.31417977e-02,
+         2.31818393e-03,  5.72410749e-02,  2.03761353e-02,
+        -4.51385729e-05, -8.03160671e-06,  2.83735925e-02,
+        -6.47115457e-06,  9.92901510e-02,  5.06218703e-04,
+         7.79457571e-03,  6.86020913e-02,  1.56449805e-02,
+         1.18047238e-01, -9.23627128e-05, -3.96131852e-04,
+         1.50451051e-01],
+       [ 5.55909123e-04,  2.22341291e-05,  5.64499709e-03,
+         1.68886213e-03,  8.41828983e-04,  8.58232783e-06,
+        -1.25315830e-04,  7.17331102e-03,  7.04327049e-04,
+         1.43560480e-02,  2.35830071e-02, -1.95154008e-05,
+         0.00000000e+00,  2.25098064e-03,  1.31238460e-02,
+         9.04808009e-05,  5.37148326e-02,  3.43695135e-02,
+        -2.06272038e-03, -6.94303212e-04,  6.52963409e-03,
+        -1.39101730e-05,  6.94595869e-02,  2.45300464e-06,
+         1.56308297e-02,  9.03758992e-02,  1.79236987e-03,
+         5.96030262e-02, -6.13118147e-03, -6.12586700e-03,
+         1.56093978e-01],
+       [ 5.60993646e-04,  1.60576891e-04,  1.52838804e-03,
+         6.21966488e-03,  8.84953820e-06,  2.57812024e-03,
+        -4.13855467e-05,  1.10421294e-05,  1.69192269e-02,
+         1.39258197e-02,  1.55244571e-03, -9.16514201e-04,
+        -1.22711949e-03,  0.00000000e+00,  4.05603628e-02,
+         1.69980966e-02,  1.21910691e-02,  2.80004753e-04,
+        -2.78732540e-05, -1.43905262e-03,  6.57466013e-02,
+        -7.36722523e-03,  4.55251904e-02,  1.06844807e-03,
+         4.50747024e-06,  4.18880015e-03,  6.44939699e-02,
+         1.02739919e-01, -1.63555061e-05, -1.07661841e-03,
+         2.48231312e-02],
+       [-1.23988402e-03, -5.84712988e-03, -3.12582666e-04,
+        -3.33122771e-05, -9.88219283e-03, -1.88326299e-03,
+        -3.21388096e-02, -9.69799843e-03, -6.03330901e-05,
+        -2.14110412e-06, -9.08440852e-04, -3.33361963e-02,
+        -1.33349736e-02, -4.22125568e-02,  0.00000000e+00,
+        -1.39615659e-03,  5.84196451e-05, -9.25768902e-03,
+        -9.46504105e-02, -1.09219381e-01, -5.88144936e-06,
+        -6.24651237e-02,  6.59679924e-05, -1.44184571e-02,
+        -5.50670356e-02, -2.25417154e-03, -7.06973100e-04,
+         9.82758178e-06, -1.55973443e-01, -2.31780233e-01,
+         1.55444973e-03],
+       [-2.40342061e-07, -3.50880254e-04,  1.86195913e-03,
+         2.17974521e-04, -2.24983130e-03, -7.39990670e-06,
+        -5.80897155e-03, -4.52615464e-04,  8.31135354e-06,
+         3.13316403e-03,  1.03504130e-02, -2.23434506e-03,
+        -8.94833433e-05, -1.53548476e-02,  1.35035682e-03,
+         0.00000000e+00,  2.07856293e-02,  1.42004223e-02,
+        -2.67098836e-02, -1.50685265e-02,  1.87585903e-04,
+        -2.22072624e-03,  1.96233130e-02, -2.03263388e-05,
+        -1.79166248e-02,  4.67373653e-02,  7.43100072e-06,
+         1.04005621e-02, -6.21340789e-02, -5.68796082e-02,
+         7.32922971e-02],
+       [-1.85721862e-03, -1.23709250e-02, -8.20274258e-05,
+        -6.21319221e-04, -4.98940211e-03, -1.30634211e-02,
+        -2.77852236e-02, -1.42748704e-03, -3.87021099e-03,
+        -1.25121842e-05, -8.75547328e-06, -5.79289494e-02,
+        -5.55211435e-02, -1.25076110e-02, -1.11828235e-04,
+        -2.30036417e-02,  0.00000000e+00, -4.42469220e-04,
+        -5.74473679e-02, -1.28318049e-01, -2.26353212e-03,
+        -1.50213474e-01,  7.70573911e-06, -8.97697881e-02,
+        -9.66711548e-03, -3.05832847e-05, -2.09511434e-02,
+         3.22978870e-04, -6.43419397e-02, -1.87030258e-01,
+         5.67434635e-06],
+       [-6.43852250e-04, -4.62214699e-03,  4.19203451e-05,
+         3.01463861e-04, -4.31380860e-04, -8.49327495e-03,
+        -4.39180950e-03, -7.98797917e-06, -2.99841823e-04,
+         1.49943815e-03,  1.03346614e-05, -1.96711485e-02,
+        -3.33785009e-02, -2.79431822e-04,  7.79033621e-03,
+        -1.66741643e-02,  4.23200524e-04,  0.00000000e+00,
+        -5.86893511e-03, -3.29229707e-02,  1.46438302e-02,
+        -7.27357568e-02,  4.74096592e-03, -6.69805022e-02,
+        -5.13737565e-05,  1.07998710e-05, -2.77732311e-03,
+         2.03163823e-02, -3.71941350e-03, -3.36005710e-02,
+         7.25640281e-04],
+       [ 2.17411867e-03,  6.63986401e-04,  8.48744632e-03,
+         1.70477681e-02,  1.38262443e-04,  5.55138925e-03,
+         5.02020097e-06,  7.80875319e-04,  3.28084463e-02,
+         4.58835183e-02,  1.33759568e-02,  6.43309584e-05,
+         2.62270210e-03,  2.85284179e-05,  9.45612730e-02,
+         2.95692256e-02,  5.71411146e-02,  6.00428310e-03,
+         0.00000000e+00, -2.92324586e-05,  1.20280606e-01,
+        -2.63530958e-04,  1.41665007e-01,  1.34232259e-02,
+         6.32288779e-04,  3.34580846e-02,  1.02670868e-01,
+         2.38220229e-01,  1.20256486e-06, -1.13230544e-05,
+         1.13251338e-01],
+       [ 3.68763215e-03,  4.79434897e-04,  1.98170763e-02,
+         2.09160009e-02,  9.96769363e-04,  3.08148256e-03,
+         2.70508867e-05,  6.89886392e-03,  2.64617980e-02,
+         7.34566297e-02,  4.37691680e-02,  8.29113442e-06,
+         7.52282440e-04,  1.55284007e-03,  1.10989327e-01,
+         1.62006860e-02,  1.29710144e-01,  3.47010864e-02,
+         3.20101617e-05,  0.00000000e+00,  1.05561307e-01,
+         3.39217196e-05,  2.36579638e-01,  5.07211353e-03,
+         1.01509270e-02,  1.18158499e-01,  6.69377372e-02,
+         3.04638884e-01,  5.66262304e-04, -6.36151681e-06,
+         2.75502120e-01],
+       [-2.30572318e-03, -6.04020393e-03, -1.17674995e-03,
+        -1.11096635e-04, -1.65624324e-02, -1.03775287e-03,
+        -3.88187804e-02, -2.03961425e-02, -1.11859766e-05,
+         3.94925385e-05, -2.52669439e-03, -2.82918985e-02,
+        -6.58016882e-03, -6.83992755e-02,  5.49111201e-06,
+        -1.90690861e-04,  1.46135200e-03, -2.03783108e-02,
+        -1.18549887e-01, -1.02474858e-01,  0.00000000e+00,
+        -3.90444057e-02,  1.27297097e-03, -4.22503312e-03,
+        -9.57676099e-02, -2.47495278e-03, -2.23646272e-05,
+         2.32183570e-04, -2.13545675e-01, -2.47249708e-01,
+         9.95826575e-03],
+       [ 3.77601738e-03,  3.37226435e-04,  2.31808298e-02,
+         1.23980224e-02,  3.39942377e-03,  5.70908176e-04,
+         3.72819205e-04,  1.97286282e-02,  8.33494886e-03,
+         5.91850239e-02,  6.67807841e-02,  6.84553599e-06,
+         1.42175822e-05,  8.91605732e-03,  6.28194029e-02,
+         2.29748082e-03,  1.50409421e-01,  7.80923566e-02,
+         6.19026932e-04, -2.73858372e-05,  3.95977912e-02,
+         0.00000000e+00,  2.09101168e-01,  1.95022270e-04,
+         3.83097356e-02,  1.98253373e-01,  1.46882049e-02,
+         2.02577516e-01,  4.23567670e-03, -8.02659422e-04,
+         3.54258725e-01],
+       [-5.02361415e-03, -2.42706736e-02, -5.67723959e-04,
+        -8.69024174e-04, -1.78353127e-02, -1.74166342e-02,
+        -6.75952265e-02, -9.40097534e-03, -3.38459206e-03,
+        -1.56209548e-05, -4.37633358e-04, -1.02320307e-01,
+        -7.28434460e-02, -4.79494320e-02, -7.16549831e-05,
+        -2.14192265e-02, -8.11402456e-06, -5.18445920e-03,
+        -1.45372109e-01, -2.38638366e-01, -1.48229671e-03,
+        -2.13335867e-01,  0.00000000e+00, -9.54619923e-02,
+        -4.47644183e-02, -1.01848814e-03, -1.57810895e-02,
+         3.01617433e-06, -1.81489093e-01, -3.80239798e-01,
+        -2.05743797e-05],
+       [ 2.13349831e-03,  1.72502817e-04,  1.29620322e-02,
+         3.33768352e-03,  2.75060359e-03,  6.09997404e-05,
+        -1.41612169e-03,  1.78431307e-02,  7.23023224e-04,
+         2.19556769e-02,  4.65443743e-02, -4.53963051e-04,
+        -2.30769024e-06,  3.75245720e-03,  1.40904823e-02,
+         2.04572165e-05,  8.50208178e-02,  6.87456697e-02,
+        -9.82544653e-03, -4.43983325e-03,  4.18022514e-03,
+        -1.86473173e-04,  8.94096155e-02,  0.00000000e+00,
+         3.03608176e-02,  1.54285706e-01,  4.17826696e-04,
+         5.97095082e-02, -2.20543390e-02, -2.27746869e-02,
+         2.30160384e-01],
+       [ 1.14808878e-03, -8.48545491e-04,  2.25772026e-03,
+         9.91455780e-03, -2.21899807e-05,  2.24687112e-03,
+        -9.25647411e-04,  1.83452688e-05,  2.51955598e-02,
+         1.65796850e-02,  1.17858708e-03, -6.84545274e-03,
+        -1.17571184e-02, -4.43064810e-06,  5.08007533e-02,
+         2.03188234e-02,  9.29564710e-03,  5.12637981e-05,
+        -6.06814313e-04, -9.18078199e-03,  8.67814108e-02,
+        -3.14426551e-02,  4.15171203e-02, -1.78368772e-02,
+         0.00000000e+00,  1.35935878e-03,  8.30239797e-02,
+         1.09012490e-01, -1.10751439e-04, -6.01244616e-03,
+         1.32655758e-02],
+       [-3.99594857e-03, -1.94078834e-02, -3.76001625e-04,
+        -2.88205231e-03, -4.13076152e-03, -2.89208008e-02,
+        -2.36596640e-02, -4.45303233e-04, -1.28241745e-02,
+         2.28582757e-05, -9.79142164e-06, -6.84990363e-02,
+        -9.28205038e-02, -4.24341695e-03,  8.15952375e-04,
+        -5.51717574e-02,  2.77209359e-05, -1.09587120e-05,
+        -3.32461487e-02, -1.14896162e-01, -5.08892894e-03,
+        -1.93492220e-01,  8.80643086e-04, -1.62882711e-01,
+        -1.38245086e-03,  0.00000000e+00, -5.12784832e-02,
+         6.03417649e-03, -2.43502466e-02, -1.25554646e-01,
+         1.71637339e-05],
+       [-2.11651475e-03, -4.03822008e-03,  2.89129175e-04,
+         5.65261599e-05, -1.52439318e-02, -4.27296057e-04,
+        -2.95508105e-02, -1.83791324e-02, -1.56463418e-06,
+         2.36722176e-03,  5.54736580e-03, -1.52043123e-02,
+        -1.77973887e-03, -6.36704072e-02,  6.61431797e-04,
+        -7.48014752e-06,  1.66021977e-02, -7.76700004e-03,
+        -9.57469977e-02, -6.26984634e-02,  2.18394146e-05,
+        -1.42183642e-02,  1.35830049e-02, -4.16897763e-04,
+        -8.77459750e-02,  3.08307903e-02,  0.00000000e+00,
+         4.82127321e-03, -1.87487263e-01, -1.77542708e-01,
+         5.86273014e-02],
+       [-8.99499390e-03, -3.14813090e-02, -2.30275272e-03,
+        -1.00638119e-03, -3.80564995e-02, -1.49586165e-02,
+        -1.07951020e-01, -3.01279678e-02, -1.61487028e-03,
+        -8.05007539e-05, -3.57265512e-03, -1.22341671e-01,
+        -6.24311360e-02, -1.10859872e-01, -1.01288391e-05,
+        -1.10985148e-02, -3.85916894e-04, -2.37794421e-02,
+        -2.47294830e-01, -3.09316511e-01, -2.47563422e-04,
+        -2.07552322e-01, -3.96967772e-06, -6.31660436e-02,
+        -1.22402203e-01, -8.02126580e-03, -5.27342086e-03,
+         0.00000000e+00, -3.46847169e-01, -5.49935364e-01,
+        -7.32090826e-04],
+       [ 6.46767312e-03,  3.33653597e-03,  1.46377752e-02,
+         3.61691797e-02,  5.79274359e-04,  1.79053812e-02,
+         1.23369182e-04,  8.50214398e-04,  7.25464236e-02,
+         7.07070336e-02,  1.47936478e-02,  4.73681171e-04,
+         9.80803041e-03,  1.66941853e-05,  1.55196274e-01,
+         7.22974733e-02,  6.38179166e-02,  3.78841898e-03,
+        -9.10075807e-07, -4.50615117e-04,  2.16674206e-01,
+        -1.22775018e-03,  1.75716059e-01,  3.74187390e-02,
+         1.13163488e-04,  2.44445632e-02,  2.05687477e-01,
+         3.30379004e-01,  0.00000000e+00, -1.30686578e-04,
+         1.00880834e-01],
+       [ 1.20907522e-02,  3.51808693e-03,  4.02220317e-02,
+         5.74996332e-02,  2.32859497e-03,  1.67296156e-02,
+         1.80511349e-04,  8.54548099e-03,  8.38376976e-02,
+         1.44838732e-01,  6.30176578e-02,  4.35645335e-04,
+         7.13765752e-03,  1.13738174e-03,  2.40049948e-01,
+         6.43073736e-02,  1.91634939e-01,  3.55017675e-02,
+         1.16826764e-05,  6.99948422e-06,  2.61560618e-01,
+         1.08028502e-03,  3.82311006e-01,  2.83176466e-02,
+         6.47280369e-03,  1.30435838e-01,  1.98148096e-01,
+         5.49487661e-01,  1.40668915e-04,  0.00000000e+00,
+         3.41394584e-01],
+       [-1.12367109e-02, -4.68818997e-02, -1.36549532e-03,
+        -6.00456581e-03, -1.77205112e-02, -5.38922011e-02,
+        -7.39302681e-02, -4.48028646e-03, -2.20724234e-02,
+        -5.60836652e-04, -1.48179005e-04, -1.55613340e-01,
+        -1.66813567e-01, -2.58181409e-02, -2.28656286e-03,
+        -8.60583856e-02, -6.01064590e-06, -7.57292384e-04,
+        -1.15671845e-01, -2.77111914e-01, -1.53747181e-02,
+        -3.62037157e-01,  7.71314230e-06, -2.54186746e-01,
+        -1.38916422e-02, -1.77264354e-05, -7.99087991e-02,
+         2.39012604e-04, -1.03242053e-01, -3.38352178e-01,
+         0.00000000e+00]])</code></pre>
+</div>
+</div>
+</section>
+<section id="extra-condition" class="level1">
+<h1>Extra Condition</h1>
+<div id="cell-24" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>Clam <span class="op">=</span> sp.vstack( [sp.hstack([C, np.ones((n,<span class="dv">1</span>))], <span class="bu">format</span><span class="op">=</span><span class="st">'csr'</span>), </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                    np.block([np.ones((<span class="dv">1</span>,n)), np.zeros((<span class="dv">1</span>,<span class="dv">1</span>))]) ], <span class="bu">format</span><span class="op">=</span><span class="st">'csr'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-25" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cond(Clam.todense()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>242.601724878604</code></pre>
+</div>
+</div>
+</section>
+<section id="solve" class="level1">
+<h1>Solve</h1>
+<div id="cell-27" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># l=1</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> foo1(node):</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> node[<span class="dv">0</span>]<span class="op">*</span><span class="dv">2</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> exact1(node):</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> node[<span class="dv">0</span>]</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># l=3</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> foo2(node):</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (node[<span class="dv">0</span>]<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> node[<span class="dv">1</span>]<span class="op">**</span><span class="dv">2</span>) <span class="op">*</span> <span class="dv">6</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> exact2(node):</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (node[<span class="dv">0</span>]<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> node[<span class="dv">1</span>]<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> foo3(node):</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (node[<span class="dv">0</span>]<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> node[<span class="dv">1</span>]<span class="op">**</span><span class="dv">2</span>) <span class="op">*</span> node[<span class="dv">2</span>] <span class="op">*</span> <span class="dv">12</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> exact3(node):</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (node[<span class="dv">0</span>]<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> node[<span class="dv">1</span>]<span class="op">**</span><span class="dv">2</span>) <span class="op">*</span> node[<span class="dv">2</span>]</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>foo, exact <span class="op">=</span> foo1, exact1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-28" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>rhs <span class="op">=</span> [<span class="op">-</span>foo(node) <span class="cf">for</span> node <span class="kw">in</span> nodes] <span class="op">+</span> [<span class="dv">0</span>]</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co">#u = lsqr(Clam, rhs)[0]</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> spsolve(Clam, rhs)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> u[:<span class="op">-</span><span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-29" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">################################################################</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># PHS</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co">################################################################</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>u_true <span class="op">=</span> np.array([exact(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">max</span>( np.<span class="bu">abs</span>( (u <span class="op">-</span> u_true)<span class="op">/</span>u_true) ) )</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">min</span>(u))</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">max</span>(u))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.014182518885898918
+-0.9997973933708649
+0.9988911585665358</code></pre>
+</div>
+</div>
+</section>
+<section id="plot-solution" class="level1">
+<h1>Plot Solution</h1>
+<div id="cell-31" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">5</span>))</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">121</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>ax.scatter(xs, ys, zs, c<span class="op">=</span>u, cmap<span class="op">=</span><span class="st">'coolwarm'</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Found'</span>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x'</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'y'</span>)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">122</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>ax.scatter(xs, ys, zs, c<span class="op">=</span>[exact(node) <span class="cf">for</span> node <span class="kw">in</span> nodes], cmap<span class="op">=</span><span class="st">'coolwarm'</span>)</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Expected'</span>)</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x'</span>)</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'y'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>Text(0.5,0,'y')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="rbf-fd_sphere_steady-state-PHS_files/figure-html/cell-26-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

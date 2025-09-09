@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Traveling Pulse – Sage Shaw</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-9a60b6f365114c3b1e59731f49b17c37.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Sage Shaw</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#numerics" id="toc-numerics" class="nav-link active" data-scroll-target="#numerics">Numerics</a></li>
+  <li><a href="#adjoint-nullspace" id="toc-adjoint-nullspace" class="nav-link" data-scroll-target="#adjoint-nullspace">Adjoint Nullspace</a>
+  <ul class="collapse">
+  <li><a href="#get-numerical-parameters" id="toc-get-numerical-parameters" class="nav-link" data-scroll-target="#get-numerical-parameters">get numerical parameters</a></li>
+  </ul></li>
+  <li><a href="#plot-nullspace-basis" id="toc-plot-nullspace-basis" class="nav-link" data-scroll-target="#plot-nullspace-basis">Plot nullspace basis</a></li>
+  <li><a href="#save-expressions" id="toc-save-expressions" class="nav-link" data-scroll-target="#save-expressions">Save Expressions</a></li>
+  <li><a href="#test-saved-expressions" id="toc-test-saved-expressions" class="nav-link" data-scroll-target="#test-saved-expressions">Test Saved Expressions</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Traveling Pulse</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="2e8c4f77" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext autoreload</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>autoreload <span class="dv">2</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sympy <span class="im">as</span> sym</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sympy.functions.special.delta_functions <span class="im">import</span> DiracDelta</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Heaviside numerics workaround</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>sympy_modules <span class="op">=</span> [{<span class="st">'Heaviside'</span>: <span class="kw">lambda</span> x: np.heaviside(x,<span class="fl">0.5</span>)}, <span class="st">'numpy'</span>]</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> functools <span class="im">import</span> <span class="bu">reduce</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy.linalg <span class="im">as</span> la</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># import dill # pickle but better</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pickle</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="4e53f72d" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>matplotlib.rcParams.update({<span class="st">'font.size'</span>: <span class="dv">16</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="7d95b2f5" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> <span class="st">'synaptic_depression_symbolics.pickle'</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># display_mode = 'display'</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>display_mode <span class="op">=</span> <span class="st">'latex'</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_display(expr):</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> display_mode <span class="op">==</span> <span class="st">'latex'</span>:</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(sym.latex(expr))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        display(expr)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># a dictionary of variable definitions</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">'sub_dict'</span> <span class="kw">not</span> <span class="kw">in</span> <span class="bu">globals</span>().keys():</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    sub_dict <span class="op">=</span> {}</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> recursive_reduce(expression):</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    reduced_expression <span class="op">=</span> expression</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="bu">any</span>(v <span class="kw">in</span> reduced_expression.free_symbols <span class="cf">for</span> v <span class="kw">in</span> sub_dict.keys()):</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        reduced_expression <span class="op">=</span> reduced_expression.subs(sub_dict)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> reduced_expression</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">'expr_dict'</span> <span class="kw">not</span> <span class="kw">in</span> <span class="bu">globals</span>().keys():</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    expr_dict <span class="op">=</span> {}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="04727c74" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ξ, y <span class="op">=</span> sym.symbols(<span class="st">'</span><span class="ch">\\</span><span class="st">xi y'</span>, real<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>α, β, c, Δ, μ <span class="op">=</span> sym.symbols(<span class="st">'</span><span class="ch">\\</span><span class="st">alpha, </span><span class="ch">\\</span><span class="st">beta, c, </span><span class="ch">\\</span><span class="st">Delta </span><span class="ch">\\</span><span class="st">mu'</span>, real<span class="op">=</span><span class="va">True</span>, positive<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Q_right <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>Q_mid <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>α<span class="op">*</span>β)<span class="op">*</span>(<span class="dv">1</span> <span class="op">+</span> α<span class="op">*</span>β<span class="op">*</span>sym.exp((<span class="dv">1</span><span class="op">+</span>α<span class="op">*</span>β)<span class="op">/</span>(c<span class="op">*</span>α)<span class="op">*</span>ξ))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>Q_left <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> α<span class="op">*</span>β<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>α<span class="op">*</span>β)<span class="op">*</span>(sym.exp(<span class="op">-</span>β<span class="op">*</span>Δ<span class="op">/</span>c) <span class="op">-</span> sym.exp(Δ<span class="op">/</span>(α<span class="op">*</span>c)))<span class="op">*</span>sym.exp(ξ<span class="op">/</span>(α<span class="op">*</span>c))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> sym.Piecewise((Q_left, ξ<span class="op">&lt;-</span>Δ), (Q_mid, ξ<span class="op">&lt;</span><span class="dv">0</span>), (Q_right, <span class="va">True</span>))</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>my_display(sym.Eq(sym.Function(<span class="st">'Q'</span>)(ξ), Q))</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>expr_dict[<span class="st">'Q_left'</span>] <span class="op">=</span> Q_left</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>expr_dict[<span class="st">'Q_mid'</span>] <span class="op">=</span> Q_mid</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>expr_dict[<span class="st">'Q_right'</span>] <span class="op">=</span> Q_right</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>expr_dict[<span class="st">'Q'</span>] <span class="op">=</span> Q</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Q{\left(\xi \right)} = \begin{cases} \frac{\alpha \beta \left(- e^{\frac{\Delta}{\alpha c}} + e^{- \frac{\Delta \beta}{c}}\right) e^{\frac{\xi}{\alpha c}}}{\alpha \beta + 1} + 1 &amp; \text{for}\: \Delta &lt; - \xi \\\frac{\alpha \beta e^{\frac{\xi \left(\alpha \beta + 1\right)}{\alpha c}} + 1}{\alpha \beta + 1} &amp; \text{for}\: \xi &lt; 0 \\1 &amp; \text{otherwise} \end{cases}</code></pre>
+</div>
+</div>
+<div id="b4a0d652" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>B1, B2, B3, B4, B5, B6, B7, B8, B9, B10, B11, B12, B13 <span class="op">=</span> sym.symbols([<span class="ss">f'B_</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">14</span>)])</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>r1, r2 <span class="op">=</span> sym.symbols(<span class="st">'r_1 r_2'</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>assumptions <span class="op">=</span> []</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>sub_dict[r1] <span class="op">=</span> (<span class="dv">1</span><span class="op">+</span>α<span class="op">*</span>β)<span class="op">/</span>(c<span class="op">*</span>α)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>sub_dict[B1] <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>α<span class="op">*</span>β)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>sub_dict[B2] <span class="op">=</span> α<span class="op">*</span>β<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>α<span class="op">*</span>β)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>B3_integral_result <span class="op">=</span> sym.integrate(sym.Rational(<span class="dv">1</span>,<span class="dv">2</span>)<span class="op">*</span>sym.exp(<span class="op">-</span>y)<span class="op">*</span>(B1 <span class="op">+</span> B2<span class="op">*</span>sym.exp(r1<span class="op">*</span>y)), (y, <span class="op">-</span>Δ, <span class="dv">0</span>) )</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>sub_dict[B3] <span class="op">=</span> B3_integral_result.args[<span class="dv">0</span>][<span class="dv">0</span>]</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>assumptions <span class="op">+=</span> [B3_integral_result.args[<span class="dv">0</span>][<span class="dv">1</span>]]</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>B4_integral_result <span class="op">=</span> sym.integrate(sym.Rational(<span class="dv">1</span>,<span class="dv">2</span>)<span class="op">*</span>sym.exp(y)<span class="op">*</span>(B1 <span class="op">+</span> B2<span class="op">*</span>sym.exp(r1<span class="op">*</span>y)), (y, <span class="op">-</span>Δ, <span class="dv">0</span>) )</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>sub_dict[B4] <span class="op">=</span> B4_integral_result.args[<span class="dv">0</span>][<span class="dv">0</span>]</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>assumptions <span class="op">+=</span> [B4_integral_result.args[<span class="dv">0</span>][<span class="dv">1</span>]]</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>sub_dict[B5] <span class="op">=</span> (B2<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>r1))</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>sub_dict[B6] <span class="op">=</span> (<span class="op">-</span>B1<span class="op">*</span>sym.exp(<span class="op">-</span>Δ) <span class="op">-</span> B2<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>r1)<span class="op">*</span>sym.exp(<span class="op">-</span>(<span class="dv">1</span><span class="op">+</span>r1)<span class="op">*</span>Δ))</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>sub_dict[B7] <span class="op">=</span> (<span class="op">-</span>B2<span class="op">/</span>(r1<span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>sub_dict[B8] <span class="op">=</span> (<span class="op">-</span>B1 <span class="op">+</span> B2<span class="op">/</span>(r1<span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>sub_dict[B9] <span class="op">=</span> (B6<span class="op">/</span><span class="dv">2</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>c<span class="op">*</span>μ))</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>sub_dict[B10] <span class="op">=</span> (B8<span class="op">/</span><span class="dv">2</span><span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>c<span class="op">*</span>μ))</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>sub_dict[B11] <span class="op">=</span> ((B5<span class="op">+</span>B7)<span class="op">/</span><span class="dv">2</span><span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>r1<span class="op">*</span>c<span class="op">*</span>μ))</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>sub_dict[B12] <span class="op">=</span> (B3<span class="op">/</span>(<span class="dv">1</span><span class="op">-</span>c<span class="op">*</span>μ))</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>sub_dict[B13] <span class="op">=</span> (B4<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>c<span class="op">*</span>μ))</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> key, val <span class="kw">in</span> sub_dict.items():</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    sub_dict[key] <span class="op">=</span> val.simplify()</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Assuming'</span>)</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> assumption <span class="kw">in</span> assumptions:</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    my_display(assumption.subs(sub_dict))</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'with'</span>)</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> key, val <span class="kw">in</span> sub_dict.items():</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    my_display(sym.Eq(key, val))</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>AL, AM <span class="op">=</span> sym.symbols(<span class="st">'A_L A_M'</span>)</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>U_left <span class="op">=</span> B12<span class="op">*</span>sym.exp(ξ) <span class="op">+</span> AL<span class="op">*</span>sym.exp(ξ<span class="op">/</span>(c<span class="op">*</span>μ))</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>U_right <span class="op">=</span> B13<span class="op">*</span>sym.exp(<span class="op">-</span>ξ)</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>U_mid <span class="op">=</span> B1 <span class="op">+</span> B9<span class="op">*</span>sym.exp(<span class="op">-</span>ξ) <span class="op">+</span> B10<span class="op">*</span>sym.exp(ξ) <span class="op">+</span> B11<span class="op">*</span>sym.exp(r1<span class="op">*</span>ξ) <span class="op">+</span> AM<span class="op">*</span>sym.exp(ξ<span class="op">/</span>(c<span class="op">*</span>μ))</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>U <span class="op">=</span> sym.Piecewise((U_left, ξ<span class="op">&lt;-</span>Δ), </span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>                  (U_mid, ξ<span class="op">&lt;</span><span class="dv">0</span>), </span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>                  (U_right, <span class="va">True</span>))</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>expr_dict[<span class="st">'U'</span>] <span class="op">=</span> U</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>expr_dict[<span class="st">'U_left'</span>] <span class="op">=</span> U_left</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>expr_dict[<span class="st">'U_mid'</span>] <span class="op">=</span> U_mid</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>expr_dict[<span class="st">'U_right'</span>] <span class="op">=</span> U_right</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>AM_subs <span class="op">=</span> sym.solve( (U_right <span class="op">-</span> U_mid).subs(ξ,<span class="dv">0</span>), AM)[<span class="dv">0</span>]</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>sub_dict[AM] <span class="op">=</span> AM_subs.subs(sub_dict)</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>my_display(sym.Eq(AM, AM_subs))</span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>AL_subs <span class="op">=</span> sym.solve( (U_left <span class="op">-</span> U_mid).subs(ξ,<span class="op">-</span>Δ), AL)[<span class="dv">0</span>]</span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>sub_dict[AL] <span class="op">=</span> AL_subs.subs(sub_dict)</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>my_display(sym.Eq(AL, AL_subs))</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>my_display(sym.Eq(sym.Function(<span class="st">'U'</span>)(ξ), U))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Assuming
+\frac{\alpha \beta + 1}{\alpha c} \neq 1
+\text{True}
+with
+r_{1} = \frac{\alpha \beta + 1}{\alpha c}
+B_{1} = \frac{1}{\alpha \beta + 1}
+B_{2} = \frac{\alpha \beta}{\alpha \beta + 1}
+B_{3} = \frac{\left(- B_{2} e^{\Delta} + \left(B_{1} r_{1} e^{\Delta} - B_{1} r_{1} - B_{1} e^{\Delta} + B_{1} + B_{2}\right) e^{\Delta r_{1}}\right) e^{- \Delta r_{1}}}{2 \left(r_{1} - 1\right)}
+B_{4} = \frac{\left(- B_{1} \left(r_{1} + 1\right) e^{\Delta r_{1}} - B_{2} + \left(B_{1} r_{1} + B_{1} + B_{2}\right) e^{\Delta \left(r_{1} + 1\right)}\right) e^{- \Delta \left(r_{1} + 1\right)}}{2 \left(r_{1} + 1\right)}
+B_{5} = \frac{B_{2}}{r_{1} + 1}
+B_{6} = - \frac{\left(B_{1} \left(r_{1} + 1\right) e^{\Delta \left(r_{1} + 1\right)} + B_{2} e^{\Delta}\right) e^{- \Delta \left(r_{1} + 2\right)}}{r_{1} + 1}
+B_{7} = - \frac{B_{2}}{r_{1} - 1}
+B_{8} = \frac{- B_{1} \left(r_{1} - 1\right) + B_{2}}{r_{1} - 1}
+B_{9} = \frac{B_{6}}{2 \left(\mu c + 1\right)}
+B_{10} = - \frac{B_{8}}{2 \mu c - 2}
+B_{11} = - \frac{B_{5} + B_{7}}{2 \mu c r_{1} - 2}
+B_{12} = - \frac{B_{3}}{\mu c - 1}
+B_{13} = \frac{B_{4}}{\mu c + 1}
+A_{M} = - B_{1} - B_{10} - B_{11} + B_{13} - B_{9}
+A_{L} = A_{M} + B_{1} e^{\frac{\Delta}{\mu c}} + B_{10} e^{- \Delta + \frac{\Delta}{\mu c}} + B_{11} e^{- \Delta r_{1} + \frac{\Delta}{\mu c}} - B_{12} e^{- \Delta + \frac{\Delta}{\mu c}} + B_{9} e^{\Delta + \frac{\Delta}{\mu c}}
+U{\left(\xi \right)} = \begin{cases} A_{L} e^{\frac{\xi}{\mu c}} + B_{12} e^{\xi} &amp; \text{for}\: \Delta &lt; - \xi \\A_{M} e^{\frac{\xi}{\mu c}} + B_{1} + B_{10} e^{\xi} + B_{11} e^{\xi r_{1}} + B_{9} e^{- \xi} &amp; \text{for}\: \xi &lt; 0 \\B_{13} e^{- \xi} &amp; \text{otherwise} \end{cases}</code></pre>
+</div>
+</div>
+<div id="4fff2480" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>θ <span class="op">=</span> sym.symbols(<span class="st">'</span><span class="ch">\\</span><span class="st">theta'</span>, positive<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>eq1 <span class="op">=</span> U_mid.subs(ξ, <span class="dv">0</span>) <span class="op">-</span> θ</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>my_display(sym.Eq(<span class="dv">0</span>, eq1))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>eq2 <span class="op">=</span> U_mid.subs(ξ, <span class="op">-</span>Δ) <span class="op">-</span> θ</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>my_display(sym.Eq(<span class="dv">0</span>, eq2))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>expr_dict[<span class="st">'speed_width_conditions'</span>] <span class="op">=</span> (eq1, eq2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0 = A_{M} + B_{1} + B_{10} + B_{11} + B_{9} - \theta
+0 = A_{M} e^{- \frac{\Delta}{\mu c}} + B_{1} + B_{10} e^{- \Delta} + B_{11} e^{- \Delta r_{1}} + B_{9} e^{\Delta} - \theta</code></pre>
+</div>
+</div>
+<div id="bbee35fb" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>my_display(sym.Eq(<span class="dv">0</span>, recursive_reduce(eq1).simplify()))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>my_display(sym.Eq(<span class="dv">0</span>, recursive_reduce(eq2).simplify()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><span class="math inline">\(\displaystyle 0 = \frac{\left(- \alpha^{2} \beta c - 2 \theta \left(\alpha \beta + 1\right) \left(\mu c + 1\right) \left(\alpha \beta + \alpha c + 1\right) e^{\frac{\Delta \left(\alpha \beta + \alpha c + 1\right)}{\alpha c}} - \left(\alpha \beta + \alpha c + 1\right) e^{\frac{\Delta \left(\alpha \beta + 1\right)}{\alpha c}} + \left(\alpha \beta + \alpha c \left(\alpha \beta + 1\right) + 1\right) e^{\frac{\Delta \left(\alpha \beta + \alpha c + 1\right)}{\alpha c}}\right) e^{- \frac{\Delta \left(\alpha \beta + \alpha c + 1\right)}{\alpha c}}}{2 \left(\alpha \beta + 1\right) \left(\mu c + 1\right) \left(\alpha \beta + \alpha c + 1\right)}\)</span></p>
+</div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><span class="math inline">\(\displaystyle 0 = - \theta - \left(\frac{1}{\alpha \beta + 1} + \frac{\frac{\alpha \beta}{\left(1 + \frac{\alpha \beta + 1}{\alpha c}\right) \left(\alpha \beta + 1\right)} + \frac{\alpha \beta}{\left(1 - \frac{\alpha \beta + 1}{\alpha c}\right) \left(\alpha \beta + 1\right)}}{2 - \frac{2 \mu \left(\alpha \beta + 1\right)}{\alpha}} - \frac{\left(\frac{\alpha \beta e^{\Delta}}{\alpha \beta + 1} + \frac{\left(1 + \frac{\alpha \beta + 1}{\alpha c}\right) e^{\Delta \left(1 + \frac{\alpha \beta + 1}{\alpha c}\right)}}{\alpha \beta + 1}\right) e^{- \Delta \left(2 + \frac{\alpha \beta + 1}{\alpha c}\right)}}{2 \left(1 + \frac{\alpha \beta + 1}{\alpha c}\right) \left(\mu c + 1\right)} + \frac{\left(\frac{\alpha \beta}{\alpha \beta + 1} + \frac{\left(1 + \frac{\alpha \beta + 1}{\alpha c}\right) e^{\frac{\Delta \left(\alpha \beta + 1\right)}{\alpha c}}}{\alpha \beta + 1} - \left(\frac{\alpha \beta}{\alpha \beta + 1} + \frac{1}{\alpha \beta + 1} + \frac{1}{\alpha c}\right) e^{\Delta \left(1 + \frac{\alpha \beta + 1}{\alpha c}\right)}\right) e^{- \Delta \left(1 + \frac{\alpha \beta + 1}{\alpha c}\right)}}{2 \left(1 + \frac{\alpha \beta + 1}{\alpha c}\right) \left(\mu c + 1\right)} + \frac{\frac{\alpha \beta}{\alpha \beta + 1} + \frac{1 - \frac{\alpha \beta + 1}{\alpha c}}{\alpha \beta + 1}}{\left(1 - \frac{\alpha \beta + 1}{\alpha c}\right) \left(2 \mu c - 2\right)}\right) e^{- \frac{\Delta}{\mu c}} + \frac{1}{\alpha \beta + 1} + \frac{\left(\frac{\alpha \beta}{\left(1 + \frac{\alpha \beta + 1}{\alpha c}\right) \left(\alpha \beta + 1\right)} + \frac{\alpha \beta}{\left(1 - \frac{\alpha \beta + 1}{\alpha c}\right) \left(\alpha \beta + 1\right)}\right) e^{- \frac{\Delta \left(\alpha \beta + 1\right)}{\alpha c}}}{2 - \frac{2 \mu \left(\alpha \beta + 1\right)}{\alpha}} - \frac{\left(\frac{\alpha \beta e^{\Delta}}{\alpha \beta + 1} + \frac{\left(1 + \frac{\alpha \beta + 1}{\alpha c}\right) e^{\Delta \left(1 + \frac{\alpha \beta + 1}{\alpha c}\right)}}{\alpha \beta + 1}\right) e^{\Delta} e^{- \Delta \left(2 + \frac{\alpha \beta + 1}{\alpha c}\right)}}{2 \left(1 + \frac{\alpha \beta + 1}{\alpha c}\right) \left(\mu c + 1\right)} + \frac{\left(\frac{\alpha \beta}{\alpha \beta + 1} + \frac{1 - \frac{\alpha \beta + 1}{\alpha c}}{\alpha \beta + 1}\right) e^{- \Delta}}{\left(1 - \frac{\alpha \beta + 1}{\alpha c}\right) \left(2 \mu c - 2\right)}\)</span></p>
+</div>
+</div>
+<section id="numerics" class="level2">
+<h2 class="anchored" data-anchor-id="numerics">Numerics</h2>
+</section>
+<section id="adjoint-nullspace" class="level1">
+<h1>Adjoint Nullspace</h1>
+<p>We seek <span class="math inline">\(v_1, v_2 \in L^2(\mathbb{R})\)</span> such that <span class="math display">\[
+\begin{align*}
+    -c \mu v_1' &amp;= v_1 - f'(U)Q \bigg[ \int_{\mathbb{R}} w(y,\xi) v_1(y) \ dy - \alpha \beta v_2\bigg] \\
+    -c \alpha v_2' &amp;= v_2 - f(U)\bigg[ \int_{\mathbb{R}} w(y, \xi) v_1(y) \ dy - \alpha \beta v_2 \bigg]
+\end{align*}
+\]</span> Rearranging, we have <span class="math display">\[
+\begin{align*}
+    v_1' + \frac{1}{c\mu} v_1 &amp;= \frac{1}{c\mu}f'(U)Q \bigg[ \int_{\mathbb{R}} w(y,\xi) v_1(y) \ dy - \alpha \beta v_2\bigg] \\
+    v_2' + \frac{1}{c\alpha}v_2 &amp;= \frac{1}{c\alpha}f(U)\bigg[ \int_{\mathbb{R}} w(y, \xi) v_1(y) \ dy - \alpha \beta v_2 \bigg]
+\end{align*}
+\]</span> Choosing <span class="math inline">\(f(\cdot) = H(\cdot - \theta)\)</span> and <span class="math inline">\(w(x,y) = \tfrac{1}{2} e^{-|x - y|}\)</span> we have <span class="math display">\[
+\begin{align*}
+    v_1' + \frac{1}{c\mu} v_1 &amp;=
+        \frac{1}{c\mu}\bigg( \frac{\delta(\xi)}{|U'(0)|} + \frac{\delta(\xi + \Delta)}{|U'(-\Delta)|} \bigg)Q \bigg[ \int_{\mathbb{R}} \tfrac{1}{2} e^{-|y - \xi|} v_1(y) \ dy - \alpha \beta v_2\bigg] \\
+    \big[ e^{\frac{1}{c\mu} \xi} v_1 \big]' &amp;=  
+         \frac{1}{c\mu}\bigg( \frac{\delta(\xi)}{|U'(0)|} + \frac{\delta(\xi + \Delta)}{|U'(-\Delta)|} \bigg)Q e^{\frac{1}{c\mu} \xi} \bigg[ \int_{\mathbb{R}} \tfrac{1}{2} e^{-|y - \xi|} v_1(y) \ dy - \alpha \beta v_2\bigg] \\
+    e^{\frac{1}{c\mu} \xi} v_1 &amp;=
+        A_{-\infty} + \frac{1}{c\mu}\frac{Q(0)}{|U'(0)|} \bigg[ \int_{\mathbb{R}} \tfrac{1}{2}e^{-|y|} v_1(y) \ dy - \alpha \beta v_2(0) \bigg] H(\xi) + \frac{1}{c\mu} e^{-\frac{\Delta}{c\mu}} \frac{Q(-\Delta)}{|U'(-\Delta)|} \bigg[ \int_{\mathbb{R}} \tfrac{1}{2}e^{-|y + \Delta|} v_1(y) \ dy - \alpha \beta v_2(-\Delta) \bigg] H(\xi + \Delta) \\
+    v_1 &amp;=
+        A_{-\infty}e^{-\frac{1}{c\mu} \xi}  + \underbrace{\frac{1}{c\mu}\frac{Q(0)}{|U'(0)|} \bigg[ \int_{\mathbb{R}} \tfrac{1}{2}e^{-|y|} v_1(y) \ dy - \alpha \beta v_2(0) \bigg]}_{A_{0}} e^{-\frac{1}{c\mu} \xi} H(\xi) + \underbrace{\frac{1}{c\mu} e^{-\frac{\Delta}{c\mu}} \frac{Q(-\Delta)}{|U'(-\Delta)|} \bigg[ \int_{\mathbb{R}} \tfrac{1}{2}e^{-|y + \Delta|} v_1(y) \ dy - \alpha \beta v_2(-\Delta) \bigg]}_{A_{-\Delta}} e^{-\frac{1}{c\mu} \xi} H(\xi + \Delta) \\
+    v_1(\xi) &amp;= A_{-\infty} e^{-\frac{1}{c\mu} \xi} + A_{-\Delta} e^{-\frac{1}{c\mu} \xi} H(\xi + \Delta) + A_{0} e^{-\frac{1}{c\mu} \xi}H(\xi)
+\end{align*}
+\]</span> For <span class="math inline">\(v_1\)</span> to be bounded, we need <span class="math inline">\(0 = \lim\limits_{\xi \to -\infty} v_1(\xi) \implies A_{-\infty} = 0\)</span>. This gives two consistency conditions <span class="math display">\[
+\begin{align*}
+    A_{-\Delta} &amp;= \underbrace{\frac{1}{c\mu} e^{-\frac{\Delta}{c\mu}} \frac{Q(-\Delta)}{|U'(-\Delta)|}}_{D_{-\Delta}} \bigg[ \int \tfrac{1}{2}e^{-|y + \Delta|} \bigg( A_{-\Delta} e^{-\frac{1}{c\mu} y} H(y + \Delta) + A_{0} e^{-\frac{1}{c\mu} y}H(y) \bigg) \ dy - \alpha \beta v_2(-\Delta) \bigg] \\
+    A_{0} &amp;= \underbrace{\frac{1}{c\mu}\frac{Q(0)}{|U'(0)|}}_{D_0} \bigg[ \int \tfrac{1}{2}e^{-|y|} \bigg( A_{-\Delta} e^{-\frac{1}{c\mu} y} H(y + \Delta) + A_{0} e^{-\frac{1}{c\mu} y}H(y) \bigg) \ dy - \alpha \beta v_2(0) \bigg]
+\end{align*}
+\]</span></p>
+<div id="51f0feee" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Am, A0, Dm, D0 <span class="op">=</span> sym.symbols(<span class="st">'A_{-</span><span class="ch">\\</span><span class="st">Delta} A_0 D_{-</span><span class="ch">\\</span><span class="st">Delta} D_0'</span>, real<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>v1 <span class="op">=</span> sym.Function(<span class="st">'v_1'</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>v2 <span class="op">=</span> sym.Function(<span class="st">'v_2'</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>sub_dict[D0] <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>c<span class="op">/</span>μ <span class="op">*</span> Q_mid.subs(ξ,<span class="dv">0</span>)<span class="op">/-</span>U_mid.diff(ξ).subs(ξ, <span class="dv">0</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>sub_dict[Dm] <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>c<span class="op">/</span>μ <span class="op">*</span>sym.exp(<span class="op">-</span>Δ<span class="op">/</span>c<span class="op">/</span>μ) <span class="op">*</span> Q_mid.subs(ξ,<span class="op">-</span>Δ)<span class="op">/</span>U_mid.diff(ξ).subs(ξ, <span class="op">-</span>Δ)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>expr_dict[<span class="st">'v1'</span>] <span class="op">=</span> sym.exp(<span class="op">-</span><span class="dv">1</span><span class="op">/</span>c<span class="op">/</span>μ <span class="op">*</span>ξ) <span class="op">*</span> (Am<span class="op">*</span>sym.Heaviside(ξ<span class="op">+</span>Δ) <span class="op">+</span> A0<span class="op">*</span>sym.Heaviside(ξ))</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>argm <span class="op">=</span> sym.exp(<span class="op">-</span>sym.Abs(y<span class="op">+</span>Δ))<span class="op">/</span><span class="dv">2</span> <span class="op">*</span> expr_dict[<span class="st">'v1'</span>].subs(ξ, y)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>arg0 <span class="op">=</span> sym.exp(<span class="op">-</span>sym.Abs(y))<span class="op">/</span><span class="dv">2</span> <span class="op">*</span> expr_dict[<span class="st">'v1'</span>].subs(ξ, y)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>expr_m <span class="op">=</span> Dm <span class="op">*</span> ( sym.integrate( argm, (y, <span class="op">-</span>sym.oo, sym.oo)) <span class="op">-</span> α<span class="op">*</span>β<span class="op">*</span>v2(<span class="op">-</span>Δ) ) <span class="op">-</span> Am</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>integral_expression <span class="op">=</span> sym.integrate( arg0, (y, <span class="op">-</span>sym.oo, sym.oo))</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co">#print('assume')</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co">#display(integral_expression.args[0].args[1])</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>expr_0 <span class="op">=</span> D0 <span class="op">*</span> ( integral_expression.args[<span class="dv">0</span>].args[<span class="dv">0</span>] <span class="op">-</span> α<span class="op">*</span>β<span class="op">*</span>v2(<span class="dv">0</span>) ) <span class="op">-</span> A0</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>expr_m <span class="op">=</span> expr_m.expand().collect(Am).collect(A0)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>expr_0 <span class="op">=</span> expr_0.expand().collect(Am).collect(A0)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>my_display(sym.Eq(<span class="dv">0</span>, expr_m))</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>my_display(sym.Eq(<span class="dv">0</span>, expr_0))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0 = \frac{A_{0} D_{-\Delta} \mu c e^{\frac{\Delta}{\mu c}}}{2 \mu c e^{\Delta} e^{\frac{\Delta}{\mu c}} + 2 e^{\Delta} e^{\frac{\Delta}{\mu c}}} + A_{-\Delta} \left(\frac{D_{-\Delta} \mu c e^{\frac{\Delta}{\mu c}}}{2 \mu c + 2} - 1\right) - D_{-\Delta} \alpha \beta \operatorname{v_{2}}{\left(- \Delta \right)}
+0 = A_{0} \left(\frac{D_{0} \mu c}{2 \mu c + 2} - 1\right) + A_{-\Delta} \left(- \frac{D_{0} \mu c e^{\frac{\Delta}{\mu c}}}{2 \mu c e^{\Delta} - 2 e^{\Delta}} + \frac{D_{0} \mu c}{2 \mu c + 2} + \frac{D_{0} \mu c}{2 \mu c - 2}\right) - D_{0} \alpha \beta \operatorname{v_{2}}{\left(0 \right)}</code></pre>
+</div>
+</div>
+<p>Also, <span class="math display">\[\begin{align*}
+    v_2' + \frac{1}{c\alpha}v_2 &amp;= \frac{1}{c\alpha}f(U)\bigg[ \int_{\mathbb{R}} w(y, \xi) v_1(y) \ dy - \alpha \beta v_2 \bigg]
+\end{align*}\]</span> and we have <span class="math display">\[\begin{align*}
+    v_2' + \frac{1}{c\alpha}v_2 &amp;= 0, &amp;\text{ on } \xi &amp; \not\in (-\Delta, 0) \\
+    c\alpha v_2' + (1+\alpha\beta)v_2 &amp;= \int_{\mathbb{R}} w(y, \xi) v_1(y) \ dy, &amp; \text{ on } \xi &amp; \in (-\Delta, 0)
+\end{align*}\]</span></p>
+<div id="a2aca323" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>integral_expression <span class="op">=</span>   Am<span class="op">/</span><span class="dv">2</span><span class="op">*</span>( sym.integrate( sym.exp(y<span class="op">-</span>ξ)<span class="op">*</span>sym.exp(<span class="op">-</span><span class="dv">1</span><span class="op">/</span>c<span class="op">/</span>μ<span class="op">*</span>y), (y, <span class="op">-</span>Δ, ξ) ).args[<span class="dv">0</span>].args[<span class="dv">0</span>] <span class="op">+\</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                               sym.integrate( sym.exp(ξ<span class="op">-</span>y)<span class="op">*</span>sym.exp(<span class="op">-</span><span class="dv">1</span><span class="op">/</span>c<span class="op">/</span>μ<span class="op">*</span>y), (y, ξ, sym.oo) ) ).expand().collect(sym.exp(ξ)).collect(sym.exp(ξ<span class="op">/</span>μ<span class="op">/</span>c)) <span class="op">+</span> <span class="op">\</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                        A0<span class="op">/</span><span class="dv">2</span> <span class="op">*</span> sym.integrate(sym.exp(ξ<span class="op">-</span>y) <span class="op">*</span> sym.exp(<span class="op">-</span><span class="dv">1</span><span class="op">/</span>c<span class="op">/</span>μ<span class="op">*</span>y), (y, <span class="dv">0</span>, sym.oo))</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>integral_expression <span class="op">=</span> integral_expression.expand().collect(sym.exp(ξ)).collect(sym.exp(<span class="op">-</span>ξ<span class="op">/</span>μ<span class="op">/</span>c))</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>terms <span class="op">=</span> [sym.exp(ξ), sym.exp(<span class="op">-</span>ξ), sym.exp(<span class="op">-</span>ξ<span class="op">/</span>μ<span class="op">/</span>c)]</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>coeffs <span class="op">=</span> [integral_expression.coeff(term) <span class="cf">for</span> term <span class="kw">in</span> terms]</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>coeffs <span class="op">=</span> [(coeff<span class="op">/</span>my_A).simplify() <span class="cf">for</span> coeff, my_A <span class="kw">in</span> <span class="bu">zip</span>(coeffs, [A0, Am, Am])]</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>terms <span class="op">=</span> [term<span class="op">*</span>my_A <span class="cf">for</span> term, my_A <span class="kw">in</span> <span class="bu">zip</span>(terms, [A0, Am, Am])]</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>coeffs_sub <span class="op">=</span> [sym.symbols(<span class="ss">f'E_</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">'</span>, real<span class="op">=</span><span class="va">True</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(terms))]</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># coeffs_sub_dict = {k:v for k, v in zip(coeffs_sub, coeffs)}</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>sub_dict <span class="op">=</span> {<span class="op">**</span>sub_dict, <span class="op">**</span>{k:v <span class="cf">for</span> k, v <span class="kw">in</span> <span class="bu">zip</span>(coeffs_sub, coeffs)} }</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>integral_expression_sub <span class="op">=</span> <span class="bu">sum</span>(term<span class="op">*</span>coeff <span class="cf">for</span> term, coeff <span class="kw">in</span> <span class="bu">zip</span>(terms, coeffs_sub))</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="dv">0</span> <span class="op">==</span> (integral_expression <span class="op">-</span> <span class="bu">sum</span>(term<span class="op">*</span>coeff <span class="cf">for</span> term, coeff <span class="kw">in</span> <span class="bu">zip</span>(terms, coeffs))).simplify()</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="dv">0</span> <span class="op">==</span> (integral_expression <span class="op">-</span> recursive_reduce(integral_expression_sub)).simplify()</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'The rhs is then'</span>)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>my_display(integral_expression_sub)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'for'</span>)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k, v <span class="kw">in</span> <span class="bu">zip</span>(coeffs_sub, coeffs):</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    my_display(sym.Eq(k, v))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The rhs is then
+A_{0} E_{0} e^{\xi} + A_{-\Delta} E_{1} e^{- \xi} + A_{-\Delta} E_{2} e^{- \frac{\xi}{\mu c}}
+for
+E_{0} = \frac{\mu c}{2 \left(\mu c + 1\right)}
+E_{1} = - \frac{\mu c e^{- \Delta + \frac{\Delta}{\mu c}}}{2 \mu c - 2}
+E_{2} = \frac{\mu^{2} c^{2}}{\mu^{2} c^{2} - 1}</code></pre>
+</div>
+</div>
+<div id="3f4f38c5" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>v2_mid <span class="op">=</span> sym.dsolve( c<span class="op">*</span>α<span class="op">*</span>v2(ξ).diff(ξ) <span class="op">+</span> (<span class="dv">1</span><span class="op">+</span>α<span class="op">*</span>β)<span class="op">*</span>v2(ξ) <span class="op">-</span> integral_expression_sub, func<span class="op">=</span>v2(ξ),</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                     hint<span class="op">=</span><span class="st">'nth_linear_constant_coeff_undetermined_coefficients'</span>).args[<span class="dv">1</span>]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>C1 <span class="op">=</span> sym.symbols(<span class="st">'C1'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="2b0819ca" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>my_display(v2_mid)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>\frac{A_{0} E_{0} e^{\xi}}{\alpha \beta + \alpha c + 1} - \frac{A_{-\Delta} E_{1} e^{- \xi}}{- \alpha \beta + \alpha c - 1} + \frac{A_{-\Delta} E_{2} \mu e^{- \frac{\xi}{\mu c}}}{\alpha \beta \mu - \alpha + \mu} + C_{1} e^{\frac{\xi \left(- \beta - \frac{1}{\alpha}\right)}{c}}</code></pre>
+</div>
+</div>
+<div id="74cc0e96" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>expr_v2 <span class="op">=</span> v2_mid.subs(ξ, <span class="op">-</span>Δ).expand().collect(A0).collect(Am).collect(C1)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>expr_m <span class="op">=</span> expr_m.subs(v2(<span class="op">-</span>Δ), <span class="dv">0</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>expr_0 <span class="op">=</span> expr_0.subs(v2(<span class="dv">0</span>), v2_mid.subs(ξ,<span class="dv">0</span>)).expand().collect(A0).collect(Am).collect(C1)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>conditions <span class="op">=</span> (expr_m, expr_0, expr_v2)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> condition <span class="kw">in</span> conditions:</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    my_display(sym.Eq(<span class="dv">0</span>, condition))</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>expr_dict[<span class="st">'adjoint_nullspace_conditions'</span>] <span class="op">=</span> conditions</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0 = \frac{A_{0} D_{-\Delta} \mu c e^{\frac{\Delta}{\mu c}}}{2 \mu c e^{\Delta} e^{\frac{\Delta}{\mu c}} + 2 e^{\Delta} e^{\frac{\Delta}{\mu c}}} + A_{-\Delta} \left(\frac{D_{-\Delta} \mu c e^{\frac{\Delta}{\mu c}}}{2 \mu c + 2} - 1\right)
+0 = A_{0} \left(- \frac{D_{0} E_{0} \alpha \beta}{\alpha \beta + \alpha c + 1} + \frac{D_{0} \mu c}{2 \mu c + 2} - 1\right) + A_{-\Delta} \left(\frac{D_{0} E_{1} \alpha \beta}{- \alpha \beta + \alpha c - 1} - \frac{D_{0} E_{2} \alpha \beta \mu}{\alpha \beta \mu - \alpha + \mu} - \frac{D_{0} \mu c e^{\frac{\Delta}{\mu c}}}{2 \mu c e^{\Delta} - 2 e^{\Delta}} + \frac{D_{0} \mu c}{2 \mu c + 2} + \frac{D_{0} \mu c}{2 \mu c - 2}\right) - C_{1} D_{0} \alpha \beta
+0 = \frac{A_{0} E_{0}}{\alpha \beta e^{\Delta} + \alpha c e^{\Delta} + e^{\Delta}} + A_{-\Delta} \left(- \frac{E_{1} e^{\Delta}}{- \alpha \beta + \alpha c - 1} + \frac{E_{2} \mu e^{\frac{\Delta}{\mu c}}}{\alpha \beta \mu - \alpha + \mu}\right) + C_{1} e^{\frac{\Delta}{\alpha c}} e^{\frac{\Delta \beta}{c}}</code></pre>
+</div>
+</div>
+<div id="c0d3ddc6" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>expr_dict[<span class="st">'v2'</span>] <span class="op">=</span> sym.Piecewise(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                    (<span class="dv">0</span>, ξ<span class="op">&lt;</span> <span class="op">-</span> Δ),</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                    (v2_mid, ξ<span class="op">&lt;</span><span class="dv">0</span>),</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                    (v2_mid.subs(ξ, <span class="dv">0</span>)<span class="op">*</span>sym.exp(<span class="op">-</span><span class="dv">1</span><span class="op">/</span>c<span class="op">/</span>μ <span class="op">*</span> ξ), <span class="va">True</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>                )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="75999552-af27-4d6a-9ee5-98f73bd51f8c" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>my_display(expr_dict[<span class="st">'v2'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>\begin{cases} 0 &amp; \text{for}\: \Delta &lt; - \xi \\\frac{A_{0} E_{0} e^{\xi}}{\alpha \beta + \alpha c + 1} - \frac{A_{-\Delta} E_{1} e^{- \xi}}{- \alpha \beta + \alpha c - 1} + \frac{A_{-\Delta} E_{2} \mu e^{- \frac{\xi}{\mu c}}}{\alpha \beta \mu - \alpha + \mu} + C_{1} e^{\frac{\xi \left(- \beta - \frac{1}{\alpha}\right)}{c}} &amp; \text{for}\: \xi &lt; 0 \\\left(\frac{A_{0} E_{0}}{\alpha \beta + \alpha c + 1} - \frac{A_{-\Delta} E_{1}}{- \alpha \beta + \alpha c - 1} + \frac{A_{-\Delta} E_{2} \mu}{\alpha \beta \mu - \alpha + \mu} + C_{1}\right) e^{- \frac{\xi}{\mu c}} &amp; \text{otherwise} \end{cases}</code></pre>
+</div>
+</div>
+<section id="get-numerical-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="get-numerical-parameters">get numerical parameters</h2>
+<div id="e0a22ee7" class="cell" data-execution_count="54">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> helper_symbolics</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'theta'</span>: <span class="fl">0.2</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'alpha'</span>: <span class="dv">20</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'beta'</span>: <span class="fl">.25</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'mu'</span>: <span class="dv">1</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>precision <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>numeric_subs <span class="op">=</span> helper_symbolics.get_speed_and_width(params, precision<span class="op">=</span>precision)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co"># c = float([v for k, v in numerical_params.items() if str(k) == 'c'][0])</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="co"># pulse_width = float([v for k, v in numerical_params.items() if str(k) == '\\Delta'][0])</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k, v <span class="kw">in</span> numeric_subs.items():</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss"> = </span><span class="sc">{</span>v<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="co"># U_numeric, Q_numeric, *_ = helper_symbolics.get_traveling_pulse(numerical_params, precision=precision, validate=False)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>\theta = 0.20000000000000000000000000000
+\alpha = 20.000000000000000000000000000
+\beta = 0.25000000000000000000000000000
+\mu = 1.0000000000000000000000000000
+c = 1.030045435865679633038580345828761970112975895773849122249103539507323877180428183325981484882257842
+\Delta = 9.342632848278734582348146110265447239302673294271547765964725591050019234312324056202624227085276521</code></pre>
+</div>
+</div>
+<div id="53e2d258" class="cell" data-execution_count="55">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>numerical_conditions <span class="op">=</span> []</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> condition <span class="kw">in</span> conditions:</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    condition <span class="op">=</span> recursive_reduce(condition).evalf(precision, subs<span class="op">=</span>numeric_subs)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#print(condition.free_symbols)</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    display(sym.Eq(<span class="dv">0</span>, condition))</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    numerical_conditions.append(condition)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><span class="math inline">\(\displaystyle 0 = 0.000000007258392580672051770556812345989301245290184103747722438113897057643816583319894234489587078070128743 A_{0} - 0.2798943697154407293602974780311702204388083502965224877915423907057883472536506375784921485752654356 A_{-\Delta}\)</span></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><span class="math inline">\(\displaystyle 0 = 0.00002256366768391556194149647770244686089860535465357733756112308308724105452730807833803563507258265327 A_{0} + 29.53936874874861670909134119795351046221431480864659467935516564429418368036734258052000891641018677 A_{-\Delta} - 24.27077401589502239418952037992012161717854845527239171162230343769918280642384805277039180397153573 C_{1}\)</span></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><span class="math inline">\(\displaystyle 0 = 0.0000008355458044680727405609421260836843767836801988246192921442383633156143859914378928170301006017330077 A_{0} - 595.4810469301366728439836012551744335144087370266484077901298081848274160458585391520596286684399211 A_{-\Delta} + 15.19604454810015047867319336650438168607406900127447396846477878845034695760856572725156004353798691 C_{1}\)</span></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code></code></pre>
+</div>
+</div>
+<div id="293801a3" class="cell" data-execution_count="56">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>my_vars <span class="op">=</span> [A0, Am, C1]</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>M <span class="op">=</span> sym.Matrix([</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    [condition.coeff(v) <span class="cf">for</span> v <span class="kw">in</span> my_vars] <span class="cf">for</span> condition <span class="kw">in</span> numerical_conditions</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="bd189f68" class="cell" data-execution_count="57">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>M</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="57">
+<p><span class="math inline">\(\displaystyle \left[\begin{matrix}0.000000007258392580672051770556812345989301245290184103747722438113897057643816583319894234489587078070128743 &amp; -0.2798943697154407293602974780311702204388083502965224877915423907057883472536506375784921485752654356 &amp; 0\\0.00002256366768391556194149647770244686089860535465357733756112308308724105452730807833803563507258265327 &amp; 29.53936874874861670909134119795351046221431480864659467935516564429418368036734258052000891641018677 &amp; -24.27077401589502239418952037992012161717854845527239171162230343769918280642384805277039180397153573\\0.0000008355458044680727405609421260836843767836801988246192921442383633156143859914378928170301006017330077 &amp; -595.4810469301366728439836012551744335144087370266484077901298081848274160458585391520596286684399211 &amp; 15.19604454810015047867319336650438168607406900127447396846477878845034695760856572725156004353798691\end{matrix}\right]\)</span></p>
+</div>
+</div>
+<div id="855af739" class="cell" data-execution_count="58">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>M.det()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="58">
+<p><span class="math inline">\(\displaystyle -0.000000000000000000000000000003813829961580404316756884375214968495069494200196683965441082701523107364293694859652781415120432303\)</span></p>
+</div>
+</div>
+<div id="d5fa3e7d" class="cell" data-execution_count="59">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>M_ndarray <span class="op">=</span> np.array(M, dtype<span class="op">=</span>np.<span class="bu">float</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'cond = </span><span class="sc">{</span>la<span class="sc">.</span>cond(M_ndarray)<span class="sc">:.5g}</span><span class="ss">'</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>eigen_vals, eigen_vect_mat <span class="op">=</span> la.eig(M_ndarray)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>eigen_val, eigen_vect <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">zip</span>(eigen_vals, eigen_vect_mat.T), key<span class="op">=</span><span class="kw">lambda</span> tup: <span class="bu">abs</span>(tup[<span class="dv">0</span>]))[<span class="dv">0</span>]</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(eigen_vals)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(eigen_vect)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>display(sym.Eq(sym.symbols(<span class="st">'</span><span class="ch">\\</span><span class="st">lambda'</span>), eigen_val))</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> var, sub <span class="kw">in</span> <span class="bu">zip</span>(my_vars, eigen_vect.real):</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    numeric_subs[var] <span class="op">=</span> sub</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(eigen_vect_mat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>cond = inf
+[  0.         142.80116816 -98.06575486]
+[1.00000000e+00 2.59326138e-08 9.61226070e-07]</code></pre>
+</div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><span class="math inline">\(\displaystyle \lambda = 0.0\)</span></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[ 1.00000000e+00  4.10689250e-04  5.33304553e-04]
+ [ 2.59326138e-08 -2.09532277e-01  1.86852324e-01]
+ [ 9.61226070e-07  9.77801645e-01  9.82387869e-01]]</code></pre>
+</div>
+</div>
+<div id="6c7dcda7-66f4-4567-a61d-429be08c8523" class="cell" data-execution_count="60">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>numeric_subs[Am]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="60">
+<pre><code>2.593261375013748e-08</code></pre>
+</div>
+</div>
+<div id="c69cfa53-7aa5-4638-958f-3705f7ee1bfa" class="cell" data-execution_count="61">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>np.<span class="bu">round</span>(eigen_vect_mat, <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="61">
+<pre><code>array([[ 1.000e+00,  4.000e-04,  5.000e-04],
+       [ 0.000e+00, -2.095e-01,  1.869e-01],
+       [ 0.000e+00,  9.778e-01,  9.824e-01]])</code></pre>
+</div>
+</div>
+<div id="e9cf476c-5982-4332-9867-d8e933892b78" class="cell" data-execution_count="62">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>expr_dict[<span class="st">'v1'</span>].evalf(subs<span class="op">=</span>numeric_subs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="62">
+<p><span class="math inline">\(\displaystyle \left(0.999999999999538 \theta\left(\xi\right) + 2.59326137501375 \cdot 10^{-8} \theta\left(\xi + 9.342632848278734582348146110265447239302673294271547765964725591050019234312324056202624227085276521\right)\right) e^{- 0.9708309606358008957675808151979732710609567124303613072534000631302004749911450258222324782819382615 \xi}\)</span></p>
+</div>
+</div>
+<div id="c070ff7b-adf8-4c23-b225-9b426ee01299" class="cell" data-execution_count="63">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>test_subs <span class="op">=</span> {<span class="op">**</span>numeric_subs, A0: A0, Am: Am, C1:C1}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="00f1a45e-5c14-4b69-a038-901158187e15" class="cell" data-execution_count="64">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>recursive_reduce(v2_mid).subs(test_subs).evalf(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="64">
+<p><span class="math inline">\(\displaystyle 0.0095373 A_{0} e^{\xi} + 0.89396 A_{-\Delta} e^{- \xi} - 1.2425 A_{-\Delta} e^{- 0.9708309606358008957675808151979732710609567124303613072534000631302004749911450258222324782819382615 \xi} + C_{1} e^{- 0.2912492881907402687302742445595451514363717622037873412987573405915948520928810276679107226603692338 \xi}\)</span></p>
+</div>
+</div>
+<div id="050c9cde-8d72-4c40-bdf6-d2177cd31551" class="cell" data-execution_count="65">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>eigen_vect.real</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="65">
+<pre><code>array([1.00000000e+00, 2.59326138e-08, 9.61226070e-07])</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="plot-nullspace-basis" class="level1">
+<h1>Plot nullspace basis</h1>
+<div id="68e0df32" class="cell" data-execution_count="66">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>recursive_reduce(expr_dict[<span class="st">'v1'</span>]).evalf(precision, subs<span class="op">=</span>numeric_subs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="66">
+<p><span class="math inline">\(\displaystyle \left(0.999999999999537703132546084816567599773406982421875 \theta\left(\xi\right) + 0.000000025932613750137480530374021656624117238010285291238687932491302490234375 \theta\left(\xi + 9.342632848278734582348146110265447239302673294271547765964725591050019234312324056202624227085276521\right)\right) e^{- 0.9708309606358008957675808151979732710609567124303613072534000631302004749911450258222324782819382615 \xi}\)</span></p>
+</div>
+</div>
+<div id="b916e4f3" class="cell" data-execution_count="67">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>v1_numeric <span class="op">=</span> sym.lambdify(ξ, recursive_reduce(expr_dict[<span class="st">'v1'</span>]).evalf(precision, subs<span class="op">=</span>numeric_subs), modules<span class="op">=</span>sympy_modules)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>v2_numeric <span class="op">=</span> sym.lambdify(ξ, recursive_reduce(expr_dict[<span class="st">'v2'</span>]).evalf(precision, subs<span class="op">=</span>numeric_subs), modules<span class="op">=</span>sympy_modules)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="3ffb892c" class="cell" data-execution_count="69">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>zs <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">201</span>)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>plt.plot(zs, v1_numeric(zs))</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>plt.plot(zs, v2_numeric(zs))</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="op">-</span><span class="fl">.1</span>, <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="synaptic_depression_analysis_files/figure-html/cell-30-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="save-expressions" class="level1">
+<h1>Save Expressions</h1>
+<div id="08652d4f" class="cell" data-execution_count="77">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>expr_dict[<span class="st">'sub_dict'</span>] <span class="op">=</span> sub_dict</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(file_name, <span class="st">'wb'</span>) <span class="im">as</span> f:</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    pickle.dump(expr_dict, f)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="test-saved-expressions" class="level1">
+<h1>Test Saved Expressions</h1>
+<div id="53cc8152" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> helper_symbolics</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'theta'</span>: <span class="fl">0.2</span>,</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'alpha'</span>: <span class="dv">20</span>,</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'beta'</span>: <span class="fl">.25</span>,</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'mu'</span>: <span class="dv">1</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>precision <span class="op">=</span> <span class="dv">15</span></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>U_numeric, Q_numeric, <span class="op">*</span>_ <span class="op">=</span> helper_symbolics.get_traveling_pulse(params, precision<span class="op">=</span>precision)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="031f163f" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>xs <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">20</span>,<span class="dv">10</span>, <span class="dv">2001</span>)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">8</span>))</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>plt.plot(xs, U_numeric(xs), <span class="st">'b-'</span>, label<span class="op">=</span><span class="st">'$U(</span><span class="ch">\\</span><span class="st">xi)$'</span>)</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>plt.plot(xs, Q_numeric(xs), <span class="st">'g-'</span>, label<span class="op">=</span><span class="st">'$Q(</span><span class="ch">\\</span><span class="st">xi)$'</span>)</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>plt.plot(xs, <span class="bu">float</span>(params[<span class="st">'theta'</span>]) <span class="op">+</span> <span class="dv">0</span><span class="op">*</span>xs, <span class="st">'k:'</span>, label<span class="op">=</span><span class="st">'$</span><span class="ch">\\</span><span class="st">theta$'</span>, linewidth<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Traveling Pulse Solution'</span>)</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'$</span><span class="ch">\\</span><span class="st">xi$'</span>)</span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.savefig('traveling_pulse.eps')</span></span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="synaptic_depression_analysis_files/figure-html/cell-33-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="c56e711a" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>v1_numeric, v2_numeric <span class="op">=</span> helper_symbolics.get_adjoint_nullspace(params, precision<span class="op">=</span>precision)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="af8127f4" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>xs <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">201</span>)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>plt.plot(xs, v1_numeric(xs), <span class="st">'b-'</span>, label<span class="op">=</span><span class="st">'$v_1$'</span>)</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>plt.plot(xs, v2_numeric(xs), <span class="st">'g-'</span>, label<span class="op">=</span><span class="st">'$v_2$'</span>)</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Nullspace'</span>)</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.savefig('adjoint_nullspace_basis.eps')</span></span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="synaptic_depression_analysis_files/figure-html/cell-35-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

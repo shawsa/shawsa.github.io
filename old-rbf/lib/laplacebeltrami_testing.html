@@ -1,0 +1,2046 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Testing – Sage Shaw</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-9a60b6f365114c3b1e59731f49b17c37.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Sage Shaw</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#tangent-plane-method" id="toc-tangent-plane-method" class="nav-link active" data-scroll-target="#tangent-plane-method">Tangent Plane Method</a></li>
+  <li><a href="#symmetric-ogr" id="toc-symmetric-ogr" class="nav-link" data-scroll-target="#symmetric-ogr">Symmetric OGr</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Testing</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="cell-1" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib notebook</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.linalg <span class="im">as</span> la</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mpl_toolkits.mplot3d</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.spatial <span class="im">import</span> cKDTree</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.sparse <span class="im">as</span> sp</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.sparse.linalg <span class="im">as</span> spla</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.sparse.linalg <span class="im">import</span> spsolve, lsqr</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpy.linalg <span class="im">import</span> cond, norm, inv, lstsq</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize_scalar</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> poly_basis <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> spherepts <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rbf <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> laplacebeltrami <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sphere_gaussians <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> factorial <span class="im">as</span> fac</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-2" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> schur_solve_full(A, P, Q, f, g, rcond<span class="op">=</span><span class="fl">1e-15</span>):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    lam <span class="op">=</span> la.pinv(P.T <span class="op">@</span> la.solve(A, P) <span class="op">-</span> Q, rcond<span class="op">=</span>rcond) <span class="op">@</span>  (P.T <span class="op">@</span> la.solve(A,f) <span class="op">-</span> g)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> la.solve(A, f<span class="op">-</span> P<span class="op">@</span>lam)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> w, lam</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SOGr2(nodes, normals, rbf_obj<span class="op">=</span>rbf_dict[<span class="st">'multiquadric'</span>], eps<span class="op">=</span><span class="va">None</span>, </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        stencil_size<span class="op">=</span><span class="dv">15</span>, poly_deg<span class="op">=</span><span class="va">None</span>, poly_type<span class="op">=</span><span class="st">'p'</span>, rcond<span class="op">=</span><span class="fl">1e-15</span>):</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> poly_deg <span class="kw">is</span> <span class="op">-</span><span class="dv">1</span>:</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        poly_deg <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> poly_type <span class="kw">is</span> <span class="st">'p'</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(nodes)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    k <span class="op">=</span> stencil_size</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    phi  <span class="op">=</span> rbf_obj[<span class="st">'rbf'</span>]</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    phi1 <span class="op">=</span> rbf_obj[<span class="st">'phi1'</span>]</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    phi2 <span class="op">=</span> rbf_obj[<span class="st">'phi2'</span>]</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    phi3 <span class="op">=</span> rbf_obj[<span class="st">'phi3'</span>]</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    phi4 <span class="op">=</span> rbf_obj[<span class="st">'phi4'</span>]</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> Gx(r, d, eps):</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> d<span class="op">*</span>phi1(r,eps)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> Hx(r, d,eps):</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> phi1(r,eps) <span class="op">+</span> d<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> phi2(r,eps)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> GHx(r, d,eps):</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">3</span><span class="op">*</span>d<span class="op">*</span>phi2(r,eps) <span class="op">+</span> d<span class="op">**</span><span class="dv">3</span> <span class="op">*</span> phi3(r,eps)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> HHx(r, d,eps):</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">3</span><span class="op">*</span>phi2(r,eps) <span class="op">+</span> <span class="dv">6</span> <span class="op">*</span> d<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> phi3(r,eps) <span class="op">+</span> d<span class="op">**</span><span class="dv">4</span> <span class="op">*</span> phi4(r,eps)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> Lphi(r, eps):</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">3</span><span class="op">*</span>phi1(r,eps) <span class="op">+</span> r<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> phi2(r,eps)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> LG(r, d,eps):</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">5</span><span class="op">*</span>d<span class="op">*</span>phi2(r,eps) <span class="op">+</span> r<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> d <span class="op">*</span> phi3(r,eps)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> LH(r,d,eps):</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">5</span><span class="op">*</span>phi2(r,eps) <span class="op">+</span> (r<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> <span class="dv">7</span><span class="op">*</span>d<span class="op">**</span><span class="dv">2</span>)<span class="op">*</span>phi3(r,eps) <span class="op">+</span> (d<span class="op">*</span>r)<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> phi4(r,eps)</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    weights <span class="op">=</span> np.zeros((n, stencil_size))</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    row_index <span class="op">=</span> [r <span class="cf">for</span> r <span class="kw">in</span> <span class="bu">range</span>(n) <span class="cf">for</span> c <span class="kw">in</span> <span class="bu">range</span>(stencil_size)]</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    col_index <span class="op">=</span> np.zeros((n, stencil_size))</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    tree <span class="op">=</span> cKDTree(np.array(nodes))</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, node <span class="kw">in</span> <span class="bu">enumerate</span>(nodes):</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>        stencil <span class="op">=</span> tree.query(nodes[i], k)[<span class="dv">1</span>]</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>        col_index[i] <span class="op">=</span> stencil</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>        nn <span class="op">=</span> np.array([nodes[i] <span class="cf">for</span> i <span class="kw">in</span> stencil])</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>        <span class="co"># center stencil</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>        nn <span class="op">-=</span> nn[<span class="dv">0</span>]</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>        <span class="co"># scale stencil</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>        scale <span class="op">=</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(nn))</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>        nn <span class="op">/=</span> scale</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>        r <span class="op">=</span> dist_outer(nn,nn)</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i<span class="op">==</span><span class="dv">0</span> <span class="kw">and</span> eps <span class="kw">is</span> <span class="va">None</span> <span class="kw">and</span> rbf_obj[<span class="st">'shape'</span>]:</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>            eps <span class="op">=</span> optimize_eps(phi, r, P<span class="op">=</span><span class="va">None</span>, target_cond<span class="op">=</span><span class="dv">10</span><span class="op">**</span><span class="dv">12</span>)</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">'epsilon set: </span><span class="sc">%g</span><span class="st">'</span> <span class="op">%</span> eps)</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>        d <span class="op">=</span> nn <span class="op">@</span> normals[i]</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> poly_deg <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>            A <span class="op">=</span> np.zeros((k<span class="op">+</span><span class="dv">2</span>,k<span class="op">+</span><span class="dv">2</span>))</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>            A[:k, :k] <span class="op">=</span> phi(r, eps)</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>            A[:k, <span class="op">-</span><span class="dv">2</span>] <span class="op">=</span> <span class="op">-</span>Gx(r[<span class="dv">0</span>], d, eps)<span class="op">/</span>scale</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>            A[:k, <span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> Hx(r[<span class="dv">0</span>], d, eps)<span class="op">/</span>scale<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>            A[<span class="op">-</span><span class="dv">2</span>, <span class="op">-</span><span class="dv">2</span>] <span class="op">=</span> <span class="op">-</span>Hx(<span class="dv">0</span>, <span class="dv">0</span>, eps)<span class="op">/</span>scale<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>            A[<span class="op">-</span><span class="dv">2</span>, <span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> <span class="op">-</span>GHx(<span class="dv">0</span>, <span class="dv">0</span>, eps)<span class="op">/</span>scale<span class="op">**</span><span class="dv">3</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>            A[<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> HHx(<span class="dv">0</span>, <span class="dv">0</span>, eps)<span class="op">/</span>scale<span class="op">**</span><span class="dv">4</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>            A[<span class="op">-</span><span class="dv">2</span>, :k] <span class="op">=</span> A[:k, <span class="op">-</span><span class="dv">2</span>]</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>            A[<span class="op">-</span><span class="dv">1</span>, :<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> A[:<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>            B <span class="op">=</span> np.zeros(k<span class="op">+</span><span class="dv">2</span>)</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>            B[:k] <span class="op">=</span> Lphi(r[<span class="dv">0</span>], eps)<span class="op">/</span>scale<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>            B[<span class="op">-</span><span class="dv">2</span>] <span class="op">=</span> LG(<span class="dv">0</span>, <span class="dv">0</span>, eps)<span class="op">/</span>scale<span class="op">**</span><span class="dv">3</span></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>            B[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> LH(<span class="dv">0</span>, <span class="dv">0</span>, eps)<span class="op">/</span>scale<span class="op">**</span><span class="dv">4</span></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>            weights[i] <span class="op">=</span> la.solve(A, B)[:k]</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>            P, rhs_x, rhs_y, rhs_z, poly_scale_x, poly_scale_y, poly_scale_z <span class="op">=</span> grad_poly(nn, [], poly_deg)</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>            terms <span class="op">=</span> P.shape[<span class="dv">1</span>]</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>            A <span class="op">=</span> np.zeros((k<span class="op">+</span><span class="dv">2</span><span class="op">+</span>terms,k<span class="op">+</span><span class="dv">2</span><span class="op">+</span>terms))</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>            B <span class="op">=</span> np.zeros(k<span class="op">+</span><span class="dv">2</span><span class="op">+</span>terms)</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>            B[:k] <span class="op">=</span> Lphi(r[<span class="dv">0</span>], eps)<span class="op">/</span>scale<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>            B[k] <span class="op">=</span> LG(<span class="dv">0</span>, <span class="dv">0</span>, eps)<span class="op">/</span>scale<span class="op">**</span><span class="dv">3</span></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>            B[k<span class="op">+</span><span class="dv">1</span>] <span class="op">=</span> LH(<span class="dv">0</span>, <span class="dv">0</span>, eps)<span class="op">/</span>scale<span class="op">**</span><span class="dv">4</span></span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>            A[:k, k<span class="op">+</span><span class="dv">2</span>:] <span class="op">=</span> P</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>            A[k<span class="op">+</span><span class="dv">2</span>:, :k] <span class="op">=</span> P.T</span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>            normal_scale <span class="op">=</span> normals[i]<span class="op">/</span>scale</span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>            normal_scale[<span class="dv">0</span>] <span class="op">/=</span> poly_scale_x</span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>            normal_scale[<span class="dv">1</span>] <span class="op">/=</span> poly_scale_y</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>            normal_scale[<span class="dv">2</span>] <span class="op">/=</span> poly_scale_z</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> poly_deg <span class="op">&gt;=</span> <span class="dv">1</span>:</span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Lp</span></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>                A[k, k<span class="op">+</span><span class="dv">3</span>:k<span class="op">+</span><span class="dv">6</span>] <span class="op">=</span> normal_scale</span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>                A[k<span class="op">+</span><span class="dv">3</span>:k<span class="op">+</span><span class="dv">6</span>, k] <span class="op">=</span> normal_scale</span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> poly_deg <span class="op">&gt;=</span> <span class="dv">2</span>:</span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Hp</span></span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>                nHn <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>np.outer(normal_scale, normal_scale)</span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a>                A[k<span class="op">+</span><span class="dv">1</span>, k<span class="op">+</span><span class="dv">6</span>:k<span class="op">+</span><span class="dv">9</span>] <span class="op">=</span> nHn[<span class="dv">0</span>]</span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>                A[k<span class="op">+</span><span class="dv">1</span>, k<span class="op">+</span><span class="dv">9</span>:k<span class="op">+</span><span class="dv">11</span>] <span class="op">=</span> nHn[<span class="dv">1</span>, <span class="dv">1</span>:]</span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>                A[k<span class="op">+</span><span class="dv">1</span>, k<span class="op">+</span><span class="dv">11</span>] <span class="op">=</span> nHn[<span class="dv">2</span>,<span class="dv">2</span>]</span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>                A[k<span class="op">+</span><span class="dv">6</span>:k<span class="op">+</span><span class="dv">12</span>, k<span class="op">+</span><span class="dv">1</span>] <span class="op">=</span> A[k<span class="op">+</span><span class="dv">1</span>, k<span class="op">+</span><span class="dv">6</span>:k<span class="op">+</span><span class="dv">12</span>]           </span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a>                B[k<span class="op">+</span><span class="dv">6</span> ] <span class="op">=</span> <span class="dv">2</span><span class="op">/</span>scale<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> poly_scale_x<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>                B[k<span class="op">+</span><span class="dv">9</span> ] <span class="op">=</span> <span class="dv">2</span><span class="op">/</span>scale<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> poly_scale_y<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a>                B[k<span class="op">+</span><span class="dv">11</span>] <span class="op">=</span> <span class="dv">2</span><span class="op">/</span>scale<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> poly_scale_z<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a>            A[:k,  :k] <span class="op">=</span> phi(r, eps)</span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a>            A[:k,   k] <span class="op">=</span> <span class="op">-</span>Gx(r[<span class="dv">0</span>], d, eps)<span class="op">/</span>scale</span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a>            A[:k, k<span class="op">+</span><span class="dv">1</span>] <span class="op">=</span> Hx(r[<span class="dv">0</span>], d, eps)<span class="op">/</span>scale<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a>            A[ k, k] <span class="op">=</span> <span class="op">-</span>Hx(<span class="dv">0</span>, <span class="dv">0</span>, eps)<span class="op">/</span>scale<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a>            A[k, k<span class="op">+</span><span class="dv">1</span>] <span class="op">=</span> <span class="op">-</span>GHx(<span class="dv">0</span>, <span class="dv">0</span>, eps)<span class="op">/</span>scale<span class="op">**</span><span class="dv">3</span></span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a>            A[k<span class="op">+</span><span class="dv">1</span>, k<span class="op">+</span><span class="dv">1</span>] <span class="op">=</span> HHx(<span class="dv">0</span>, <span class="dv">0</span>, eps)<span class="op">/</span>scale<span class="op">**</span><span class="dv">4</span></span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a>            A[k, :k] <span class="op">=</span> A[:k, k]</span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>            A[k<span class="op">+</span><span class="dv">1</span>, :k<span class="op">+</span><span class="dv">1</span>] <span class="op">=</span> A[:k<span class="op">+</span><span class="dv">1</span>, k<span class="op">+</span><span class="dv">1</span>]</span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a>            <span class="cf">try</span>:</span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a><span class="co">#                 weights[i] = schur_solve(A[:k+2,:k+2], A[:k+2, k+2:], B[:k+2], B[k+2:], rcond=rcond)[0][:k]</span></span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a>                weights[i] <span class="op">=</span> schur_solve(A[:k,:k], A[:k,k:], A[:k,:k], B[:k], B[k:], rcond<span class="op">=</span>rcond)[<span class="dv">0</span>]</span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a>            <span class="cf">except</span>:</span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a>                weights[i] <span class="op">=</span> la.solve(A, B)[:k]</span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a>    C <span class="op">=</span> sp.csc_matrix((weights.ravel(), (row_index, col_index.ravel())),shape<span class="op">=</span>(n,n))</span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> C</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-3" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> grad_poly(nodes, projectors, deg):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(nodes)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> nodes[:,<span class="dv">0</span>]</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> nodes[:,<span class="dv">1</span>]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> nodes[:,<span class="dv">2</span>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    poly_scale_x <span class="op">=</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(x))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    poly_scale_y <span class="op">=</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(y))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    poly_scale_z <span class="op">=</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(z))</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> x <span class="op">/</span> poly_scale_x</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> y <span class="op">/</span> poly_scale_y</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> z <span class="op">/</span> poly_scale_z</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    cols <span class="op">=</span> fac(deg<span class="op">+</span><span class="dv">3</span>)<span class="op">//</span>(fac(deg)<span class="op">*</span>fac(<span class="dv">3</span>))</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    P <span class="op">=</span> np.zeros((n, cols))</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    rhs_dx <span class="op">=</span> np.zeros((cols, n))</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    rhs_dy <span class="op">=</span> np.zeros((cols, n))</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    rhs_dz <span class="op">=</span> np.zeros((cols, n))</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    rhs_x <span class="op">=</span> np.zeros((cols, n))</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    rhs_y <span class="op">=</span> np.zeros((cols, n))</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    rhs_z <span class="op">=</span> np.zeros((cols, n))</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> d <span class="kw">in</span> <span class="bu">range</span>(deg<span class="op">+</span><span class="dv">1</span>):</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        <span class="co">#x^a y^b z^c with a+b+c = d</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> a <span class="kw">in</span> <span class="bu">range</span>(d,<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> b <span class="kw">in</span> <span class="bu">range</span>(d<span class="op">-</span>a, <span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>                c <span class="op">=</span> d<span class="op">-</span>a<span class="op">-</span>b</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>                P[:,i] <span class="op">=</span> x<span class="op">**</span>a <span class="op">*</span> y<span class="op">**</span>b <span class="op">*</span> z<span class="op">**</span>c</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> a <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>                    rhs_dx[i] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span>:</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>                    rhs_dx[i] <span class="op">=</span> a <span class="op">*</span> x<span class="op">**</span>(a<span class="op">-</span><span class="dv">1</span>) <span class="op">*</span> y<span class="op">**</span>b <span class="op">*</span> z<span class="op">**</span>c</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> b <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>                    rhs_dy[i] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span>:</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>                    rhs_dy[i] <span class="op">=</span> b <span class="op">*</span> x<span class="op">**</span>a <span class="op">*</span> y<span class="op">**</span>(b<span class="op">-</span><span class="dv">1</span>) <span class="op">*</span> z<span class="op">**</span>c</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> c <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>                    rhs_dz[i] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span>:</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>                    rhs_dz[i] <span class="op">=</span> c <span class="op">*</span> x<span class="op">**</span>a <span class="op">*</span> y<span class="op">**</span>b <span class="op">*</span> z<span class="op">**</span>(c<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>                i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    rhs_dx <span class="op">/=</span> poly_scale_x</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    rhs_dy <span class="op">/=</span> poly_scale_y</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>    rhs_dz <span class="op">/=</span> poly_scale_z</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, p <span class="kw">in</span> <span class="bu">enumerate</span>(projectors):</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>        rhs_x[:,i] <span class="op">=</span> p[<span class="dv">0</span>,<span class="dv">0</span>]<span class="op">*</span>rhs_dx[:,i] <span class="op">+</span> p[<span class="dv">1</span>,<span class="dv">0</span>]<span class="op">*</span>rhs_dy[:,i] <span class="op">+</span> p[<span class="dv">2</span>,<span class="dv">0</span>]<span class="op">*</span>rhs_dz[:,i]</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>        rhs_y[:,i] <span class="op">=</span> p[<span class="dv">0</span>,<span class="dv">1</span>]<span class="op">*</span>rhs_dx[:,i] <span class="op">+</span> p[<span class="dv">1</span>,<span class="dv">1</span>]<span class="op">*</span>rhs_dy[:,i] <span class="op">+</span> p[<span class="dv">2</span>,<span class="dv">1</span>]<span class="op">*</span>rhs_dz[:,i]</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>        rhs_z[:,i] <span class="op">=</span> p[<span class="dv">0</span>,<span class="dv">2</span>]<span class="op">*</span>rhs_dx[:,i] <span class="op">+</span> p[<span class="dv">1</span>,<span class="dv">2</span>]<span class="op">*</span>rhs_dy[:,i] <span class="op">+</span> p[<span class="dv">2</span>,<span class="dv">2</span>]<span class="op">*</span>rhs_dz[:,i]</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> P, rhs_x, rhs_y, rhs_z, poly_scale_x, poly_scale_y, poly_scale_z</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-4" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SWM(nodes, normals, rbf_obj<span class="op">=</span>rbf_dict[<span class="st">'multiquadric'</span>], epsilon<span class="op">=</span><span class="va">None</span>, </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>        stencil_size<span class="op">=</span><span class="dv">15</span>, poly_deg<span class="op">=</span><span class="va">None</span>, poly_type<span class="op">=</span><span class="st">'p'</span>, rcond<span class="op">=</span><span class="fl">1e-15</span>):</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> poly_type <span class="kw">in</span> <span class="st">'ps'</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(nodes)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    k <span class="op">=</span> stencil_size</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    rbf <span class="op">=</span> rbf_obj[<span class="st">'rbf'</span>]</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    phi1 <span class="op">=</span> rbf_obj[<span class="st">'phi1'</span>]</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    weights <span class="op">=</span> np.zeros((n, stencil_size))</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    row_index <span class="op">=</span> [r <span class="cf">for</span> r <span class="kw">in</span> <span class="bu">range</span>(n) <span class="cf">for</span> c <span class="kw">in</span> <span class="bu">range</span>(stencil_size)]</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    col_index <span class="op">=</span> np.zeros((n, stencil_size))</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    tree <span class="op">=</span> cKDTree(np.array(nodes))</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    projectors <span class="op">=</span> [np.eye(<span class="dv">3</span>) <span class="op">-</span> np.outer(node, node) <span class="cf">for</span> node <span class="kw">in</span> normals]</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, node <span class="kw">in</span> <span class="bu">enumerate</span>(nodes):</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        stencil <span class="op">=</span> tree.query(nodes[i], k)[<span class="dv">1</span>]</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        col_index[i] <span class="op">=</span> stencil</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        nn <span class="op">=</span> np.array([nodes[i] <span class="cf">for</span> i <span class="kw">in</span> stencil])</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        nn_proj <span class="op">=</span> np.array([projectors[i] <span class="cf">for</span> i <span class="kw">in</span> stencil])</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># center stencil</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        nn <span class="op">-=</span> nn[<span class="dv">0</span>]</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">#         scale stencil</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        scale <span class="op">=</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(nn))</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        scale <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        nn <span class="op">/=</span> scale        </span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> poly_deg <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>            P <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> poly_type <span class="op">==</span> <span class="st">'p'</span>:</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>                P, rhs_x, rhs_y, rhs_z, <span class="op">*</span>trash <span class="op">=</span> grad_poly(nn, nn_proj, poly_deg)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> poly_type <span class="op">==</span> <span class="st">'s'</span>:</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>                P, rhs_x, rhs_y, rhs_z <span class="op">=</span> gen_sphere_harm_basis(poly_deg, nn, nn_proj)</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>            rhs_x <span class="op">/=</span> scale</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>            rhs_y <span class="op">/=</span> scale</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>            rhs_z <span class="op">/=</span> scale</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>        dist_mat <span class="op">=</span> dist_outer(nn,nn)</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        <span class="co">#print(cond(rbf(dist_mat, 1)))</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i<span class="op">==</span><span class="dv">0</span> <span class="kw">and</span> epsilon <span class="kw">is</span> <span class="va">None</span> <span class="kw">and</span> rbf_obj[<span class="st">'shape'</span>]:</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>            epsilon <span class="op">=</span> optimize_eps(rbf, dist_mat, P<span class="op">=</span><span class="va">None</span>, target_cond<span class="op">=</span><span class="dv">10</span><span class="op">**</span><span class="dv">12</span>)</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">'epsilon set: </span><span class="sc">%g</span><span class="st">'</span> <span class="op">%</span> epsilon)</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>        A <span class="op">=</span> rbf(dist_mat, epsilon)</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>        rhsAs <span class="op">=</span> np.matmul(nn_proj, grad_rbf_outer(nn, nn, phi1, epsilon).reshape(</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>                (stencil_size,stencil_size,<span class="dv">3</span>,<span class="dv">1</span>))).reshape((stencil_size,stencil_size,<span class="dv">3</span>))</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>        rhsAs <span class="op">/=</span> scale</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> P <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>            rhs <span class="op">=</span> rhsAs[:,:,<span class="dv">0</span>] <span class="co"># only the x coordinates</span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>            weights_grad <span class="op">=</span> la.solve(A, rhs).T</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>            weights[i] <span class="op">=</span> (weights_grad<span class="op">@</span>weights_grad)[<span class="dv">0</span>]</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>            rhs <span class="op">=</span> rhsAs[:,:,<span class="dv">1</span>] <span class="co"># only the y coordinates</span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>            weights_grad <span class="op">=</span> la.solve(A, rhs).T</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>            weights[i] <span class="op">+=</span> (weights_grad<span class="op">@</span>weights_grad)[<span class="dv">0</span>]</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>            rhs <span class="op">=</span> rhsAs[:,:,<span class="dv">2</span>] <span class="co"># only the z coordinates</span></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>            weights_grad <span class="op">=</span> la.solve(A, rhs).T</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>            weights[i] <span class="op">+=</span> (weights_grad<span class="op">@</span>weights_grad)[<span class="dv">0</span>]</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>            weights_grad <span class="op">=</span> schur_solve(A, P, rhsAs[:,:,<span class="dv">0</span>], rhs_x, rcond<span class="op">=</span>rcond)[<span class="dv">0</span>].T</span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>            weights[i] <span class="op">=</span> (weights_grad<span class="op">@</span>weights_grad)[<span class="dv">0</span>]</span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>            weights_grad <span class="op">=</span> schur_solve(A, P, rhsAs[:,:,<span class="dv">1</span>], rhs_y, rcond<span class="op">=</span>rcond)[<span class="dv">0</span>].T</span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>            weights[i] <span class="op">+=</span> (weights_grad<span class="op">@</span>weights_grad)[<span class="dv">0</span>]</span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>            weights_grad <span class="op">=</span> schur_solve(A, P, rhsAs[:,:,<span class="dv">2</span>], rhs_z, rcond<span class="op">=</span>rcond)[<span class="dv">0</span>].T</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>            weights[i] <span class="op">+=</span> (weights_grad<span class="op">@</span>weights_grad)[<span class="dv">0</span>]</span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>    C <span class="op">=</span> sp.csc_matrix((weights.ravel(), (row_index, col_index.ravel())),shape<span class="op">=</span>(n,n))</span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> C</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<pre><code>surface nodeset N   k   method  rbf epsilon poly_type   deg rel_L2_error    max_error       Re_eig</code></pre>
+<p>5 S spiral 2000 100 SOGr r^10 log(r) None p 5 1.575859e-05 1.351377e-05 6.301770e-12 11 S spiral 4000 100 SOGr r^10 log(r) None p 5 3.939923e-06 3.572173e-06 -1.165472e-09 17 S spiral 8000 100 SOGr r^10 log(r) None p 5 9.724650e-07 9.668411e-07 3.048079e-09 23 S spiral 16000 100 SOGr r^10 log(r) None p 5 1.371561e-06 1.570168e-06 -2.335497e-09 29 S spiral 32000 100 SOGr r^10 log(r) None p 5 7.387383e-06 9.520261e-06 4.592605e-08</p>
+<pre><code>surface nodeset N   k   method  rbf epsilon poly_type   deg rel_L2_error    max_error   Re_eig</code></pre>
+<p>1 S spiral 2000 100 SWM r^10 log(r) None p 5 0.000057 0.000054 -6.181586e-08 7 S spiral 4000 100 SWM r^10 log(r) None p 5 0.000019 0.000021 -6.683869e-08 13 S spiral 8000 100 SWM r^10 log(r) None p 5 0.000028 0.000130 -1.994939e-07 19 S spiral 16000 100 SWM r^10 log(r) None p 5 0.000042 0.000164 -4.259407e-07 25 S spiral 32000 100 SWM r^10 log(r) None p 5 0.000091 0.000328 -2.862222e-08</p>
+<div id="cell-7" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">16000</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>rbf_obj <span class="op">=</span> rbf_dict[<span class="st">'r^10 log(r)'</span>]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>deg <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>eps <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>nodes <span class="op">=</span> gen_spiral_nodes(n)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>normals <span class="op">=</span> nodes</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>forcing, exact <span class="op">=</span> get_sphere_gaussians()</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>fs <span class="op">=</span> np.array([forcing(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>es <span class="op">=</span> np.array([exact(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-8" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> SOGr2(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=</span>deg)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">max</span>(np.<span class="bu">abs</span>(ds <span class="op">-</span> es))<span class="op">/</span>np.<span class="bu">max</span>(np.<span class="bu">abs</span>(es)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>2.1518021437346332e-07
+2.587542741046489e-07</code></pre>
+</div>
+</div>
+<div id="cell-9" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> SOGr2(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=</span>deg, rcond<span class="op">=</span><span class="fl">1e-12</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">max</span>(np.<span class="bu">abs</span>(ds <span class="op">-</span> es))<span class="op">/</span>np.<span class="bu">max</span>(np.<span class="bu">abs</span>(es)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>2.1518021437346332e-07
+2.587542741046489e-07</code></pre>
+</div>
+</div>
+<div id="cell-10" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> SOGr(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=</span>deg, rcond<span class="op">=</span><span class="fl">1e-12</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">max</span>(np.<span class="bu">abs</span>(ds <span class="op">-</span> es))<span class="op">/</span>np.<span class="bu">max</span>(np.<span class="bu">abs</span>(es)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1.550687930537811e-06
+2.164334630775415e-06</code></pre>
+</div>
+</div>
+<div id="cell-14" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> SOGr(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=</span>deg, rcond<span class="op">=</span><span class="fl">1e-15</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">max</span>(np.<span class="bu">abs</span>(ds <span class="op">-</span> es))<span class="op">/</span>np.<span class="bu">max</span>(np.<span class="bu">abs</span>(es)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1.3715612784569182e-06
+1.5701679146374062e-06</code></pre>
+</div>
+</div>
+<div id="cell-15" class="cell" data-execution_count="56">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># original n=16000; k=100; deg=5</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> SOGr(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=</span>deg)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">max</span>(np.<span class="bu">abs</span>(ds <span class="op">-</span> es))<span class="op">/</span>np.<span class="bu">max</span>(np.<span class="bu">abs</span>(es)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1.783502264599848e-06
+1.744754293181107e-06</code></pre>
+</div>
+</div>
+<div id="cell-16" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> SOGr(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=</span>deg)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">max</span>(np.<span class="bu">abs</span>(ds <span class="op">-</span> es))<span class="op">/</span>np.<span class="bu">max</span>(np.<span class="bu">abs</span>(es)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1.5759829582569648e-05
+1.351479527159747e-05</code></pre>
+</div>
+</div>
+<div id="cell-17" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> SWM(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=</span>deg)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">max</span>(np.<span class="bu">abs</span>(ds <span class="op">-</span> es))<span class="op">/</span>np.<span class="bu">max</span>(np.<span class="bu">abs</span>(es)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.00021769312598381567
+0.00014424877957518162</code></pre>
+</div>
+</div>
+<div id="cell-18" class="cell" data-execution_count="54">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> schur_solve(A, P, f, g):</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    lam <span class="op">=</span> la.pinv(P.T <span class="op">@</span> la.solve(A, P)) <span class="op">@</span>  (P.T <span class="op">@</span> la.solve(A,f) <span class="op">-</span> g)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> la.solve(A, f<span class="op">-</span> P<span class="op">@</span>lam)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> w, lam</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> SOGr(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=</span>deg)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">max</span>(np.<span class="bu">abs</span>(ds <span class="op">-</span> es))<span class="op">/</span>np.<span class="bu">max</span>(np.<span class="bu">abs</span>(es)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1.5759829582569648e-05
+1.351479527159747e-05</code></pre>
+</div>
+</div>
+<div id="cell-19" class="cell" data-execution_count="59">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> schur_solve(A, P, f, g):</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    lam <span class="op">=</span> la.pinv(P.T <span class="op">@</span> la.solve(A, P)) <span class="op">@</span>  (P.T <span class="op">@</span> la.solve(A,f) <span class="op">-</span> g)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> la.solve(A, f<span class="op">-</span> P<span class="op">@</span>lam)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> w, lam</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> SOGr(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=</span>deg)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">max</span>(np.<span class="bu">abs</span>(ds <span class="op">-</span> es))<span class="op">/</span>np.<span class="bu">max</span>(np.<span class="bu">abs</span>(es)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1.783502264599848e-06
+1.744754293181107e-06</code></pre>
+</div>
+</div>
+<div id="cell-20" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> itertools</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-21" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>my_Ns <span class="op">=</span> [<span class="dv">4000</span>, <span class="dv">8000</span>, <span class="dv">16000</span>]</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>rconds <span class="op">=</span> [<span class="fl">1e-10</span>, <span class="fl">1e-11</span>, <span class="fl">1e-12</span>, <span class="fl">1e-13</span>, <span class="fl">1e-14</span>, <span class="fl">1e-15</span>]</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>rbf_obj <span class="op">=</span> rbf_dict[<span class="st">'r^10 log(r)'</span>]</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>deg <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>eps <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>runs <span class="op">=</span> []</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> my_N, rcond <span class="kw">in</span> itertools.product(my_Ns, rconds):</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>    nodes <span class="op">=</span> gen_spiral_nodes(my_N)</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>    normals <span class="op">=</span> nodes</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>    forcing, exact <span class="op">=</span> get_exact(<span class="st">'gaussians'</span>)</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>    fs <span class="op">=</span> np.array([forcing(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>    es <span class="op">=</span> np.array([exact(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(my_N, rcond)</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> schur_solve(A, P, f, g, rcond<span class="op">=</span><span class="fl">1e-14</span>):</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>        lam <span class="op">=</span> la.pinv(P.T <span class="op">@</span> la.solve(A, P), rcond<span class="op">=</span><span class="fl">1e-14</span>) <span class="op">@</span>  (P.T <span class="op">@</span> la.solve(A,f) <span class="op">-</span> g)</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>        w <span class="op">=</span> la.solve(A, f<span class="op">-</span> P<span class="op">@</span>lam)</span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> w, lam</span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>    C <span class="op">=</span> SWM(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=</span>deg)</span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>    ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>    l2_norm  <span class="op">=</span> la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es)</span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>    max_norm <span class="op">=</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(ds <span class="op">-</span> es))<span class="op">/</span>np.<span class="bu">max</span>(np.<span class="bu">abs</span>(es))</span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>    runs <span class="op">+=</span> [(my_N, rcond, l2_norm, max_norm)]</span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'finished'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>4000 1e-10
+4000 1e-11
+4000 1e-12
+4000 1e-13
+4000 1e-14
+4000 1e-15
+8000 1e-10
+8000 1e-11
+8000 1e-12
+8000 1e-13
+8000 1e-14
+8000 1e-15
+16000 1e-10
+16000 1e-11
+16000 1e-12
+16000 1e-13
+16000 1e-14
+16000 1e-15
+finished</code></pre>
+</div>
+</div>
+<div id="cell-22" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> run <span class="kw">in</span> runs:</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(run)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(4000, 1e-10, 1.5153813507300652e-05, 1.470460918455755e-05)
+(4000, 1e-11, 1.5153813507300652e-05, 1.470460918455755e-05)
+(4000, 1e-12, 1.5153813507300652e-05, 1.470460918455755e-05)
+(4000, 1e-13, 1.5153813507300652e-05, 1.470460918455755e-05)
+(4000, 1e-14, 1.5153813507300652e-05, 1.470460918455755e-05)
+(4000, 1e-15, 1.5153813507300652e-05, 1.470460918455755e-05)
+(8000, 1e-10, 3.54950400763888e-06, 3.5210736001130522e-06)
+(8000, 1e-11, 3.54950400763888e-06, 3.5210736001130522e-06)
+(8000, 1e-12, 3.54950400763888e-06, 3.5210736001130522e-06)
+(8000, 1e-13, 3.54950400763888e-06, 3.5210736001130522e-06)
+(8000, 1e-14, 3.54950400763888e-06, 3.5210736001130522e-06)
+(8000, 1e-15, 3.54950400763888e-06, 3.5210736001130522e-06)
+(16000, 1e-10, 8.442463061183014e-07, 1.0425796335933876e-06)
+(16000, 1e-11, 8.442463061183014e-07, 1.0425796335933876e-06)
+(16000, 1e-12, 8.442463061183014e-07, 1.0425796335933876e-06)
+(16000, 1e-13, 8.442463061183014e-07, 1.0425796335933876e-06)
+(16000, 1e-14, 8.442463061183014e-07, 1.0425796335933876e-06)
+(16000, 1e-15, 8.442463061183014e-07, 1.0425796335933876e-06)</code></pre>
+</div>
+</div>
+<div id="cell-23" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> schur_solve(A, P, f, g):</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    U, S, V <span class="op">=</span> la.svd(P.T <span class="op">@</span> la.solve(A, P))</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    S[S<span class="op">&lt;</span> <span class="fl">1e-12</span>] <span class="op">=</span> <span class="dv">0</span> </span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    S[S<span class="op">&gt;</span><span class="dv">0</span>] <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>S[S<span class="op">&gt;</span><span class="dv">0</span>]</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    lam <span class="op">=</span> (V.T<span class="op">*</span>S) <span class="op">@</span> U.T <span class="op">@</span>  (P.T <span class="op">@</span> la.solve(A,f) <span class="op">-</span> g)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> la.solve(A, f<span class="op">-</span> P<span class="op">@</span>lam)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> w, lam</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> SOGr(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=</span>deg)</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">max</span>(np.<span class="bu">abs</span>(ds <span class="op">-</span> es))<span class="op">/</span>np.<span class="bu">max</span>(np.<span class="bu">abs</span>(es)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>296.7242323114897
+597.969909963094</code></pre>
+</div>
+</div>
+<div id="cell-24" class="cell" data-execution_count="33">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> schur_solve(A, P, f, g):</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    lam <span class="op">=</span> la.pinv(P.T <span class="op">@</span> la.solve(A, P)) <span class="op">@</span>  (P.T <span class="op">@</span> la.solve(A,f) <span class="op">-</span> g)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> la.solve(A, f<span class="op">-</span> P<span class="op">@</span>lam)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> w, lam</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> SOGr(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">max</span>(np.<span class="bu">abs</span>(ds <span class="op">-</span> es))<span class="op">/</span>np.<span class="bu">max</span>(np.<span class="bu">abs</span>(es)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1.5759829582569648e-05
+1.351479527159747e-05</code></pre>
+</div>
+</div>
+<div id="cell-25" class="cell" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> schur_solve(A, P, f, g):</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    lam <span class="op">=</span> la.pinv(P.T <span class="op">@</span> la.solve(A, P), rcond<span class="op">=</span><span class="fl">1e-14</span>) <span class="op">@</span>  (P.T <span class="op">@</span> la.solve(A,f) <span class="op">-</span> g)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> la.solve(A, f<span class="op">-</span> P<span class="op">@</span>lam)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> w, lam</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> SOGr(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">max</span>(np.<span class="bu">abs</span>(ds <span class="op">-</span> es))<span class="op">/</span>np.<span class="bu">max</span>(np.<span class="bu">abs</span>(es)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>2.44549843692173e-06
+2.3725485873029463e-06</code></pre>
+</div>
+</div>
+<div id="cell-26" class="cell" data-execution_count="102">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> SWM(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">max</span>(np.<span class="bu">abs</span>(ds <span class="op">-</span> es))<span class="op">/</span>np.<span class="bu">max</span>(np.<span class="bu">abs</span>(es)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>4.7699734224631064e-05</code></pre>
+</div>
+</div>
+<div id="cell-27" class="cell" data-execution_count="104">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">max</span>(np.<span class="bu">abs</span>(ds <span class="op">-</span> es))<span class="op">/</span>np.<span class="bu">max</span>(np.<span class="bu">abs</span>(es)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>4.7699734224631064e-05
+0.00021931437214353408</code></pre>
+</div>
+</div>
+<div id="cell-28" class="cell" data-execution_count="120">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">4</span>))</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="bu">range</span>(<span class="bu">len</span>(fs)), ds<span class="op">-</span>es, <span class="st">'b,'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<script type="application/javascript">
+/* Put everything inside the global mpl namespace */
+window.mpl = {};
+
+
+mpl.get_websocket_type = function() {
+    if (typeof(WebSocket) !== 'undefined') {
+        return WebSocket;
+    } else if (typeof(MozWebSocket) !== 'undefined') {
+        return MozWebSocket;
+    } else {
+        alert('Your browser does not have WebSocket support.' +
+              'Please try Chrome, Safari or Firefox ≥ 6. ' +
+              'Firefox 4 and 5 are also supported but you ' +
+              'have to enable WebSockets in about:config.');
+    };
+}
+
+mpl.figure = function(figure_id, websocket, ondownload, parent_element) {
+    this.id = figure_id;
+
+    this.ws = websocket;
+
+    this.supports_binary = (this.ws.binaryType != undefined);
+
+    if (!this.supports_binary) {
+        var warnings = document.getElementById("mpl-warnings");
+        if (warnings) {
+            warnings.style.display = 'block';
+            warnings.textContent = (
+                "This browser does not support binary websocket messages. " +
+                    "Performance may be slow.");
+        }
+    }
+
+    this.imageObj = new Image();
+
+    this.context = undefined;
+    this.message = undefined;
+    this.canvas = undefined;
+    this.rubberband_canvas = undefined;
+    this.rubberband_context = undefined;
+    this.format_dropdown = undefined;
+
+    this.image_mode = 'full';
+
+    this.root = $('<div/>');
+    this._root_extra_style(this.root)
+    this.root.attr('style', 'display: inline-block');
+
+    $(parent_element).append(this.root);
+
+    this._init_header(this);
+    this._init_canvas(this);
+    this._init_toolbar(this);
+
+    var fig = this;
+
+    this.waiting = false;
+
+    this.ws.onopen =  function () {
+            fig.send_message("supports_binary", {value: fig.supports_binary});
+            fig.send_message("send_image_mode", {});
+            if (mpl.ratio != 1) {
+                fig.send_message("set_dpi_ratio", {'dpi_ratio': mpl.ratio});
+            }
+            fig.send_message("refresh", {});
+        }
+
+    this.imageObj.onload = function() {
+            if (fig.image_mode == 'full') {
+                // Full images could contain transparency (where diff images
+                // almost always do), so we need to clear the canvas so that
+                // there is no ghosting.
+                fig.context.clearRect(0, 0, fig.canvas.width, fig.canvas.height);
+            }
+            fig.context.drawImage(fig.imageObj, 0, 0);
+        };
+
+    this.imageObj.onunload = function() {
+        fig.ws.close();
+    }
+
+    this.ws.onmessage = this._make_on_message_function(this);
+
+    this.ondownload = ondownload;
+}
+
+mpl.figure.prototype._init_header = function() {
+    var titlebar = $(
+        '<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ' +
+        'ui-helper-clearfix"/>');
+    var titletext = $(
+        '<div class="ui-dialog-title" style="width: 100%; ' +
+        'text-align: center; padding: 3px;"/>');
+    titlebar.append(titletext)
+    this.root.append(titlebar);
+    this.header = titletext[0];
+}
+
+
+
+mpl.figure.prototype._canvas_extra_style = function(canvas_div) {
+
+}
+
+
+mpl.figure.prototype._root_extra_style = function(canvas_div) {
+
+}
+
+mpl.figure.prototype._init_canvas = function() {
+    var fig = this;
+
+    var canvas_div = $('<div/>');
+
+    canvas_div.attr('style', 'position: relative; clear: both; outline: 0');
+
+    function canvas_keyboard_event(event) {
+        return fig.key_event(event, event['data']);
+    }
+
+    canvas_div.keydown('key_press', canvas_keyboard_event);
+    canvas_div.keyup('key_release', canvas_keyboard_event);
+    this.canvas_div = canvas_div
+    this._canvas_extra_style(canvas_div)
+    this.root.append(canvas_div);
+
+    var canvas = $('<canvas/>');
+    canvas.addClass('mpl-canvas');
+    canvas.attr('style', "left: 0; top: 0; z-index: 0; outline: 0")
+
+    this.canvas = canvas[0];
+    this.context = canvas[0].getContext("2d");
+
+    var backingStore = this.context.backingStorePixelRatio ||
+    this.context.webkitBackingStorePixelRatio ||
+    this.context.mozBackingStorePixelRatio ||
+    this.context.msBackingStorePixelRatio ||
+    this.context.oBackingStorePixelRatio ||
+    this.context.backingStorePixelRatio || 1;
+
+    mpl.ratio = (window.devicePixelRatio || 1) / backingStore;
+
+    var rubberband = $('<canvas/>');
+    rubberband.attr('style', "position: absolute; left: 0; top: 0; z-index: 1;")
+
+    var pass_mouse_events = true;
+
+    canvas_div.resizable({
+        start: function(event, ui) {
+            pass_mouse_events = false;
+        },
+        resize: function(event, ui) {
+            fig.request_resize(ui.size.width, ui.size.height);
+        },
+        stop: function(event, ui) {
+            pass_mouse_events = true;
+            fig.request_resize(ui.size.width, ui.size.height);
+        },
+    });
+
+    function mouse_event_fn(event) {
+        if (pass_mouse_events)
+            return fig.mouse_event(event, event['data']);
+    }
+
+    rubberband.mousedown('button_press', mouse_event_fn);
+    rubberband.mouseup('button_release', mouse_event_fn);
+    // Throttle sequential mouse events to 1 every 20ms.
+    rubberband.mousemove('motion_notify', mouse_event_fn);
+
+    rubberband.mouseenter('figure_enter', mouse_event_fn);
+    rubberband.mouseleave('figure_leave', mouse_event_fn);
+
+    canvas_div.on("wheel", function (event) {
+        event = event.originalEvent;
+        event['data'] = 'scroll'
+        if (event.deltaY < 0) {
+            event.step = 1;
+        } else {
+            event.step = -1;
+        }
+        mouse_event_fn(event);
+    });
+
+    canvas_div.append(canvas);
+    canvas_div.append(rubberband);
+
+    this.rubberband = rubberband;
+    this.rubberband_canvas = rubberband[0];
+    this.rubberband_context = rubberband[0].getContext("2d");
+    this.rubberband_context.strokeStyle = "#000000";
+
+    this._resize_canvas = function(width, height) {
+        // Keep the size of the canvas, canvas container, and rubber band
+        // canvas in synch.
+        canvas_div.css('width', width)
+        canvas_div.css('height', height)
+
+        canvas.attr('width', width * mpl.ratio);
+        canvas.attr('height', height * mpl.ratio);
+        canvas.attr('style', 'width: ' + width + 'px; height: ' + height + 'px;');
+
+        rubberband.attr('width', width);
+        rubberband.attr('height', height);
+    }
+
+    // Set the figure to an initial 600x600px, this will subsequently be updated
+    // upon first draw.
+    this._resize_canvas(600, 600);
+
+    // Disable right mouse context menu.
+    $(this.rubberband_canvas).bind("contextmenu",function(e){
+        return false;
+    });
+
+    function set_focus () {
+        canvas.focus();
+        canvas_div.focus();
+    }
+
+    window.setTimeout(set_focus, 100);
+}
+
+mpl.figure.prototype._init_toolbar = function() {
+    var fig = this;
+
+    var nav_element = $('<div/>')
+    nav_element.attr('style', 'width: 100%');
+    this.root.append(nav_element);
+
+    // Define a callback function for later on.
+    function toolbar_event(event) {
+        return fig.toolbar_button_onclick(event['data']);
+    }
+    function toolbar_mouse_event(event) {
+        return fig.toolbar_button_onmouseover(event['data']);
+    }
+
+    for(var toolbar_ind in mpl.toolbar_items) {
+        var name = mpl.toolbar_items[toolbar_ind][0];
+        var tooltip = mpl.toolbar_items[toolbar_ind][1];
+        var image = mpl.toolbar_items[toolbar_ind][2];
+        var method_name = mpl.toolbar_items[toolbar_ind][3];
+
+        if (!name) {
+            // put a spacer in here.
+            continue;
+        }
+        var button = $('<button/>');
+        button.addClass('ui-button ui-widget ui-state-default ui-corner-all ' +
+                        'ui-button-icon-only');
+        button.attr('role', 'button');
+        button.attr('aria-disabled', 'false');
+        button.click(method_name, toolbar_event);
+        button.mouseover(tooltip, toolbar_mouse_event);
+
+        var icon_img = $('<span/>');
+        icon_img.addClass('ui-button-icon-primary ui-icon');
+        icon_img.addClass(image);
+        icon_img.addClass('ui-corner-all');
+
+        var tooltip_span = $('<span/>');
+        tooltip_span.addClass('ui-button-text');
+        tooltip_span.html(tooltip);
+
+        button.append(icon_img);
+        button.append(tooltip_span);
+
+        nav_element.append(button);
+    }
+
+    var fmt_picker_span = $('<span/>');
+
+    var fmt_picker = $('<select/>');
+    fmt_picker.addClass('mpl-toolbar-option ui-widget ui-widget-content');
+    fmt_picker_span.append(fmt_picker);
+    nav_element.append(fmt_picker_span);
+    this.format_dropdown = fmt_picker[0];
+
+    for (var ind in mpl.extensions) {
+        var fmt = mpl.extensions[ind];
+        var option = $(
+            '<option/>', {selected: fmt === mpl.default_extension}).html(fmt);
+        fmt_picker.append(option)
+    }
+
+    // Add hover states to the ui-buttons
+    $( ".ui-button" ).hover(
+        function() { $(this).addClass("ui-state-hover");},
+        function() { $(this).removeClass("ui-state-hover");}
+    );
+
+    var status_bar = $('<span class="mpl-message"/>');
+    nav_element.append(status_bar);
+    this.message = status_bar[0];
+}
+
+mpl.figure.prototype.request_resize = function(x_pixels, y_pixels) {
+    // Request matplotlib to resize the figure. Matplotlib will then trigger a resize in the client,
+    // which will in turn request a refresh of the image.
+    this.send_message('resize', {'width': x_pixels, 'height': y_pixels});
+}
+
+mpl.figure.prototype.send_message = function(type, properties) {
+    properties['type'] = type;
+    properties['figure_id'] = this.id;
+    this.ws.send(JSON.stringify(properties));
+}
+
+mpl.figure.prototype.send_draw_message = function() {
+    if (!this.waiting) {
+        this.waiting = true;
+        this.ws.send(JSON.stringify({type: "draw", figure_id: this.id}));
+    }
+}
+
+
+mpl.figure.prototype.handle_save = function(fig, msg) {
+    var format_dropdown = fig.format_dropdown;
+    var format = format_dropdown.options[format_dropdown.selectedIndex].value;
+    fig.ondownload(fig, format);
+}
+
+
+mpl.figure.prototype.handle_resize = function(fig, msg) {
+    var size = msg['size'];
+    if (size[0] != fig.canvas.width || size[1] != fig.canvas.height) {
+        fig._resize_canvas(size[0], size[1]);
+        fig.send_message("refresh", {});
+    };
+}
+
+mpl.figure.prototype.handle_rubberband = function(fig, msg) {
+    var x0 = msg['x0'] / mpl.ratio;
+    var y0 = (fig.canvas.height - msg['y0']) / mpl.ratio;
+    var x1 = msg['x1'] / mpl.ratio;
+    var y1 = (fig.canvas.height - msg['y1']) / mpl.ratio;
+    x0 = Math.floor(x0) + 0.5;
+    y0 = Math.floor(y0) + 0.5;
+    x1 = Math.floor(x1) + 0.5;
+    y1 = Math.floor(y1) + 0.5;
+    var min_x = Math.min(x0, x1);
+    var min_y = Math.min(y0, y1);
+    var width = Math.abs(x1 - x0);
+    var height = Math.abs(y1 - y0);
+
+    fig.rubberband_context.clearRect(
+        0, 0, fig.canvas.width, fig.canvas.height);
+
+    fig.rubberband_context.strokeRect(min_x, min_y, width, height);
+}
+
+mpl.figure.prototype.handle_figure_label = function(fig, msg) {
+    // Updates the figure title.
+    fig.header.textContent = msg['label'];
+}
+
+mpl.figure.prototype.handle_cursor = function(fig, msg) {
+    var cursor = msg['cursor'];
+    switch(cursor)
+    {
+    case 0:
+        cursor = 'pointer';
+        break;
+    case 1:
+        cursor = 'default';
+        break;
+    case 2:
+        cursor = 'crosshair';
+        break;
+    case 3:
+        cursor = 'move';
+        break;
+    }
+    fig.rubberband_canvas.style.cursor = cursor;
+}
+
+mpl.figure.prototype.handle_message = function(fig, msg) {
+    fig.message.textContent = msg['message'];
+}
+
+mpl.figure.prototype.handle_draw = function(fig, msg) {
+    // Request the server to send over a new figure.
+    fig.send_draw_message();
+}
+
+mpl.figure.prototype.handle_image_mode = function(fig, msg) {
+    fig.image_mode = msg['mode'];
+}
+
+mpl.figure.prototype.updated_canvas_event = function() {
+    // Called whenever the canvas gets updated.
+    this.send_message("ack", {});
+}
+
+// A function to construct a web socket function for onmessage handling.
+// Called in the figure constructor.
+mpl.figure.prototype._make_on_message_function = function(fig) {
+    return function socket_on_message(evt) {
+        if (evt.data instanceof Blob) {
+            /* FIXME: We get "Resource interpreted as Image but
+             * transferred with MIME type text/plain:" errors on
+             * Chrome.  But how to set the MIME type?  It doesn't seem
+             * to be part of the websocket stream */
+            evt.data.type = "image/png";
+
+            /* Free the memory for the previous frames */
+            if (fig.imageObj.src) {
+                (window.URL || window.webkitURL).revokeObjectURL(
+                    fig.imageObj.src);
+            }
+
+            fig.imageObj.src = (window.URL || window.webkitURL).createObjectURL(
+                evt.data);
+            fig.updated_canvas_event();
+            fig.waiting = false;
+            return;
+        }
+        else if (typeof evt.data === 'string' && evt.data.slice(0, 21) == "data:image/png;base64") {
+            fig.imageObj.src = evt.data;
+            fig.updated_canvas_event();
+            fig.waiting = false;
+            return;
+        }
+
+        var msg = JSON.parse(evt.data);
+        var msg_type = msg['type'];
+
+        // Call the  "handle_{type}" callback, which takes
+        // the figure and JSON message as its only arguments.
+        try {
+            var callback = fig["handle_" + msg_type];
+        } catch (e) {
+            console.log("No handler for the '" + msg_type + "' message type: ", msg);
+            return;
+        }
+
+        if (callback) {
+            try {
+                // console.log("Handling '" + msg_type + "' message: ", msg);
+                callback(fig, msg);
+            } catch (e) {
+                console.log("Exception inside the 'handler_" + msg_type + "' callback:", e, e.stack, msg);
+            }
+        }
+    };
+}
+
+// from http://stackoverflow.com/questions/1114465/getting-mouse-location-in-canvas
+mpl.findpos = function(e) {
+    //this section is from http://www.quirksmode.org/js/events_properties.html
+    var targ;
+    if (!e)
+        e = window.event;
+    if (e.target)
+        targ = e.target;
+    else if (e.srcElement)
+        targ = e.srcElement;
+    if (targ.nodeType == 3) // defeat Safari bug
+        targ = targ.parentNode;
+
+    // jQuery normalizes the pageX and pageY
+    // pageX,Y are the mouse positions relative to the document
+    // offset() returns the position of the element relative to the document
+    var x = e.pageX - $(targ).offset().left;
+    var y = e.pageY - $(targ).offset().top;
+
+    return {"x": x, "y": y};
+};
+
+/*
+ * return a copy of an object with only non-object keys
+ * we need this to avoid circular references
+ * http://stackoverflow.com/a/24161582/3208463
+ */
+function simpleKeys (original) {
+  return Object.keys(original).reduce(function (obj, key) {
+    if (typeof original[key] !== 'object')
+        obj[key] = original[key]
+    return obj;
+  }, {});
+}
+
+mpl.figure.prototype.mouse_event = function(event, name) {
+    var canvas_pos = mpl.findpos(event)
+
+    if (name === 'button_press')
+    {
+        this.canvas.focus();
+        this.canvas_div.focus();
+    }
+
+    var x = canvas_pos.x * mpl.ratio;
+    var y = canvas_pos.y * mpl.ratio;
+
+    this.send_message(name, {x: x, y: y, button: event.button,
+                             step: event.step,
+                             guiEvent: simpleKeys(event)});
+
+    /* This prevents the web browser from automatically changing to
+     * the text insertion cursor when the button is pressed.  We want
+     * to control all of the cursor setting manually through the
+     * 'cursor' event from matplotlib */
+    event.preventDefault();
+    return false;
+}
+
+mpl.figure.prototype._key_event_extra = function(event, name) {
+    // Handle any extra behaviour associated with a key event
+}
+
+mpl.figure.prototype.key_event = function(event, name) {
+
+    // Prevent repeat events
+    if (name == 'key_press')
+    {
+        if (event.which === this._key)
+            return;
+        else
+            this._key = event.which;
+    }
+    if (name == 'key_release')
+        this._key = null;
+
+    var value = '';
+    if (event.ctrlKey && event.which != 17)
+        value += "ctrl+";
+    if (event.altKey && event.which != 18)
+        value += "alt+";
+    if (event.shiftKey && event.which != 16)
+        value += "shift+";
+
+    value += 'k';
+    value += event.which.toString();
+
+    this._key_event_extra(event, name);
+
+    this.send_message(name, {key: value,
+                             guiEvent: simpleKeys(event)});
+    return false;
+}
+
+mpl.figure.prototype.toolbar_button_onclick = function(name) {
+    if (name == 'download') {
+        this.handle_save(this, null);
+    } else {
+        this.send_message("toolbar_button", {name: name});
+    }
+};
+
+mpl.figure.prototype.toolbar_button_onmouseover = function(tooltip) {
+    this.message.textContent = tooltip;
+};
+mpl.toolbar_items = [["Home", "Reset original view", "fa fa-home icon-home", "home"], ["Back", "Back to  previous view", "fa fa-arrow-left icon-arrow-left", "back"], ["Forward", "Forward to next view", "fa fa-arrow-right icon-arrow-right", "forward"], ["", "", "", ""], ["Pan", "Pan axes with left mouse, zoom with right", "fa fa-arrows icon-move", "pan"], ["Zoom", "Zoom to rectangle", "fa fa-square-o icon-check-empty", "zoom"], ["", "", "", ""], ["Download", "Download plot", "fa fa-floppy-o icon-save", "download"]];
+
+mpl.extensions = ["eps", "jpeg", "pdf", "png", "ps", "raw", "svg", "tif"];
+
+mpl.default_extension = "png";var comm_websocket_adapter = function(comm) {
+    // Create a "websocket"-like object which calls the given IPython comm
+    // object with the appropriate methods. Currently this is a non binary
+    // socket, so there is still some room for performance tuning.
+    var ws = {};
+
+    ws.close = function() {
+        comm.close()
+    };
+    ws.send = function(m) {
+        //console.log('sending', m);
+        comm.send(m);
+    };
+    // Register the callback with on_msg.
+    comm.on_msg(function(msg) {
+        //console.log('receiving', msg['content']['data'], msg);
+        // Pass the mpl event to the overridden (by mpl) onmessage function.
+        ws.onmessage(msg['content']['data'])
+    });
+    return ws;
+}
+
+mpl.mpl_figure_comm = function(comm, msg) {
+    // This is the function which gets called when the mpl process
+    // starts-up an IPython Comm through the "matplotlib" channel.
+
+    var id = msg.content.data.id;
+    // Get hold of the div created by the display call when the Comm
+    // socket was opened in Python.
+    var element = $("#" + id);
+    var ws_proxy = comm_websocket_adapter(comm)
+
+    function ondownload(figure, format) {
+        window.open(figure.imageObj.src);
+    }
+
+    var fig = new mpl.figure(id, ws_proxy,
+                           ondownload,
+                           element.get(0));
+
+    // Call onopen now - mpl needs it, as it is assuming we've passed it a real
+    // web socket which is closed, not our websocket->open comm proxy.
+    ws_proxy.onopen();
+
+    fig.parent_element = element.get(0);
+    fig.cell_info = mpl.find_output_cell("<div id='" + id + "'></div>");
+    if (!fig.cell_info) {
+        console.error("Failed to find cell for figure", id, fig);
+        return;
+    }
+
+    var output_index = fig.cell_info[2]
+    var cell = fig.cell_info[0];
+
+};
+
+mpl.figure.prototype.handle_close = function(fig, msg) {
+    var width = fig.canvas.width/mpl.ratio
+    fig.root.unbind('remove')
+
+    // Update the output cell to use the data from the current canvas.
+    fig.push_to_output();
+    var dataURL = fig.canvas.toDataURL();
+    // Re-enable the keyboard manager in IPython - without this line, in FF,
+    // the notebook keyboard shortcuts fail.
+    IPython.keyboard_manager.enable()
+    $(fig.parent_element).html('<img src="' + dataURL + '" width="' + width + '">');
+    fig.close_ws(fig, msg);
+}
+
+mpl.figure.prototype.close_ws = function(fig, msg){
+    fig.send_message('closing', msg);
+    // fig.ws.close()
+}
+
+mpl.figure.prototype.push_to_output = function(remove_interactive) {
+    // Turn the data on the canvas into data in the output cell.
+    var width = this.canvas.width/mpl.ratio
+    var dataURL = this.canvas.toDataURL();
+    this.cell_info[1]['text/html'] = '<img src="' + dataURL + '" width="' + width + '">';
+}
+
+mpl.figure.prototype.updated_canvas_event = function() {
+    // Tell IPython that the notebook contents must change.
+    IPython.notebook.set_dirty(true);
+    this.send_message("ack", {});
+    var fig = this;
+    // Wait a second, then push the new image to the DOM so
+    // that it is saved nicely (might be nice to debounce this).
+    setTimeout(function () { fig.push_to_output() }, 1000);
+}
+
+mpl.figure.prototype._init_toolbar = function() {
+    var fig = this;
+
+    var nav_element = $('<div/>')
+    nav_element.attr('style', 'width: 100%');
+    this.root.append(nav_element);
+
+    // Define a callback function for later on.
+    function toolbar_event(event) {
+        return fig.toolbar_button_onclick(event['data']);
+    }
+    function toolbar_mouse_event(event) {
+        return fig.toolbar_button_onmouseover(event['data']);
+    }
+
+    for(var toolbar_ind in mpl.toolbar_items){
+        var name = mpl.toolbar_items[toolbar_ind][0];
+        var tooltip = mpl.toolbar_items[toolbar_ind][1];
+        var image = mpl.toolbar_items[toolbar_ind][2];
+        var method_name = mpl.toolbar_items[toolbar_ind][3];
+
+        if (!name) { continue; };
+
+        var button = $('<button class="btn btn-default" href="#" title="' + name + '"><i class="fa ' + image + ' fa-lg"></i></button>');
+        button.click(method_name, toolbar_event);
+        button.mouseover(tooltip, toolbar_mouse_event);
+        nav_element.append(button);
+    }
+
+    // Add the status bar.
+    var status_bar = $('<span class="mpl-message" style="text-align:right; float: right;"/>');
+    nav_element.append(status_bar);
+    this.message = status_bar[0];
+
+    // Add the close button to the window.
+    var buttongrp = $('<div class="btn-group inline pull-right"></div>');
+    var button = $('<button class="btn btn-mini btn-primary" href="#" title="Stop Interaction"><i class="fa fa-power-off icon-remove icon-large"></i></button>');
+    button.click(function (evt) { fig.handle_close(fig, {}); } );
+    button.mouseover('Stop Interaction', toolbar_mouse_event);
+    buttongrp.append(button);
+    var titlebar = this.root.find($('.ui-dialog-titlebar'));
+    titlebar.prepend(buttongrp);
+}
+
+mpl.figure.prototype._root_extra_style = function(el){
+    var fig = this
+    el.on("remove", function(){
+    fig.close_ws(fig, {});
+    });
+}
+
+mpl.figure.prototype._canvas_extra_style = function(el){
+    // this is important to make the div 'focusable
+    el.attr('tabindex', 0)
+    // reach out to IPython and tell the keyboard manager to turn it's self
+    // off when our div gets focus
+
+    // location in version 3
+    if (IPython.notebook.keyboard_manager) {
+        IPython.notebook.keyboard_manager.register_events(el);
+    }
+    else {
+        // location in version 2
+        IPython.keyboard_manager.register_events(el);
+    }
+
+}
+
+mpl.figure.prototype._key_event_extra = function(event, name) {
+    var manager = IPython.notebook.keyboard_manager;
+    if (!manager)
+        manager = IPython.keyboard_manager;
+
+    // Check for shift+enter
+    if (event.shiftKey && event.which == 13) {
+        this.canvas_div.blur();
+        event.shiftKey = false;
+        // Send a "J" for go to next cell
+        event.which = 74;
+        event.keyCode = 74;
+        manager.command_mode();
+        manager.handle_keydown(event);
+    }
+}
+
+mpl.figure.prototype.handle_save = function(fig, msg) {
+    fig.ondownload(fig, null);
+}
+
+
+mpl.find_output_cell = function(html_output) {
+    // Return the cell and output element which can be found *uniquely* in the notebook.
+    // Note - this is a bit hacky, but it is done because the "notebook_saving.Notebook"
+    // IPython event is triggered only after the cells have been serialised, which for
+    // our purposes (turning an active figure into a static one), is too late.
+    var cells = IPython.notebook.get_cells();
+    var ncells = cells.length;
+    for (var i=0; i<ncells; i++) {
+        var cell = cells[i];
+        if (cell.cell_type === 'code'){
+            for (var j=0; j<cell.output_area.outputs.length; j++) {
+                var data = cell.output_area.outputs[j];
+                if (data.data) {
+                    // IPython >= 3 moved mimebundle to data attribute of output
+                    data = data.data;
+                }
+                if (data['text/html'] == html_output) {
+                    return [cell, data, j];
+                }
+            }
+        }
+    }
+}
+
+// Register the function which deals with the matplotlib target/channel.
+// The kernel may be null if the page has been refreshed.
+if (IPython.notebook.kernel != null) {
+    IPython.notebook.kernel.comm_manager.register_target('matplotlib', mpl.mpl_figure_comm);
+}
+
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<img src="data:image/png;base64,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" width="800">
+</div>
+</div>
+<div id="cell-29" class="cell" data-execution_count="114">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>eig</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="114">
+<pre><code>(array([6.86279737e-08+0.j]), array([[0.00559017+0.j],
+        [0.00559017+0.j],
+        [0.00559017+0.j],
+        ...,
+        [0.00559017+0.j],
+        [0.00559017+0.j],
+        [0.00559017+0.j]]))</code></pre>
+</div>
+</div>
+<div id="cell-31" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> SWM(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=</span><span class="dv">1</span>, poly_type<span class="op">=</span><span class="st">'p'</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>fs <span class="op">=</span> np.array([forcing(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>es <span class="op">=</span> np.array([exact(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.001904940403098113</code></pre>
+</div>
+</div>
+<div id="cell-32" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> SWM(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=</span><span class="dv">4</span>, poly_type<span class="op">=</span><span class="st">'p'</span>)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>fs <span class="op">=</span> np.array([forcing(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>es <span class="op">=</span> np.array([exact(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.0005002980927061657</code></pre>
+</div>
+</div>
+<div id="cell-33" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> SWM(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=-</span><span class="dv">1</span>, poly_type<span class="op">=</span><span class="st">'s'</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>fs <span class="op">=</span> np.array([forcing(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>es <span class="op">=</span> np.array([exact(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>epsilon set: 0.821766
+0.00030839577294799705</code></pre>
+</div>
+</div>
+<section id="tangent-plane-method" class="level1">
+<h1>Tangent Plane Method</h1>
+<div id="cell-35" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> TPM(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>fs <span class="op">=</span> np.array([forcing(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>es <span class="op">=</span> np.array([exact(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.00048721016990151497</code></pre>
+</div>
+</div>
+<div id="cell-36" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> TPM(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>fs <span class="op">=</span> np.array([forcing(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>es <span class="op">=</span> np.array([exact(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>epsilon = 0.823559
+7.10414912415893e-05</code></pre>
+</div>
+</div>
+</section>
+<section id="symmetric-ogr" class="level1">
+<h1>Symmetric OGr</h1>
+<div id="cell-38" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> SOGr(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=</span><span class="va">None</span>, poly_type<span class="op">=</span><span class="st">'p'</span>)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>fs <span class="op">=</span> np.array([forcing(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>es <span class="op">=</span> np.array([exact(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>epsilon set: 0.439866
+0.00010560047226705281</code></pre>
+</div>
+</div>
+<div id="cell-39" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> SOGr(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=</span><span class="dv">0</span>, poly_type<span class="op">=</span><span class="st">'p'</span>)</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>fs <span class="op">=</span> np.array([forcing(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>es <span class="op">=</span> np.array([exact(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>epsilon set: 0.439866
+0.00010517675599315773</code></pre>
+</div>
+</div>
+<div id="cell-40" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> SOGr(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=</span><span class="dv">1</span>, poly_type<span class="op">=</span><span class="st">'p'</span>)</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>fs <span class="op">=</span> np.array([forcing(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>es <span class="op">=</span> np.array([exact(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>epsilon set: 0.439866
+0.00010400431625191328</code></pre>
+</div>
+</div>
+<div id="cell-41" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> SOGr(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=</span><span class="dv">2</span>, poly_type<span class="op">=</span><span class="st">'p'</span>)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>fs <span class="op">=</span> np.array([forcing(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>es <span class="op">=</span> np.array([exact(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>epsilon set: 0.439866
+9.147184192494719e-05</code></pre>
+</div>
+</div>
+<div id="cell-42" class="cell" data-scrolled="false" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> SOGr(nodes, normals, rbf_obj, eps, k, poly_deg<span class="op">=</span><span class="dv">5</span>, poly_type<span class="op">=</span><span class="st">'p'</span>)</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>fs <span class="op">=</span> np.array([forcing(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> C <span class="op">@</span> fs</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>es <span class="op">=</span> np.array([exact(node) <span class="cf">for</span> node <span class="kw">in</span> nodes])</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(la.norm(ds <span class="op">-</span> es)<span class="op">/</span>la.norm(es))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>epsilon set: 0.439866
+3.679303853167017e-11</code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

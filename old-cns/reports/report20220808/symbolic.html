@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Traveling Front Derivation – Sage Shaw</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-9a60b6f365114c3b1e59731f49b17c37.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Sage Shaw</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#params" id="toc-params" class="nav-link active" data-scroll-target="#params">params</a></li>
+  <li><a href="#q" id="toc-q" class="nav-link" data-scroll-target="#q">Q</a></li>
+  <li><a href="#u" id="toc-u" class="nav-link" data-scroll-target="#u">U</a></li>
+  <li><a href="#wave-response" id="toc-wave-response" class="nav-link" data-scroll-target="#wave-response">Wave response</a></li>
+  <li><a href="#code-generation" id="toc-code-generation" class="nav-link" data-scroll-target="#code-generation">Code Generation</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Traveling Front Derivation</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="ff330764-b872-4f7e-8509-3517964c0cea" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sympy <span class="im">as</span> sym</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sympy_modules <span class="op">=</span> [{<span class="st">'Heaviside'</span>: <span class="kw">lambda</span> x: np.heaviside(x,<span class="fl">0.5</span>)}, <span class="st">'numpy'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The model in characteristic coordinates is <span class="math display">\[\begin{align*}
+    -c\mu U' &amp;= -U + \int_{\mathbb{R}}w(\xi, y) Q(y) f[U(y)] \ dy \\
+    -c \alpha Q' &amp;= 1 - Q - \alpha \beta Q f[U]
+\end{align*}\]</span> Take <span class="math inline">\(f(\cdot) = H(\cdot - \theta)\)</span> and <span class="math inline">\(w(x,y) = \frac{1}{2}e^{-|x-y|}\)</span>.</p>
+<section id="params" class="level3">
+<h3 class="anchored" data-anchor-id="params">params</h3>
+<div id="152604ed-ab0e-4f82-9842-dafe978f74d2" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>c, α, β, μ, θ <span class="op">=</span> sym.symbols(<span class="vs">r'c </span><span class="ch">\a</span><span class="vs">lpha </span><span class="dv">\b</span><span class="vs">eta </span><span class="dv">\m</span><span class="vs">u </span><span class="ch">\t</span><span class="vs">heta'</span>, real<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>numeric_sub <span class="op">=</span> {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    α: <span class="dv">20</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    β: <span class="fl">.2</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    μ: <span class="dv">1</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    θ: <span class="fl">.1</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="q" class="level3">
+<h3 class="anchored" data-anchor-id="q">Q</h3>
+<div id="05e9ebb3-09a8-40f7-b378-84e01e5ef8ff" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ξ, y <span class="op">=</span> sym.symbols(<span class="vs">r'</span><span class="er">\</span><span class="vs">xi y'</span>, real<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>Q <span class="op">=</span> sym.Function(<span class="st">'Q'</span>)(ξ)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>Q_left <span class="op">=</span> sym.dsolve(<span class="dv">1</span> <span class="op">-</span> Q <span class="op">-</span> α<span class="op">*</span>β<span class="op">*</span>Q <span class="op">+</span> c<span class="op">*</span>α<span class="op">*</span>Q.diff(ξ), ics<span class="op">=</span>{Q.subs(ξ,<span class="dv">0</span>): <span class="dv">1</span>}).args[<span class="dv">1</span>].simplify().collect(sym.exp((<span class="dv">1</span><span class="op">+</span>α<span class="op">*</span>β)<span class="op">/</span>(c<span class="op">*</span>α)<span class="op">*</span>ξ))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>Q_right <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>Q_sol <span class="op">=</span> sym.Piecewise((Q_left, ξ<span class="op">&lt;</span><span class="dv">0</span>), (Q_right, <span class="va">True</span>))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>display(sym.Eq(Q, Q_sol))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><span class="math inline">\(\displaystyle Q{\left(\xi \right)} = \begin{cases} \frac{\alpha \beta e^{\frac{\xi \left(\alpha \beta + 1\right)}{\alpha c}} + 1}{\alpha \beta + 1} &amp; \text{for}\: \xi &lt; 0 \\1 &amp; \text{otherwise} \end{cases}\)</span></p>
+</div>
+</div>
+</section>
+<section id="u" class="level3">
+<h3 class="anchored" data-anchor-id="u">U</h3>
+<div id="c1d329cf-cb3b-4a10-acd8-2db07c119fc1" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>U <span class="op">=</span> sym.Function(<span class="st">'U'</span>)(ξ)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>If <span class="math inline">\(\xi &gt; 0\)</span> then <span class="math display">\[
+-c \mu U' + U = \frac{1}{2} e^{-\xi} \int_{-\infty}^0 e^y Q(y) \ dy
+\]</span></p>
+<div id="dce5f327-47d1-44cd-b32d-501960161cb0" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>integral_options <span class="op">=</span> sym.integrate(sym.exp(y) <span class="op">*</span> Q_left.subs(ξ, y), (y, <span class="op">-</span>sym.oo, <span class="dv">0</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># this integral evaluates to different values depending on the parameters</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Assume'</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>display(integral_options.args[<span class="dv">0</span>].args[<span class="dv">1</span>])</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>integral <span class="op">=</span> integral_options.args[<span class="dv">0</span>].args[<span class="dv">0</span>]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>rhs <span class="op">=</span> sym.Rational(<span class="dv">1</span>,<span class="dv">2</span>)<span class="op">*</span>sym.exp(<span class="op">-</span>ξ)<span class="op">*</span>integral</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Assume</code></pre>
+</div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><span class="math inline">\(\displaystyle \alpha \neq - \frac{1}{\beta + c}\)</span></p>
+</div>
+</div>
+<div id="71d84c05-fc6d-4406-9cc4-19d836f2d4be" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sol_right_obj <span class="op">=</span> sym.dsolve(<span class="op">-</span>c<span class="op">*</span>μ<span class="op">*</span>U.diff(ξ) <span class="op">+</span> U <span class="op">-</span> rhs).simplify()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Assume'</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>display(sol_right_obj.args[<span class="dv">1</span>].args[<span class="dv">0</span>].args[<span class="dv">1</span>])</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>sol_left_not_constrained <span class="op">=</span> sol_right_obj.args[<span class="dv">1</span>].args[<span class="dv">0</span>].args[<span class="dv">0</span>].expand().powsimp()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Assume</code></pre>
+</div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><span class="math inline">\(\displaystyle \mu \neq - \frac{1}{c}\)</span></p>
+</div>
+</div>
+<div id="09cbeee6-44b3-4b6e-b745-9b2879ba914f" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>cond <span class="op">=</span> sol_left_not_constrained.collect(sym.exp(ξ)).coeff(sym.exp(<span class="op">-</span>ξ)).factor()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>U_right <span class="op">=</span> cond<span class="op">*</span>sym.exp(<span class="op">-</span>ξ)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>If <span class="math inline">\(\xi &lt; 0\)</span> then we will have two terms in the forcing <span class="math display">\[
+-c \mu U' + U = \frac{1}{2}e^{-\xi} \int_{-\infty}^\xi e^y Q(y) \ dy + \frac{1}{2}e^\xi \int_{\xi}^0 e^{-y}Q(y) \ dy
+\]</span></p>
+<div id="7e64907e-2df7-4ff3-be6c-2f9a605a07da" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>integral1_options <span class="op">=</span> sym.integrate(sym.exp(y)<span class="op">*</span>Q_left.subs(ξ, y), (y, <span class="op">-</span>sym.oo, ξ))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="f1a02a73-13bc-4d32-b146-f1bb52489bf5" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Assume'</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>display(integral1_options.args[<span class="dv">0</span>].args[<span class="dv">1</span>])</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>integral1 <span class="op">=</span> integral1_options.args[<span class="dv">0</span>].args[<span class="dv">0</span>].expand().powsimp()</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>display(integral1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Assume</code></pre>
+</div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><span class="math inline">\(\displaystyle \alpha \neq - \frac{1}{\beta + c}\)</span></p>
+</div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><span class="math inline">\(\displaystyle \frac{\alpha^{2} \beta c e^{\frac{\beta \xi}{c} + \xi + \frac{\xi}{\alpha c}}}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1} + \frac{\alpha \beta e^{\xi}}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1} + \frac{\alpha c e^{\xi}}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1} + \frac{e^{\xi}}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1}\)</span></p>
+</div>
+</div>
+<div id="05ebb9ca-bb5a-4ca1-8a54-f4932716da89" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>A1, A2 <span class="op">=</span> sym.symbols(<span class="st">'A_1 A_2'</span>, real<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>coeffs <span class="op">=</span> [A1, A2]</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>terms <span class="op">=</span> [sym.exp(ξ), </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>         sym.exp((α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>)<span class="op">/</span>(α<span class="op">*</span>c)<span class="op">*</span>ξ)]</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>sub_dict <span class="op">=</span> {</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    A1: integral1.coeff(sym.exp(ξ)),</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    A2: integral1.coeff(sym.exp(β<span class="op">*</span>ξ<span class="op">/</span>c <span class="op">+</span> ξ <span class="op">+</span> ξ<span class="op">/</span>α<span class="op">/</span>c))</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>new_integral1 <span class="op">=</span> <span class="bu">sum</span>(c<span class="op">*</span>f <span class="cf">for</span> c, f <span class="kw">in</span> <span class="bu">zip</span>(coeffs, terms))</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span>((new_integral1.subs(sub_dict) <span class="op">-</span> integral1).simplify() <span class="op">==</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="f8fc8bec-0049-49e9-885e-b1251306757c" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>integral2_options <span class="op">=</span> sym.integrate(sym.exp(<span class="op">-</span>y)<span class="op">*</span>Q_left.subs(ξ, y), (y, ξ, <span class="dv">0</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="2df7bdd4-9369-4771-baf1-eef00d0fe75f" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Assume'</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>display(integral2_options.args[<span class="dv">0</span>].args[<span class="dv">1</span>])</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>integral2 <span class="op">=</span> integral2_options.args[<span class="dv">0</span>].args[<span class="dv">0</span>].expand().powsimp()</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>display(integral2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Assume</code></pre>
+</div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><span class="math inline">\(\displaystyle \alpha \neq \frac{1}{- \beta + c}\)</span></p>
+</div>
+<div class="cell-output cell-output-display cell-output-markdown">
+<p><span class="math inline">\(\displaystyle \frac{\alpha^{2} \beta c e^{\frac{\beta \xi}{c} + \frac{\xi}{\alpha c}}}{- \alpha^{2} \beta^{2} e^{\xi} + \alpha^{2} \beta c e^{\xi} - 2 \alpha \beta e^{\xi} + \alpha c e^{\xi} - e^{\xi}} - \frac{\alpha^{2} \beta c}{- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1} - \frac{\alpha \beta}{- \alpha^{2} \beta^{2} e^{\xi} + \alpha^{2} \beta c e^{\xi} - 2 \alpha \beta e^{\xi} + \alpha c e^{\xi} - e^{\xi}} + \frac{\alpha \beta}{- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1} + \frac{\alpha c}{- \alpha^{2} \beta^{2} e^{\xi} + \alpha^{2} \beta c e^{\xi} - 2 \alpha \beta e^{\xi} + \alpha c e^{\xi} - e^{\xi}} - \frac{\alpha c}{- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1} - \frac{1}{- \alpha^{2} \beta^{2} e^{\xi} + \alpha^{2} \beta c e^{\xi} - 2 \alpha \beta e^{\xi} + \alpha c e^{\xi} - e^{\xi}} + \frac{1}{- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1}\)</span></p>
+</div>
+</div>
+<div id="07ac8f07-8410-49b5-9440-2b7f738d1f39" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>B1, B2, B3 <span class="op">=</span> sym.symbols(<span class="st">'B_1, B_2, B_3'</span>, real<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>coeffs <span class="op">=</span> [B1, B2, B3]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>terms <span class="op">=</span> [<span class="dv">1</span>, sym.exp(<span class="op">-</span>ξ), sym.exp((α<span class="op">*</span>β <span class="op">-</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>)<span class="op">/</span>(α<span class="op">*</span>c) <span class="op">*</span> ξ)]</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>sub_dict[B3] <span class="op">=</span> (integral2.coeff(sym.exp(β<span class="op">*</span>ξ<span class="op">/</span>c <span class="op">+</span> ξ<span class="op">/</span>α<span class="op">/</span>c))<span class="op">*</span>sym.exp(ξ)).simplify()</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>sub_dict[B1] <span class="op">=</span> <span class="bu">sum</span>(arg <span class="cf">for</span> arg <span class="kw">in</span> integral2.args <span class="cf">if</span> ξ <span class="kw">not</span> <span class="kw">in</span> arg.free_symbols)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>sub_dict[B2] <span class="op">=</span> (integral2 <span class="op">-</span> sub_dict[B1] <span class="op">-</span> terms[<span class="dv">2</span>]<span class="op">*</span>sub_dict[B3]).simplify().coeff(sym.exp(<span class="op">-</span>ξ))</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>new_integral2 <span class="op">=</span> <span class="bu">sum</span>(c<span class="op">*</span>f <span class="cf">for</span> c, f <span class="kw">in</span> <span class="bu">zip</span>(coeffs, terms))</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span>((new_integral2.subs(sub_dict) <span class="op">-</span> integral2).simplify() <span class="op">==</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="a0f8e97d-c1de-4d6e-961d-a2ad06bebb0d" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>rhs.expand().powsimp()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="14">
+<p><span class="math inline">\(\displaystyle \frac{\alpha^{2} \beta c}{2 \alpha^{2} \beta^{2} e^{\xi} + 2 \alpha^{2} \beta c e^{\xi} + 4 \alpha \beta e^{\xi} + 2 \alpha c e^{\xi} + 2 e^{\xi}} + \frac{\alpha \beta}{2 \alpha^{2} \beta^{2} e^{\xi} + 2 \alpha^{2} \beta c e^{\xi} + 4 \alpha \beta e^{\xi} + 2 \alpha c e^{\xi} + 2 e^{\xi}} + \frac{\alpha c}{2 \alpha^{2} \beta^{2} e^{\xi} + 2 \alpha^{2} \beta c e^{\xi} + 4 \alpha \beta e^{\xi} + 2 \alpha c e^{\xi} + 2 e^{\xi}} + \frac{1}{2 \alpha^{2} \beta^{2} e^{\xi} + 2 \alpha^{2} \beta c e^{\xi} + 4 \alpha \beta e^{\xi} + 2 \alpha c e^{\xi} + 2 e^{\xi}}\)</span></p>
+</div>
+</div>
+<div id="3a8e326c-06d4-4517-947b-74e2e6f7c49c" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>rhs <span class="op">=</span> sym.Rational(<span class="dv">1</span>,<span class="dv">2</span>)<span class="op">*</span>sym.exp(<span class="op">-</span>ξ)<span class="op">*</span>new_integral1 <span class="op">+</span> sym.Rational(<span class="dv">1</span>,<span class="dv">2</span>)<span class="op">*</span>sym.exp(ξ)<span class="op">*</span>new_integral2</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>sol_left_obj <span class="op">=</span> sym.dsolve(<span class="op">-</span>c<span class="op">*</span>μ<span class="op">*</span>U.diff(ξ) <span class="op">+</span> U <span class="op">-</span> rhs.expand().powsimp(), </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                          ics<span class="op">=</span>{U.subs(ξ,<span class="dv">0</span>): θ},</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                          hint<span class="op">=</span><span class="st">'nth_linear_constant_coeff_undetermined_coefficients'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="77065030-94b3-416b-a12a-60c557b38f20" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>U_left <span class="op">=</span> sol_left_obj.args[<span class="dv">1</span>].subs(sub_dict)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="325ecdad-7fbe-4fcb-bbaa-bf2b398fb8a0" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>U_sol <span class="op">=</span> sym.Piecewise((U_left, ξ <span class="op">&lt;</span><span class="dv">0</span>), (U_right, <span class="va">True</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="2d514b69-a964-46a4-9c00-a07d693bc285" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>U_sol</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="18">
+<p><span class="math inline">\(\displaystyle \begin{cases} - \frac{\alpha^{3} \beta c e^{\frac{\xi \left(\beta + \frac{1}{\alpha}\right)}{c}}}{2 \left(\alpha \beta \mu - \alpha + \mu\right) \left(\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1\right)} - \frac{\alpha^{3} \beta c e^{\frac{\xi \left(\beta + \frac{1}{\alpha}\right)}{c}}}{2 \left(\alpha \beta \mu - \alpha + \mu\right) \left(- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1\right)} + \frac{\alpha \beta}{2 \left(\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1\right)} + \frac{\alpha c}{2 \left(\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1\right)} + \frac{\left(\frac{\alpha^{3} \beta \mu c^{2}}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1} + \frac{\alpha^{3} \beta \mu c^{2}}{- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1} - \frac{\alpha^{3} \beta c}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1} - \frac{\alpha^{3} \beta c}{- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1} + 2 \alpha \beta \mu^{2} \theta c - \alpha \beta \mu^{2} c \left(\frac{\alpha \beta}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1} + \frac{\alpha c}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1} + \frac{1}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1}\right) - \frac{\alpha \beta \mu^{2} c}{\alpha \beta + 1} - 2 \alpha \beta \mu \theta + \alpha \beta \mu \left(\frac{\alpha \beta}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1} + \frac{\alpha c}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1} + \frac{1}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1}\right) + \alpha \beta \mu \left(- \frac{\alpha^{2} \beta c}{- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1} + \frac{\alpha \beta}{- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1} - \frac{\alpha c}{- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1} + \frac{1}{- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1}\right) + \frac{\alpha \beta \mu}{\alpha \beta + 1} - 2 \alpha \mu \theta c + \alpha \mu c \left(\frac{\alpha \beta}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1} + \frac{\alpha c}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1} + \frac{1}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1}\right) + \frac{\alpha \mu c}{\alpha \beta + 1} + 2 \alpha \theta - \alpha \left(\frac{\alpha \beta}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1} + \frac{\alpha c}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1} + \frac{1}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1}\right) - \alpha \left(- \frac{\alpha^{2} \beta c}{- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1} + \frac{\alpha \beta}{- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1} - \frac{\alpha c}{- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1} + \frac{1}{- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1}\right) - \frac{\alpha}{\alpha \beta + 1} + 2 \mu^{2} \theta c - \mu^{2} c \left(\frac{\alpha \beta}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1} + \frac{\alpha c}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1} + \frac{1}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1}\right) - \frac{\mu^{2} c}{\alpha \beta + 1} - 2 \mu \theta + \mu \left(\frac{\alpha \beta}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1} + \frac{\alpha c}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1} + \frac{1}{\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1}\right) + \mu \left(- \frac{\alpha^{2} \beta c}{- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1} + \frac{\alpha \beta}{- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1} - \frac{\alpha c}{- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1} + \frac{1}{- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1}\right) + \frac{\mu}{\alpha \beta + 1}\right) e^{\frac{\xi}{\mu c}}}{2 \alpha \beta \mu^{2} c - 2 \alpha \beta \mu - 2 \alpha \mu c + 2 \alpha + 2 \mu^{2} c - 2 \mu} + \frac{1}{2 \left(\alpha^{2} \beta^{2} + \alpha^{2} \beta c + 2 \alpha \beta + \alpha c + 1\right)} - \frac{\left(- \frac{\alpha^{2} \beta c}{- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1} + \frac{\alpha \beta}{- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1} - \frac{\alpha c}{- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1} + \frac{1}{- \alpha^{2} \beta^{2} + \alpha^{2} \beta c - 2 \alpha \beta + \alpha c - 1}\right) e^{\xi}}{2 \left(\mu c - 1\right)} + \frac{1}{2 \left(\alpha \beta + 1\right)} &amp; \text{for}\: \xi &lt; 0 \\\frac{\left(\alpha c + 1\right) e^{- \xi}}{2 \left(\mu c + 1\right) \left(\alpha \beta + \alpha c + 1\right)} &amp; \text{otherwise} \end{cases}\)</span></p>
+</div>
+</div>
+<div id="f3f6603b-e100-4755-9068-0e37bc05a2bc" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>U_right</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="22">
+<p><span class="math inline">\(\displaystyle \frac{\left(\alpha c + 1\right) e^{- \xi}}{2 \left(\mu c + 1\right) \left(\alpha \beta + \alpha c + 1\right)}\)</span></p>
+</div>
+</div>
+<div id="7a1fc608-8543-4eb8-83af-af7eeeeed33c" class="cell" data-execution_count="33">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>U_left.free_symbols</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="33">
+<pre><code>{\alpha, \beta, \mu, \theta, \xi, c}</code></pre>
+</div>
+</div>
+<div id="f010b567-1b81-4f06-a6e3-fd35bc00ab31" class="cell" data-execution_count="37">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>left_lim <span class="op">=</span> <span class="bu">sum</span>(term <span class="cf">for</span> term <span class="kw">in</span> U_left.expand().args <span class="cf">if</span> ξ <span class="kw">not</span> <span class="kw">in</span> term.free_symbols)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="3912bf43-2cb8-4c46-b91b-b8e4ba84add9" class="cell" data-execution_count="39">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>left_lim.simplify()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="39">
+<p><span class="math inline">\(\displaystyle \frac{1}{\alpha \beta + 1}\)</span></p>
+</div>
+</div>
+<div id="2cbb4198-ab84-44ec-ab34-5bf7eaa8a9ab" class="cell" data-execution_count="34">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>cond</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="34">
+<p><span class="math inline">\(\displaystyle \frac{\alpha c + 1}{2 \left(\mu c + 1\right) \left(\alpha \beta + \alpha c + 1\right)}\)</span></p>
+</div>
+</div>
+<div id="02eb205f-b780-4bab-a113-19f11d425d75" class="cell" data-execution_count="35">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>sols[<span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="35">
+<p><span class="math inline">\(\displaystyle \frac{- 2 \alpha \beta \mu \theta - 2 \alpha \theta + \alpha - 2 \mu \theta - \sqrt{4 \alpha^{2} \beta^{2} \mu^{2} \theta^{2} - 8 \alpha^{2} \beta \mu \theta^{2} - 4 \alpha^{2} \beta \mu \theta + 4 \alpha^{2} \theta^{2} - 4 \alpha^{2} \theta + \alpha^{2} + 8 \alpha \beta \mu^{2} \theta^{2} - 8 \alpha \mu \theta^{2} + 4 \alpha \mu \theta + 4 \mu^{2} \theta^{2}}}{4 \alpha \mu \theta}\)</span></p>
+</div>
+</div>
+<div id="815c66ab-7597-4c61-854b-1d8bd9fb8704" class="cell" data-execution_count="36">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>sols[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="36">
+<p><span class="math inline">\(\displaystyle \frac{- 2 \alpha \beta \mu \theta - 2 \alpha \theta + \alpha - 2 \mu \theta + \sqrt{4 \alpha^{2} \beta^{2} \mu^{2} \theta^{2} - 8 \alpha^{2} \beta \mu \theta^{2} - 4 \alpha^{2} \beta \mu \theta + 4 \alpha^{2} \theta^{2} - 4 \alpha^{2} \theta + \alpha^{2} + 8 \alpha \beta \mu^{2} \theta^{2} - 8 \alpha \mu \theta^{2} + 4 \alpha \mu \theta + 4 \mu^{2} \theta^{2}}}{4 \alpha \mu \theta}\)</span></p>
+</div>
+</div>
+<div id="b3965543-2f2c-455b-b26b-f837966f8043" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span><span class="op">/</span>(α<span class="op">*</span>β <span class="op">+</span> <span class="dv">1</span>)).subs(numeric_sub)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="20">
+<p><span class="math inline">\(\displaystyle 0.2\)</span></p>
+</div>
+</div>
+<div id="b67a0a82-86cf-46a2-b5ff-4ab4bcdf0763" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>c_vals <span class="op">=</span> sym.solve(cond <span class="op">-</span> θ, c)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>c_subs <span class="op">=</span> c_vals[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="66141461-77fb-4bad-a48b-8dba5effd174" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>U_numeric <span class="op">=</span> sym.lambdify(ξ, U_sol.subs(c, c_subs).subs(numeric_sub), modules<span class="op">=</span>sympy_modules)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>xs <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">100</span>, <span class="dv">20</span>, <span class="dv">2001</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>plt.plot(xs, U_numeric(xs))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="symbolic_files/figure-html/cell-35-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="c8de7b30-9ed8-4d39-b3b1-849f8b1f51a5" class="cell" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>U_numeric <span class="op">=</span> sym.lambdify(ξ, U_sol.subs(c, c_subs).subs(numeric_sub), modules<span class="op">=</span>sympy_modules)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>xs <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">100</span>, <span class="dv">20</span>, <span class="dv">2001</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>plt.plot(xs, U_numeric(xs))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="symbolic_files/figure-html/cell-36-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="2c8c5d00-aebe-4a51-afb1-fa8bba6bf26a" class="cell" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>c_subs.subs(numeric_sub)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="24">
+<p><span class="math inline">\(\displaystyle 3.75\)</span></p>
+</div>
+</div>
+<div id="1c40e8b8-fe23-4e5e-8249-3be1be5ec0f1" class="cell" data-execution_count="25">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>U_right.subs(c, c_subs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="25">
+<p><span class="math inline">\(\displaystyle \frac{\left(1 + \frac{- 2 \alpha \beta \mu \theta - 2 \alpha \theta + \alpha - 2 \mu \theta + \sqrt{4 \alpha^{2} \beta^{2} \mu^{2} \theta^{2} - 8 \alpha^{2} \beta \mu \theta^{2} - 4 \alpha^{2} \beta \mu \theta + 4 \alpha^{2} \theta^{2} - 4 \alpha^{2} \theta + \alpha^{2} + 8 \alpha \beta \mu^{2} \theta^{2} - 8 \alpha \mu \theta^{2} + 4 \alpha \mu \theta + 4 \mu^{2} \theta^{2}}}{4 \mu \theta}\right) e^{- \xi}}{2 \left(1 + \frac{- 2 \alpha \beta \mu \theta - 2 \alpha \theta + \alpha - 2 \mu \theta + \sqrt{4 \alpha^{2} \beta^{2} \mu^{2} \theta^{2} - 8 \alpha^{2} \beta \mu \theta^{2} - 4 \alpha^{2} \beta \mu \theta + 4 \alpha^{2} \theta^{2} - 4 \alpha^{2} \theta + \alpha^{2} + 8 \alpha \beta \mu^{2} \theta^{2} - 8 \alpha \mu \theta^{2} + 4 \alpha \mu \theta + 4 \mu^{2} \theta^{2}}}{4 \alpha \theta}\right) \left(\alpha \beta + 1 + \frac{- 2 \alpha \beta \mu \theta - 2 \alpha \theta + \alpha - 2 \mu \theta + \sqrt{4 \alpha^{2} \beta^{2} \mu^{2} \theta^{2} - 8 \alpha^{2} \beta \mu \theta^{2} - 4 \alpha^{2} \beta \mu \theta + 4 \alpha^{2} \theta^{2} - 4 \alpha^{2} \theta + \alpha^{2} + 8 \alpha \beta \mu^{2} \theta^{2} - 8 \alpha \mu \theta^{2} + 4 \alpha \mu \theta + 4 \mu^{2} \theta^{2}}}{4 \mu \theta}\right)}\)</span></p>
+</div>
+</div>
+<div id="b4114faf-bcf0-4cad-ba78-c24fda7d9698" class="cell" data-execution_count="26">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>c</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="26">
+<p><span class="math inline">\(\displaystyle c\)</span></p>
+</div>
+</div>
+<div id="58e97054-4fbe-4389-8bdc-f1dbdbd5dbbb" class="cell" data-execution_count="27">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>Q_numeric <span class="op">=</span> sym.lambdify(ξ, Q_sol.subs(c, c_subs).subs(numeric_sub), modules<span class="op">=</span>sympy_modules)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>xs <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">100</span>, <span class="dv">20</span>, <span class="dv">201</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>plt.plot(xs, Q_numeric(xs))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="symbolic_files/figure-html/cell-40-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="wave-response" class="level1">
+<h1>Wave response</h1>
+<p>We have <span class="math display">\[\begin{align*}
+    -c\mu v_1' - v_1 &amp;= -\frac{\delta(\xi)}{|U'(\xi)|}Q\big[(w * v_1) + \alpha\beta v_2) \big] \\
+    -c\alpha v_2' - v_2 &amp;= H(-\xi)\big(-(w*v_1) + \alpha\beta v_2\big)
+\end{align*}\]</span></p>
+<p>Choose <span class="math inline">\(v_1(\xi) = H(\xi)e^{-\frac{1}{c\mu}\xi}\)</span>. We seek <span class="math display">\[\begin{align*}
+    w * v_1 &amp;= \int_0^\infty \frac{1}{2}e^{-|\xi - y|}e^{-\frac{1}{c\mu}y} \ dy \\
+\end{align*}\]</span></p>
+<p>If <span class="math inline">\(\xi &gt; 0\)</span> then <span class="math inline">\(-c\alpha v_2' - v_2 = 0\)</span> and</p>
+<p><span class="math inline">\(v_2(\xi) = A_8 e^{-\frac{1}{c\alpha}\xi}\)</span>.</p>
+<p>If <span class="math inline">\(\xi &lt; 0\)</span> then <span class="math inline">\(\xi - y &lt; 0\)</span> and <span class="math display">\[\begin{align*}
+    (w * v_1) &amp;= \int_0^\infty \frac{1}{2}e^{\xi} e^{-y}e^{-\frac{1}{c\mu}y} \ dy \\
+        &amp;= \frac{1}{2}e^{\xi} \int_0^\infty e^{-\frac{1+c\mu}{c\mu} y} \ dy \\
+        &amp;= \frac{c \mu}{2(1+c\mu)}e^{\xi}
+\end{align*}\]</span> so we have <span class="math display">\[\begin{align*}
+    -c\alpha v_2' - (1+\alpha\beta)v_2 &amp;= -\frac{c \mu}{2(1+c\mu)}e^{\xi}
+\end{align*}\]</span></p>
+<div id="e643800c-34ca-43a6-8c26-1729ff926165" class="cell" data-execution_count="28">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>v1 <span class="op">=</span> sym.exp(<span class="op">-</span><span class="dv">1</span><span class="op">/</span>c<span class="op">/</span>μ<span class="op">*</span>ξ)<span class="op">*</span>sym.Heaviside(ξ)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="code-generation" class="level1">
+<h1>Code Generation</h1>
+<div id="7352ad86-b2a1-47bc-bc85-c1f11e1116fe" class="cell" data-execution_count="40">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> py_code(expr, replace_numpy<span class="op">=</span><span class="va">True</span>, replace_unicode<span class="op">=</span><span class="va">True</span>, numpy_package<span class="op">=</span><span class="st">'np.'</span>):</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>    code <span class="op">=</span> sym.ccode(expr)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> replace_unicode:</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>        unicode_replacements <span class="op">=</span> [</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>            (<span class="st">'</span><span class="ch">\\</span><span class="st">alpha'</span>, <span class="st">'α'</span>),</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>            (<span class="st">'</span><span class="ch">\\</span><span class="st">beta'</span>, <span class="st">'β'</span>),</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>            (<span class="st">'</span><span class="ch">\\</span><span class="st">gamma'</span>, <span class="st">'γ'</span>),</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>            (<span class="st">'</span><span class="ch">\\</span><span class="st">Gamma'</span>, <span class="st">'Γ'</span>),</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>            (<span class="st">'</span><span class="ch">\\</span><span class="st">delta'</span>, <span class="st">'δ'</span>),</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>            (<span class="st">'</span><span class="ch">\\</span><span class="st">Delta'</span>, <span class="st">'Δ'</span>),</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>            (<span class="st">'</span><span class="ch">\\</span><span class="st">epsilon'</span>, <span class="st">'ϵ'</span>),</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>            (<span class="st">'</span><span class="ch">\\</span><span class="st">zeta'</span>, <span class="st">'ζ'</span>),</span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>            (<span class="st">'</span><span class="ch">\\</span><span class="st">eta'</span>, <span class="st">'η'</span>),</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>            (<span class="st">'</span><span class="ch">\\</span><span class="st">theta'</span>, <span class="st">'θ'</span>),</span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>            (<span class="st">'</span><span class="ch">\\</span><span class="st">xi'</span>, <span class="st">'ξ'</span>),</span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>            (<span class="st">'</span><span class="ch">\\</span><span class="st">mu'</span>, <span class="st">'μ'</span>)</span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="bu">unicode</span>, symbol <span class="kw">in</span> unicode_replacements:</span>
+<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>            code <span class="op">=</span> code.replace(<span class="bu">unicode</span>, symbol)</span>
+<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> replace_numpy:</span>
+<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>        numpy_replacements <span class="op">=</span> [</span>
+<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>            (<span class="st">'exp'</span>, numpy_package <span class="op">+</span> <span class="st">'exp'</span>),</span>
+<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a>            (<span class="st">'log'</span>, numpy_package <span class="op">+</span> <span class="st">'log'</span>),</span>
+<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a>            (<span class="st">'sqrt'</span>, numpy_package <span class="op">+</span> <span class="st">'sqrt'</span>),</span>
+<span id="cb40-27"><a href="#cb40-27" aria-hidden="true" tabindex="-1"></a>            (<span class="st">'pow'</span>, <span class="st">'( lambda base, exponent: base**exponent )'</span>),</span>
+<span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a>            (<span class="st">'Heaviside'</span>, <span class="st">'(lambda input: np.heaviside(input,0.5))'</span>)</span>
+<span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb40-30"><a href="#cb40-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> c_func, np_func <span class="kw">in</span> numpy_replacements:</span>
+<span id="cb40-31"><a href="#cb40-31" aria-hidden="true" tabindex="-1"></a>            code <span class="op">=</span> code.replace(c_func, np_func)</span>
+<span id="cb40-32"><a href="#cb40-32" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb40-33"><a href="#cb40-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> code</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="ae4a18a5-368b-42d4-9e6d-58450160760f" class="cell" data-execution_count="48">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>code <span class="op">=</span> <span class="st">'def get_speed(μ, α, β, θ):</span><span class="ch">\n\t</span><span class="st">return '</span> <span class="op">+</span> py_code(c_subs)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>def get_speed(μ, α, β, θ):
+    return (1.0/4.0)*(-2*α*β*μ*θ - 2*α*θ + α - 2*μ*θ + np.sqrt(4*( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2)*( lambda base, exponent: base**exponent )(μ, 2)*( lambda base, exponent: base**exponent )(θ, 2) - 8*( lambda base, exponent: base**exponent )(α, 2)*β*μ*( lambda base, exponent: base**exponent )(θ, 2) - 4*( lambda base, exponent: base**exponent )(α, 2)*β*μ*θ + 4*( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(θ, 2) - 4*( lambda base, exponent: base**exponent )(α, 2)*θ + ( lambda base, exponent: base**exponent )(α, 2) + 8*α*β*( lambda base, exponent: base**exponent )(μ, 2)*( lambda base, exponent: base**exponent )(θ, 2) - 8*α*μ*( lambda base, exponent: base**exponent )(θ, 2) + 4*α*μ*θ + 4*( lambda base, exponent: base**exponent )(μ, 2)*( lambda base, exponent: base**exponent )(θ, 2)))/(α*μ*θ)</code></pre>
+</div>
+</div>
+<div id="33eb0911-4475-44f0-a4be-055d91927367" class="cell" data-execution_count="58">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_speed(μ, α, β, θ):</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (<span class="fl">1.0</span><span class="op">/</span><span class="fl">4.0</span>)<span class="op">*</span>(<span class="op">-</span><span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β<span class="op">*</span>μ<span class="op">*</span>θ <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>θ <span class="op">+</span> α <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>μ<span class="op">*</span>θ <span class="op">+</span> np.sqrt(<span class="dv">4</span><span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(μ, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(θ, <span class="dv">2</span>) <span class="op">-</span> <span class="dv">8</span><span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>μ<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(θ, <span class="dv">2</span>) <span class="op">-</span> <span class="dv">4</span><span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>μ<span class="op">*</span>θ <span class="op">+</span> <span class="dv">4</span><span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(θ, <span class="dv">2</span>) <span class="op">-</span> <span class="dv">4</span><span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>θ <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>) <span class="op">+</span> <span class="dv">8</span><span class="op">*</span>α<span class="op">*</span>β<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(μ, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(θ, <span class="dv">2</span>) <span class="op">-</span> <span class="dv">8</span><span class="op">*</span>α<span class="op">*</span>μ<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(θ, <span class="dv">2</span>) <span class="op">+</span> <span class="dv">4</span><span class="op">*</span>α<span class="op">*</span>μ<span class="op">*</span>θ <span class="op">+</span> <span class="dv">4</span><span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(μ, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(θ, <span class="dv">2</span>)))<span class="op">/</span>(α<span class="op">*</span>μ<span class="op">*</span>θ)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="20d2adc7-acb8-45e8-8e24-ac9f194e4394" class="cell" data-execution_count="51">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>numeric_sub</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="51">
+<pre><code>{\alpha: 20, \beta: 0.2, \mu: 1, \theta: 0.1}</code></pre>
+</div>
+</div>
+<div id="8c043b43-29aa-4418-8236-a72b3ab3be0e" class="cell" data-execution_count="52">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>get_speed(<span class="dv">1</span>, <span class="dv">20</span>, <span class="fl">.2</span>, <span class="fl">.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="52">
+<pre><code>3.75</code></pre>
+</div>
+</div>
+<div id="0156b35f-48cd-4d47-8d51-0367a63d2d05" class="cell" data-execution_count="57">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>c_subs.subs(numeric_sub)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="57">
+<p><span class="math inline">\(\displaystyle 3.75\)</span></p>
+</div>
+</div>
+<div id="8078d9fb-3304-47f7-887c-5a0ea8d05415" class="cell" data-execution_count="73">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>U_right</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="73">
+<p><span class="math inline">\(\displaystyle \frac{\left(\alpha c + 1\right) e^{- \xi}}{2 \left(\mu c + 1\right) \left(\alpha \beta + \alpha c + 1\right)}\)</span></p>
+</div>
+</div>
+<div id="60d5de84-cb31-4908-93c1-3f422db7341a" class="cell" data-execution_count="81">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>U_code <span class="op">=</span> sym.Heaviside(ξ)<span class="op">*</span>U_right <span class="op">+</span> sym.Heaviside(<span class="op">-</span>ξ)<span class="op">*</span>U_left</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>code <span class="op">=</span> <span class="st">'def U_numeric(ξ, μ, α, β, θ):</span><span class="ch">\n\t</span><span class="st">return '</span> <span class="op">+</span> py_code(U_code)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>def U_numeric(ξ, μ, α, β, θ):
+    return // Not supported in C:
+// (lambda input: np.heaviside(input,0.5))
+// (lambda input: np.heaviside(input,0.5))
+(1.0/2.0)*(α*c + 1)*np.exp(-ξ)*(lambda input: np.heaviside(input,0.5))(ξ)/((μ*c + 1)*(α*β + α*c + 1)) + (-1.0/2.0*( lambda base, exponent: base**exponent )(α, 3)*β*c*np.exp(ξ*(β + 1.0/α)/c)/((α*β*μ - α + μ)*(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1)) - 1.0/2.0*( lambda base, exponent: base**exponent )(α, 3)*β*c*np.exp(ξ*(β + 1.0/α)/c)/((α*β*μ - α + μ)*(-( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c - 2*α*β + α*c - 1)) + (1.0/2.0)*α*β/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1) + (1.0/2.0)*α*c/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1) + (( lambda base, exponent: base**exponent )(α, 3)*β*μ*( lambda base, exponent: base**exponent )(c, 2)/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1) + ( lambda base, exponent: base**exponent )(α, 3)*β*μ*( lambda base, exponent: base**exponent )(c, 2)/(-( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c - 2*α*β + α*c - 1) - ( lambda base, exponent: base**exponent )(α, 3)*β*c/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1) - ( lambda base, exponent: base**exponent )(α, 3)*β*c/(-( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c - 2*α*β + α*c - 1) + 2*α*β*( lambda base, exponent: base**exponent )(μ, 2)*θ*c - α*β*( lambda base, exponent: base**exponent )(μ, 2)*c*(α*β/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1) + α*c/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1) + 1.0/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1)) - α*β*( lambda base, exponent: base**exponent )(μ, 2)*c/(α*β + 1) - 2*α*β*μ*θ + α*β*μ*(α*β/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1) + α*c/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1) + 1.0/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1)) + α*β*μ*(-( lambda base, exponent: base**exponent )(α, 2)*β*c/(-( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c - 2*α*β + α*c - 1) + α*β/(-( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c - 2*α*β + α*c - 1) - α*c/(-( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c - 2*α*β + α*c - 1) + 1.0/(-( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c - 2*α*β + α*c - 1)) + α*β*μ/(α*β + 1) - 2*α*μ*θ*c + α*μ*c*(α*β/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1) + α*c/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1) + 1.0/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1)) + α*μ*c/(α*β + 1) + 2*α*θ - α*(α*β/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1) + α*c/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1) + 1.0/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1)) - α*(-( lambda base, exponent: base**exponent )(α, 2)*β*c/(-( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c - 2*α*β + α*c - 1) + α*β/(-( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c - 2*α*β + α*c - 1) - α*c/(-( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c - 2*α*β + α*c - 1) + 1.0/(-( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c - 2*α*β + α*c - 1)) - α/(α*β + 1) + 2*( lambda base, exponent: base**exponent )(μ, 2)*θ*c - ( lambda base, exponent: base**exponent )(μ, 2)*c*(α*β/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1) + α*c/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1) + 1.0/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1)) - ( lambda base, exponent: base**exponent )(μ, 2)*c/(α*β + 1) - 2*μ*θ + μ*(α*β/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1) + α*c/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1) + 1.0/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1)) + μ*(-( lambda base, exponent: base**exponent )(α, 2)*β*c/(-( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c - 2*α*β + α*c - 1) + α*β/(-( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c - 2*α*β + α*c - 1) - α*c/(-( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c - 2*α*β + α*c - 1) + 1.0/(-( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c - 2*α*β + α*c - 1)) + μ/(α*β + 1))*np.exp(ξ/(μ*c))/(2*α*β*( lambda base, exponent: base**exponent )(μ, 2)*c - 2*α*β*μ - 2*α*μ*c + 2*α + 2*( lambda base, exponent: base**exponent )(μ, 2)*c - 2*μ) + (1.0/2.0)/(( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c + 2*α*β + α*c + 1) - 1.0/2.0*(-( lambda base, exponent: base**exponent )(α, 2)*β*c/(-( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c - 2*α*β + α*c - 1) + α*β/(-( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c - 2*α*β + α*c - 1) - α*c/(-( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c - 2*α*β + α*c - 1) + 1.0/(-( lambda base, exponent: base**exponent )(α, 2)*( lambda base, exponent: base**exponent )(β, 2) + ( lambda base, exponent: base**exponent )(α, 2)*β*c - 2*α*β + α*c - 1))*np.exp(ξ)/(μ*c - 1) + (1.0/2.0)/(α*β + 1))*(lambda input: np.heaviside(input,0.5))(-ξ)</code></pre>
+</div>
+</div>
+<div id="b5b10e49-8964-4f97-a4a1-a92c1e98ffe3" class="cell" data-execution_count="75">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> U_numeric(ξ, μ, α, β, θ):</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> get_speed(μ, α, β, θ)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (<span class="fl">1.0</span><span class="op">/</span><span class="fl">2.0</span>)<span class="op">*</span>(α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>)<span class="op">*</span>np.exp(<span class="op">-</span>ξ)<span class="op">*</span>(<span class="kw">lambda</span> <span class="bu">input</span>: np.heaviside(<span class="bu">input</span>,<span class="fl">0.5</span>))(ξ)<span class="op">/</span>((μ<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>)<span class="op">*</span>(α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>)) <span class="op">+</span> (<span class="op">-</span><span class="fl">1.0</span><span class="op">/</span><span class="fl">2.0</span><span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">3</span>)<span class="op">*</span>β<span class="op">*</span>c<span class="op">*</span>np.exp(ξ<span class="op">*</span>(β <span class="op">+</span> <span class="fl">1.0</span><span class="op">/</span>α)<span class="op">/</span>c)<span class="op">/</span>((α<span class="op">*</span>β<span class="op">*</span>μ <span class="op">-</span> α <span class="op">+</span> μ)<span class="op">*</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>)) <span class="op">-</span> <span class="fl">1.0</span><span class="op">/</span><span class="fl">2.0</span><span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">3</span>)<span class="op">*</span>β<span class="op">*</span>c<span class="op">*</span>np.exp(ξ<span class="op">*</span>(β <span class="op">+</span> <span class="fl">1.0</span><span class="op">/</span>α)<span class="op">/</span>c)<span class="op">/</span>((α<span class="op">*</span>β<span class="op">*</span>μ <span class="op">-</span> α <span class="op">+</span> μ)<span class="op">*</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>)) <span class="op">+</span> (<span class="fl">1.0</span><span class="op">/</span><span class="fl">2.0</span>)<span class="op">*</span>α<span class="op">*</span>β<span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> (<span class="fl">1.0</span><span class="op">/</span><span class="fl">2.0</span>)<span class="op">*</span>α<span class="op">*</span>c<span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> (( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">3</span>)<span class="op">*</span>β<span class="op">*</span>μ<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(c, <span class="dv">2</span>)<span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">3</span>)<span class="op">*</span>β<span class="op">*</span>μ<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(c, <span class="dv">2</span>)<span class="op">/</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>) <span class="op">-</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">3</span>)<span class="op">*</span>β<span class="op">*</span>c<span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>) <span class="op">-</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">3</span>)<span class="op">*</span>β<span class="op">*</span>c<span class="op">/</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>) <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(μ, <span class="dv">2</span>)<span class="op">*</span>θ<span class="op">*</span>c <span class="op">-</span> α<span class="op">*</span>β<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(μ, <span class="dv">2</span>)<span class="op">*</span>c<span class="op">*</span>(α<span class="op">*</span>β<span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> α<span class="op">*</span>c<span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> <span class="fl">1.0</span><span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>)) <span class="op">-</span> α<span class="op">*</span>β<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(μ, <span class="dv">2</span>)<span class="op">*</span>c<span class="op">/</span>(α<span class="op">*</span>β <span class="op">+</span> <span class="dv">1</span>) <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β<span class="op">*</span>μ<span class="op">*</span>θ <span class="op">+</span> α<span class="op">*</span>β<span class="op">*</span>μ<span class="op">*</span>(α<span class="op">*</span>β<span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> α<span class="op">*</span>c<span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> <span class="fl">1.0</span><span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>)) <span class="op">+</span> α<span class="op">*</span>β<span class="op">*</span>μ<span class="op">*</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c<span class="op">/</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>) <span class="op">+</span> α<span class="op">*</span>β<span class="op">/</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>) <span class="op">-</span> α<span class="op">*</span>c<span class="op">/</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>) <span class="op">+</span> <span class="fl">1.0</span><span class="op">/</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>)) <span class="op">+</span> α<span class="op">*</span>β<span class="op">*</span>μ<span class="op">/</span>(α<span class="op">*</span>β <span class="op">+</span> <span class="dv">1</span>) <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>μ<span class="op">*</span>θ<span class="op">*</span>c <span class="op">+</span> α<span class="op">*</span>μ<span class="op">*</span>c<span class="op">*</span>(α<span class="op">*</span>β<span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> α<span class="op">*</span>c<span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> <span class="fl">1.0</span><span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>)) <span class="op">+</span> α<span class="op">*</span>μ<span class="op">*</span>c<span class="op">/</span>(α<span class="op">*</span>β <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>θ <span class="op">-</span> α<span class="op">*</span>(α<span class="op">*</span>β<span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> α<span class="op">*</span>c<span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> <span class="fl">1.0</span><span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>)) <span class="op">-</span> α<span class="op">*</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c<span class="op">/</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>) <span class="op">+</span> α<span class="op">*</span>β<span class="op">/</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>) <span class="op">-</span> α<span class="op">*</span>c<span class="op">/</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>) <span class="op">+</span> <span class="fl">1.0</span><span class="op">/</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>)) <span class="op">-</span> α<span class="op">/</span>(α<span class="op">*</span>β <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(μ, <span class="dv">2</span>)<span class="op">*</span>θ<span class="op">*</span>c <span class="op">-</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(μ, <span class="dv">2</span>)<span class="op">*</span>c<span class="op">*</span>(α<span class="op">*</span>β<span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> α<span class="op">*</span>c<span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> <span class="fl">1.0</span><span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>)) <span class="op">-</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(μ, <span class="dv">2</span>)<span class="op">*</span>c<span class="op">/</span>(α<span class="op">*</span>β <span class="op">+</span> <span class="dv">1</span>) <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>μ<span class="op">*</span>θ <span class="op">+</span> μ<span class="op">*</span>(α<span class="op">*</span>β<span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> α<span class="op">*</span>c<span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>) <span class="op">+</span> <span class="fl">1.0</span><span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>)) <span class="op">+</span> μ<span class="op">*</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c<span class="op">/</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>) <span class="op">+</span> α<span class="op">*</span>β<span class="op">/</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>) <span class="op">-</span> α<span class="op">*</span>c<span class="op">/</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>) <span class="op">+</span> <span class="fl">1.0</span><span class="op">/</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>)) <span class="op">+</span> μ<span class="op">/</span>(α<span class="op">*</span>β <span class="op">+</span> <span class="dv">1</span>))<span class="op">*</span>np.exp(ξ<span class="op">/</span>(μ<span class="op">*</span>c))<span class="op">/</span>(<span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(μ, <span class="dv">2</span>)<span class="op">*</span>c <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β<span class="op">*</span>μ <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>μ<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(μ, <span class="dv">2</span>)<span class="op">*</span>c <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>μ) <span class="op">+</span> (<span class="fl">1.0</span><span class="op">/</span><span class="fl">2.0</span>)<span class="op">/</span>(( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">+</span> <span class="dv">1</span>) <span class="op">-</span> <span class="fl">1.0</span><span class="op">/</span><span class="fl">2.0</span><span class="op">*</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c<span class="op">/</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>) <span class="op">+</span> α<span class="op">*</span>β<span class="op">/</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>) <span class="op">-</span> α<span class="op">*</span>c<span class="op">/</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>) <span class="op">+</span> <span class="fl">1.0</span><span class="op">/</span>(<span class="op">-</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(β, <span class="dv">2</span>) <span class="op">+</span> ( <span class="kw">lambda</span> base, exponent: base<span class="op">**</span>exponent )(α, <span class="dv">2</span>)<span class="op">*</span>β<span class="op">*</span>c <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>α<span class="op">*</span>β <span class="op">+</span> α<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>))<span class="op">*</span>np.exp(ξ)<span class="op">/</span>(μ<span class="op">*</span>c <span class="op">-</span> <span class="dv">1</span>) <span class="op">+</span> (<span class="fl">1.0</span><span class="op">/</span><span class="fl">2.0</span>)<span class="op">/</span>(α<span class="op">*</span>β <span class="op">+</span> <span class="dv">1</span>))<span class="op">*</span>(<span class="kw">lambda</span> <span class="bu">input</span>: np.heaviside(<span class="bu">input</span>,<span class="fl">0.5</span>))(<span class="op">-</span>ξ)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="aa9bb279-083d-4721-8f78-fbc614edcebd" class="cell" data-execution_count="76">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>numeric_sub</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="76">
+<pre><code>{\alpha: 20, \beta: 0.2, \mu: 1, \theta: 0.1}</code></pre>
+</div>
+</div>
+<div id="1b5bf100-ad93-481a-a045-0972701c0803" class="cell" data-execution_count="77">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>xs <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">100</span>, <span class="dv">20</span>, <span class="dv">2001</span>)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>plt.plot(xs, U_numeric(xs, <span class="dv">1</span>, <span class="dv">20</span>, <span class="fl">0.2</span>, <span class="fl">.1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="symbolic_files/figure-html/cell-63-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="2d50150e-efb4-4c72-8f4d-90e7e2e392bb" class="cell" data-execution_count="82">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>Q_code <span class="op">=</span> sym.Heaviside(ξ)<span class="op">*</span>Q_right <span class="op">+</span> sym.Heaviside(<span class="op">-</span>ξ)<span class="op">*</span>Q_left</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>code <span class="op">=</span> <span class="st">'def Q_numeric(ξ, μ, α, β, θ):</span><span class="ch">\n\t</span><span class="st">return '</span> <span class="op">+</span> py_code(Q_code)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>def Q_numeric(ξ, μ, α, β, θ):
+    return // Not supported in C:
+// (lambda input: np.heaviside(input,0.5))
+// (lambda input: np.heaviside(input,0.5))
+(lambda input: np.heaviside(input,0.5))(ξ) + (α*β*np.exp(ξ*(α*β + 1)/(α*c)) + 1)*(lambda input: np.heaviside(input,0.5))(-ξ)/(α*β + 1)</code></pre>
+</div>
+</div>
+<div id="e5ce23b7-daf3-49c5-adf2-c1b6473753da" class="cell" data-execution_count="83">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> Q_numeric(ξ, μ, α, β, θ):</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> get_speed(μ, α, β, θ)</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (<span class="kw">lambda</span> <span class="bu">input</span>: np.heaviside(<span class="bu">input</span>,<span class="fl">0.5</span>))(ξ) <span class="op">+</span> (α<span class="op">*</span>β<span class="op">*</span>np.exp(ξ<span class="op">*</span>(α<span class="op">*</span>β <span class="op">+</span> <span class="dv">1</span>)<span class="op">/</span>(α<span class="op">*</span>c)) <span class="op">+</span> <span class="dv">1</span>)<span class="op">*</span>(<span class="kw">lambda</span> <span class="bu">input</span>: np.heaviside(<span class="bu">input</span>,<span class="fl">0.5</span>))(<span class="op">-</span>ξ)<span class="op">/</span>(α<span class="op">*</span>β <span class="op">+</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="0dbb01a4-a707-459e-9613-17af197faf8d" class="cell" data-execution_count="84">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>xs <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">100</span>, <span class="dv">20</span>, <span class="dv">2001</span>)</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>plt.plot(xs, Q_numeric(xs, <span class="dv">1</span>, <span class="dv">20</span>, <span class="fl">0.2</span>, <span class="fl">.1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="symbolic_files/figure-html/cell-66-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
