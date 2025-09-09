@@ -2,6 +2,8 @@
 *-checkpoint.ipynb
 __pycache__
 
+_site/*
+
 *.pdf
 **/texaux/*
 !**/texaux/*.pdf

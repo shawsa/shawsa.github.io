@@ -73,8 +73,10 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="Sage Shaw - Mathematician / Data scientist – Sage Shaw">
 <meta property="og:description" content="">
-<meta property="og:image" content="./media/headshot_sage.png">
+<meta property="og:image" content="https://shawsa.github.io/media/headshot_sage.png">
 <meta property="og:site_name" content="Sage Shaw">
+<meta property="og:image:height" content="739">
+<meta property="og:image:width" content="933">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -250,7 +252,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/shawsa\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

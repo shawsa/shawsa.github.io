@@ -1,6 +1,9 @@
-# Publications
+---
+title: "Publications"
+---
 
-### Approximating the effect of inputs and cortical geometry on wave propagation in neural fields - PhD Thesis (2025)
+### Approximating the effect of inputs and cortical geometry on wave propagation in neural fields
+PhD Thesis (2025)
 
 My doctoral research focused on neural-field equations. These are
 integro-differential equations (similar to PDEs) that are useful for modeling
@@ -46,7 +49,7 @@ illustrating the method's ability to capture complex wave propagation patterns.
 
 ![Interpolatory Projector](https://raw.githubusercontent.com/shawsa/shawsa.github.io/refs/heads/master/_old-cns/presentations/20250509_defense/media/presentation_projection_interp.gif)
 
-## Representing stimulus motion with waves in adaptive neural fields
+### Representing stimulus motion with waves in adaptive neural fields
 [Journal of Computational Neuroscience](https://link.springer.com/article/10.1007/s10827-024-00869-z)(2024)
 
 Traveling waves of neural activity emerge in cortical networks both spontaneously
